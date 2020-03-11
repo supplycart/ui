@@ -28,7 +28,7 @@
                 ? Currencies.find(item => item.country === this.currency.toUpperCase() || item.code === this.currency)
                 : this.currency;
 
-            currency = currency ?? DefaultCurrency;
+            currency = currency ? currency : DefaultCurrency;
 
             let strVal = typeof this.value === "number" ? this.value.toFixed(currency.precision) : this.value;
 
