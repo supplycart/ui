@@ -32,7 +32,7 @@
 
             let strVal = typeof this.value === "number" ? this.value.toFixed(currency.precision) : this.value;
 
-            let format = this.format ?? this.sign ? currency.formatWithSign : currency.format;
+            let format = this.format ? this.format : this.sign ? currency.formatWithSign : currency.format;
 
             return createElement("span", Dinero({
                 amount: parseInt(strVal.replace(".", "")),
