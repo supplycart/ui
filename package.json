@@ -1,0 +1,19 @@
+{
+  "name": "@supplycart/ui",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/supplycart/ui"
+  },
+  "devDependencies": {
+    "dinero.js": "^1.6.0",
+    "lodash": "^4.17.15",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.28",
+    "numeral": "^2.0.6",
+    "vue": "^2.6.11",
+    "vue-currency-input": "^1.17.3",
+    "vue-flatpickr-component": "^8.1.5"
+  },
+  "license": "MIT"
+}
