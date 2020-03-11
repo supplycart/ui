@@ -56,6 +56,10 @@
             currency: {
                 type: String | Object,
                 default: null
+            },
+            errors: {
+                type: Array,
+                default: () => []
             }
         },
         computed: {
@@ -73,7 +77,7 @@
             currencyData() {
                 let currency = this.currency instanceof String ? Currencies.find(item => item.code === this.currency || item.country === this.currency.toUpperCase()) : this.currency;
 
-                return currency ?? DefaultCurrency;
+                return currency ? currency : DefaultCurrency;
             },
             showCurrency() {
                 return !!this.currency;
