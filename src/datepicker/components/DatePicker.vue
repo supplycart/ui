@@ -55,8 +55,5 @@
                 return merge(this.defaultConfig, this.config);
             }
         },
-        mounted() {
-
-        }
     };
 </script>
