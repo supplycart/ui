@@ -1,5 +1,5 @@
 <template>
-    <div class="input-holder">
+    <div>
         <slot name="label">
             <label
                 v-if="label"
@@ -15,6 +15,7 @@
         <CurrencyInput
             v-if="currencyData"
             class="text-right"
+            :class="inputClass"
             v-model="input"
             :locale="currencyData.locale"
             :currency="showCurrency ? {currency: currencyData.code, prefix: currencyData.sign} : null"
@@ -54,6 +55,10 @@
                 default: false
             },
             currency: {
+                type: String | Object,
+                default: null
+            },
+            inputClass: {
                 type: String | Object,
                 default: null
             },
