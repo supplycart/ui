@@ -5,9 +5,12 @@
     "type": "git",
     "url": "https://github.com/supplycart/ui"
   },
-  "devDependencies": {
+  "dependencies": {
+    "core-js": "^3.6.4",
     "dinero.js": "^1.6.0",
+    "flatpickr": "^4.6.3",
     "lodash": "^4.17.15",
+    "luxon": "^1.22.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "numeral": "^2.0.6",
@@ -15,5 +18,9 @@
     "vue-currency-input": "^1.17.3",
     "vue-flatpickr-component": "^8.1.5"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-vue": "^6.2.2"
+  }
 }
