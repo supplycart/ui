@@ -1,10 +1,6 @@
 <template>
-    <div>
-        <input ref="field"
-               class="w-full"
-               type="text">
-        <br>
-    </div>
+    <input ref="field"
+           type="text">
 </template>
 <script>
     import flatpickr from "flatpickr";
@@ -72,13 +68,13 @@
                 this.instance = this.instance ? this.instance : flatpickr(this.$refs.field, {
                     mode: "range",
                     defaultHour: 0,
-                    onChange: this.onChange
+                    onChange: this.onChange,
+                    ...this.dateConfig,
+                    defaultDate: [
+                        this.value.from ? DateTime.fromFormat(this.value.from, "yyyy-MM-dd", {zone: "UTC"}).setZone(this.timezoneString).toFormat("yyyy-MM-dd") : new Date,
+                        this.value.to ? DateTime.fromFormat(this.value.to, "yyyy-MM-dd", {zone: "UTC"}).setZone(this.timezoneString).toFormat("yyyy-MM-dd") : new Date
+                    ]
                 });
-
-                this.instance.setDate([
-                    this.value.from ? DateTime.fromFormat(this.value.from, "yyyy-MM-dd", {zone: "UTC"}).setZone(this.timezoneString).toJSDate() : null,
-                    this.value.to ? DateTime.fromFormat(this.value.to, "yyyy-MM-dd", {zone: "UTC"}).setZone(this.timezoneString).toJSDate() : null
-                ]);
             },
             onChange(selectedDates, dateStr, instance) {
                 if (selectedDates.length === 2) {

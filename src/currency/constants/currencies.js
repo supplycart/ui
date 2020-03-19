@@ -1,3 +1,5 @@
+import { find } from "lodash";
+
 const currencies = [
         {
             country: "MALAYSIA",
@@ -81,7 +83,7 @@ const currencies = [
     ]
 ;
 
-const DefaultCurrency = currencies.find(item => item.code === "MYR");
+const DefaultCurrency = find(currencies, item => item.code === "MYR");
 
 export default currencies;
 export { DefaultCurrency };

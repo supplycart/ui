@@ -3,13 +3,14 @@
         :id="id"
         v-model="input"
         :config="dateConfig"
-        class="input-holder"
     />
 </template>
 <script>
     import FlatPickr from "vue-flatpickr-component";
     import moment from "moment-timezone";
     import { merge } from "lodash";
+    import { Timezones } from "../constants";
+    import { DefaultConfig } from "../constants/flatpickr";
 
     export default {
         props: {
@@ -22,7 +23,10 @@
                 default: null
             },
             timezone: {
-                type: String | Object
+                type: [String, Object],
+                default() {
+                    return Timezones.MALAYSIA.timezone;
+                }
             },
             config: {
                 type: Object,
@@ -30,16 +34,6 @@
             }
         },
         components: {FlatPickr},
-        data() {
-            return {
-                defaultConfig: {
-                    altInput: true,
-                    altFormat: "d M Y",
-                    dateFormat: "Y-m-d",
-                    minDate: this.moment().format("YYYY-MM-DD")
-                }
-            };
-        },
         computed: {
             input: {
                 get() {
@@ -52,7 +46,7 @@
                 }
             },
             dateConfig() {
-                return merge(this.defaultConfig, this.config);
+                return merge(DefaultConfig, this.config);
             }
         },
         mounted() {

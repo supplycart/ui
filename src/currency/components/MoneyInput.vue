@@ -14,7 +14,7 @@
 
         <CurrencyInput
             v-if="currencyData"
-            class="text-right"
+            class="text-right text-right w-full"
             :class="inputClass"
             v-model="input"
             :locale="currencyData.locale"
@@ -34,6 +34,7 @@
     import Currencies from "../constants/currencies";
     import { DefaultCurrency } from "../constants/currencies";
     import { CurrencyInput } from "vue-currency-input";
+    import { find } from "lodash";
 
     export default {
         name: "MoneyInput",
@@ -47,7 +48,7 @@
                 default: null
             },
             value: {
-                type: Number | String,
+                type: [Number, String],
                 default: 0
             },
             required: {
@@ -55,11 +56,11 @@
                 default: false
             },
             currency: {
-                type: String | Object,
+                type: [String, Object],
                 default: null
             },
             inputClass: {
-                type: String | Object,
+                type: [String, Object],
                 default: null
             },
             errors: {
@@ -80,7 +81,7 @@
                 return this.errors && this.errors.length > 0;
             },
             currencyData() {
-                let currency = this.currency instanceof String ? Currencies.find(item => item.code === this.currency || item.country === this.currency.toUpperCase()) : this.currency;
+                let currency = this.currency instanceof String ? find(Currencies, item => item.code === this.currency || item.country === this.currency.toUpperCase()) : this.currency;
 
                 return currency ? currency : DefaultCurrency;
             },
