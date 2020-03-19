@@ -108,6 +108,11 @@
                 }
             }
         },
+        watch: {
+            disabled(value) {
+                value && this.instance ? this.instance.destroy() : this.init();
+            }
+        },
         mounted() {
             this.init();
         },
