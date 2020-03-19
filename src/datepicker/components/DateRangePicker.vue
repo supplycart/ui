@@ -1,5 +1,6 @@
 <template>
     <input ref="field"
+           :disabled="disabled"
            type="text">
 </template>
 <script>
@@ -27,6 +28,10 @@
             config: {
                 type: Object,
                 default: () => ({})
+            },
+            disabled: {
+                type: Boolean,
+                default: false
             }
         },
         data() {
@@ -94,8 +99,16 @@
                 }
             }
         },
+        watch: {
+            disabled(value) {
+                value ? this.instance.destroy() : this.init();
+            }
+        },
         mounted() {
             this.init();
+        },
+        beforeDestroy() {
+            this.instance.destroy();
         }
     };
 </script>
