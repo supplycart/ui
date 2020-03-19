@@ -1,7 +1,11 @@
 <template>
-    <input ref="field"
-           :disabled="disabled"
+    <input v-if="!disabled"
+           ref="field"
            type="text">
+    <input v-else
+           :value="selectedDatesString"
+           type="text"
+           disabled>
 </template>
 <script>
     import flatpickr from "flatpickr";
@@ -56,8 +60,8 @@
             localValue: {
                 get() {
                     return {
-                        from: this.value.from ? DateTime.fromFormat(this.value.from, "yyyy-MM-dd", {zone: "UTC"}).setZone(this.timezoneString) : DateTime.utc(),
-                        to: this.value.to ? DateTime.fromFormat(this.value.to, "yyyy-MM-dd", {zone: "UTC"}).setZone(this.timezoneString) : DateTime.utc()
+                        from: this.value.from ? DateTime.fromFormat(this.value.from, "yyyy-MM-dd", {zone: "UTC"}).setZone(this.timezoneString) : DateTime.local(),
+                        to: this.value.to ? DateTime.fromFormat(this.value.to, "yyyy-MM-dd", {zone: "UTC"}).setZone(this.timezoneString) : DateTime.local()
                     };
                 }
             },
@@ -66,20 +70,25 @@
                     from: this.value.from ? DateTime.fromFormat(this.value.from, "yyyy-MM-dd", {zone: "UTC"}) : DateTime.utc(),
                     to: this.value.to ? DateTime.fromFormat(this.value.to, "yyyy-MM-dd", {zone: "UTC"}) : DateTime.utc()
                 };
+            },
+            selectedDatesString() {
+                return this.localValue.from.toFormat("d MMM y") + " to " + this.localValue.to.toFormat("d MMM y");
             }
         },
         methods: {
             init() {
-                this.instance = this.instance ? this.instance : flatpickr(this.$refs.field, {
-                    mode: "range",
-                    defaultHour: 0,
-                    onChange: this.onChange,
-                    ...this.dateConfig,
-                    defaultDate: [
-                        this.value.from ? DateTime.fromFormat(this.value.from, "yyyy-MM-dd", {zone: "UTC"}).setZone(this.timezoneString).toFormat("yyyy-MM-dd") : new Date,
-                        this.value.to ? DateTime.fromFormat(this.value.to, "yyyy-MM-dd", {zone: "UTC"}).setZone(this.timezoneString).toFormat("yyyy-MM-dd") : new Date
-                    ]
-                });
+                if (this.$refs.field) {
+                    this.instance = this.instance ? this.instance : flatpickr(this.$refs.field, {
+                        mode: "range",
+                        defaultHour: 0,
+                        onChange: this.onChange,
+                        ...this.dateConfig,
+                        defaultDate: [
+                            this.localValue.from.toFormat("yyyy-MM-dd"),
+                            this.localValue.to.toFormat("yyyy-MM-dd")
+                        ]
+                    });
+                }
             },
             onChange(selectedDates, dateStr, instance) {
                 if (selectedDates.length === 2) {
@@ -99,16 +108,11 @@
                 }
             }
         },
-        watch: {
-            disabled(value) {
-                value ? this.instance.destroy() : this.init();
-            }
-        },
         mounted() {
             this.init();
         },
         beforeDestroy() {
-            this.instance.destroy();
+            this.instance && this.instance.destroy();
         }
     };
 </script>
