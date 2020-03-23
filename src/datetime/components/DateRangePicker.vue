@@ -111,6 +111,14 @@
         watch: {
             disabled(value) {
                 value && this.instance ? this.instance.destroy() : this.init();
+            },
+            value(value) {
+                if (this.instance) {
+                    this.instance.setDate([
+                        this.localValue.from.toFormat("yyyy-MM-dd"),
+                        this.localValue.to.toFormat("yyyy-MM-dd")
+                    ]);
+                }
             }
         },
         mounted() {

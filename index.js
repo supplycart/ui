@@ -1,2 +1,2 @@
 export * from "./src/currency";
-export * from "./src/datepicker";
+export * from "./src/datetime";
