@@ -120,12 +120,16 @@
                     ]);
                 }
             },
-            config(value) {
-                if (this.instance) {
-                    each(Object.keys(value), key => {
-                        this.instance.set(key, value[key]);
-                    });
-                }
+            dateConfig: {
+                handler: function (value) {
+                    if (this.instance) {
+                        this.instance.destroy();
+                        this.instance = null;
+
+                        this.init();
+                    }
+                },
+                deep: true
             }
         },
         mounted() {
