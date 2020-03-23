@@ -11,7 +11,7 @@
     import flatpickr from "flatpickr";
     import { DefaultDateRangeConfig } from "../constants/flatpickr";
     import { DateTime } from "luxon";
-    import { merge } from "lodash";
+    import { each, merge } from "lodash";
     import { Timezones } from "../constants";
 
     export default {
@@ -118,6 +118,13 @@
                         this.localValue.from.toFormat("yyyy-MM-dd"),
                         this.localValue.to.toFormat("yyyy-MM-dd")
                     ]);
+                }
+            },
+            config(value) {
+                if (this.instance) {
+                    each(Object.keys(value), key => {
+                        this.instance.set(key, value[key]);
+                    });
                 }
             }
         },
