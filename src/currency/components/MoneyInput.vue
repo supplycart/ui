@@ -19,7 +19,9 @@
             v-model="input"
             :locale="currencyData.locale"
             :currency="showCurrency ? {currency: currencyData.code, prefix: currencyData.sign} : null"
-            :precision="currencyData.precision"/>
+            :precision="currencyData.precision"
+            :value-as-integer="true"
+        />
 
         <slot name="error"></slot>
         <slot name="description"></slot>
@@ -31,10 +33,12 @@
     }
 </style>
 <script>
-    import Currencies from "../constants/currencies";
-    import { DefaultCurrency } from "../constants/currencies";
+
+    import Currencies, { DefaultCurrency } from "../constants/currencies";
     import { CurrencyInput } from "vue-currency-input";
     import { find } from "lodash";
+    import numeral from "numeral";
+    import { isFloat } from "../index";
 
     export default {
         name: "MoneyInput",
@@ -66,15 +70,19 @@
             errors: {
                 type: Array,
                 default: () => []
+            },
+            intValue: {
+                type: Boolean,
+                default: true
             }
         },
         computed: {
             input: {
                 get() {
-                    return this.value;
+                    return this.intValue ? numeral(this.value).value() : numeral(this.value).multiply(100).value();
                 },
                 set(value) {
-                    this.$emit("input", value);
+                    this.$emit("input", this.intValue ? numeral(value).value() : numeral(value).divide(100).value());
                 }
             },
             hasError() {

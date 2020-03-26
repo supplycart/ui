@@ -3,6 +3,7 @@
     import Currencies from "../constants/currencies";
     import { DefaultCurrency } from "../constants/currencies";
     import { find, replace } from "lodash";
+    import numeral from "numeral";
 
     export default {
         name: "Money",
@@ -22,6 +23,10 @@
             format: {
                 type: String,
                 default: null
+            },
+            intValue: {
+                type: Boolean,
+                default: true
             }
         },
         render(createElement, context) {
@@ -31,12 +36,12 @@
 
             currency = currency ? currency : DefaultCurrency;
 
-            let strVal = typeof this.value === "number" ? this.value.toFixed(currency.precision) : this.value;
+            let val = this.intValue ? numeral(this.value).value() : numeral(this.value).multiply(100).value();
 
             let format = this.format ? this.format : this.sign ? currency.formatWithSign : currency.format;
 
             return createElement("span", Dinero({
-                amount: parseInt(replace(strVal, ".", "")),
+                amount: val,
                 currency: currency.code,
                 precision: currency.precision
             }).setLocale(currency.locale).toFormat(format));
