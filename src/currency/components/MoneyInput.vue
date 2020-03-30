@@ -79,10 +79,10 @@
         computed: {
             input: {
                 get() {
-                    return this.intValue ? numeral(this.value).value() : numeral(this.value).multiply(100).value();
+                    return numeral(this.value).value();
                 },
                 set(value) {
-                    this.$emit("input", this.intValue ? numeral(value).value() : numeral(value).divide(100).value());
+                    this.$emit("input", numeral(value).value());
                 }
             },
             hasError() {
