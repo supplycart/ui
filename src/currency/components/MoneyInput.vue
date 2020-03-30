@@ -20,7 +20,7 @@
             :locale="currencyData.locale"
             :currency="showCurrency ? {currency: currencyData.code, prefix: currencyData.sign} : null"
             :precision="currencyData.precision"
-            :value-as-integer="true"
+            :value-as-integer="intValue"
         />
 
         <slot name="error"></slot>
