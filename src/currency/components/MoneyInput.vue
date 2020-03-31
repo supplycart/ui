@@ -89,7 +89,7 @@
                 return this.errors && this.errors.length > 0;
             },
             currencyData() {
-                let currency = this.currency instanceof String ? find(Currencies, item => item.code === this.currency || item.country === this.currency.toUpperCase()) : this.currency;
+                let currency = typeof this.currency === "string" ? find(Currencies, item => item.code === this.currency.toUpperCase() || item.country === this.currency.toUpperCase()) : this.currency;
 
                 return currency ? currency : DefaultCurrency;
             },
