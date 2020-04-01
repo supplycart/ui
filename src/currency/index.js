@@ -14,7 +14,7 @@ function isFloat(n) {
 }
 
 function format(amount, currency, sign = false) {
-    currency = typeof this.currency === "string"
+    currency = typeof currency === "string"
         ? find(Currencies, item => item.country === currency.toUpperCase() || item.code === currency)
         : currency;
 
