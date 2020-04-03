@@ -18,7 +18,7 @@
             :class="inputClass"
             v-model="input"
             :locale="currencyData.locale"
-            :currency="showCurrency ? {currency: currencyData.code, prefix: currencyData.sign} : null"
+            :currency="sign ? {currency: currencyData.code, prefix: currencyData.sign} : null"
             :precision="currencyData.precision"
             :value-as-integer="intValue"
         />
@@ -38,7 +38,6 @@
     import { CurrencyInput } from "vue-currency-input";
     import { find } from "lodash";
     import numeral from "numeral";
-    import { isFloat } from "../index";
 
     export default {
         name: "MoneyInput",
@@ -62,6 +61,10 @@
             currency: {
                 type: [String, Object],
                 default: null
+            },
+            sign: {
+                type: Boolean,
+                default: false
             },
             inputClass: {
                 type: [String, Object],
@@ -92,9 +95,6 @@
                 let currency = typeof this.currency === "string" ? find(Currencies, item => item.code === this.currency.toUpperCase() || item.country === this.currency.toUpperCase()) : this.currency;
 
                 return currency ? currency : DefaultCurrency;
-            },
-            showCurrency() {
-                return !!this.currency;
             }
         }
     };
