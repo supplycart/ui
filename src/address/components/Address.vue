@@ -1,16 +1,24 @@
-<template>
-    <component :is="component" :value="value"/>
-</template>
 <script>
-    import { startCase } from "lodash";
-    import MalaysiaBillingAddress from "./billing/Malaysia";
-    import MalaysiaDeliveryAddress from "./delivery/Malaysia";
+    import { startCase, lowerCase } from "lodash";
 
     export default {
         name: "Address",
         components: {
-            MalaysiaBillingAddress,
-            MalaysiaDeliveryAddress
+            MalaysiaBillingAddress: () => import('./billing/Malaysia'),
+            SingaporeBillingAddress: () => import('./billing/Singapore'),
+            IndonesiaBillingAddress: () => import('./billing/Indonesia'),
+            ThailandBillingAddress: () => import('./billing/Thailand'),
+            HongKongBillingAddress: () => import('./billing/HongKong'),
+            PhilippinesBillingAddress: () => import('./billing/Philippines'),
+            VietnamBillingAddress: () => import('./billing/Vietnam'),
+
+            MalaysiaDeliveryAddress: () => import('./delivery/Malaysia'),
+            SingaporeDeliveryAddress: () => import('./delivery/Singapore'),
+            IndonesiaDeliveryAddress: () => import('./delivery/Indonesia'),
+            ThailandDeliveryAddress: () => import('./delivery/Thailand'),
+            HongKongDeliveryAddress: () => import('./delivery/HongKong'),
+            PhilippinesDeliveryAddress: () => import('./delivery/Philippines'),
+            VietnamDeliveryAddress: () => import('./delivery/Vietnam'),
         },
         props: {
             value: {
@@ -33,10 +41,14 @@
 
                 return `${country}${type}Address`;
             }
+        },
+        render(createElement, context) {
+            return createElement("keep-alive", [
+                createElement("component", {
+                    is: this.component,
+                    props: this.$props
+                })
+            ]);
         }
     };
 </script>
-
-<style scoped>
-
-</style>

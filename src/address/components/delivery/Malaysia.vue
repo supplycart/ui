@@ -4,7 +4,7 @@
 
 <script>
     export default {
-        name: "Malaysia",
+        name: "MalaysiaDeliveryAddress",
         props: {
             value: {
                 type: Object,
@@ -13,7 +13,3 @@
         }
     };
 </script>
-
-<style scoped>
-
-</style>
