@@ -6,7 +6,8 @@
     "url": "https://github.com/supplycart/ui"
   },
   "scripts": {
-    "serve": "cd ./demo && npm run serve"
+    "install-demo": "cd ./demo && yarn install && yarn link @supplycart/ui",
+    "serve": "cd ./demo && yarn serve"
   },
   "dependencies": {
     "core-js": "^3.6.4",
