@@ -1,13 +1,30 @@
 <template>
-    
+    <div>
+        <p>
+            {{ value.branch_name }}
+        </p>
+        <p>{{ value.pic_phone }}</p>
+        <p>
+            <span v-if="value.unit">{{ value.unit }}, </span>
+            <span v-if="value.floor">{{ value.floor }}, </span>
+            <span v-if="value.building">{{ value.building }}</span>
+        </p>
+        <p>{{ value.street }}</p>
+        <p>{{ value.postcode }} {{ value.city }}, {{ value.state }}</p>
+        <p>{{ value.country }}</p>
+        <p v-if="value.lift_access">Lift Access: {{ value.lift_access }}</p>
+        <p v-if="value.requires_permit">Requires Permit: {{ value.requires_permit }}</p>
+    </div>
 </template>
-
+<style src="../../../styles/address/address.css" scoped></style>
 <script>
     export default {
-        name: "Indonesia"
+        name: "IndonesiaDeliveryAddress",
+        props: {
+            value: {
+                type: Object,
+                default: () => ({})
+            }
+        }
     };
 </script>
-
-<style scoped>
-
-</style>
