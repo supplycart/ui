@@ -16,7 +16,7 @@
             },
             timezone: {
                 type: String,
-                default: null,
+                default: 'Asia/Kuala_Lumpur',
                 required: true
             },
             format: {
