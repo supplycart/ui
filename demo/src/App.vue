@@ -70,14 +70,14 @@
             <div class="p-12">
                 <h2 class="mb-2">Billing Address</h2>
                 <div class="mb-4">
-                    <h3 class="font-bold mb-2">Billing Address - Malaysia</h3>
+                    <h3 class="font-bold mb-2">Billing Address</h3>
                     <Address
                         v-model="malaysiaBillingAddress"
                         country="Malaysia"
                         type="billing"/>
                 </div>
                 <div class="mb-4">
-                    <h3 class="font-bold mb-2">Delivery Address - Malaysia</h3>
+                    <h3 class="font-bold mb-2">Delivery Address</h3>
                     <Address
                         v-model="malaysiaDeliveryAddress"
                         country="Malaysia"
@@ -118,9 +118,9 @@
                     decimal: 10.00
                 },
                 malaysiaBillingAddress: {
-                    entityName: "Supplycart",
-                    picName: "Will",
-                    picPhoneNo: "012340545343",
+                    entity_name: "Supplycart",
+                    pic_name: "Will",
+                    pic_phone: "012340545343",
                     unit: "PG02",
                     floor: "Ground Floor",
                     building: "Phoenix Tower",
@@ -129,11 +129,11 @@
                     state: "Selangor",
                     postcode: "47301",
                     country: "Malaysia",
-                    invoiceEmail: "will@supplycart.my",
-                    registrationNo: "REG0001"
+                    einvoice_email: "will@supplycart.my",
+                    registration_no: "REG0001"
                 },
                 malaysiaDeliveryAddress: {
-                    branchName: "Supplycart",
+                    branch_name: "Supplycart",
                     unit: "PG02",
                     floor: "Ground Floor",
                     building: "Phoenix Tower",
@@ -142,9 +142,10 @@
                     state: "Selangor",
                     postcode: "47301",
                     country: "Malaysia",
-                    liftAccess: true,
-                    requiresPermit: false
-                }
+                    pic_phone: "012340545343",
+                    lift_access: true,
+                    requires_permit: false
+                },
             };
         },
         mounted() {
