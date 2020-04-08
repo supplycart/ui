@@ -84,18 +84,41 @@
                         type="delivery"/>
                 </div>
             </div>
+            <div class="p-12">
+                <h2 class="mb-2">Datetime</h2>
+                <div class="mb-4">
+                    <DateTime
+                        :value="currentTime"
+                        :timezone="'Asia/Kuala_Lumpur'"
+                        :format="'DD MMM YYYY'"/>
+                    <DateTime
+                        :value="currentTime"
+                        :timezone="'Asia/Kuala_Lumpur'"
+                        :format="'DD MMM YYYY hh:mmA'"/>
+                    <br>
+                    <DateTime
+                        :value="currentTime"
+                        :timezone="'Asia/Kuala_Lumpur'"
+                        :format="'ddd, DD MMM YYYY'"/>
+                    <DateTime
+                        :value="currentTime"
+                        :timezone="'Asia/Kuala_Lumpur'"
+                        :format="'DD MMM YY'"/>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 
-    import { DatePicker, DateRangePicker, Money, MoneyInput, Address } from "@supplycart/ui";
+    import { DatePicker, DateTime, DateRangePicker, Money, MoneyInput, Address } from "@supplycart/ui";
     import moment from "moment";
 
     export default {
         name: "App",
         components: {
+            DateTime,
             DatePicker,
             DateRangePicker,
             Money,
@@ -146,6 +169,7 @@
                     lift_access: true,
                     requires_permit: false
                 },
+                currentTime: moment().format('YYYY-MM-DD HH:mm:ss')
             };
         },
         mounted() {
