@@ -99,20 +99,19 @@
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
+                        :format="'DD MMM YY'"/>
+                    <DateTime
+                        :value="currentTime"
+                        :timezone="'Asia/Kuala_Lumpur'"
                         :format="'DD MMM YYYY'"/>
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
                         :format="'DD MMM YYYY hh:mmA'"/>
-                    <br>
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'ddd, DD MMM YYYY'"/>
-                    <DateTime
-                        :value="currentTime"
-                        :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'DD MMM YY'"/>
+                        :format="'ddd, DD MMM YYYY HH:mm'"/>
                 </div>
             </div>
         </div>
