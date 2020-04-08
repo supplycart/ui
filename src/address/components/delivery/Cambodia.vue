@@ -5,8 +5,14 @@
                 {{ value.branch_name }}
             </p>
         </div>
-        <div v-if="showAttribute('branch_name')">
+        <div v-if="showAttribute('pic_phone')">
             <p>{{ value.pic_phone }}</p>
+        </div>
+        <div v-if="showAttribute('recipient_name')">
+            <p>{{ value.recipient_name }}</p>
+        </div>
+        <div v-if="showAttribute('recipient_phone')">
+            <p>{{ value.recipient_phone }}</p>
         </div>
         <div v-if="showAttribute('address')">
             <p>
