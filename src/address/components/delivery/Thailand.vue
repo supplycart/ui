@@ -5,8 +5,14 @@
                 {{ value.branch_name }}
             </p>
         </div>
-        <div v-if="showAttribute('branch_name')">
+        <div v-if="showAttribute('pic_phone')">
             <p>{{ value.pic_phone }}</p>
+        </div>
+        <div v-if="showAttribute('recipient_name')">
+            <p>{{ value.recipient_name }}</p>
+        </div>
+        <div v-if="showAttribute('recipient_phone')">
+            <p>{{ value.recipient_phone }}</p>
         </div>
         <div v-if="showAttribute('address')">
             <p>
@@ -19,10 +25,10 @@
             <p>{{ value.country }}</p>
         </div>
         <div v-if="showAttribute('lift_access')">
-            <p v-if="value.lift_access">Lift Access: {{ value.lift_access }}</p>
+            <p v-if="value.lift_access">Lift Access</p>
         </div>
         <div v-if="showAttribute('requires_permit')">
-            <p v-if="value.requires_permit">Requires Permit: {{ value.requires_permit }}</p>
+            <p v-if="value.requires_permit">Requires Permit</p>
         </div>
     </div>
 </template>

@@ -6,7 +6,7 @@
             </p>
         </div>
         <div>
-            <div v-if="this.display.length > 1">
+            <div v-if="this.display.length > 0">
                 <div v-if="showAttribute('pic_name')">
                     {{ value.pic_name }}
                 </div>
