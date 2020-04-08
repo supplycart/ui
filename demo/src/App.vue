@@ -32,6 +32,15 @@
                 <pre>{{ dateRange }}</pre>
             </div>
             <div class="p-12">
+                <h2 class="mb-2">TimePicker</h2>
+                <TimePicker
+                    v-model="time"
+                    class="mb-4 p-2 rounded border border-gray-200 w-1/2"
+                    placeholder="Select Time"/>
+                <br>
+                <pre>{value: {{ time }}}</pre>
+            </div>
+            <div class="p-12">
                 <h2 class="mb-2">Money</h2>
                 <Money :sign="true"
                        currency="MYR"
@@ -90,20 +99,19 @@
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
+                        :format="'DD MMM YY'"/>
+                    <DateTime
+                        :value="currentTime"
+                        :timezone="'Asia/Kuala_Lumpur'"
                         :format="'DD MMM YYYY'"/>
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
                         :format="'DD MMM YYYY hh:mmA'"/>
-                    <br>
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'ddd, DD MMM YYYY'"/>
-                    <DateTime
-                        :value="currentTime"
-                        :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'DD MMM YY'"/>
+                        :format="'ddd, DD MMM YYYY HH:mm'"/>
                 </div>
             </div>
         </div>
@@ -112,7 +120,7 @@
 
 <script>
 
-    import { DatePicker, DateTime, DateRangePicker, Money, MoneyInput, Address } from "@supplycart/ui";
+    import { DatePicker, DateRangePicker, DateTime, TimePicker, Money, MoneyInput, Address } from "@supplycart/ui";
     import moment from "moment";
 
     export default {
@@ -120,6 +128,7 @@
         components: {
             DateTime,
             DatePicker,
+            TimePicker,
             DateRangePicker,
             Money,
             MoneyInput,
@@ -169,6 +178,7 @@
                     lift_access: true,
                     requires_permit: false
                 },
+                time: null,
                 currentTime: moment().format('YYYY-MM-DD HH:mm:ss')
             };
         },

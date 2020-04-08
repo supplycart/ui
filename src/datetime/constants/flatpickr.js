@@ -15,4 +15,10 @@ const DefaultDateRangeConfig = {
     mode: "range"
 };
 
-export { DefaultConfig, DefaultDateRangeConfig };
+const DefaultTimeConfig = {
+    enableTime: true,
+    noCalendar: true,
+    dateFormat: "H:i",
+};
+
+export {DefaultConfig, DefaultDateRangeConfig, DefaultTimeConfig};
