@@ -16,7 +16,6 @@
         <p v-if="value.registration_no">Registration No.: {{ value.registration_no }}</p>
     </div>
 </template>
-<style src="../../../styles/address/address.css" scoped></style>
 <script>
     export default {
         name: "IndonesiaBillingAddress",

@@ -16,7 +16,6 @@
         <p v-if="value.requires_permit">Requires Permit: {{ value.requires_permit }}</p>
     </div>
 </template>
-<style src="../../../styles/address/address.css" scoped></style>
 <script>
     export default {
         name: "HongKongDeliveryAddress",
