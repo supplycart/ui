@@ -12,6 +12,10 @@
                 <h2 class="mb-2">DatePicker</h2>
                 <DatePicker class="p-2 rounded border border-gray-200 w-1/2"
                             placeholder="Select Date"/>
+                <h2 class="mb-2">TimePicker</h2>
+                <Datetime 
+                    class="p-2 rounded border border-gray-200 w-1/2"
+                    placeholder="Select Time"/>
             </div>
             <div class="p-12">
                 <h2 class="mb-2">DateRangePicker</h2>
@@ -90,7 +94,7 @@
 
 <script>
 
-    import { DatePicker, DateRangePicker, Money, MoneyInput, Address } from "@supplycart/ui";
+    import { DatePicker, DateRangePicker, Money, MoneyInput, Address, Datetime } from "@supplycart/ui";
     import moment from "moment";
 
     export default {
