@@ -81,6 +81,7 @@
                     <Address
                         v-model="malaysiaDeliveryAddress"
                         country="Malaysia"
+                        :display="['address', 'lift_access']"
                         type="delivery"/>
                 </div>
             </div>

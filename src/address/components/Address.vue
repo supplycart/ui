@@ -32,6 +32,10 @@
             type: {
                 type: String,
                 required: true
+            },
+            display: {
+                type: Array,
+                default: () => []
             }
         },
         computed: {
