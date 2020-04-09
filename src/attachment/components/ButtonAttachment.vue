@@ -3,9 +3,10 @@
     v-model="input"
     @change="change"
   >
-    <span
+    <label
       slot-scope="{ setAttachment }"
-      class="inline-block cursor-pointer"
+      class="cursor-pointer inline-block"
+      :for="id"
     >
       <input
         :id="id"
@@ -13,15 +14,10 @@
         class="hidden"
         @change="setAttachment"
       >
-      <label
-        class="cursor-pointer block"
-        :for="id"
-      >
-        <slot>
-          <div class="p-2">{{ label }}</div>
-        </slot>
-      </label>
-    </span>
+      <slot>
+        <div>{{ label }}</div>
+      </slot>
+    </label>
   </BaseAttachment>
 </template>
 <script>
