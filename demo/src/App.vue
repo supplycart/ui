@@ -114,28 +114,48 @@
                         :format="'ddd, DD MMM YYYY HH:mm'"/>
                 </div>
             </div>
+            <div class="p-12">
+                <h2>Attachment</h2>
+                <div class="mb-4">
+                    <ButtonAttachment 
+                        v-model="attachments" 
+                        class="rounded border border-gray-200 mb-4"
+                        label="Upload Files"/>
+                    <pre>{Attachment Count: {{ attachments.length }} }</pre>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-
-    import { DatePicker, DateRangePicker, DateTime, TimePicker, Money, MoneyInput, Address } from "@supplycart/ui";
+    import { 
+        Address,
+        ButtonAttachment,
+        DatePicker, 
+        DateRangePicker, 
+        DateTime, 
+        TimePicker, 
+        Money, 
+        MoneyInput, 
+    } from "@supplycart/ui";
     import moment from "moment";
 
     export default {
         name: "App",
         components: {
+            Address,
+            ButtonAttachment,
             DateTime,
             DatePicker,
             TimePicker,
             DateRangePicker,
             Money,
             MoneyInput,
-            Address
         },
         data() {
             return {
+                attachments: [],
                 minDate: moment().format("YYYY-MM-DD"),
                 dateRange: {
                     from: "2020-03-19",
