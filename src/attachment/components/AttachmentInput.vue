@@ -17,31 +17,27 @@
       v-model="input"
       @change="change"
     >
-      <div
+      <label
         slot-scope="{ setAttachment }"
-        class="cursor-pointer"
+        for="service_attachment"
+        class="block cursor-pointer"
       >
-        <label
-          for="service_attachment"
-          class="cursor-pointer"
+        <input
+          id="service_attachment"
+          type="file"
+          class="hidden"
+          @change="setAttachment"
         >
-          <input
-            id="service_attachment"
-            type="file"
-            class="hidden"
-            @change="setAttachment"
-          >
-          <div
-            class="w-full"
-          >
-            <span>Click to Attach Document</span>
-            <FeatherIcon
-              name="paperclip"
-              class="svg-15 ml-2"
-            />
-          </div>
-        </label>
-      </div>
+        <div
+          class="w-full"
+        >
+          <span>Click to Attach Document</span>
+          <FeatherIcon
+            name="paperclip"
+            class="svg-15 ml-2"
+          />
+        </div>
+      </label>
     </BaseAttachment>
 
     <slot name="error" />
