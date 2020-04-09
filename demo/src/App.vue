@@ -115,12 +115,16 @@
                 </div>
             </div>
             <div class="p-12">
-                <h2>Attachment</h2>
+                <h2 class="mb-2">Attachment</h2>
                 <div class="mb-4">
                     <ButtonAttachment 
                         v-model="attachments" 
                         class="rounded border border-gray-200 mb-4"
                         label="Upload Files"/>
+                    <AttachmentInput
+                        v-model="attachments"
+                        class="p-2 rounded border border-gray-200 w-1/2 mb-4"
+                        />
                     <pre>{Attachment Count: {{ attachments.length }} }</pre>
                 </div>
             </div>
@@ -131,6 +135,7 @@
 <script>
     import { 
         Address,
+        AttachmentInput,
         ButtonAttachment,
         DatePicker, 
         DateRangePicker, 
@@ -145,6 +150,7 @@
         name: "App",
         components: {
             Address,
+            AttachmentInput,
             ButtonAttachment,
             DateTime,
             DatePicker,
