@@ -6,13 +6,13 @@
             </p>
         </div>
         <div v-if="showAttribute('pic_phone')">
-            <p>{{ value.pic_phone }}</p>
+            <p v-if="value.pic_phone">{{ value.pic_phone }}</p>
         </div>
         <div v-if="showAttribute('recipient_name')">
-            <p>{{ value.recipient_name }}</p>
+            <p v-if="value.recipient_name">{{ value.recipient_name }}</p>
         </div>
         <div v-if="showAttribute('recipient_phone')">
-            <p>{{ value.recipient_phone }}</p>
+            <p v-if="value.recipient_phone">{{ value.recipient_phone }}</p>
         </div>
         <div v-if="showAttribute('address')">
             <p>
