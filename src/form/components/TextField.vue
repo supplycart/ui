@@ -8,7 +8,7 @@
       class="leading-normal"
     >
       <slot>
-        <div v-html="value" />
+        {{ value }}
       </slot>
     </div>
     <div

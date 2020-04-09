@@ -32,10 +32,6 @@
           class="w-full"
         >
           <span>Click to Attach Document</span>
-          <FeatherIcon
-            name="paperclip"
-            class="svg-15 ml-2"
-          />
         </div>
       </label>
     </BaseAttachment>

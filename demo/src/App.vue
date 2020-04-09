@@ -119,13 +119,32 @@
                 <div class="mb-4">
                     <ButtonAttachment 
                         v-model="attachments" 
-                        class="rounded border border-gray-200 mb-4"
+                        class="p-1 rounded border border-gray-200 mb-4"
                         label="Upload Files"/>
                     <AttachmentInput
                         v-model="attachments"
                         class="p-2 rounded border border-gray-200 w-1/2 mb-4"
                         />
                     <pre>{Attachment Count: {{ attachments.length }} }</pre>
+                </div>
+            </div>
+            <div class="p-12">
+                <h2 class="mb-2">Input</h2>
+                <div class="mb-4">
+                    <TextInput
+                        label="First Name"
+                        v-model="name.first"
+                        :required="true"
+                        class="w-1/2 mr-4 mb-4"
+                        input-class="p-2 rounded border border-gray-200"
+                    />
+                    <TextInput
+                        label="Last Name"
+                        v-model="name.last"
+                        :required="true"
+                        class="w-1/2 mr-4"
+                        input-class="p-2 rounded border border-gray-200"
+                    />
                 </div>
             </div>
         </div>
@@ -143,6 +162,7 @@
         TimePicker, 
         Money, 
         MoneyInput, 
+        TextInput
     } from "@supplycart/ui";
     import moment from "moment";
 
@@ -158,6 +178,7 @@
             DateRangePicker,
             Money,
             MoneyInput,
+            TextInput
         },
         data() {
             return {
@@ -203,6 +224,10 @@
                     pic_phone: "012340545343",
                     lift_access: true,
                     requires_permit: false
+                },
+                name: {
+                    first: null,
+                    last: null
                 },
                 time: null,
                 currentTime: moment().format('YYYY-MM-DD HH:mm:ss')
