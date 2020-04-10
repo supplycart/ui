@@ -145,6 +145,13 @@
                         class="w-1/2 mr-4"
                         input-class="p-2 rounded border border-gray-200"
                     />
+                    <PhoneInput
+                        label='Phone'
+                        class="w-1/2 mr-4"
+                        input-class="p-2 rounded border border-gray-200"
+                        v-model="phone"
+                        :required="true"
+                    />
                 </div>
             </div>
         </div>
@@ -162,7 +169,8 @@
         TimePicker, 
         Money, 
         MoneyInput, 
-        TextInput
+        TextInput,
+        PhoneInput
     } from "@supplycart/ui";
     import moment from "moment";
 
@@ -178,7 +186,8 @@
             DateRangePicker,
             Money,
             MoneyInput,
-            TextInput
+            TextInput,
+            PhoneInput
         },
         data() {
             return {
@@ -229,6 +238,7 @@
                     first: null,
                     last: null
                 },
+                phone: '019-1234566',
                 time: null,
                 currentTime: moment().format('YYYY-MM-DD HH:mm:ss')
             };
