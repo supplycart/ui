@@ -33,6 +33,11 @@
 | timezone | string | Asia/Kuala_Lumpur | Timezone value in string |
 | format | string | YYYY-MM-DD HH:mm:ss | Format value in string |
 
+#### PhoneInput
+| Props | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | int, string | null | Input value |
+
 #### Address
 | Props | Type | Default | Description |
 | --- | --- | --- | --- |
