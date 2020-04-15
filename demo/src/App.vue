@@ -112,6 +112,11 @@
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
                         :format="'ddd, DD MMM YYYY HH:mm'"/>
+                    <DateTime
+                        :value="currentTime"
+                        :is-utc="true"
+                        :timezone="'Asia/Kuala_Lumpur'"
+                        :format="'ddd, DD MMM YYYY HH:mm'"/>
                 </div>
             </div>
             <div class="p-12">
