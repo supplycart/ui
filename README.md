@@ -32,6 +32,7 @@
 | value | Date, string | | Datetime value in date or string |
 | timezone | string | Asia/Kuala_Lumpur | Timezone value in string |
 | format | string | YYYY-MM-DD HH:mm:ss | Format value in string |
+| isUtc | Boolean | true | display date in UTC format with specified timezone |
 
 #### PhoneInput
 | Props | Type | Default | Description |
