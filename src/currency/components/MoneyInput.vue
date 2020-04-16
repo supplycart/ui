@@ -1,31 +1,34 @@
 <template>
-    <div>
-        <slot name="label">
-            <label
-                v-if="label"
-                :for="$attrs.id">
-                {{ label }}
-                <small
-                    v-if="required"
-                    class="italic text-red-600">*
-                </small>
-            </label>
-        </slot>
+  <div>
+    <slot name="label">
+      <label
+        v-if="label"
+        :for="$attrs.id"
+      >
+        {{ label }}
+        <small
+          v-if="required && !disabled"
+          class="italic text-red-600"
+        >*
+        </small>
+      </label>
+    </slot>
 
-        <CurrencyInput
-            v-if="currencyData"
-            class="text-right text-right w-full"
-            :class="inputClass"
-            v-model="input"
-            :locale="currencyData.locale"
-            :currency="sign ? {currency: currencyData.code, prefix: currencyData.sign} : null"
-            :precision="currencyData.precision"
-            :value-as-integer="intValue"
-        />
+    <CurrencyInput
+      v-if="currencyData"
+      v-model="input"
+      class="text-right text-right w-full"
+      :class="inputClass"
+      :disabled="disabled"
+      :locale="currencyData.locale"
+      :currency="sign ? {currency: currencyData.code, prefix: currencyData.sign} : null"
+      :precision="currencyData.precision"
+      :value-as-integer="intValue"
+    />
 
-        <slot name="error"></slot>
-        <slot name="description"></slot>
-    </div>
+    <slot name="error" />
+    <slot name="description" />
+  </div>
 </template>
 <style scoped>
     input[type=text] {
@@ -41,10 +44,10 @@
 
     export default {
         name: "MoneyInput",
-        inheritAttrs: false,
         components: {
             CurrencyInput
         },
+        inheritAttrs: false,
         props: {
             label: {
                 type: String,
@@ -55,6 +58,10 @@
                 default: 0
             },
             required: {
+                type: Boolean,
+                default: false
+            },
+            disabled: {
                 type: Boolean,
                 default: false
             },

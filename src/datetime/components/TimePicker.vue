@@ -3,6 +3,7 @@
     :id="id"
     v-model="input"
     :config="timeConfig"
+    :disabled="disabled"
   />
 </template>
 <script>
@@ -25,6 +26,10 @@
       config: {
         type: Object,
         default: () => {}
+      },
+      disabled: {
+        type: Boolean,
+        default: false
       }
     },
     computed: {
