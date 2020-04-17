@@ -24,11 +24,22 @@
             <p>{{ value.postcode }} {{ value.city }}, {{ value.state }}</p>
             <p>{{ value.country }}</p>
         </div>
-        <div v-if="showAttribute('lift_access')">
-            <p v-if="value.lift_access">Lift Access</p>
+        <div>
+            <div v-if="showAttribute('lift_access') && this.display.length > 0">
+                <p v-if="value.lift_access">Lift Access</p>
+            </div>
+            <div v-else>
+                <p v-if="value.lift_access">Lift Access: {{ value.lift_access }}</p>
+            </div>
         </div>
-        <div v-if="showAttribute('requires_permit')">
-            <p v-if="value.requires_permit">Requires Permit</p>
+        
+        <div>
+             <div v-if="showAttribute('requires_permit') && this.display.length > 0">
+                <p v-if="value.requires_permit">Requires Permit</p>
+            </div>
+            <div v-else>
+                <p v-if="value.requires_permit">Requires Permit: {{ value.requires_permit }}</p>
+            </div>
         </div>
     </div>
 </template>
