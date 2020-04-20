@@ -19,11 +19,11 @@
         <div v-if="showAttribute('address')">
             <p>{{ value.street }}</p>
             <p>
-                <span v-if="value.unit">{{ value.unit }}, </span>
                 <span v-if="value.floor">{{ value.floor }}, </span>
+                <span v-if="value.unit">{{ value.unit }}, </span>
                 <span v-if="value.building">{{ value.building }}</span>
             </p>
-            <p>{{ value.postcode }} {{ value.city }}, {{ value.state }}</p>
+            <p>{{ value.postcode }} {{ value.city }}</p>
             <p>{{ value.country }}</p>
         </div>
         <div v-if="showAttribute('einvoice_email')">
