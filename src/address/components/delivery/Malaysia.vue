@@ -29,7 +29,7 @@
                 <p v-if="value.lift_access">Lift Access</p>
             </div>
             <div v-else>
-                <p v-if="value.lift_access">Lift Access: {{ value.lift_access }}</p>
+                <p>Lift Access: {{ value.lift_access }}</p>
             </div>
         </div>
         
@@ -38,7 +38,7 @@
                 <p v-if="value.requires_permit">Requires Permit</p>
             </div>
             <div v-else>
-                <p v-if="value.requires_permit">Requires Permit: {{ value.requires_permit }}</p>
+                <p>Requires Permit: {{ value.requires_permit }}</p>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
 <script>
     import AddressMixins from "../../mixins/address"
     export default {
-        name: "CambodiaDeliveryAddress",
+        name: "MalaysiaDeliveryAddress",
         mixins: [AddressMixins]
     };
 </script>

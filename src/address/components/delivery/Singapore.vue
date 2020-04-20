@@ -21,7 +21,7 @@
             <span v-if="value.unit">{{ value.unit }}, </span>
             <span v-if="value.building">{{ value.building }}</span>
             </p>
-            <p>{{ value.postcode }} {{ value.city }}</p>
+            <p>{{ value.city }}, {{ value.postcode }}</p>
             <p>{{ value.country }}</p>
         </div>
         <div>
@@ -29,7 +29,7 @@
                 <p v-if="value.lift_access">Lift Access</p>
             </div>
             <div v-else>
-                <p v-if="value.lift_access">Lift Access: {{ value.lift_access }}</p>
+                <p>Lift Access: {{ value.lift_access }}</p>
             </div>
         </div>
         
@@ -38,7 +38,7 @@
                 <p v-if="value.requires_permit">Requires Permit</p>
             </div>
             <div v-else>
-                <p v-if="value.requires_permit">Requires Permit: {{ value.requires_permit }}</p>
+                <p>Requires Permit: {{ value.requires_permit }}</p>
             </div>
         </div>
     </div>
