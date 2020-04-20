@@ -5,6 +5,7 @@
         name: "Address",
         components: {
             MalaysiaBillingAddress: () => import('./billing/Malaysia'),
+            CambodiaBillingAddress: () => import('./billing/Cambodia'),
             SingaporeBillingAddress: () => import('./billing/Singapore'),
             IndonesiaBillingAddress: () => import('./billing/Indonesia'),
             ThailandBillingAddress: () => import('./billing/Thailand'),
@@ -13,6 +14,7 @@
             VietnamBillingAddress: () => import('./billing/Vietnam'),
 
             MalaysiaDeliveryAddress: () => import('./delivery/Malaysia'),
+            CambodiaDeliveryAddress: () => import('./delivery/Cambodia'),
             SingaporeDeliveryAddress: () => import('./delivery/Singapore'),
             IndonesiaDeliveryAddress: () => import('./delivery/Indonesia'),
             ThailandDeliveryAddress: () => import('./delivery/Thailand'),
