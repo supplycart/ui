@@ -23,7 +23,7 @@
                 <span v-if="value.unit">{{ value.unit }}, </span>
                 <span v-if="value.building">{{ value.building }}</span>
             </p>
-            <p>{{ value.postcode }} {{ value.city }}</p>
+            <p>{{ value.city }} {{ value.postcode }}</p>
             <p>{{ value.country }}</p>
         </div>
         <div v-if="showAttribute('einvoice_email')">
