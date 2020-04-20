@@ -47,7 +47,7 @@
 <script>
     import AddressMixins from "../../mixins/address"
     export default {
-        name: "CambodiaDeliveryAddress",
+        name: "MalaysiaDeliveryAddress",
         mixins: [AddressMixins]
     };
 </script>
