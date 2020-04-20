@@ -157,6 +157,13 @@
                         v-model="phone"
                         :required="true"
                     />
+                    <RemarksInput
+                        label='Remarks'
+                        class="w-1/2 mr-4"
+                        input-class="p-2 rounded border border-gray-200"
+                        v-model="phone"
+                        :required="true"
+                    />
                 </div>
             </div>
         </div>
@@ -175,7 +182,8 @@
         Money, 
         MoneyInput, 
         TextInput,
-        PhoneInput
+        PhoneInput,
+        RemarksInput,
     } from "@supplycart/ui";
     import moment from "moment";
 
@@ -192,7 +200,8 @@
             Money,
             MoneyInput,
             TextInput,
-            PhoneInput
+            PhoneInput,
+            RemarksInput,
         },
         data() {
             return {
