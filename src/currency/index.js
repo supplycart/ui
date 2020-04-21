@@ -48,4 +48,15 @@ function formatCents(amount, currency, sign = false, intValue = true) {
     }).setLocale(currency.locale).toFormat(format);
 }
 
-export { isInt, isFloat, format, formatCents };
+function currency(countryCurrency, type) {
+    let currency = typeof countryCurrency === "object" ? countryCurrency : Currencies.find(item => item.country === countryCurrency.toUpperCase() || item.code === countryCurrency.toUpperCase());
+
+    if (!currency) {
+        currency = DefaultCurrency;
+    }
+
+    return currency[type];
+}
+
+
+export { isInt, isFloat, format, formatCents, currency };
