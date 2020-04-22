@@ -166,6 +166,14 @@
                     />
                 </div>
             </div>
+            <div class="p-12">
+                <h2 class="mb-2">Button</h2>
+                <div>
+                    <SubmitButton 
+                        class="p-2 rounded bg-blue-300 cursor-pointer" 
+                        :loading="true"/>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -184,6 +192,7 @@
         TextInput,
         PhoneInput,
         RemarksInput,
+        SubmitButton
     } from "@supplycart/ui";
     import moment from "moment";
 
@@ -202,6 +211,7 @@
             TextInput,
             PhoneInput,
             RemarksInput,
+            SubmitButton,
         },
         data() {
             return {
