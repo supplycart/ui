@@ -16,19 +16,19 @@
         </div>
         <div v-if="showAttribute('address')">
             <p>
-            <span v-if="value.unit">{{ value.unit }}, </span>
-            <span v-if="value.floor">{{ value.floor }}, </span>
-            <span v-if="value.building">{{ value.building }}</span>
+                <span v-if="value.unit">{{ value.unit }}, </span>
+                <span v-if="value.floor">{{ value.floor }}, </span>
+                <span v-if="value.building">{{ value.building }}</span>
             </p>
             <p>{{ value.street }}</p>
-            <p>{{ value.postcode }} {{ value.city }}, {{ value.state }}</p>
-            <p>{{ value.country }}</p>
+            <p>{{ value.city }}, {{ value.postcode }}  </p>
+            <p>{{ value.state }}, {{ value.country }}</p>
         </div>
         <div>
             <div v-if="showAttribute('lift_access') && this.display.length > 0">
                 <p v-if="value.lift_access">Lift Access</p>
             </div>
-            <div v-else>
+            <div v-if="!this.display.length">
                 <p>">Lift Access: {{ value.lift_access }}</p>
             </div>
         </div>
@@ -37,7 +37,7 @@
              <div v-if="showAttribute('requires_permit') && this.display.length > 0">
                 <p v-if="value.requires_permit">Requires Permit</p>
             </div>
-            <div v-else>
+            <div v-if="!this.display.length">
                 <p>Requires Permit: {{ value.requires_permit }}</p>
             </div>
         </div>
