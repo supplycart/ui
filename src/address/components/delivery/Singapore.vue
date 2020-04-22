@@ -28,7 +28,7 @@
             <div v-if="showAttribute('lift_access') && this.display.length > 0">
                 <p v-if="value.lift_access">Lift Access</p>
             </div>
-            <div v-else>
+            <div v-if="!this.display.length">
                 <p>Lift Access: {{ value.lift_access }}</p>
             </div>
         </div>
@@ -37,7 +37,7 @@
              <div v-if="showAttribute('requires_permit') && this.display.length > 0">
                 <p v-if="value.requires_permit">Requires Permit</p>
             </div>
-            <div v-else>
+            <div v-if="!this.display.length">
                 <p>Requires Permit: {{ value.requires_permit }}</p>
             </div>
         </div>
