@@ -160,9 +160,14 @@
                     <RemarksInput
                         label='Remarks'
                         class="w-1/2 mr-4"
-                        input-class="p-2 rounded border border-gray-200"
+                        input-class="p-2 w-full rounded border border-gray-200"
                         v-model="phone"
                         :required="true"
+                    />
+                    <Checkbox
+                        label="Checkbox"
+                        v-model="check"
+                        input-class="mr-2 form-checkbox h-4 w-4"
                     />
                 </div>
             </div>
@@ -170,8 +175,13 @@
                 <h2 class="mb-2">Button</h2>
                 <div>
                     <SubmitButton 
-                        class="p-2 rounded bg-blue-300 cursor-pointer" 
+                        class="p-2 rounded bg-blue-300 cursor-pointer mb-4" 
                         :loading="true"/>
+                    <IconButton
+                        class="p-2 rounded bg-blue-300 hover:bg-blue-200 ease-in ease-out cursor-pointer flex"
+                        label="Button with Icon">
+                        <FeatherIcon name="download" size="15" class="inline-block mr-2"/>
+                    </IconButton>
                 </div>
             </div>
         </div>
@@ -183,16 +193,19 @@
         Address,
         AttachmentInput,
         ButtonAttachment,
+        Checkbox,
         DatePicker, 
         DateRangePicker, 
         DateTime, 
         TimePicker, 
         Money, 
+        FeatherIcon,
         MoneyInput, 
         TextInput,
         PhoneInput,
         RemarksInput,
-        SubmitButton
+        SubmitButton,
+        IconButton,
     } from "@supplycart/ui";
     import moment from "moment";
 
@@ -202,16 +215,19 @@
             Address,
             AttachmentInput,
             ButtonAttachment,
+            Checkbox,
             DateTime,
             DatePicker,
             TimePicker,
             DateRangePicker,
             Money,
+            FeatherIcon,
             MoneyInput,
             TextInput,
             PhoneInput,
             RemarksInput,
             SubmitButton,
+            IconButton,
         },
         data() {
             return {
@@ -264,6 +280,7 @@
                 },
                 phone: '019-1234566',
                 time: null,
+                check: false,
                 currentTime: moment().format('YYYY-MM-DD HH:mm:ss')
             };
         },
