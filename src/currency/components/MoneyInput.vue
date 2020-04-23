@@ -24,6 +24,7 @@
       :currency="sign ? {currency: currencyData.code, prefix: currencyData.sign} : null"
       :precision="currencyData.precision"
       :value-as-integer="intValue"
+      @blur="blur"
     />
 
     <slot name="error" />
@@ -103,6 +104,11 @@
 
                 return currency ? currency : DefaultCurrency;
             }
+        },
+        methods: {
+            blur(e) {
+                this.$emit('blur', e);
+            },
         }
     };
 </script>
