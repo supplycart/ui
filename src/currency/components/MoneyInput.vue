@@ -17,6 +17,7 @@
     <CurrencyInput
       v-if="currencyData"
       v-model="input"
+      v-bind="$attrs"
       class="text-right text-right w-full"
       :class="inputClass"
       :disabled="disabled"
