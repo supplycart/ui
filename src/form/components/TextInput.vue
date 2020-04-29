@@ -1,17 +1,13 @@
 <template>
   <div>
     <slot name="label">
-      <label
-        v-if="label"
-        :for="$attrs.id"
+      <FormLabel 
+        :id="$attrs.id" 
+        :label="label" 
+        :required="required"
+        :disabled="disabled"
         class="inline-block mb-2"
-      >
-        {{ label }}
-        <small
-          v-if="required"
-          class="italic text-red-600"
-        >*</small>
-      </label>
+      />
     </slot>
 
     <input
@@ -46,7 +42,10 @@
   </div>
 </template>
 <script>
+import FormLabel from "./FormLabel";
+
 export default {
+  components: {FormLabel},
   inheritAttrs: false,
   props: {
     value: {

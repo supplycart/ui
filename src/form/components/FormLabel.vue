@@ -1,0 +1,34 @@
+<template>
+  <label
+    v-if="label"
+    :for="id"
+  >
+    {{ label }}
+    <small
+      v-if="required && !disabled"
+      class="italic text-red-600"
+    >*</small>
+  </label>
+</template>
+<script>
+    export default {
+			props: {
+				id: {
+					type: String,
+					default: null
+				},
+				label: {
+					type: String,
+					default: null
+				},
+				required: {
+					type: Boolean,
+					default: false
+				},
+				disabled: {
+					type: Boolean,
+					default: false
+				}
+			}
+    }
+</script>

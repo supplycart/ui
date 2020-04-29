@@ -1,17 +1,12 @@
 <template>
   <div>
     <slot name="label">
-      <label
-        v-if="label"
-        :for="$attrs.id"
-      >
-        {{ label }}
-        <small
-          v-if="required && !disabled"
-          class="italic text-red-600"
-        >*
-        </small>
-      </label>
+      <FormLabel 
+        :id="$attrs.id" 
+        :label="label" 
+        :required="required"
+        :disabled="disabled"
+      />
     </slot>
 
     <CurrencyInput
@@ -40,6 +35,7 @@
 <script>
 
     import Currencies, { DefaultCurrency } from "../constants/currencies";
+    import FormLabel from "../../form/components/FormLabel";
     import { CurrencyInput } from "vue-currency-input";
     import { find } from "lodash";
     import numeral from "numeral";
@@ -47,6 +43,7 @@
     export default {
         name: "MoneyInput",
         components: {
+            FormLabel,
             CurrencyInput
         },
         inheritAttrs: false,
