@@ -17,6 +17,7 @@
     <input
       :id="$attrs.id"
       v-model="input"
+      v-bind="$attrs"
       :placeholder="placeholder"
       :required="required"
       :disabled="disabled"
