@@ -16,7 +16,7 @@
     <input
       v-model="input"
       v-bind="$attrs"
-      :class="{error: showError || isInvalid}"
+      :class="[showError || isInvalid ? error: null, inputClass]"
       :required="required"
       @focus="focus"
       @change="change"
@@ -86,7 +86,11 @@ export default {
     format: {
       type: String,
       default: "Invalid format"
-    }
+    },
+    inputClass: {
+      type: String,
+      default: null
+    },
   },
   data() {
     return {

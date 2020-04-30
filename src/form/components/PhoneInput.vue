@@ -5,6 +5,7 @@
     :value="value"
     :regex="regex"
     :error="error"
+    :input-class="inputClass"
     :description="description"
     :required="required"
     @input="update"

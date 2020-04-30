@@ -21,6 +21,10 @@ export default {
             type: Boolean,
             default: false
         },
+        inputClass: {
+            type: String,
+            default: null
+        }
     },
     data() {
         return {

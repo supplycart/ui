@@ -150,10 +150,17 @@
                         class="w-1/2 mr-4"
                         input-class="p-2 rounded border border-gray-200"
                     />
+                    <QuantityInput
+                        label="Quantity"
+                        v-model="quantity"
+                        :required="true"
+                        class="w-1/2 mr-4"
+                        input-class="w-full mt-2 p-2 rounded border border-gray-200"
+                    />
                     <PhoneInput
                         label='Phone'
                         class="w-1/2 mr-4"
-                        input-class="p-2 rounded border border-gray-200"
+                        input-class="w-full mt-2 p-2 rounded border border-gray-200"
                         v-model="phone"
                         :required="true"
                     />
@@ -204,6 +211,7 @@
         TextInput,
         PhoneInput,
         RemarksInput,
+        QuantityInput,
         SubmitButton,
         IconButton,
     } from "@supplycart/ui";
@@ -227,6 +235,7 @@
             PhoneInput,
             RemarksInput,
             SubmitButton,
+            QuantityInput,
             IconButton,
         },
         data() {
@@ -278,6 +287,7 @@
                     first: null,
                     last: null
                 },
+                quantity: null,
                 phone: '019-1234566',
                 time: null,
                 check: false,
