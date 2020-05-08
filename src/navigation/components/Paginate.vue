@@ -7,8 +7,8 @@
       <div class="btn-group ml-4">
         <button
           :disabled="current_page == 1"
+          class="btn btn-default rounded rounded-tr-none rounded-br-none"
           :class="btnClass"
-          class="btn btn-default"
           type="button"
           @click="nextPage(1)"
         >
@@ -18,8 +18,8 @@
         <button 
           v-for="(btn,index) in pages"
           :key="index+'b'"
-          :class="[ selected == btn ? 'active' : '', btnClass ]"
           class="btn btn-default"
+          :class="[ selected == btn ? 'active' : '', btnClass ]"
           type="button"
           @click="nextPage(btn)"
         >
@@ -29,8 +29,8 @@
         <button
           v-if="total"
           :disabled="current_page == last_page"
+          class="btn btn-default rounded rounded-tl-none rounded-bl-none"
           :class="btnClass"
-          class="btn btn-default"
           type="button"
           @click="nextPage(last_page)"
         >
@@ -42,6 +42,7 @@
 </template>
 <script>
     export default {
+        name: 'Paginate',
         props: {
             total: {
                 type: Number,

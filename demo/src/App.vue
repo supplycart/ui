@@ -9,12 +9,12 @@
         </div>
         <div class="grid grid-cols-2 gap-3">
             <div class="p-12">
-                <h2 class="mb-2">DatePicker</h2>
+                <h2 class="mb-2 font-bold text-gray-600">DatePicker</h2>
                 <DatePicker class="p-2 rounded border border-gray-200 w-1/2"
                             placeholder="Select Date"/>
             </div>
             <div class="p-12">
-                <h2 class="mb-2">DateRangePicker</h2>
+                <h2 class="mb-2 font-bold text-gray-600">DateRangePicker</h2>
                 <DateRangePicker
                     v-model="dateRange"
                     :config="{minDate}"
@@ -32,7 +32,7 @@
                 <pre>{{ dateRange }}</pre>
             </div>
             <div class="p-12">
-                <h2 class="mb-2">TimePicker</h2>
+                <h2 class="mb-2 font-bold text-gray-600">TimePicker</h2>
                 <TimePicker
                     v-model="time"
                     class="mb-4 p-2 rounded border border-gray-200 w-1/2"
@@ -41,7 +41,7 @@
                 <pre>{value: {{ time }}}</pre>
             </div>
             <div class="p-12">
-                <h2 class="mb-2">Money</h2>
+                <h2 class="mb-2 font-bold text-gray-600">Money</h2>
                 <Money :sign="true"
                        currency="MYR"
                        :value="money.integer"
@@ -60,7 +60,7 @@
                 <pre>{value: {{ money.decimal }} }</pre>
             </div>
             <div class="p-12">
-                <h2 class="mb-2">MoneyInput</h2>
+                <h2 class="mb-2 font-bold text-gray-600">MoneyInput</h2>
                 <MoneyInput v-model="moneyInput.integer"
                             currency="MYR"
                             class="mb-4 p-2 rounded border border-gray-200 w-1/2"/>
@@ -77,7 +77,7 @@
                 <pre>{value: {{ moneyInput.decimal }} }</pre>
             </div>
             <div class="p-12">
-                <h2 class="mb-2">Billing Address</h2>
+                <h2 class="mb-2 font-bold text-gray-600">Billing Address</h2>
                 <div class="mb-4">
                     <h3 class="font-bold mb-2">Billing Address</h3>
                     <Address
@@ -94,7 +94,7 @@
                 </div>
             </div>
             <div class="p-12">
-                <h2 class="mb-2">Datetime</h2>
+                <h2 class="mb-2 font-bold text-gray-600">Datetime</h2>
                 <div class="mb-4">
                     <DateTime
                         :value="currentTime"
@@ -120,7 +120,7 @@
                 </div>
             </div>
             <div class="p-12">
-                <h2 class="mb-2">Attachment</h2>
+                <h2 class="mb-2 font-bold text-gray-600">Attachment</h2>
                 <div class="mb-4">
                     <ButtonAttachment 
                         v-model="attachments" 
@@ -134,7 +134,7 @@
                 </div>
             </div>
             <div class="p-12">
-                <h2 class="mb-2">Input</h2>
+                <h2 class="mb-2 font-bold text-gray-600">Input</h2>
                 <div class="mb-4">
                     <TextInput
                         label="First Name"
@@ -147,28 +147,35 @@
                         label="Last Name"
                         v-model="name.last"
                         :required="true"
-                        class="w-1/2 mr-4"
+                        class="w-1/2 mr-4 mb-4"
                         input-class="p-2 rounded border border-gray-200"
                     />
                     <QuantityInput
                         label="Quantity"
                         v-model="quantity"
                         :required="true"
-                        class="w-1/2 mr-4"
+                        class="w-1/2 mr-4 mb-4"
                         input-class="w-full mt-2 p-2 rounded border border-gray-200"
                     />
                     <PhoneInput
                         label='Phone'
-                        class="w-1/2 mr-4"
+                        class="w-1/2 mr-4 mb-4"
                         input-class="w-full mt-2 p-2 rounded border border-gray-200"
                         v-model="phone"
                         :required="true"
                     />
                     <RemarksInput
                         label='Remarks'
-                        class="w-1/2 mr-4"
+                        class="w-1/2 mr-4 mb-4"
                         input-class="p-2 w-full rounded border border-gray-200"
                         v-model="phone"
+                        :required="true"
+                    />
+                    <EmailInput
+                        label='Email'
+                        class="w-1/2 mr-4 mb-4"
+                        input-class="p-2 w-full rounded border border-gray-200"
+                        v-model="email"
                         :required="true"
                     />
                     <Checkbox
@@ -179,7 +186,7 @@
                 </div>
             </div>
             <div class="p-12">
-                <h2 class="mb-2">Button</h2>
+                <h2 class="mb-2 font-bold text-gray-600">Button</h2>
                 <div>
                     <SubmitButton 
                         class="p-2 rounded bg-blue-300 cursor-pointer mb-4" 
@@ -187,8 +194,14 @@
                     <IconButton
                         class="p-2 rounded bg-blue-300 hover:bg-blue-200 ease-in ease-out cursor-pointer flex"
                         label="Button with Icon">
-                        <FeatherIcon name="download" size="15" class="inline-block mr-2"/>
+                        <FeatherIcon name="download" :size="15" class="inline-block mr-2"/>
                     </IconButton>
+                </div>
+            </div>
+            <div class="p-12">
+                <h2 class="mb-2 font-bold text-gray-600">Pagination</h2>
+                <div>
+                    <Paginate v-bind="meta" btn-class="py-2 px-3 border"/>
                 </div>
             </div>
         </div>
@@ -208,12 +221,14 @@
         Money, 
         FeatherIcon,
         MoneyInput, 
+        EmailInput,
         TextInput,
         PhoneInput,
         RemarksInput,
         QuantityInput,
         SubmitButton,
         IconButton,
+        Paginate,
     } from "@supplycart/ui";
     import moment from "moment";
 
@@ -231,12 +246,14 @@
             Money,
             FeatherIcon,
             MoneyInput,
+            EmailInput,
             TextInput,
             PhoneInput,
             RemarksInput,
             SubmitButton,
             QuantityInput,
             IconButton,
+            Paginate
         },
         data() {
             return {
@@ -291,7 +308,14 @@
                 phone: '019-1234566',
                 time: null,
                 check: false,
-                currentTime: moment().format('YYYY-MM-DD HH:mm:ss')
+                currentTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+                meta: {
+                    total: 180,
+                    last_page: 10,
+                    from: 1,
+                    to: 8,
+                    current_page: 1,
+                }
             };
         },
         mounted() {
