@@ -1,6 +1,6 @@
 {
   "name": "@supplycart/ui",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/supplycart/ui"
@@ -17,7 +17,7 @@
     "flatpickr": "^4.6.3",
     "lodash": "^4.17.15",
     "luxon": "^1.22.0",
-    "moment": "^2.24.0",
+    "moment": "2.24.0",
     "moment-timezone": "^0.5.28",
     "numeral": "^2.0.6",
     "vue": "^2.6.11",
