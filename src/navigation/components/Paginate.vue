@@ -1,128 +1,111 @@
 <template>
-  <div class="row-full pagination-header">
-    <div class="w-full flex flex-1 items-center justify-between">
-      <div>
-        <span v-if="showWording">Showing {{ from || 0 }} to {{ to || 0 }} <span v-if="total">out of {{ total }}</span></span>
-      </div>
-      <div class="btn-group ml-4">
-        <button
-          :disabled="current_page == 1"
-          class="btn btn-default rounded rounded-tr-none rounded-br-none"
-          :class="btnClass"
-          type="button"
-          @click="nextPage(1)"
-        >
-          First
-        </button>
+    <div class="flex">
+        <slot name="default" :pagination="pagination">
+            <PerPageSelect v-model="perPage" @change="goToPage(1)"/>
+        </slot>
+        <div class="w-full flex md:flex-1 items-center justify-end">
+            <div v-if="showItemInterval">
+                {{ pagination.from || 0 | toFullNumber }} - {{ pagination.to || 0 | toFullNumber }} of {{
+                pagination.total | toFullNumber }}
+            </div>
+            <div class="btn-group ml-4">
+                <button
+                    :disabled="pagination.current_page === 1"
+                    class="btn btn-default"
+                    type="button"
+                    @click="goToPage(1)">
+                    First
+                </button>
 
-        <button 
-          v-for="(btn,index) in pages"
-          :key="index+'b'"
-          class="btn btn-default"
-          :class="[ selected == btn ? 'active' : '', btnClass ]"
-          type="button"
-          @click="nextPage(btn)"
-        >
-          {{ btn }}
-        </button>
+                <button
+                    v-for="page in pages"
+                    :key="page"
+                    :class="[ selected === page ? 'active' : '' ]"
+                    class="btn btn-default"
+                    type="button"
+                    @click="goToPage(page)">
+                    {{ page }}
+                </button>
 
-        <button
-          v-if="total"
-          :disabled="current_page == last_page"
-          class="btn btn-default rounded rounded-tl-none rounded-bl-none"
-          :class="btnClass"
-          type="button"
-          @click="nextPage(last_page)"
-        >
-          Last
-        </button>
-      </div>
+                <button
+                    :disabled="pagination.current_page === pagination.last_page"
+                    class="btn btn-default"
+                    type="button"
+                    @click="goToPage(pagination.last_page)">
+                    Last
+                </button>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 <script>
+    import PerPageSelect from "@/components/navigation/PerPageSelect";
+
     export default {
-        name: 'Paginate',
+        components: {PerPageSelect},
         props: {
-            total: {
-                type: Number,
-                default: 0
+            value: {
+                type: Object,
+                default: () => ({})
             },
-            last_page: {
-                type: Number,
-                default: 1
-            },
-            from: {
-                type: Number,
-                default: 0
-            },
-            to: {
-                type: Number,
-                default: 0
-            },
-            showWording : {
+            showItemInterval: {
                 type: Boolean,
                 default: true
-            },
-            current_page: {  
-                type: Number,
-                default: 1
-            },
-            btnClass: {
-                type: String,
-                default: null
             }
         },
         data() {
             return {
                 pages: [],
                 selected: 1,
-                range: 2
+                range: 3,
+                perPage: 30
+            };
+        },
+        computed: {
+            pagination: {
+                get() {
+                    return this.value;
+                },
+                set(value) {
+
+                }
             }
         },
         watch: {
-            current_page: function() {
-                this.checkPages();
-                this.checkMin();
-                this.checkMax();
-            },
-            last_page: function() {
-                this.checkPages();
-                this.checkMin();
-                this.checkMax();
-            },
-        },
-        mounted() {
-            this.checkPages();
+            pagination: {
+                handler(value) {
+                    this.perPage = value.per_page;
+                    this.selected = value.current_page;
+
+                    this.checkPages();
+                },
+                deep: true
+            }
         },
         methods: {
             checkPages() {
-                this.pages = [];
-                this.selected = this.current_page;
+                let pages = [];
 
-                if(this.last_page < this.range + 1) {
-                    for(let a=0; a<this.last_page; a++) {
-                        this.pages.push(a+1);
+                let min = this.selected - this.range;
+                let max = this.selected + this.range;
+
+                for (let i = min + 1; i < max; i++) {
+                    if (i > 0 && i <= this.pagination.last_page) {
+                        pages.push(i);
                     }
                 }
-                else {
-                    for(let a=0; a<this.current_page + this.range; a++) {
-                        this.pages.push(a+1);
-                    }
-                }
+
+                this.pages = pages;
             },
-            nextPage(page) {
-                this.$emit("nextPage", page);
-            },
-            checkMin() {
-                let temp = this.pages.findIndex(item => item == this.current_page - this.range);
-                temp > -1 ? this.pages.splice(0, temp) : '';
-            },
-            checkMax() {
-                let temp = this.pages.findIndex(item => item > this.last_page);
-                let range = (this.pages.length-1)-temp;
-                temp > -1 ? this.pages.splice(temp, this.pages.length-1) : '';
+            goToPage(page) {
+                this.$emit("change", {
+                    page,
+                    perPage: this.perPage
+                });
             }
         },
+        mounted() {
+            this.checkPages();
+        }
     };
 </script>
