@@ -39,7 +39,7 @@
     </div>
 </template>
 <script>
-    import PerPageSelect from "@/components/navigation/PerPageSelect";
+    import PerPageSelect from "./PerPageSelect";
 
     export default {
         components: {PerPageSelect},
