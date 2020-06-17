@@ -9,10 +9,8 @@
                 required: true,
             },
             size: {
-                type: Number,
-                default(){
-                    return 24;
-                }
+                type: [Number, String],
+                default: 24
             },
             attributes: {
                 type: Object,
