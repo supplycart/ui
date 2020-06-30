@@ -1,42 +1,51 @@
 <template>
-    <div class="flex">
-        <slot name="default" :pagination="pagination">
-            <PerPageSelect v-model="perPage" @change="goToPage(1)"/>
-        </slot>
-        <div class="w-full flex md:flex-1 items-center justify-end">
-            <div v-if="showItemInterval">
-                {{ pagination.from || 0 | toFullNumber }} - {{ pagination.to || 0 | toFullNumber }} of {{
-                pagination.total | toFullNumber }}
-            </div>
-            <div class="btn-group ml-4">
-                <button
-                    :disabled="pagination.current_page === 1"
-                    class="btn btn-default"
-                    type="button"
-                    @click="goToPage(1)">
-                    First
-                </button>
+  <div class="flex">
+    <slot
+      name="default"
+      :pagination="pagination"
+    >
+      <PerPageSelect
+        v-model="perPage"
+        @change="goToPage(1)"
+      />
+    </slot>
+    <div class="w-full flex md:flex-1 items-center justify-end">
+      <div v-if="showItemInterval">
+        {{ pagination.from || 0 | toFullNumber }} - {{ pagination.to || 0 | toFullNumber }} of {{
+          pagination.total | toFullNumber }}
+      </div>
+      <div class="btn-group ml-4">
+        <button
+          :disabled="pagination.current_page === 1"
+          class="btn btn-default"
+          type="button"
+          @click="goToPage(1)"
+        >
+          First
+        </button>
 
-                <button
-                    v-for="page in pages"
-                    :key="page"
-                    :class="[ selected === page ? 'active' : '' ]"
-                    class="btn btn-default"
-                    type="button"
-                    @click="goToPage(page)">
-                    {{ page }}
-                </button>
+        <button
+          v-for="page in pages"
+          :key="page"
+          :class="[ selected === page ? 'active' : '' ]"
+          class="btn btn-default"
+          type="button"
+          @click="goToPage(page)"
+        >
+          {{ page }}
+        </button>
 
-                <button
-                    :disabled="pagination.current_page === pagination.last_page"
-                    class="btn btn-default"
-                    type="button"
-                    @click="goToPage(pagination.last_page)">
-                    Last
-                </button>
-            </div>
-        </div>
+        <button
+          :disabled="pagination.current_page === pagination.last_page"
+          class="btn btn-default"
+          type="button"
+          @click="goToPage(pagination.last_page)"
+        >
+          Last
+        </button>
+      </div>
     </div>
+  </div>
 </template>
 <script>
     import PerPageSelect from "./PerPageSelect";
@@ -79,8 +88,12 @@
 
                     this.checkPages();
                 },
-                deep: true
+                deep: true,
+                immediate: true
             }
+        },
+        mounted() {
+            this.checkPages();
         },
         methods: {
             checkPages() {
@@ -103,9 +116,6 @@
                     perPage: this.perPage
                 });
             }
-        },
-        mounted() {
-            this.checkPages();
         }
     };
 </script>
