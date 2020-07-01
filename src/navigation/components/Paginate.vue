@@ -1,5 +1,5 @@
 <template>
-  <div class="flex">
+  <div class="paginate flex">
     <slot
       name="default"
       :pagination="pagination"
