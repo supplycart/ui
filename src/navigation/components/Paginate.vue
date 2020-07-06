@@ -1,6 +1,7 @@
 <template>
   <div class="paginate flex">
     <slot
+      v-if="showPerPage"
       name="default"
       :pagination="pagination"
     >
@@ -60,6 +61,10 @@
             showItemInterval: {
                 type: Boolean,
                 default: true
+            },
+            showPerPage: {
+              type: Boolean,
+              default: true
             }
         },
         data() {
