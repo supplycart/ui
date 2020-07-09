@@ -43,6 +43,7 @@
         computed: {
             component() {
                 let type = startCase(this.type);
+                let country = startCase(this.country);
                 
                 if (this.country.match(/\s/g)) {
                     let split = this.country.split(' ');
@@ -50,7 +51,6 @@
                     let lName = split[1];
                     return `${fName}${lName}${type}Address`;
                 }
-                let country = startCase(this.country);
                 
                 return `${country}${type}Address`;
             }
