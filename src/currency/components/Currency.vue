@@ -15,7 +15,7 @@
             }
         },
         render(createElement, context) {
-            let currency = typeof this.currency === "object" ? this.currency : Currencies.find(item => item.country === this.currency.toUpperCase() || item.code === this.currency.toUpperCase());
+            let currency = typeof this.currency === "object" ? this.currency : Currencies.find(item => item.country === this.currency.toUpperCase().replace(' ', '_') || item.code === this.currency.toUpperCase());
 
             if (!currency) {
                 currency = DefaultCurrency;
