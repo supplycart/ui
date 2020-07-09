@@ -21,8 +21,8 @@
                 <span v-if="value.building">{{ value.building }}</span>
             </p>
             <p>{{ value.street }}</p>
-            <p>{{ value.city }}, {{ value.postcode }}  </p>
-            <p>{{ value.state }}, {{ value.country }}</p>
+            <p>{{ value.city }}</p>
+            <p>{{ value.country }}</p>
         </div>
         <div>
             <div v-if="showAttribute('lift_access') && this.display.length > 0">
