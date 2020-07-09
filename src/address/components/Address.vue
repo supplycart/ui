@@ -50,7 +50,6 @@
                     let lName = split[1];
                     return `${fName}${lName}${type}Address`;
                 }
-                let nospace = this.country.split(' ').join('');
                 let country = startCase(this.country);
                 
                 return `${country}${type}Address`;
