@@ -42,9 +42,17 @@
         },
         computed: {
             component() {
-                let country = startCase(this.country);
                 let type = startCase(this.type);
-
+                
+                if (this.country.match(/\s/g)) {
+                    let split = this.country.split(' ');
+                    let fName = split[0];
+                    let lName = split[1];
+                    return `${fName}${lName}${type}Address`;
+                }
+                let nospace = this.country.split(' ').join('');
+                let country = startCase(this.country);
+                
                 return `${country}${type}Address`;
             }
         },
