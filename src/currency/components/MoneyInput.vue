@@ -20,7 +20,7 @@
       :currency="sign ? {currency: currencyData.code, prefix: currencyData.sign} : null"
       :precision="currencyData.precision"
       :value-as-integer="intValue"
-      :allow-negative="false"
+      :allow-negative="allowNegative"
       @blur="blur"
     />
 
@@ -84,6 +84,10 @@
             intValue: {
                 type: Boolean,
                 default: true
+            },
+            allowNegative: {
+                type: Boolean,
+                default: false
             }
         },
         computed: {
