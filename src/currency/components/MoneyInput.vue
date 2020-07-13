@@ -20,6 +20,7 @@
       :currency="sign ? {currency: currencyData.code, prefix: currencyData.sign} : null"
       :precision="currencyData.precision"
       :value-as-integer="intValue"
+      :allow-negative="false"
       @blur="blur"
     />
 
