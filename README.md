@@ -46,3 +46,10 @@
 | type | string | | type of the address |
 | country | string | Malaysia | country of the address |
 | display | array | | specific field to display|
+
+#### AddressForm
+| Props | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | Object | | value of the address |
+| type | string | | type of the address |
+| country | string | Malaysia | country of the address |
