@@ -77,7 +77,7 @@
                 <pre>{value: {{ moneyInput.decimal }} }</pre>
             </div>
             <div class="p-12">
-                <h2 class="mb-2 font-bold text-gray-600">Billing Address</h2>
+                <h2 class="mb-2 font-bold text-gray-600">Display Address</h2>
                 <div class="mb-4">
                     <h3 class="font-bold mb-2">Billing Address</h3>
                     <Address
@@ -88,6 +88,23 @@
                 <div class="mb-4">
                     <h3 class="font-bold mb-2">Delivery Address</h3>
                     <Address
+                        v-model="malaysiaDeliveryAddress"
+                        country="Malaysia"
+                        type="delivery"/>
+                </div>
+            </div>
+            <div class="p-12">
+                <h2 class="mb-2 font-bold text-gray-600">Address Form</h2>
+                <div class="mb-4">
+                    <h3 class="font-bold mb-2">Billing Address</h3>
+                    <AddressForm
+                        v-model="malaysiaBillingAddress"
+                        country="Malaysia"
+                        type="billing"/>
+                </div>
+                <div class="mb-4">
+                    <h3 class="font-bold mb-2">Delivery Address</h3>
+                    <AddressForm
                         v-model="malaysiaDeliveryAddress"
                         country="Malaysia"
                         type="delivery"/>
@@ -211,6 +228,7 @@
 <script>
     import { 
         Address,
+        AddressForm,
         AttachmentInput,
         ButtonAttachment,
         Checkbox,
@@ -236,6 +254,7 @@
         name: "App",
         components: {
             Address,
+            AddressForm,
             AttachmentInput,
             ButtonAttachment,
             Checkbox,
