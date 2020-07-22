@@ -51,5 +51,6 @@
 | Props | Type | Default | Description |
 | --- | --- | --- | --- |
 | value | Object | | value of the address |
-| type | string | | type of the address |
+| type | string | | type of the address 'billing' or 'delivery' |
 | country | string | Malaysia | country of the address |
+| countryChanged | event |  | triggered when country changed, to change the value of country |
