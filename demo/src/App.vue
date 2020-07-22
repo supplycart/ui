@@ -106,7 +106,7 @@
                     <h3 class="font-bold mb-2">Delivery Address</h3>
                     <AddressForm
                         v-model="malaysiaDeliveryAddress"
-                        country="Malaysia"
+                        :country="deliveryCountry" @countryChanged="changeCountry"
                         type="delivery"/>
                 </div>
             </div>
@@ -276,6 +276,7 @@
         },
         data() {
             return {
+                deliveryCountry: 'Malaysia',
                 attachments: [],
                 minDate: moment().format("YYYY-MM-DD"),
                 dateRange: {
@@ -347,6 +348,11 @@
                 };
                 vm.minDate = "2020-01-01";
             }, 5000);
+        },
+        methods: {
+            changeCountry(val) {
+                this.deliveryCountry = val
+            }
         }
     };
 </script>
