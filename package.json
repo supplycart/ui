@@ -22,7 +22,8 @@
     "numeral": "^2.0.6",
     "vue": "^2.6.11",
     "vue-currency-input": "^1.17.3",
-    "vue-flatpickr-component": "^8.1.5"
+    "vue-flatpickr-component": "^8.1.5",
+    "vue-select": "^3.10.7"
   },
   "license": "MIT",
   "devDependencies": {
