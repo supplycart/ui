@@ -64,14 +64,12 @@
                     input-class="p-2 rounded border border-gray-200"
                 />
 
-                <TextInput
-                    label="Country"
-                    v-model="value.country"
-                    :disabled="true"
-                    :required="true"
-                    class="w-full mr-4 mb-4"
-                    input-class="p-2 rounded border border-gray-200"
-                />
+                <div>
+                    <label for="country" >
+                        Country <small class="italic text-red-600" >*</small>
+                    </label>
+                    <VSelect :options="countries" v-model="setCountry" class="mt-2 select-country"></VSelect>
+                </div>
             </div>
         </div>
         <div>
@@ -96,19 +94,10 @@
 <script>
 import TextInput from "../../../form/components/TextInput";
 import Checkbox from "../../../form/components/Checkbox";
+import AddressFormMixins from '../../mixins/addressForm'
 export default {
     name: "VietnamDeliveryAddressForm",
     components: { TextInput, Checkbox },
-    props: {
-        value: {
-            type: Object,
-            default: () => ({})
-        }
-    },
-    mounted() {
-        if (!this.value.hasOwnProperty("country")) {
-            this.value.country = "Vietnam";
-        }
-    }
+    mixins: [AddressFormMixins]
 };
 </script>
