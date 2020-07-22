@@ -2,7 +2,7 @@
     import { startCase, lowerCase } from "lodash";
 
     export default {
-        name: "Address",
+        name: "AddressForm",
         components: {
 
             MalaysiaBillingAddressForm: () => import('./billingForm/Malaysia'),
@@ -36,6 +36,10 @@
             type: {
                 type: String,
                 required: true
+            },
+            countries: {
+                type: [Object, Array],
+                default: () => (['Malaysia'])
             }
         },
         computed: {
@@ -51,13 +55,26 @@
                 return `${country}${type}AddressForm`;
             }
         },
+        methods: {
+            changeCountry(country) {
+                this.$emit('countryChanged', country)
+            }
+        },
         render(createElement, context) {
             return createElement("keep-alive", [
                 createElement("component", {
                     is: this.component,
-                    props: this.$props
+                    props: this.$props,
+                    on: {
+                        changeCountry: this.changeCountry
+                    },
                 })
             ]);
         }
     };
 </script>
+<style>
+    .select-country .vs__dropdown-toggle{
+        padding:0.4rem
+    }
+</style>
