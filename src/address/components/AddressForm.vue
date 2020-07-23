@@ -47,7 +47,7 @@
                 get() {
                     let address = this.value
                     if(!address.hasOwnProperty('country')) {
-                        address.country = this.country
+                        this.$set(address, 'country', this.country)
                     }
                     return address;
                 },
@@ -59,7 +59,6 @@
         methods: {
             changeCountry(country) {
                 this.address.country = country
-                this.$forceUpdate()
             }
         },
         render(createElement, context) {
