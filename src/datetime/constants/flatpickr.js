@@ -3,7 +3,7 @@ import moment from "moment";
 const DefaultConfig = {
     altInput: true,
     altFormat: "j M Y",
-    dateFormat: "Y-m-d",
+    dateFormat: "Z",
     minDate: moment().format("YYYY-MM-DD")
 };
 

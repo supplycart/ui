@@ -19,7 +19,7 @@
                 default: null
             },
             value: {
-                type: String,
+                type: [String, Date],
                 default: null
             },
             timezone: {
@@ -37,12 +37,10 @@
         computed: {
             input: {
                 get() {
-                    let timezone = this.timezone ? this.timezone : process.env.MIX_APP_TIMEZONE;
-
-                    return moment.tz(this.value, timezone).format("YYYY-MM-DD");
+                    return this.value;
                 },
                 set(val) {
-                    this.$emit("input", moment.tz(val, "UTC").format("YYYY-MM-DD"));
+                    this.$emit("input", val);
                 }
             },
             dateConfig() {
