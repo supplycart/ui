@@ -45,19 +45,25 @@
         computed: {
             component() {
                 let type = startCase(this.type);
-                let country = startCase(this.country);
+                let country = startCase(this.value.country);
                 
-                if (this.country.match(/\s/g)) {
-                    let split = this.country.split(' ');
+                if (this.value.country.match(/\s/g)) {
+                    let split = this.value.country.split(' ');
                     return `${split[0]}${split[1]}${type}AddressForm`;
                 }
                 
                 return `${country}${type}AddressForm`;
             }
         },
+        created() {
+            if(!this.value.hasOwnProperty('country')) {
+            
+            this.value.country = this.country
+        }
+        },
         methods: {
             changeCountry(country) {
-                this.$emit('countryChanged', country)
+                this.value.country = country
             }
         },
         render(createElement, context) {

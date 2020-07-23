@@ -20,19 +20,11 @@ export default {
     computed: {
         setCountry: {
             get() {
-                return this.country;
+                return this.value.country;
             },
             set(value) {
                 this.$emit('changeCountry', value)
-                this.value.country = value
             }
         },
-    },
-    
-    created() {
-        if(!this.value.hasOwnProperty('country')) {
-            
-            this.value.country = this.country
-        }
     }
 }
