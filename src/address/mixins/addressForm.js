@@ -8,10 +8,6 @@ export default {
             type: Object,
             default: () => ({})
         },
-        country: {
-            type: String,
-            default: "Malaysia"
-        },
         countries: {
             type: [Object, Array],
             default: () => (["Malaysia"])
