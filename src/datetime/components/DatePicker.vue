@@ -19,7 +19,7 @@
                 default: null
             },
             value: {
-                type: String,
+                type: [String, Date],
                 default: null
             },
             timezone: {
