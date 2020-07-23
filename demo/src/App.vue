@@ -106,7 +106,8 @@
                     <h3 class="font-bold mb-2">Delivery Address</h3>
                     <AddressForm
                         v-model="malaysiaDeliveryAddress"
-                        :country="deliveryCountry" @countryChanged="changeCountry"
+                        :country="deliveryCountry"
+                        :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia']"
                         type="delivery"/>
                 </div>
             </div>
@@ -350,9 +351,7 @@
             }, 5000);
         },
         methods: {
-            changeCountry(val) {
-                this.deliveryCountry = val
-            }
+            
         }
     };
 </script>
