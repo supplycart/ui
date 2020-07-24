@@ -108,7 +108,17 @@
                         v-model="malaysiaDeliveryAddress"
                         :country="deliveryCountry"
                         :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia']"
+                        :disableFields="[]"
                         type="delivery"/>
+                </div>
+                <div class="mb-4">
+                    <h3 class="font-bold mb-2">General Address</h3>
+                    <AddressForm
+                        v-model="malaysiaDeliveryAddress"
+                        :country="deliveryCountry"
+                        :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia']"
+                        :disableFields="['country', 'state']"
+                        type="general"/>
                 </div>
             </div>
             <div class="p-12">

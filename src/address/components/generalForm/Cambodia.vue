@@ -1,33 +1,5 @@
 <template>
     <div>
-        <TextInput
-            label="Billing Entity Name"
-            v-model="value.entity_name"
-            :disabled="disabledFields['entity_name']"
-            :required="true"
-            class="w-full mb-4"
-            input-class="p-2 rounded border border-gray-200"
-        />
-
-        <div class="grid grid-cols-2 gap-2">
-            <TextInput
-                label="Finance PIC Name"
-                v-model="value.pic_name"
-                :disabled="disabledFields['pic_name']"
-                :required="true"
-                class="w-full mb-4"
-                input-class="p-2 rounded border border-gray-200"
-            />
-
-            <TextInput
-                label="Finance PIC Phone No."
-                v-model="value.pic_phone"
-                :disabled="disabledFields['pic_phone']"
-                :required="true"
-                class="w-full mb-4"
-                input-class="p-2 rounded border border-gray-200"
-            />
-        </div>
         <div>
             <div class="grid grid-cols-3 gap-2">
                 <TextInput
@@ -41,24 +13,24 @@
                 <TextInput
                     label="Floor"
                     v-model="value.floor"
-                    :disabled="disabledFields['floor']"
                     class="w-full mb-4"
+                    :disabled="disabledFields['floor']"
                     input-class="p-2 rounded border border-gray-200"
                 />
 
                 <TextInput
                     label="Building"
                     v-model="value.building"
-                    :disabled="disabledFields['building']"
                     class="w-full mb-4"
+                    :disabled="disabledFields['building']"
                     input-class="p-2 rounded border border-gray-200"
                 />
             </div>
             <TextInput
                 label="Street"
                 v-model="value.street"
-                :disabled="disabledFields['street']"
                 :required="true"
+                :disabled="disabledFields['street']"
                 class="w-full mr-4 mb-4"
                 input-class="p-2 rounded border border-gray-200"
             />
@@ -66,8 +38,8 @@
                 <TextInput
                     label="District"
                     v-model="value.city"
-                    :disabled="disabledFields['city']"
                     :required="true"
+                    :disabled="disabledFields['city']"
                     class="w-full mr-4 mb-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
@@ -75,8 +47,8 @@
                 <TextInput
                     label="Postcode"
                     v-model="value.postcode"
-                    :disabled="disabledFields['postcode']"
                     :required="true"
+                    :disabled="disabledFields['postcode']"
                     class="w-full mr-4 mb-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
@@ -85,44 +57,28 @@
                 <TextInput
                     label="Province"
                     v-model="value.state"
-                    :disabled="disabledFields['state']"
                     :required="true"
+                    :disabled="disabledFields['state']"
                     class="w-full mr-4 mb-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
 
-                <TextInput
-                    label="Country"
-                    v-model="value.country"
-                    :required="true"
-                    :disabled="true"
-                    class="w-full mr-4 mb-4"
-                    input-class="p-2 rounded border border-gray-200"
-                />
+                 <div>
+                    <label for="country" >
+                        Country <small class="italic text-red-600" >*</small>
+                    </label>
+                    <VSelect :options="countries" :disabled="disabledFields['country']" v-model="setCountry" class="mt-2 select-country"></VSelect>
+                </div>
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-2">
-            <TextInput
-                label="E-Invoice Mailbox"
-                v-model="value.einvoice_email"
-                class="w-full mr-4 mb-4"
-                input-class="p-2 rounded border border-gray-200"
-            />
-            <TextInput
-                label="Registration No."
-                v-model="value.registration_no"
-                class="w-full mr-4 mb-4"
-                input-class="p-2 rounded border border-gray-200"
-            />
-        </div>
+        
     </div>
 </template>
 <script>
 import TextInput from "../../../form/components/TextInput";
 import AddressFormMixins from '../../mixins/addressForm'
-
 export default {
-    name: "VietnamBillingAddressForm",
+    name: "CambodiaDefaultAddressForm",
     mixins: [AddressFormMixins],
     components: {
         TextInput
