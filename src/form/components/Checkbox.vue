@@ -4,6 +4,7 @@
       v-model="input" 
       type="checkbox"
       :class="inputClass"
+      :disabled="disabled"
       @change="change"
     >
     <slot>{{ label }}</slot>
@@ -23,6 +24,10 @@ export default {
         inputClass: {
             type: String,
             default: 'mr-2 h-4 w-4'
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {

@@ -40,7 +40,10 @@ export default {
                     pic_phone:false,
                     pic_name:false,
                     einvoice_email: false,
-                    registration_no: false
+                    registration_no: false,
+                    branch_name: false,
+                    lift_access: false,
+                    requires_permit: false
                 }
 
                 this.disableFields.forEach( field => {

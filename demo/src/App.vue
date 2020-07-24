@@ -108,6 +108,7 @@
                         v-model="malaysiaDeliveryAddress"
                         :country="deliveryCountry"
                         :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia']"
+                        :disableFields="[]"
                         type="delivery"/>
                 </div>
                 <div class="mb-4">

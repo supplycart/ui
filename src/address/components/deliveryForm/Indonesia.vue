@@ -3,6 +3,7 @@
         <TextInput
             label="Branch Name"
             v-model="value.branch_name"
+            :disabled="disabledFields['branch_name']"
             :required="true"
             class="w-full mr-4 mb-4"
             input-class="p-2 rounded border border-gray-200"
@@ -12,6 +13,7 @@
                 <TextInput
                     label="Unit"
                     v-model="value.unit"
+                    :disabled="disabledFields['unit']"
                     class="w-full mb-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
@@ -19,6 +21,7 @@
                 <TextInput
                     label="Floor"
                     v-model="value.floor"
+                    :disabled="disabledFields['floor']"
                     class="w-full mb-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
@@ -26,6 +29,7 @@
                 <TextInput
                     label="Building"
                     v-model="value.building"
+                    :disabled="disabledFields['building']"
                     class="w-full mb-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
@@ -33,6 +37,7 @@
             <TextInput
                 label="Street"
                 v-model="value.street"
+                :disabled="disabledFields['street']"
                 :required="true"
                 class="w-full mr-4 mb-4"
                 input-class="p-2 rounded border border-gray-200"
@@ -41,6 +46,7 @@
                 <TextInput
                     label="City"
                     v-model="value.city"
+                    :disabled="disabledFields['city']"
                     :required="true"
                     class="w-full mr-4 mb-4"
                     input-class="p-2 rounded border border-gray-200"
@@ -49,6 +55,7 @@
                 <TextInput
                     label="Postcode"
                     v-model="value.postcode"
+                    :disabled="disabledFields['postcode']"
                     :required="true"
                     class="w-full mr-4 mb-4"
                     input-class="p-2 rounded border border-gray-200"
@@ -58,6 +65,7 @@
                 <TextInput
                     label="State"
                     v-model="value.state"
+                    :disabled="disabledFields['state']"
                     :required="true"
                     class="w-full mr-4 mb-4"
                     input-class="p-2 rounded border border-gray-200"
@@ -67,7 +75,7 @@
                     <label for="country" >
                         Country <small class="italic text-red-600" >*</small>
                     </label>
-                    <VSelect :options="countries" v-model="setCountry" class="mt-2 select-country"></VSelect>
+                    <VSelect :disabled="disabledFields['country']" :options="countries" v-model="setCountry" class="mt-2 select-country"></VSelect>
                 </div>
             </div>
         </div>
@@ -76,6 +84,7 @@
                 <Checkbox
                     label="This address has lift access (uncheck if none)"
                     v-model="value.lift_access"
+                    :disabled="disabledFields['lift_access']"
                     input-class="mr-2 form-checkbox h-4 w-4"
                 />
             </div>
@@ -83,6 +92,7 @@
                 <Checkbox
                     label="This address requires delivery permit (tick if permit required)"
                     v-model="value.requires_permit"
+                    :disabled="disabledFields['requires_permit']"
                     input-class="mr-2 form-checkbox h-4 w-4"
                 />
             </div>
