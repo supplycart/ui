@@ -45,7 +45,6 @@ export default {
                 return tempDisabledFields;
             },
             set(value) {
-                this.$emit('changeCountry', value)
             }
         }
     }

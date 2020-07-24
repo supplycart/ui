@@ -57,13 +57,12 @@
             />
         </div>
         <div class="grid grid-cols-2 gap-2">
-            <TextInput
-                label="State"
-                v-model="value.state"
-                :required="true"
-                class="w-full mr-4 mb-4"
-                input-class="p-2 rounded border border-gray-200"
-            />
+            <div>
+                <label for="state" >
+                    State <small class="italic text-red-600" >*</small>
+                </label>
+                <VSelect :options="states" v-model="value.state" class="mt-2 select-country"></VSelect>
+            </div>
 
             <div>
                 <label for="country" >
@@ -97,10 +96,12 @@
 import TextInput from "../../../form/components/TextInput";
 import Checkbox from "../../../form/components/Checkbox"
 import AddressFormMixins from '../../mixins/addressForm'
+import StateMixins from '../../mixins/malaysiaStates'
+
 
 export default {
     name: "MalaysiaDeliveryAddressForm",
     components: { TextInput, Checkbox },
-    mixins: [AddressFormMixins]
+    mixins: [AddressFormMixins, StateMixins]
 };
 </script>
