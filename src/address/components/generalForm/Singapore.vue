@@ -69,7 +69,7 @@
 import TextInput from "../../../form/components/TextInput";
 import AddressFormMixins from '../../mixins/addressForm'
 export default {
-    name: "SingaporeDefaultAddress",
+    name: "SingaporeDefaultAddressForm",
     mixins: [AddressFormMixins],
     components: {
         TextInput

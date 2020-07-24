@@ -100,17 +100,13 @@
 </template>
 <script>
 import TextInput from "../../../form/components/TextInput";
+import AddressFormMixins from '../../mixins/addressForm'
 
 export default {
     name: "SingaporeBillingAddress",
+    mixins: [AddressFormMixins],
     components: {
         TextInput
-    },
-    props: {
-        value: {
-            type: Object,
-            default: () => ({})
-        }
     }
 };
 </script>

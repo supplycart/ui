@@ -110,14 +110,11 @@
 </template>
 <script>
 import TextInput from "../../../form/components/TextInput";
+import AddressFormMixins from '../../mixins/addressForm'
+
 export default {
     name: "IndonesiaBillingAddressForm",
-    props: {
-        value: {
-            type: Object,
-            default: () => ({})
-        }
-    },
+    mixins: [AddressFormMixins],
     components: {
         TextInput
     }
