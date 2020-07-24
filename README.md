@@ -54,3 +54,4 @@
 | type | string | | type of the address 'billing' or 'delivery' |
 | country | string | Malaysia | country of the address |
 | countries | Array | Malaysia | array of countries for dropdown list |
+| disableFields | Array |  | array fields to be disabled. Available value: 'unit' 'floor' 'building' 'street' 'city' 'postcode' 'state' 'country' |
