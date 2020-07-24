@@ -101,11 +101,6 @@ export default {
             type: Object,
             default: () => ({})
         }
-    },
-    mounted() {
-        if (!this.value.hasOwnProperty("country")) {
-            this.value.country = "Hong Kong";
-        }
     }
 };
 </script>

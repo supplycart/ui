@@ -120,11 +120,6 @@ export default {
     },
     components: {
         TextInput
-    },
-    mounted() {
-        if (!this.value.hasOwnProperty("country")) {
-            this.value.country = "Indonesia";
-        }
     }
 };
 </script>
