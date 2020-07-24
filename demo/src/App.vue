@@ -110,6 +110,16 @@
                         :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia']"
                         type="delivery"/>
                 </div>
+
+                <div class="mb-4">
+                    <h3 class="font-bold mb-2">General Address</h3>
+                    <AddressForm
+                        v-model="malaysiaDeliveryAddress"
+                        :country="deliveryCountry"
+                        :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia']"
+                        :disableFields="['state','country']"
+                        type="general"/>
+                </div>
             </div>
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Datetime</h2>

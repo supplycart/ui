@@ -11,6 +11,9 @@ export default {
         countries: {
             type: [Object, Array],
             default: () => (["Malaysia"])
+        },
+        disableFields: {
+            type: Array,
         }
     },
     computed: {
@@ -22,5 +25,28 @@ export default {
                 this.$emit('changeCountry', value)
             }
         },
+        disabledFields: {
+            get() {
+                let tempDisabledFields = {
+                    unit: false,
+                    floor: false,
+                    building: false,
+                    street:false,
+                    city: false,
+                    postcode: false,
+                    state: false,
+                    country:false
+                }
+                
+                this.disableFields.forEach( field => {
+                    tempDisabledFields[field] = true
+                })
+
+                return tempDisabledFields;
+            },
+            set(value) {
+                this.$emit('changeCountry', value)
+            }
+        }
     }
 }

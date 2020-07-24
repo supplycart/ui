@@ -23,6 +23,15 @@
             PhilippinesDeliveryAddressForm: () => import('./deliveryForm/Philippines'),
             VietnamDeliveryAddressForm: () => import('./deliveryForm/Vietnam'),
 
+            MalaysiaGeneralAddressForm: () => import('./generalForm/Malaysia'),
+            CambodiaGeneralAddressForm: () => import('./generalForm/Cambodia'),
+            SingaporeGeneralAddressForm: () => import('./generalForm/Singapore'),
+            IndonesiaGeneralAddressForm: () => import('./generalForm/Indonesia'),
+            ThailandGeneralAddressForm: () => import('./generalForm/Thailand'),
+            HongKongGeneralAddressForm: () => import('./generalForm/HongKong'),
+            PhilippinesGeneralAddressForm: () => import('./generalForm/Philippines'),
+            VietnamGeneralAddressForm: () => import('./generalForm/Vietnam'),
+
         },
         props: {
             value: {
@@ -40,6 +49,10 @@
             countries: {
                 type: [Object, Array],
                 default: () => (['Malaysia'])
+            },
+            disableFields: {
+                type: Array,
+                default: () => ([])
             }
         },
         computed: {
@@ -67,6 +80,7 @@
                     is: `${startCase(this.address.country)}${startCase(this.type)}AddressForm`.replace(/\s+/g, ''),
                     props: {
                         countries: this.$props.countries,
+                        disableFields:this.$props.disableFields,
                         value: this.address
                     },
                     on: {
