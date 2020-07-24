@@ -55,7 +55,7 @@
                 </div>
             </div>
         </div>
-        <div>
+       <div class="mt-2">
             <div>
                 <Checkbox
                     label="This address has lift access (uncheck if none)"

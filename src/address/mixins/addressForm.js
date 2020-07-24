@@ -35,11 +35,24 @@ export default {
                     city: false,
                     postcode: false,
                     state: false,
-                    country:false
+                    country:false,
+                    entity_name: false,
+                    pic_phone:false,
+                    pic_name:false,
+                    einvoice_email: false,
+                    registration_no: false
                 }
-                
+
                 this.disableFields.forEach( field => {
-                    tempDisabledFields[field] = true
+                    if(field === 'all') {
+                        let objKeys = Object.keys(tempDisabledFields)
+
+                        objKeys.forEach(key => {
+                            tempDisabledFields[key] = true
+                        })
+                    } else {
+                        tempDisabledFields[field] = true
+                    }
                 })
 
                 return tempDisabledFields;

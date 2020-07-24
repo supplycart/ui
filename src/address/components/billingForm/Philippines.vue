@@ -3,6 +3,7 @@
         <TextInput
             label="Billing Entity Name"
             v-model="value.entity_name"
+            :disabled="disabledFields['entity_name']"
             :required="true"
             class="w-full mb-4"
             input-class="p-2 rounded border border-gray-200"
@@ -11,6 +12,7 @@
             <TextInput
                 label="Finance PIC Name"
                 v-model="value.pic_name"
+                :disabled="disabledFields['pic_name']"
                 :required="true"
                 class="w-full mb-4"
                 input-class="p-2 rounded border border-gray-200"
@@ -19,6 +21,7 @@
             <TextInput
                 label="Finance PIC Phone No."
                 v-model="value.pic_phone"
+                :disabled="disabledFields['pic_phone']"
                 :required="true"
                 class="w-full mb-4"
                 input-class="p-2 rounded border border-gray-200"
@@ -29,6 +32,7 @@
                 <TextInput
                     label="Unit"
                     v-model="value.unit"
+                    :disabled="disabledFields['unit']"
                     class="w-full mb-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
@@ -36,6 +40,7 @@
                 <TextInput
                     label="Floor"
                     v-model="value.floor"
+                    :disabled="disabledFields['floor']"
                     class="w-full mb-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
@@ -43,6 +48,7 @@
                 <TextInput
                     label="Building"
                     v-model="value.building"
+                    :disabled="disabledFields['building']"
                     class="w-full mb-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
@@ -50,6 +56,7 @@
             <TextInput
                 label="Street"
                 v-model="value.street"
+                :disabled="disabledFields['street']"
                 :required="true"
                 class="w-full mr-4 mb-4"
                 input-class="p-2 rounded border border-gray-200"
@@ -58,6 +65,7 @@
                 <TextInput
                     label="District"
                     v-model="value.city"
+                    :disabled="disabledFields['city']"
                     :required="true"
                     class="w-full mr-4 mb-4"
                     input-class="p-2 rounded border border-gray-200"
@@ -66,6 +74,7 @@
                 <TextInput
                     label="Zipcode"
                     v-model="value.postcode"
+                    :disabled="disabledFields['postcode']"
                     :required="true"
                     class="w-full mr-4 mb-4"
                     input-class="p-2 rounded border border-gray-200"
@@ -75,6 +84,7 @@
                 <TextInput
                     label="Province"
                     v-model="value.state"
+                    :disabled="disabledFields['state']"
                     :required="true"
                     class="w-full mr-4 mb-4"
                     input-class="p-2 rounded border border-gray-200"
