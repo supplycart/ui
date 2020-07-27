@@ -211,6 +211,14 @@
                         v-model="check"
                         input-class="mr-2 form-checkbox h-4 w-4"
                     />
+                    <PasswordInput
+                        label="Password"
+                        class="w-1/2 mr-4 mb-4"
+                        v-model="password"
+                        input-class="p-2 w-full rounded border border-gray-200"
+                        format="The password should more than 8 characters."
+                        :required="true"
+                    />
                 </div>
             </div>
             <div class="p-12">
@@ -258,6 +266,7 @@
         SubmitButton,
         IconButton,
         Paginate,
+        PasswordInput
     } from "@supplycart/ui";
     import moment from "moment";
 
@@ -283,7 +292,8 @@
             SubmitButton,
             QuantityInput,
             IconButton,
-            Paginate
+            Paginate,
+            PasswordInput
         },
         data() {
             return {
@@ -339,6 +349,7 @@
                 phone: '019-1234566',
                 time: null,
                 check: false,
+                password: '',
                 currentTime: moment().format('YYYY-MM-DD HH:mm:ss'),
                 meta: {
                     total: 180,
