@@ -7,4 +7,5 @@ export {default as QuantityInput} from "./components/QuantityInput";
 export {default as RemarksInput} from "./components/RemarksInput";
 export {default as TextField} from "./components/TextField";
 export {default as TextInput} from "./components/TextInput";
+export {default as PasswordInput} from "./components/PasswordInput";
 
