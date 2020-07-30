@@ -46,6 +46,8 @@
         methods: {
             onClose(selectedDates, dateStr, instance) {
                 if (selectedDates.length === 2) {
+                    selectedDates[1].setHours(23,59,59,999);
+                    
                     this.$emit("input", {
                         from: flatpickr.formatDate(selectedDates[0], this.instance.config.dateFormat),
                         to: flatpickr.formatDate(selectedDates[1], this.instance.config.dateFormat)
