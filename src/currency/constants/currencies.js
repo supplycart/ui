@@ -52,7 +52,7 @@ const currencies = [
         },
         {
             country: "HONG_KONG",
-            sign: "$",
+            sign: "HK$",
             name: "Dollar",
             code: "HKD",
             precision: 2,
