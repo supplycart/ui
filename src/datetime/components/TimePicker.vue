@@ -8,6 +8,7 @@
 </template>
 <script>
   import FlatPickr from "vue-flatpickr-component";
+  import 'flatpickr/dist/flatpickr.css';
   import { merge } from "lodash";
   import { DefaultTimeConfig } from "../constants/flatpickr";
 

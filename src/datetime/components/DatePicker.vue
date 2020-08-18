@@ -7,6 +7,7 @@
 </template>
 <script>
     import FlatPickr from "vue-flatpickr-component";
+    import 'flatpickr/dist/flatpickr.css';
     import moment from "moment-timezone";
     import { merge } from "lodash";
     import { Timezones } from "../constants";
