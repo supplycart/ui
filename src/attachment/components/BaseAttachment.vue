@@ -37,6 +37,8 @@ export default {
         this.attachments.push(file);
         this.$emit("input", this.attachments);
         this.$emit('change', this.attachments);
+        
+        event.target.value = null;
       }
     },
 
