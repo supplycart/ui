@@ -40,11 +40,21 @@
 
             let format = this.format ? this.format : this.sign ? currency.formatWithSign : currency.format;
 
-            return createElement("span", Dinero({
-                amount: val,
-                currency: currency.code,
-                precision: currency.precision
-            }).setLocale(currency.locale).toFormat(format));
+            // EUR and GBP are the currencies that is being used by many countries
+            if(currency.code === "EUR" || currency.code === "GBP") { 
+                return createElement("span", Dinero({
+                    amount: val,
+                    currency: currency.code,
+                    precision: currency.precision
+                }).toFormat(format));
+            } else {
+                return createElement("span", Dinero({
+                    amount: val,
+                    currency: currency.code,
+                    precision: currency.precision
+                }).setLocale(currency.locale).toFormat(format));
+            }
+
         }
     };
 </script>
