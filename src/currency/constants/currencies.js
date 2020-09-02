@@ -115,9 +115,9 @@ const currencies = [
             sign: "¥",
             name: "Yuan",
             code: "CNY",
-            precision: 2,
-            format: "0,0.00",
-            formatWithSign: "$0,0.00",
+            precision: 0,
+            format: "0,0",
+            formatWithSign: "$0,0",
             locale: "zh-CN"
         },
         {
