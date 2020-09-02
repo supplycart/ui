@@ -79,7 +79,63 @@ const currencies = [
             format: "0,0.00",
             formatWithSign: "$0,0.00",
             locale: "km-KH"
-        }
+        },
+        {
+            country: "AUSTRALIA",
+            sign: "$",
+            name: "Dollar",
+            code: "AUD",
+            precision: 2,
+            format: "0,0.00",
+            formatWithSign: "$0,0.00",
+            locale: "en-AU"
+        },
+        {
+            country: "UNITED STATES",
+            sign: "$",
+            name: "Dollar",
+            code: "USD",
+            precision: 2,
+            format: "0,0.00",
+            formatWithSign: "$0,0.00",
+            locale: "en-US"
+        },
+        {
+            country: "NEW ZEALAND",
+            sign: "$",
+            name: "Dollar",
+            code: "NZD",
+            precision: 2,
+            format: "0,0.00",
+            formatWithSign: "$0,0.00",
+            locale: "en-NZ"
+        },
+        {
+            country: "CHINA",
+            sign: "¥",
+            name: "Yuan",
+            code: "CNY",
+            precision: 0,
+            format: "0,0",
+            formatWithSign: "$0,0",
+            locale: "zh-CN"
+        },
+        {
+            sign: "£",
+            name: "Pound Sterling",
+            code: "GBP",
+            precision: 2,
+            format: "0,0.00",
+            formatWithSign: "$0,0.00"
+        },
+        {
+            sign: "€",
+            name: "Euro",
+            code: "EUR",
+            precision: 2,
+            format: "0,0.00",
+            formatWithSign: "$0,0.00"
+        },
     ]
 ;
 
