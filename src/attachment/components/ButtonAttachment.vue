@@ -8,7 +8,9 @@
       class="cursor-pointer inline-block flex justify-center fit-width"
       :for="id"
     >
-      <FeatherIcon :name="icon" class="inline-block mr-2" />
+      <slot name="icon">
+          <FeatherIcon :name="icon" class="inline-block mx-1" :size="15"/>
+      </slot>
       <input
         :id="id"
         type="file"
@@ -16,7 +18,7 @@
         @change="setAttachment"
       >
       <slot>
-        <div>{{ label }}</div>
+        <div class="mr-1" v-if="label!= ''">{{ label }}</div>
       </slot>
     </label>
   </BaseAttachment>

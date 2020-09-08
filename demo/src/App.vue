@@ -153,6 +153,15 @@
                     <ButtonAttachment 
                         v-model="attachments" 
                         class="p-1 rounded border border-gray-200 mb-4"
+                        icon="upload" label="">
+                        <template
+                        slot="icon">
+                        <FeatherIcon name="file" :size="14"/>
+                    </template>
+                    </ButtonAttachment>
+                    <ButtonAttachment 
+                        v-model="attachments" 
+                        class="p-1 rounded border border-gray-200 mb-4"
                         icon="upload" label="Upload"/>
                     <AttachmentInput
                         v-model="attachments"
