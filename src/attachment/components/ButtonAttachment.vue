@@ -8,7 +8,9 @@
       class="cursor-pointer inline-block flex justify-center fit-width"
       :for="id"
     >
-      <FeatherIcon :name="icon" class="inline-block mx-1" :size="15"/>
+      <slot name="icon">
+          <FeatherIcon :name="icon" class="inline-block mx-1" :size="15"/>
+      </slot>
       <input
         :id="id"
         type="file"
