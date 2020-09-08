@@ -153,7 +153,7 @@
                     <ButtonAttachment 
                         v-model="attachments" 
                         class="p-1 rounded border border-gray-200 mb-4"
-                        label="Upload Files"/>
+                        icon="upload" label="Upload"/>
                     <AttachmentInput
                         v-model="attachments"
                         class="p-2 rounded border border-gray-200 w-1/2 mb-4"
