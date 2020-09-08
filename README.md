@@ -60,3 +60,22 @@
 | Props | Type | Default | Description |
 | --- | --- | --- | --- |
 | value | int, string | null | Input value |
+
+#### ButtonAttachment
+| Props | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | Array | [] | Input value |
+| label | String |  | Button label |
+| icon | String |  | Button Icon |
+| mode | String | multiple | Only 'single' or 'multiple' accepted |
+| maxSize | Number | 20000000 | Maximum size of file to be upload |
+| format | Array | [] | List of allowed format. (csv, pdf, etc)  |
+
+#### AttachmentInput
+| Props | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | Array | [] | Input value |
+| label | String |  | Button label |
+| mode | String | multiple | Only 'single' or 'multiple' accepted |
+| maxSize | Number | 20000000 | Maximum size of file to be upload |
+| format | Array | [] | List of allowed format. (csv, pdf, etc)  |
