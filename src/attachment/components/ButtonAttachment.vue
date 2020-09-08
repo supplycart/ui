@@ -5,9 +5,10 @@
   >
     <label
       slot-scope="{ setAttachment }"
-      class="cursor-pointer inline-block"
+      class="cursor-pointer inline-block flex justify-center fit-width"
       :for="id"
     >
+      <FeatherIcon :name="icon" class="inline-block mr-2" />
       <input
         :id="id"
         type="file"
@@ -22,10 +23,12 @@
 </template>
 <script>
 import BaseAttachment from "./BaseAttachment";
+import FeatherIcon from "../../icon/components/FeatherIcon"
 
 export default {
   components: {
-    BaseAttachment
+    BaseAttachment,
+    FeatherIcon
   },
   props: {
     id: {
@@ -38,7 +41,11 @@ export default {
     },
     label: {
       type: String,
-      default: 'Upload'
+      default: ''
+    },
+    icon: {
+      type: String,
+      default: ''
     }
   },
   computed: {
@@ -58,3 +65,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+  .fit-width {
+    width: fit-content
+  }
+</style>
