@@ -15,15 +15,16 @@
 
     <BaseAttachment
       v-model="input"
+      v-bind="$props"
       @change="change"
     >
       <label
-        slot-scope="{ setAttachment }"
-        for="service_attachment"
+        slot-scope="{ setAttachment, maxSize }"
+        for="attachment_input"
         class="block cursor-pointer"
       >
         <input
-          id="service_attachment"
+          id="attachment_input"
           type="file"
           class="hidden"
           @change="setAttachment"
@@ -31,7 +32,7 @@
         <div
           class="w-full"
         >
-          <span>Click to Attach Document</span>
+          <span>Click to Attach Document (max {{ maxSize }}mb)</span>
         </div>
       </label>
     </BaseAttachment>
@@ -57,7 +58,10 @@ export default {
     label: {
       type: String,
       default: null
-    }
+    },
+    maxSize: {
+      type: Number
+    },
   },
   computed: {
     input: {
