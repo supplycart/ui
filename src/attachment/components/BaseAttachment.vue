@@ -12,7 +12,7 @@ export default {
     },
     maxSize: {
       type: Number,
-      default: 20000000
+      default: 100
     },
     format: {
       type: Array,
@@ -47,8 +47,8 @@ export default {
     },
 
     validateSize(file) {
-      if (this.maxSize && file.size > this.maxSize) {
-        console.log("Maximum size allowed is 20mb");
+      if (this.maxSize && file.size > this.maxSize * 1024 * 1024) {
+        console.log(`Maximum size allowed is ${this.maxSize}mb`);
         return false;
       }
 
@@ -75,7 +75,8 @@ export default {
     return this.$scopedSlots.default({
       attachments: this.value,
       setAttachment: this.setAttachment,
-      deleteAttachment: this.deleteAttachment
+      deleteAttachment: this.deleteAttachment,
+      maxSize: this.maxSize,
     });
   }
 };
