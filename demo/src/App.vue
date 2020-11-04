@@ -11,6 +11,7 @@
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">DatePicker</h2>
                 <DatePicker class="p-2 rounded border border-gray-200 w-1/2"
+                    :disabled="false"
                             placeholder="Select Date"/>
             </div>
             <div class="p-12">
