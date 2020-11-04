@@ -3,6 +3,7 @@
         :id="id"
         v-model="input"
         :config="dateConfig"
+        :disabled="disabled"
     />
 </template>
 <script>
@@ -31,6 +32,10 @@
             config: {
                 type: Object,
                 default: () => {}
+            },
+            disabled: {
+                type: Boolean,
+                default: false
             }
         },
         components: {FlatPickr},
