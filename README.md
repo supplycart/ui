@@ -73,7 +73,7 @@
 
 | Event | Description |
 | --- | --- |
-| deleted | return deleted index |
+| deleted | return deleted data contains index and deleted file |
 
 #### AttachmentInput
 | Props | Type | Default | Description |
@@ -86,4 +86,4 @@
 
 | Event | Description |
 | --- | --- |
-| deleted | return deleted index |
+| deleted | return deleted data contains index and deleted file |
