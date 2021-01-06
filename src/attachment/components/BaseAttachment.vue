@@ -43,6 +43,11 @@ export default {
     },
 
     async deleteAttachment(index) {
+      let data = {
+        index: index,
+        file: this.attachments[index]
+      }
+      this.$emit('deleted', data)
       this.attachments.splice(index, 1);
     },
 

@@ -71,6 +71,10 @@
 | maxSize | Number | 20000000 | Maximum size of file to be upload |
 | format | Array | [] | List of allowed format. (csv, pdf, etc)  |
 
+| Event | Description |
+| --- | --- |
+| deleted | return deleted data contains index and deleted file |
+
 #### AttachmentInput
 | Props | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -79,3 +83,7 @@
 | mode | String | multiple | Only 'single' or 'multiple' accepted |
 | maxSize | Number | 20000000 | Maximum size of file to be upload |
 | format | Array | [] | List of allowed format. (csv, pdf, etc)  |
+
+| Event | Description |
+| --- | --- |
+| deleted | return deleted data contains index and deleted file |

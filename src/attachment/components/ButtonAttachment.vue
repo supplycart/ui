@@ -2,6 +2,7 @@
   <BaseAttachment 
     v-model="input"
     @change="change"
+    @deleted="deleted"
   >
     <label
       slot-scope="{ setAttachment }"
@@ -63,6 +64,9 @@ export default {
   methods: {
     change(val) {
       this.$emit('change', val);
+    },
+    deleted(val) {
+      this.$emit('deleted', val)
     }
   }
 };
