@@ -17,6 +17,7 @@
       v-model="input"
       v-bind="$props"
       @change="change"
+      @deleted="deleted"
     >
       <label
         slot-scope="{ setAttachment, maxSize }"
@@ -76,6 +77,9 @@ export default {
   methods: {
     change(val) {
       this.$emit("change", val);
+    },
+    deleted(val) {
+      this.$emit('deleted', val)
     }
   }
 };

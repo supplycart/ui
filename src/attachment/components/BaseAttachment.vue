@@ -44,6 +44,7 @@ export default {
 
     async deleteAttachment(index) {
       this.attachments.splice(index, 1);
+      this.$emit('deleted', index)
     },
 
     validateSize(file) {
