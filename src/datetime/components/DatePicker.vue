@@ -8,7 +8,7 @@
 </template>
 <script>
     import FlatPickr from "vue-flatpickr-component";
-    import moment from "moment-timezone";
+    import moment from "moment";
     import { merge } from "lodash";
     import { Timezones } from "../constants";
     import { DefaultConfig } from "../constants/flatpickr";
@@ -39,21 +39,31 @@
             }
         },
         components: {FlatPickr},
+        data() {
+            return {
+                dateConfig: {}
+            }
+        },
         computed: {
             input: {
                 get() {
                     return this.value;
                 },
                 set(val) {
-                    this.$emit("input", val);
+                    let dateFormat = moment(val).tz(this.timezone).format("YYYY-MM-DD")
+                    this.$emit("input", dateFormat);
                 }
             },
-            dateConfig() {
-                return merge(DefaultConfig, this.config);
+            
+        },
+        watch: {
+            config: {
+                handler: function(val){
+                    this.dateConfig = merge(DefaultConfig, val);
+                },
+                deep: true,
+                immediate: true
             }
         },
-        mounted() {
-
-        }
     };
 </script>
