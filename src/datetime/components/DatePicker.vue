@@ -50,8 +50,7 @@
                     return this.value;
                 },
                 set(val) {
-                    let dateFormat = moment(val).tz(this.timezone).format("YYYY-MM-DD")
-                    this.$emit("input", dateFormat);
+                    this.$emit("input", val);
                 }
             },
             
