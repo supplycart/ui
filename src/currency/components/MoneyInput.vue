@@ -16,6 +16,7 @@
       class="text-right text-right w-full"
       :class="inputClass"
       :disabled="disabled"
+      :required="required"
       :locale="currencyData.locale"
       :currency="sign ? {currency: currencyData.code, prefix: currencyData.sign} : null"
       :precision="currencyData.precision"

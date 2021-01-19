@@ -16,6 +16,7 @@
     <BaseAttachment
       v-model="input"
       v-bind="$props"
+      :required="required"
       @change="change"
       @deleted="deleted"
     >
@@ -27,9 +28,16 @@
         <input
           id="attachment_input"
           type="file"
+          :required="required"
           class="hidden"
           @change="setAttachment"
         >
+
+        <!-- add this section to retrieve input value from parent component, as input type = file value is not accessible from parent -->
+        <input type="text" 
+          :value="input" 
+          class="hidden" 
+          id="attachment_input_value"/>
         <div
           class="w-full"
         >
@@ -62,6 +70,9 @@ export default {
     },
     maxSize: {
       type: Number
+    },
+    required: {
+      type: Boolean
     },
   },
   computed: {
