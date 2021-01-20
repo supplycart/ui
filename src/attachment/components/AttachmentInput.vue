@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{'input-error':showError}">
     <slot name="label">
       <label
         v-if="label"
@@ -16,9 +16,9 @@
     <BaseAttachment
       v-model="input"
       v-bind="$props"
-      :required="required"
       @change="change"
       @deleted="deleted"
+      
     >
       <label
         slot-scope="{ setAttachment, maxSize }"
@@ -28,16 +28,9 @@
         <input
           id="attachment_input"
           type="file"
-          :required="required"
           class="hidden"
           @change="setAttachment"
         >
-
-        <!-- add this section to retrieve input value from parent component, as input type = file value is not accessible from parent -->
-        <input type="text" 
-          :value="input" 
-          class="hidden" 
-          id="attachment_input_value"/>
         <div
           class="w-full"
         >
@@ -71,9 +64,14 @@ export default {
     maxSize: {
       type: Number
     },
-    required: {
-      type: Boolean
+    error: {
+      type: [String, Boolean],
+      default: null
     },
+    required: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     input: {
@@ -84,6 +82,29 @@ export default {
         return this.value;
       }
     }
+  },
+  watch: {
+      error: {
+          handler(val) {
+              if(val && this.required) {
+                  this.showError = true
+              }
+          }
+      },
+      input: {
+        handler(val) {
+          if(!val.length && this.required){
+            this.showError = true
+          }else {
+            this.showError = false
+          }
+        }
+      }
+  },
+  data() {
+      return{
+          showError: false
+      }
   },
   methods: {
     change(val) {

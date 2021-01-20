@@ -12,11 +12,10 @@
         >*</small>
       </label>
     </slot>
-
     <input
       v-model="input"
       v-bind="$attrs"
-      :class="[showError || isInvalid ? error: null, inputClass]"
+      :class="[{'input-error': showError || isInvalid}, inputClass]"
       :required="required"
       @focus="focus"
       @change="change"
@@ -94,7 +93,8 @@ export default {
   },
   data() {
     return {
-      focused: false
+      focused: false,
+      showError: false
     };
   },
   computed: {
@@ -107,9 +107,6 @@ export default {
         this.$forceUpdate();
       }
     },
-    showError() {
-      return this.error && this.required && !this.input && this.focused;
-    },
     isInvalid() {
       if (!this.regex) return false;
 
@@ -117,8 +114,22 @@ export default {
       return !value && this.focused && this.input;
     }
   },
+  watch: {
+      error: {
+          handler(val) {
+              if(val && this.required) {
+                  this.showError = true
+              }
+          },
+      }
+  },
   methods: {
     blur(e) {
+      if(!e.target.value && this.required){
+        this.showError = true
+      } else {
+        this.showError = false
+      }
       this.$emit("blur", e);
     },
     change(e) {
