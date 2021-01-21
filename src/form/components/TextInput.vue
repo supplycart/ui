@@ -9,7 +9,6 @@
                 class="inline-block mb-2"
             />
         </slot>
-
         <input
             :id="$attrs.id"
             v-model="input"
@@ -26,7 +25,7 @@
         <slot name="error">
             <p
                 v-if="showError && !input"
-                class="italic text-red-600 text-sm mt-2"
+                class="italic text-red-600 text-xs mt-2"
             >
                 {{ error }}
             </p>
@@ -34,7 +33,7 @@
         <slot name="description">
             <p
                 v-if="description"
-                class="italic text-sm mt-2"
+                class="italic text-xs mt-2"
             >
                 {{ description }}
             </p>
@@ -95,6 +94,15 @@
                 get() {
                     return this.value;
                 }
+            }
+        },
+        watch: {
+            error: {
+                handler(val) {
+                    if(val && this.required) {
+                        this.showError = true
+                    }
+                },
             }
         },
         methods: {

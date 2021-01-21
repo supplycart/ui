@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{'input-error':showError}">
     <slot name="label">
       <label
         v-if="label"
@@ -18,6 +18,7 @@
       v-bind="$props"
       @change="change"
       @deleted="deleted"
+      
     >
       <label
         slot-scope="{ setAttachment, maxSize }"
@@ -63,6 +64,14 @@ export default {
     maxSize: {
       type: Number
     },
+    error: {
+      type: [String, Boolean],
+      default: null
+    },
+    required: {
+      type: Boolean,
+      default: false
+    }
   },
   computed: {
     input: {
@@ -73,6 +82,29 @@ export default {
         return this.value;
       }
     }
+  },
+  watch: {
+      error: {
+          handler(val) {
+              if(val && this.required) {
+                  this.showError = true
+              }
+          }
+      },
+      input: {
+        handler(val) {
+          if(!val.length && this.required){
+            this.showError = true
+          }else {
+            this.showError = false
+          }
+        }
+      }
+  },
+  data() {
+      return{
+          showError: false
+      }
   },
   methods: {
     change(val) {
