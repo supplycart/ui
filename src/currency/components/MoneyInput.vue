@@ -14,7 +14,7 @@
       v-model="input"
       v-bind="$attrs"
       class="text-right text-right w-full"
-      :class="inputClass"
+      :class="[showError ? 'input-error' : '', inputClass]"
       :disabled="disabled"
       :required="required"
       :locale="currencyData.locale"
@@ -25,7 +25,14 @@
       @blur="blur"
     />
 
-    <slot name="error" />
+    <slot name="error" >
+        <p
+            v-if="showError"
+            class="italic text-red-600 text-xs mt-2"
+        >
+            {{ error }}
+        </p>
+    </slot>
     <slot name="description" />
   </div>
 </template>
@@ -78,9 +85,9 @@
                 type: [String, Object],
                 default: null
             },
-            errors: {
-                type: Array,
-                default: () => []
+            error: {
+                type: String,
+                default: null
             },
             intValue: {
                 type: Boolean,
@@ -109,8 +116,23 @@
                 return currency ? currency : DefaultCurrency;
             }
         },
+        data() {
+            return {
+                showError: false
+            };
+        },
+        watch: {
+            error: {
+                handler(val) {
+                    if(val && this.required) {
+                        this.showError = true
+                    }
+                },
+            }
+        },
         methods: {
             blur(e) {
+                this.showError = e ? false : true;
                 this.$emit('blur', e);
             },
         }
