@@ -96,6 +96,10 @@
             allowNegative: {
                 type: Boolean,
                 default: false
+            },
+            allowZero: {
+                type: Boolean,
+                default: true
             }
         },
         computed: {
@@ -132,7 +136,9 @@
         },
         methods: {
             blur(e) {
-                this.showError = e ? false : true;
+                if(!this.allowZero){
+                    this.showError = e.target.value!=0 ? false : true;
+                }
                 this.$emit('blur', e);
             },
         }
