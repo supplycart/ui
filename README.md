@@ -87,3 +87,11 @@
 | Event | Description |
 | --- | --- |
 | deleted | return deleted data contains index and deleted file |
+
+
+#### TextareaInput
+| Props | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | String |  | Input value |
+| label | String |  | Form label |
+

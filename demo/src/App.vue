@@ -250,6 +250,15 @@
                     <Paginate v-bind="meta" btn-class="py-2 px-3 border"/>
                 </div>
             </div>
+            <div class="p-12">
+                <TextareaInput
+                        label='Text area'
+                        class="w-1/2 mr-4 mb-4"
+                        input-class="p-2 w-full rounded border border-gray-200"
+                        v-model="phone"
+                        :required="true"
+                    />
+            </div>
         </div>
     </div>
 </template>
@@ -276,7 +285,8 @@
         SubmitButton,
         IconButton,
         Paginate,
-        PasswordInput
+        PasswordInput,
+        TextareaInput
     } from "@supplycart/ui";
     import moment from "moment";
 
@@ -303,7 +313,8 @@
             QuantityInput,
             IconButton,
             Paginate,
-            PasswordInput
+            PasswordInput,
+            TextareaInput
         },
         data() {
             return {

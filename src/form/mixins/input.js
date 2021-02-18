@@ -1,6 +1,10 @@
 export default {
     inheritAttrs: false,
     props: {
+        id: {
+            type: String,
+            default: null
+        },
         label: {
             type: String,
             default: null

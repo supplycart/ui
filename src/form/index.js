@@ -8,4 +8,5 @@ export {default as RemarksInput} from "./components/RemarksInput";
 export {default as TextField} from "./components/TextField";
 export {default as TextInput} from "./components/TextInput";
 export {default as PasswordInput} from "./components/PasswordInput";
+export {default as TextareaInput} from "./components/TextareaInput";
 
