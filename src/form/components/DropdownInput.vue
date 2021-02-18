@@ -82,7 +82,6 @@ export default {
                 },
                 set(e) {
                     this.$emit('input', e);
-                    console.log(e)
                     this.required && this.toggleError(e);
                 }
             },
