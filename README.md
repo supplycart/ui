@@ -95,3 +95,11 @@
 | value | String |  | Input value |
 | label | String |  | Form label |
 
+#### DropdownInput
+This component is based on [vue-select](https://vue-select.org/) . Can refer to this documentation
+
+| Props | Type | Default | Description |
+| --- | --- | --- | --- |
+| value | String |  | Input value |
+| form-label | String |  | Form label |
+

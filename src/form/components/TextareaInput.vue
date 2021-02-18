@@ -21,6 +21,7 @@
       :class="[showError ? 'error' : '', inputClass]"
       :required="required"
       @blur="blur"
+      @focus="focus"
     />
 
     <slot
@@ -55,6 +56,11 @@ import InputMixins from "../mixins/input";
     export default {
         mixins: [InputMixins],
         inheritAttrs: false,
+        data() {
+            return {
+                focused: false,
+            }
+        },
         computed: {
             input: {
                 get() {
@@ -67,6 +73,12 @@ import InputMixins from "../mixins/input";
             showError() {
                 return this.error && this.required && !this.input && this.focused; 
             },
+        },
+        methods: {
+            focus(e) {
+                this.focused = true;
+            }
         }
+        
     };
 </script>
