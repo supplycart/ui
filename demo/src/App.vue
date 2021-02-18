@@ -250,6 +250,27 @@
                     <Paginate v-bind="meta" btn-class="py-2 px-3 border"/>
                 </div>
             </div>
+            <div class="p-12">
+                <TextareaInput
+                        label='Text area'
+                        class="w-1/2 mr-4 mb-4"
+                        input-class="p-2 w-full rounded border border-gray-200"
+                        value="phone"
+                        :required="true"
+                        error="hello"
+                    />
+
+                <DropdownInput 
+                    v-model="state" 
+                    multiple
+                    :required="true"
+                    :options="stateOptions" 
+                    :reduce="state => state.id"
+                    label="label"
+                    @input="test"
+                    :filterable="false"
+                    form-label="Dropdown Input"/>
+            </div>
         </div>
     </div>
 </template>
@@ -276,7 +297,9 @@
         SubmitButton,
         IconButton,
         Paginate,
-        PasswordInput
+        PasswordInput,
+        TextareaInput,
+        DropdownInput
     } from "@supplycart/ui";
     import moment from "moment";
 
@@ -303,7 +326,9 @@
             QuantityInput,
             IconButton,
             Paginate,
-            PasswordInput
+            PasswordInput,
+            TextareaInput,
+            DropdownInput
         },
         data() {
             return {
@@ -367,7 +392,9 @@
                     from: 1,
                     to: 8,
                     current_page: 1,
-                }
+                },
+                state: null,
+                stateOptions: [{id:1,label:'Pahang'},{id:2,label:'Perak'}, {id:3,label:'Melaka'}]
             };
         },
         mounted() {
@@ -382,7 +409,9 @@
             }, 5000);
         },
         methods: {
-            
+            test(e) {
+                console.log('input dropdown', e)
+            }
         }
     };
 </script>
