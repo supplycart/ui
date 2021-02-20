@@ -6,6 +6,8 @@
 3. Run `yarn install-demo`
 4. Run `yarn serve` to run demo app
 
+If you want to use this repo as the `@supplycart/ui` packages for ADAM/HUB/EVA repo locally, run `yarn link "@supplycart/ui"` at the root directory of the repo.
+
 #### Money
 | Props | Type | Default | Description |
 | --- | --- | --- | --- |
