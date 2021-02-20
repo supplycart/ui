@@ -1,34 +1,38 @@
 {
-  "name": "@supplycart/ui",
-  "version": "1.11.0",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/supplycart/ui"
-  },
-  "scripts": {
-    "install-demo": "cd ./demo && yarn install && yarn link @supplycart/ui",
-    "serve": "cd ./demo && yarn serve",
-    "lint": "cd ./demo && yarn lint"
-  },
-  "dependencies": {
-    "core-js": "^3.6.4",
-    "dinero.js": "^1.6.0",
-    "feather-icons": "^4.28.0",
-    "flatpickr": "^4.6.3",
-    "lodash": "^4.17.19",
-    "luxon": "^1.22.0",
-    "moment": "2.24.0",
-    "moment-timezone": "^0.5.28",
-    "numeral": "^2.0.6",
-    "vue": "^2.6.11",
-    "vue-currency-input": "^1.17.3",
-    "vue-flatpickr-component": "^8.1.5",
-    "vue-select": "^3.10.7"
-  },
-  "license": "MIT",
-  "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0",
-    "eslint-plugin-vue": "^6.2.2"
-  }
+    "name": "@supplycart/ui",
+    "version": "1.11.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/supplycart/ui"
+    },
+    "scripts": {
+        "install-demo": "cd ./demo && yarn install && yarn link @supplycart/ui",
+        "serve": "cd ./demo && yarn serve",
+        "lint": "eslint --ext .js,.vue src",
+        "lint-fix": "eslint --fix --ext .js,.vue src"
+    },
+    "dependencies": {
+        "core-js": "^3.6.4",
+        "dinero.js": "^1.6.0",
+        "feather-icons": "^4.28.0",
+        "flatpickr": "^4.6.3",
+        "lodash": "^4.17.19",
+        "luxon": "^1.22.0",
+        "moment": "2.24.0",
+        "moment-timezone": "^0.5.28",
+        "numeral": "^2.0.6",
+        "vue": "^2.6.11",
+        "vue-currency-input": "^1.17.3",
+        "vue-flatpickr-component": "^8.1.5",
+        "vue-select": "^3.10.7"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "@vue/eslint-config-prettier": "^6.0.0",
+        "eslint": "^6.8.0",
+        "eslint-plugin-prettier": "^3.3.1",
+        "eslint-plugin-vue": "^7.5.0",
+        "prettier": "^2.2.1",
+        "prettier-eslint": "^12.0.0"
+    }
 }
