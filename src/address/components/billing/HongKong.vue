@@ -27,17 +27,21 @@
             <p>{{ value.country }}</p>
         </div>
         <div v-if="showAttribute('einvoice_email')">
-            <p v-if="value.einvoice_email">E-Invoice Mailbox: {{ value.einvoice_email }}</p>
+            <p v-if="value.einvoice_email">
+                E-Invoice Mailbox: {{ value.einvoice_email }}
+            </p>
         </div>
         <div v-if="showAttribute('registration_no')">
-            <p v-if="value.registration_no">Registration No.: {{ value.registration_no }}</p>
+            <p v-if="value.registration_no">
+                Registration No.: {{ value.registration_no }}
+            </p>
         </div>
     </div>
 </template>
 <script>
-    import AddressMixins from "../../mixins/address"
-    export default {
-        name: "HongKongBillingAddress",
-        mixins: [AddressMixins],
-    };
+import AddressMixins from "../../mixins/address";
+export default {
+    name: "HongKongBillingAddress",
+    mixins: [AddressMixins],
+};
 </script>

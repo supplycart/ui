@@ -1,49 +1,35 @@
 <template>
-  <div class="input-holder">
-    <slot name="label">
-      <label
-        v-if="label"
-        :for="$attrs.id"
-      >
-        {{ label }}
-        <small
-          v-if="required"
-          class="italic text-red-600"
-        >*</small>
-      </label>
-    </slot>
+    <div class="input-holder">
+        <slot name="label">
+            <label v-if="label" :for="$attrs.id">
+                {{ label }}
+                <small v-if="required" class="italic text-red-600">*</small>
+            </label>
+        </slot>
 
-    <textarea
-      v-model="input"
-      rows="4"
-      v-bind="$attrs"
-      class="h-textarea"
-      :class="[showError ? 'error' : '', inputClass]"
-      :required="required"
-      @blur="blur"
-      @focus="focus"
-    />
+        <textarea
+            v-model="input"
+            rows="4"
+            v-bind="$attrs"
+            class="h-textarea"
+            :class="[showError ? 'error' : '', inputClass]"
+            :required="required"
+            @blur="blur"
+            @focus="focus"
+        />
 
-    <slot
-      name="error"
-    >
-      <p
-        v-if="showError"
-        class="text-error"
-      >
-        {{ error }}
-      </p>
-    </slot>
+        <slot name="error">
+            <p v-if="showError" class="text-error">
+                {{ error }}
+            </p>
+        </slot>
 
-    <slot name="description">
-      <p
-        v-if="description"
-        class="text-desc"
-      >
-        {{ description }}
-      </p>
-    </slot>
-  </div>
+        <slot name="description">
+            <p v-if="description" class="text-desc">
+                {{ description }}
+            </p>
+        </slot>
+    </div>
 </template>
 <style>
 .h-textarea {
@@ -53,32 +39,31 @@
 </style>
 <script>
 import InputMixins from "../mixins/input";
-    export default {
-        mixins: [InputMixins],
-        inheritAttrs: false,
-        data() {
-            return {
-                focused: false,
-            }
-        },
-        computed: {
-            input: {
-                get() {
-                    return this.value;
-                },
-                set(e) {
-                    this.$emit('input', e);
-                }
+export default {
+    mixins: [InputMixins],
+    inheritAttrs: false,
+    data() {
+        return {
+            focused: false,
+        };
+    },
+    computed: {
+        input: {
+            get() {
+                return this.value;
             },
-            showError() {
-                return this.error && this.required && !this.input && this.focused; 
+            set(e) {
+                this.$emit("input", e);
             },
         },
-        methods: {
-            focus(e) {
-                this.focused = true;
-            }
-        }
-        
-    };
+        showError() {
+            return this.error && this.required && !this.input && this.focused;
+        },
+    },
+    methods: {
+        focus(e) {
+            this.focused = true;
+        },
+    },
+};
 </script>

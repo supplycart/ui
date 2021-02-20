@@ -1,49 +1,49 @@
 <template>
-  <FlatPickr
-    :id="id"
-    v-model="input"
-    :config="timeConfig"
-    :disabled="disabled"
-  />
+    <FlatPickr
+        :id="id"
+        v-model="input"
+        :config="timeConfig"
+        :disabled="disabled"
+    />
 </template>
 <script>
-  import FlatPickr from "vue-flatpickr-component";
-  import { merge } from "lodash";
-  import { DefaultTimeConfig } from "../constants/flatpickr";
+import FlatPickr from "vue-flatpickr-component";
+import { merge } from "lodash";
+import { DefaultTimeConfig } from "../constants/flatpickr";
 
-  export default {
-    name: 'TimePicker',
-    components: {FlatPickr},
+export default {
+    name: "TimePicker",
+    components: { FlatPickr },
     props: {
-      id: {
-        type: String,
-        default: null
-      },
-      value: {
-        type: String,
-        default: null
-      },
-      config: {
-        type: Object,
-        default: () => {}
-      },
-      disabled: {
-        type: Boolean,
-        default: false
-      }
+        id: {
+            type: String,
+            default: null,
+        },
+        value: {
+            type: String,
+            default: null,
+        },
+        config: {
+            type: Object,
+            default: () => {},
+        },
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
-      input: {
-        get() {
-          return this.value;
+        input: {
+            get() {
+                return this.value;
+            },
+            set(val) {
+                this.$emit("input", val);
+            },
         },
-        set(val) {
-          this.$emit("input", val);
-        }
-      },
-      timeConfig() {
-        return merge(DefaultTimeConfig, this.config);
-      }
+        timeConfig() {
+            return merge(DefaultTimeConfig, this.config);
+        },
     },
-  };
+};
 </script>
