@@ -60,7 +60,7 @@ export default {
         address: {
             get() {
                 let address = this.value;
-                if (!address.hasOwnProperty("country")) {
+                if (!Object.prototype.hasOwnProperty.call(address, "country")) {
                     this.$set(address, "country", this.country);
                 }
                 return address;

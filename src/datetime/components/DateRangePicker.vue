@@ -3,6 +3,7 @@
 </template>
 <script>
 import { merge } from "lodash";
+import flatpickr from "flatpickr";
 
 export default {
     props: {
