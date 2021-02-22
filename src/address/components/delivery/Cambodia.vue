@@ -21,7 +21,7 @@
                 <span v-if="value.building">{{ value.building }}</span>
             </p>
             <p>{{ value.street }}</p>
-            <p>{{ value.city }}, {{ value.postcode }}  </p>
+            <p>{{ value.city }}, {{ value.postcode }}</p>
             <p>{{ value.state }}, {{ value.country }}</p>
         </div>
         <div>
@@ -32,9 +32,13 @@
                 <p>Lift Access: {{ value.lift_access }}</p>
             </div>
         </div>
-        
+
         <div>
-             <div v-if="showAttribute('requires_permit') && this.display.length > 0">
+            <div
+                v-if="
+                    showAttribute('requires_permit') && this.display.length > 0
+                "
+            >
                 <p v-if="value.requires_permit">Requires Permit</p>
             </div>
             <div v-if="!this.display.length">
@@ -45,9 +49,9 @@
 </template>
 
 <script>
-    import AddressMixins from "../../mixins/address"
-    export default {
-        name: "CambodiaDeliveryAddress",
-        mixins: [AddressMixins]
-    };
+import AddressMixins from "../../mixins/address";
+export default {
+    name: "CambodiaDeliveryAddress",
+    mixins: [AddressMixins],
+};
 </script>

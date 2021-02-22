@@ -85,12 +85,16 @@
                 />
             </div>
             <div class="grid grid-cols-2 gap-2">
-                
                 <div>
-                    <label for="state" >
-                        State <small class="italic text-red-600" >*</small>
+                    <label for="state">
+                        State <small class="italic text-red-600">*</small>
                     </label>
-                    <VSelect :disabled="disabledFields['state']" :options="states" v-model="value.state" class="mt-2 select-country"></VSelect>
+                    <VSelect
+                        :disabled="disabledFields['state']"
+                        :options="states"
+                        v-model="value.state"
+                        class="mt-2 select-country"
+                    ></VSelect>
                 </div>
 
                 <TextInput
@@ -101,7 +105,6 @@
                     class="w-full mr-4 mb-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
-                
             </div>
 
             <div class="grid grid-cols-2 gap-2">
@@ -123,14 +126,14 @@
 </template>
 <script>
 import TextInput from "../../../form/components/TextInput";
-import StateMixins from '../../mixins/malaysiaStates'
-import AddressFormMixins from '../../mixins/addressForm'
+import StateMixins from "../../mixins/malaysiaStates";
+import AddressFormMixins from "../../mixins/addressForm";
 
 export default {
     name: "MalaysiaBillingAddressForm",
-    mixins: [AddressFormMixins,StateMixins],
+    mixins: [AddressFormMixins, StateMixins],
     components: {
-        TextInput
-    }
+        TextInput,
+    },
 };
 </script>

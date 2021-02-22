@@ -120,13 +120,13 @@
 </template>
 <script>
 import TextInput from "../../../form/components/TextInput";
-import AddressFormMixins from '../../mixins/addressForm'
+import AddressFormMixins from "../../mixins/addressForm";
 
 export default {
     name: "IndonesiaBillingAddressForm",
     mixins: [AddressFormMixins],
     components: {
-        TextInput
-    }
+        TextInput,
+    },
 };
 </script>

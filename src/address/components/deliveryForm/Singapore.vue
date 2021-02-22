@@ -9,7 +9,7 @@
                 class="w-full mr-4"
                 input-class="p-2 rounded border border-gray-200"
             />
-            <portal-target name="address-branch-name" class="italic"/>
+            <portal-target name="address-branch-name" class="italic" />
         </div>
 
         <div>
@@ -22,7 +22,7 @@
                     class="w-full mr-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
-                <portal-target name="address-street" class="italic"/>
+                <portal-target name="address-street" class="italic" />
             </div>
             <div class="grid grid-cols-3 gap-2">
                 <div class="mb-4">
@@ -33,7 +33,7 @@
                         class="w-full"
                         input-class="p-2 rounded border border-gray-200"
                     />
-                    <portal-target name="address-unit" class="italic"/>
+                    <portal-target name="address-unit" class="italic" />
                 </div>
                 <div class="mb-4">
                     <TextInput
@@ -43,7 +43,7 @@
                         class="w-full"
                         input-class="p-2 rounded border border-gray-200"
                     />
-                    <portal-target name="address-floor" class="italic"/>
+                    <portal-target name="address-floor" class="italic" />
                 </div>
                 <div class="mb-4">
                     <TextInput
@@ -53,7 +53,7 @@
                         class="w-full"
                         input-class="p-2 rounded border border-gray-200"
                     />
-                    <portal-target name="address-building" class="italic"/>
+                    <portal-target name="address-building" class="italic" />
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-2">
@@ -66,7 +66,7 @@
                         class="w-full mr-4"
                         input-class="p-2 rounded border border-gray-200"
                     />
-                    <portal-target name="address-city" class="italic"/>
+                    <portal-target name="address-city" class="italic" />
                 </div>
 
                 <div class="mb-4">
@@ -78,16 +78,21 @@
                         class="w-full mr-4"
                         input-class="p-2 rounded border border-gray-200"
                     />
-                    <portal-target name="address-postcode" class="italic"/>
+                    <portal-target name="address-postcode" class="italic" />
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-2">
                 <div>
-                    <label for="country" >
-                        Country <small class="italic text-red-600" >*</small>
+                    <label for="country">
+                        Country <small class="italic text-red-600">*</small>
                     </label>
-                    <VSelect :disabled="disabledFields['country']" :options="countries" v-model="setCountry" class="mt-2 select-country"></VSelect>
-                    <portal-target name="address-country" class="italic"/>
+                    <VSelect
+                        :disabled="disabledFields['country']"
+                        :options="countries"
+                        v-model="setCountry"
+                        class="mt-2 select-country"
+                    ></VSelect>
+                    <portal-target name="address-country" class="italic" />
                 </div>
             </div>
         </div>
@@ -114,10 +119,10 @@
 <script>
 import TextInput from "../../../form/components/TextInput";
 import Checkbox from "../../../form/components/Checkbox";
-import AddressFormMixins from '../../mixins/addressForm'
+import AddressFormMixins from "../../mixins/addressForm";
 export default {
     name: "SingaporeDeliveryAddressForm",
     components: { TextInput, Checkbox },
-    mixins: [AddressFormMixins]
+    mixins: [AddressFormMixins],
 };
 </script>

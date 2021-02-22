@@ -7,62 +7,61 @@
     />
 </template>
 <script>
-    import FlatPickr from "vue-flatpickr-component";
-    import moment from "moment";
-    import { merge } from "lodash";
-    import { Timezones } from "../constants";
-    import { DefaultConfig } from "../constants/flatpickr";
+import FlatPickr from "vue-flatpickr-component";
+import moment from "moment";
+import { merge } from "lodash";
+import { Timezones } from "../constants";
+import { DefaultConfig } from "../constants/flatpickr";
 
-    export default {
-        props: {
-            id: {
-                type: String,
-                default: null
-            },
-            value: {
-                type: [String, Date],
-                default: null
-            },
-            timezone: {
-                type: [String, Object],
-                default() {
-                    return Timezones.MALAYSIA.timezone;
-                }
-            },
-            config: {
-                type: Object,
-                default: () => {}
-            },
-            disabled: {
-                type: Boolean,
-                default: false
-            }
+export default {
+    props: {
+        id: {
+            type: String,
+            default: null,
         },
-        components: {FlatPickr},
-        data() {
-            return {
-                dateConfig: {}
-            }
+        value: {
+            type: [String, Date],
+            default: null,
         },
-        computed: {
-            input: {
-                get() {
-                    return this.value;
-                },
-                set(val) {
-                    this.$emit("input", val);
-                }
+        timezone: {
+            type: [String, Object],
+            default() {
+                return Timezones.MALAYSIA.timezone;
             },
-            
         },
-        watch: {
-            config: {
-                handler: function(val){
-                    this.dateConfig = merge(DefaultConfig, val);
-                },
-                deep: true,
-                immediate: true
-            }
+        config: {
+            type: Object,
+            default: () => {},
         },
-    };
+        disabled: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    components: { FlatPickr },
+    data() {
+        return {
+            dateConfig: {},
+        };
+    },
+    computed: {
+        input: {
+            get() {
+                return this.value;
+            },
+            set(val) {
+                this.$emit("input", val);
+            },
+        },
+    },
+    watch: {
+        config: {
+            handler: function (val) {
+                this.dateConfig = merge(DefaultConfig, val);
+            },
+            deep: true,
+            immediate: true,
+        },
+    },
+};
 </script>

@@ -1,1 +1,1 @@
-export {default as Paginate} from "./components/Paginate";
+export { default as Paginate } from "./components/Paginate";

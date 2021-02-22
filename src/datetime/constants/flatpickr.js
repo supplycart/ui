@@ -4,7 +4,7 @@ const DefaultConfig = {
     altInput: true,
     altFormat: "j M Y",
     dateFormat: "Z",
-    minDate: moment().format("YYYY-MM-DD")
+    minDate: moment().format("YYYY-MM-DD"),
 };
 
 const DefaultDateRangeConfig = {
@@ -12,7 +12,7 @@ const DefaultDateRangeConfig = {
     altFormat: "j M Y",
     dateFormat: "Y-m-d",
     minDate: moment().format("YYYY-MM-DD"),
-    mode: "range"
+    mode: "range",
 };
 
 const DefaultTimeConfig = {
@@ -21,4 +21,4 @@ const DefaultTimeConfig = {
     dateFormat: "H:i",
 };
 
-export {DefaultConfig, DefaultDateRangeConfig, DefaultTimeConfig};
+export { DefaultConfig, DefaultDateRangeConfig, DefaultTimeConfig };
