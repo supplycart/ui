@@ -10,7 +10,7 @@
                         class="w-full"
                         input-class="p-2 rounded border border-gray-200"
                     />
-                    <portal-target name="address-unit"/>
+                    <portal-target name="address-unit" />
                 </div>
 
                 <div class="mb-4">
@@ -21,7 +21,7 @@
                         class="w-full"
                         input-class="p-2 rounded border border-gray-200"
                     />
-                    <portal-target name="address-floor"/>
+                    <portal-target name="address-floor" />
                 </div>
 
                 <div class="mb-4">
@@ -32,7 +32,7 @@
                         class="w-full"
                         input-class="p-2 rounded border border-gray-200"
                     />
-                    <portal-target name="address-building"/>
+                    <portal-target name="address-building" />
                 </div>
             </div>
             <div class="mb-4">
@@ -44,7 +44,7 @@
                     class="w-full mr-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
-                <portal-target name="address-street"/>
+                <portal-target name="address-street" />
             </div>
             <div class="grid grid-cols-2 gap-2">
                 <div class="mb-4">
@@ -56,15 +56,20 @@
                         class="w-full mr-4"
                         input-class="p-2 rounded border border-gray-200"
                     />
-                    <portal-target name="address-district"/>
+                    <portal-target name="address-district" />
                 </div>
 
-                 <div>
-                    <label for="country" >
-                        Country <small class="italic text-red-600" >*</small>
+                <div>
+                    <label for="country">
+                        Country <small class="italic text-red-600">*</small>
                     </label>
-                    <VSelect :options="countries" :disabled="disabledFields['country']" v-model="setCountry" class="mt-2 select-country"></VSelect>
-                    <portal-target name="address-country"/>
+                    <VSelect
+                        :options="countries"
+                        :disabled="disabledFields['country']"
+                        v-model="setCountry"
+                        class="mt-2 select-country"
+                    ></VSelect>
+                    <portal-target name="address-country" />
                 </div>
             </div>
         </div>
@@ -72,12 +77,12 @@
 </template>
 <script>
 import TextInput from "../../../form/components/TextInput";
-import AddressFormMixins from '../../mixins/addressForm'
+import AddressFormMixins from "../../mixins/addressForm";
 export default {
     name: "HongKongDefaultAddressForm",
     mixins: [AddressFormMixins],
     components: {
-        TextInput
-    }
+        TextInput,
+    },
 };
 </script>

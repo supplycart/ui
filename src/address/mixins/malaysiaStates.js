@@ -17,9 +17,8 @@ export default {
                 "Sabah",
                 "Sarawak",
                 "Selangor",
-                "Terengganu"
-            ]
-            
-        }
-    }
-}
+                "Terengganu",
+            ],
+        };
+    },
+};

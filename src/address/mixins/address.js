@@ -2,17 +2,17 @@ export default {
     props: {
         value: {
             type: Object,
-            default: () => ({})
+            default: () => ({}),
         },
         display: {
             type: Array,
-            default: () => []
-        }
+            default: () => [],
+        },
     },
-    methods:{
+    methods: {
         showAttribute(display) {
             if (this.display.length < 1) return true;
             return this.display.indexOf(display) >= 0 ? true : false;
-        }
-    }
-}
+        },
+    },
+};
