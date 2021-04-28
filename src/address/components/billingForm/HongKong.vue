@@ -95,6 +95,15 @@
                 input-class="p-2 rounded border border-gray-200"
             />
         </div>
+        <div class="grid grid-cols-2 gap-2">
+            <TextInput
+                label="Billing ID"
+                v-model="value.ref_no"
+                :disabled="disabledFields['ref_no']"
+                class="w-full mr-4 mb-4"
+                input-class="p-2 rounded border border-gray-200"
+            />
+        </div>
     </div>
 </template>
 <script>

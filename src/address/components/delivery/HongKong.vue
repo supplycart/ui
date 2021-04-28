@@ -45,6 +45,9 @@
                 <p>Requires Permit: {{ value.requires_permit }}</p>
             </div>
         </div>
+        <div v-if="showAttribute('ref_no')">
+            <p v-if="value.ref_no">Branch ID: {{ value.ref_no }}</p>
+        </div>
     </div>
 </template>
 

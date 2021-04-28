@@ -82,7 +82,7 @@
                 <portal-target name="address-postcode" class="italic" />
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-2">
+        <div class="mb-4 grid grid-cols-2 gap-2">
             <div>
                 <label for="state">
                     State <small class="italic text-red-600">*</small>
@@ -108,6 +108,15 @@
                 ></VSelect>
                 <portal-target name="address-country" class="italic" />
             </div>
+        </div>
+        <div class="grid grid-cols-2 gap-2">
+            <TextInput
+                label="Branch ID"
+                v-model="value.ref_no"
+                :disabled="disabledFields['ref_no']"
+                class="w-full mr-4 mb-4"
+                input-class="p-2 rounded border border-gray-200"
+            />
         </div>
         <div class="mt-2">
             <div>
