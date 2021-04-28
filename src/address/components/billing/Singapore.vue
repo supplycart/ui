@@ -36,6 +36,9 @@
                 Registration No.: {{ value.registration_no }}
             </p>
         </div>
+        <div v-if="showAttribute('ref_no')">
+            <p v-if="value.ref_no">Billing ID: {{ value.ref_no }}</p>
+        </div>
     </div>
 </template>
 <script>
