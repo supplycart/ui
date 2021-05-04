@@ -108,6 +108,15 @@
                 </div>
             </div>
         </div>
+        <div class="grid grid-cols-2 gap-2">
+            <TextInput
+                label="Branch ID"
+                v-model="value.ref_no"
+                :disabled="disabledFields['ref_no']"
+                class="w-full mr-4 mb-4"
+                input-class="p-2 rounded border border-gray-200"
+            />
+        </div>
         <div class="mt-2">
             <div>
                 <Checkbox
@@ -125,15 +134,6 @@
                     input-class="mr-2 form-checkbox h-4 w-4"
                 />
             </div>
-        </div>
-        <div class="grid grid-cols-2 gap-2">
-            <TextInput
-                label="Branch ID"
-                v-model="value.ref_no"
-                :disabled="disabledFields['ref_no']"
-                class="w-full mr-4 mb-4"
-                input-class="p-2 rounded border border-gray-200"
-            />
         </div>
     </div>
 </template>
