@@ -1,9 +1,8 @@
 <script>
 import Dinero from "dinero.js";
-import Currencies from "../constants/currencies";
-import { DefaultCurrency } from "../constants/currencies";
-import { find, replace } from "lodash";
+import { find } from "lodash";
 import numeral from "numeral";
+import Currencies, { DefaultCurrency } from "../constants/currencies";
 
 export default {
     name: "Money",
@@ -15,6 +14,10 @@ export default {
         currency: {
             type: [String, Object],
             default: null,
+        },
+        decimal: {
+            type: Number,
+            default: 2,
         },
         sign: {
             type: Boolean,
@@ -29,7 +32,7 @@ export default {
             default: true,
         },
     },
-    render(createElement, context) {
+    render(createElement) {
         let currency =
             typeof this.currency === "string"
                 ? find(
@@ -59,7 +62,7 @@ export default {
                 Dinero({
                     amount: val,
                     currency: currency.code,
-                    precision: currency.precision,
+                    precision: this.decimal ?? currency.precision,
                 }).toFormat(format)
             );
         } else {
@@ -68,7 +71,7 @@ export default {
                 Dinero({
                     amount: val,
                     currency: currency.code,
-                    precision: currency.precision,
+                    precision: this.decimal ?? currency.precision,
                 })
                     .setLocale(currency.locale)
                     .toFormat(format)
