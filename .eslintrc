@@ -19,6 +19,9 @@
         }
     },
     "rules": {
+        "no-console": "error",
+        "prefer-const": "error",
+        "prettier/prettier": "error",
         // All the rules below needs to be removed upon all fixes are done
         "no-unused-vars": "warn",
         "no-redeclare": "warn",
