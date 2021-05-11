@@ -26,7 +26,7 @@ export default {
     },
     methods: {
         update(e) {
-            let val = e.replace(/[^0-9+-\sx]/g, "");
+            const val = e.replace(/[^0-9+-\sx]/g, "");
             this.$emit("input", val);
         },
     },

@@ -46,11 +46,11 @@ export default {
 
         currency = currency ? currency : DefaultCurrency;
 
-        let val = this.intValue
+        const val = this.intValue
             ? numeral(this.value).value()
             : numeral(this.value).multiply(Math.pow(10, this.decimal)).value();
 
-        let format = this.format
+        const format = this.format
             ? this.format
             : this.sign
             ? currency.formatWithSign

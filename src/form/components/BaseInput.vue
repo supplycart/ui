@@ -92,7 +92,7 @@ export default {
         isInvalid() {
             if (!this.regex) return false;
 
-            let value = this.regex.test(this.input);
+            const value = this.regex.test(this.input);
             return !value && this.focused && this.input;
         },
     },

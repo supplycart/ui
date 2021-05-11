@@ -21,7 +21,6 @@ export default {
     },
     computed: {
         attachments: {
-            set(val) {},
             get() {
                 return this.value;
             },
@@ -31,7 +30,7 @@ export default {
         async setAttachment(event) {
             this.attachments = this.attachments ? this.attachments : [];
 
-            let file = event.target.files[0];
+            const file = event.target.files[0];
 
             if (this.validateSize(file) && this.validateFormat(file)) {
                 this.attachments.push(file);
@@ -43,7 +42,7 @@ export default {
         },
 
         async deleteAttachment(index) {
-            let data = {
+            const data = {
                 index: index,
                 file: this.attachments[index],
             };
@@ -52,25 +51,19 @@ export default {
         },
 
         validateSize(file) {
-            if (this.maxSize && file.size > this.maxSize * 1024 * 1024) {
-                console.log(`Maximum size allowed is ${this.maxSize}mb`);
-                return false;
-            }
-
-            return true;
+            return !(this.maxSize && file.size > this.maxSize * 1024 * 1024);
         },
 
         validateFormat(file) {
-            let allowed = this.format.join(", ");
-            let fname = file.name;
+            const fname = file.name;
             let regex = null;
 
             for (let index = 0; index < this.format.length; index++) {
-                let element = this.format[index];
-                let temp = element.toLowerCase();
+                const element = this.format[index];
+                const temp = element.toLowerCase();
 
                 regex = new RegExp(`(\\.${temp})$`, "i");
-                return !regex.exec(fname) ? false : true;
+                return regex.exec(fname);
             }
 
             return true;

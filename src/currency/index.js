@@ -27,7 +27,7 @@ function format(amount, currency, sign = false) {
 
     currency = currency ? currency : DefaultCurrency;
 
-    let format = sign ? currency.formatWithSign : currency.format;
+    const format = sign ? currency.formatWithSign : currency.format;
 
     return Dinero({
         amount: amount,
@@ -51,11 +51,11 @@ function formatCents(amount, currency, sign = false, intValue = true) {
 
     currency = currency ? currency : DefaultCurrency;
 
-    let val = intValue
+    const val = intValue
         ? numeral(amount).value()
         : numeral(amount).multiply(100).value();
 
-    let format = sign ? currency.formatWithSign : currency.format;
+    const format = sign ? currency.formatWithSign : currency.format;
 
     return Dinero({
         amount: val,

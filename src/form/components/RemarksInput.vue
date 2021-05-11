@@ -109,7 +109,7 @@ export default {
         },
         isInvalid() {
             if (!this.regex) return false;
-            let value = this.input ? this.input.length <= 255 : false;
+            const value = this.input ? this.input.length <= 255 : false;
 
             return !value && this.focused && this.input;
         },

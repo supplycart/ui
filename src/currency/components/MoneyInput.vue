@@ -119,7 +119,7 @@ export default {
             return this.errors && this.errors.length > 0;
         },
         currencyData() {
-            let currency =
+            const currency =
                 typeof this.currency === "string"
                     ? find(
                           Currencies,

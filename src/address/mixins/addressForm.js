@@ -27,7 +27,7 @@ export default {
         },
         disabledFields: {
             get() {
-                let tempDisabledFields = {
+                const tempDisabledFields = {
                     unit: false,
                     floor: false,
                     building: false,
@@ -48,7 +48,7 @@ export default {
 
                 this.disableFields.forEach((field) => {
                     if (field === "all") {
-                        let objKeys = Object.keys(tempDisabledFields);
+                        const objKeys = Object.keys(tempDisabledFields);
 
                         objKeys.forEach((key) => {
                             tempDisabledFields[key] = true;
