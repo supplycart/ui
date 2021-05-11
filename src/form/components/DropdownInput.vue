@@ -66,7 +66,7 @@ export default {
     },
     data() {
         return {
-            showError: false
+            showError: false,
         };
     },
     computed: {

@@ -42,13 +42,13 @@ export default {
     },
     computed: {
         component() {
-            let type = startCase(this.type);
-            let country = startCase(this.country);
+            const type = startCase(this.type);
+            const country = startCase(this.country);
 
             if (this.country.match(/\s/g)) {
-                let split = this.country.split(" ");
-                let fName = split[0];
-                let lName = split[1];
+                const split = this.country.split(" ");
+                const fName = split[0];
+                const lName = split[1];
                 return `${fName}${lName}${type}Address`;
             }
 

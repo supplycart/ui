@@ -59,7 +59,7 @@ export default {
     computed: {
         address: {
             get() {
-                let address = this.value;
+                const address = this.value;
                 if (!Object.prototype.hasOwnProperty.call(address, "country")) {
                     this.$set(address, "country", this.country);
                 }

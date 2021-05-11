@@ -27,7 +27,7 @@ export default {
     },
     methods: {
         update(e) {
-            let val = e.replace(/\D+/g, "");
+            const val = e.replace(/\D+/g, "");
             this.$emit("input", val);
         },
     },

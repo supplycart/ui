@@ -94,10 +94,10 @@ export default {
     },
     methods: {
         checkPages() {
-            let pages = [];
+            const pages = [];
 
-            let min = this.selected - this.range;
-            let max = this.selected + this.range;
+            const min = this.selected - this.range;
+            const max = this.selected + this.range;
 
             for (let i = min + 1; i < max; i++) {
                 if (i > 0 && i <= this.pagination.last_page) {

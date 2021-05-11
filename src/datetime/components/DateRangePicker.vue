@@ -64,7 +64,7 @@ export default {
         },
     },
     mounted() {
-        let config = merge(
+        const config = merge(
             {
                 mode: "range",
                 altInput: true,

@@ -77,6 +77,10 @@ export default {
             type: [String, Object],
             default: null,
         },
+        decimal: {
+            type: Number,
+            default: 2,
+        },
         sign: {
             type: Boolean,
             default: false,
@@ -115,13 +119,15 @@ export default {
             return this.errors && this.errors.length > 0;
         },
         currencyData() {
-            let currency =
+            const currency =
                 typeof this.currency === "string"
                     ? find(
                           Currencies,
                           (item) =>
-                              item.code === this.currency.toUpperCase() ||
-                              item.country === this.currency.toUpperCase()
+                              (item.code === this.currency.toUpperCase() ||
+                                  item.country ===
+                                      this.currency.toUpperCase()) &&
+                              item.precision === this.decimal
                       )
                     : this.currency;
 
@@ -145,7 +151,7 @@ export default {
     methods: {
         blur(e) {
             if (!this.allowZero) {
-                this.showError = e.target.value != 0 ? false : true;
+                this.showError = e.target.value === 0;
             }
             this.$emit("blur", e);
         },
