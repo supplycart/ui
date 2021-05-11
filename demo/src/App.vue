@@ -46,6 +46,7 @@
                 <Money :sign="true"
                        currency="MYR"
                        :value="money.integer"
+                       :decimal="money.decimal"
                        class="block mb-4 p-2 w-1/2"/>
 
                 <pre>{value: {{ money.integer }} }</pre>
@@ -53,29 +54,32 @@
                 <br>
 
                 <Money :sign="true"
-                       :value="money.decimal"
-                       :int-value="false"
                        currency="MYR"
+                       :value="money.value"
+                       :decimal="money.decimal"
+                       :int-value="false"
                        class="block mb-4 p-2 w-1/2"/>
 
-                <pre>{value: {{ money.decimal }} }</pre>
+                <pre>{value: {{ money.value }} }</pre>
             </div>
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">MoneyInput</h2>
                 <MoneyInput v-model="moneyInput.integer"
                             currency="MYR"
+                            :decimal="moneyInput.decimal"
                             class="mb-4 p-2 rounded border border-gray-200 w-1/2"/>
 
                 <pre>{value: {{ moneyInput.integer }} }</pre>
 
                 <br>
 
-                <MoneyInput v-model="moneyInput.decimal"
+                <MoneyInput v-model="moneyInput.value"
                             :int-value="false"
                             currency="MYR"
+                            :decimal="moneyInput.decimal"
                             class="mb-4 p-2 rounded border border-gray-200 w-1/2"/>
 
-                <pre>{value: {{ moneyInput.decimal }} }</pre>
+                <pre>{value: {{ moneyInput.value }} }</pre>
             </div>
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Display Address</h2>
@@ -151,8 +155,8 @@
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Attachment</h2>
                 <div class="mb-4">
-                    <ButtonAttachment 
-                        v-model="attachments" 
+                    <ButtonAttachment
+                        v-model="attachments"
                         class="p-1 rounded border border-gray-200 mb-4"
                         icon="upload" label="">
                         <template
@@ -160,8 +164,8 @@
                         <FeatherIcon name="file" :size="14"/>
                     </template>
                     </ButtonAttachment>
-                    <ButtonAttachment 
-                        v-model="attachments" 
+                    <ButtonAttachment
+                        v-model="attachments"
                         class="p-1 rounded border border-gray-200 mb-4"
                         icon="upload" label="Upload"/>
                     <AttachmentInput
@@ -234,8 +238,8 @@
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Button</h2>
                 <div>
-                    <SubmitButton 
-                        class="p-2 rounded bg-blue-300 cursor-pointer mb-4" 
+                    <SubmitButton
+                        class="p-2 rounded bg-blue-300 cursor-pointer mb-4"
                         :loading="true"/>
                     <IconButton
                         class="p-2 rounded bg-blue-300 hover:bg-blue-200 ease-in ease-out cursor-pointer flex"
@@ -260,11 +264,11 @@
                         error="hello"
                     />
 
-                <DropdownInput 
-                    v-model="state" 
+                <DropdownInput
+                    v-model="state"
                     multiple
                     :required="true"
-                    :options="stateOptions" 
+                    :options="stateOptions"
                     :reduce="state => state.id"
                     label="label"
                     @input="test"
@@ -276,19 +280,19 @@
 </template>
 
 <script>
-    import { 
+    import {
         Address,
         AddressForm,
         AttachmentInput,
         ButtonAttachment,
         Checkbox,
-        DatePicker, 
-        DateRangePicker, 
-        DateTime, 
-        TimePicker, 
-        Money, 
+        DatePicker,
+        DateRangePicker,
+        DateTime,
+        TimePicker,
+        Money,
         FeatherIcon,
-        MoneyInput, 
+        MoneyInput,
         EmailInput,
         TextInput,
         PhoneInput,
@@ -341,11 +345,13 @@
                 },
                 moneyInput: {
                     integer: 1000,
-                    decimal: 10.00
+                    value: 10.00,
+                    decimal: 4,
                 },
                 money: {
-                    integer: 1000,
-                    decimal: 10.00
+                    integer: 100000,
+                    value: 10.00,
+                    decimal: 4,
                 },
                 malaysiaBillingAddress: {
                     entity_name: "Supplycart",

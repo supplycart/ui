@@ -38,8 +38,9 @@ export default {
                 ? find(
                       Currencies,
                       (item) =>
-                          item.country === this.currency.toUpperCase() ||
-                          item.code === this.currency
+                          (item.country === this.currency.toUpperCase() ||
+                              item.code === this.currency) &&
+                          item.precision === this.decimal
                   )
                 : this.currency;
 
@@ -47,7 +48,7 @@ export default {
 
         let val = this.intValue
             ? numeral(this.value).value()
-            : numeral(this.value).multiply(100).value();
+            : numeral(this.value).multiply(Math.pow(10, this.decimal)).value();
 
         let format = this.format
             ? this.format
@@ -62,7 +63,7 @@ export default {
                 Dinero({
                     amount: val,
                     currency: currency.code,
-                    precision: this.decimal ?? currency.precision,
+                    precision: currency.precision,
                 }).toFormat(format)
             );
         } else {
@@ -71,7 +72,7 @@ export default {
                 Dinero({
                     amount: val,
                     currency: currency.code,
-                    precision: this.decimal ?? currency.precision,
+                    precision: currency.precision,
                 })
                     .setLocale(currency.locale)
                     .toFormat(format)
