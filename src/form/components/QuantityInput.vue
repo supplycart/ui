@@ -3,7 +3,7 @@
         v-bind="$attrs"
         :label="label"
         :value="value"
-        :regex="regex"
+        :regex="newRegex"
         :error="error"
         :description="description"
         :required="required"
@@ -20,15 +20,22 @@ import InputMixins from "./../mixins/input";
 export default {
     components: { BaseInput },
     mixins: [InputMixins],
-    data() {
-        return {
-            regex: /^[0-9]{1,6}$/,
-        };
+    props: {
+        decimal: {
+            type: Number,
+            default: 0,
+        },
+    },
+    computed: {
+        newRegex() {
+            const firstExp = "^\\d*(\\.\\d{0,";
+            const lastExp = "})?$";
+            return new RegExp(firstExp + this.decimal + lastExp);
+        },
     },
     methods: {
         update(e) {
-            const val = e.replace(/\D+/g, "");
-            this.$emit("input", val);
+            this.$emit("input", e);
         },
     },
 };
