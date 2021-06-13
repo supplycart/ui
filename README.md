@@ -12,6 +12,7 @@ If you want to use this repo as the `@supplycart/ui` packages for ADAM/HUB/EVA r
 | Props | Type | Default | Description |
 | --- | --- | --- | --- |
 | value | int, string | | Money value in decimal or integer |
+| convertPrecision | int | | convert precision of Dinero object |
 
 #### MoneyInput
 | Props | Type | Default | Description |

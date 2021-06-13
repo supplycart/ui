@@ -47,6 +47,7 @@
                        currency="MYR"
                        :value="money.integer"
                        :decimal="money.decimal"
+                       :convert-precision="3"
                        class="block mb-4 p-2 w-1/2"/>
 
                 <pre>{value: {{ money.integer }} }</pre>
@@ -350,7 +351,7 @@
                     decimal: 4,
                 },
                 money: {
-                    integer: 100000,
+                    integer: 102355,
                     value: 10.00,
                     decimal: 4,
                 },
