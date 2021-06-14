@@ -19,6 +19,10 @@ export default {
             type: Number,
             default: 2,
         },
+        convertPrecision: {
+            type: Number,
+            default: 2,
+        },
         sign: {
             type: Boolean,
             default: false,
@@ -64,7 +68,9 @@ export default {
                     amount: val,
                     currency: currency.code,
                     precision: currency.precision,
-                }).toFormat(format)
+                })
+                    .convertPrecision(this.convertPrecision)
+                    .toFormat(format)
             );
         } else {
             return createElement(
@@ -74,6 +80,7 @@ export default {
                     currency: currency.code,
                     precision: currency.precision,
                 })
+                    .convertPrecision(this.convertPrecision)
                     .setLocale(currency.locale)
                     .toFormat(format)
             );
