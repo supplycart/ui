@@ -69,7 +69,7 @@ export default {
                     currency: currency.code,
                     precision: currency.precision,
                 })
-                    .convertPrecision(this.convertPrecision)
+                    .convertPrecision(this.convertPrecision, "HALF_UP")
                     .toFormat(format)
             );
         } else {
@@ -80,7 +80,7 @@ export default {
                     currency: currency.code,
                     precision: currency.precision,
                 })
-                    .convertPrecision(this.convertPrecision)
+                    .convertPrecision(this.convertPrecision, "HALF_UP")
                     .setLocale(currency.locale)
                     .toFormat(format)
             );
