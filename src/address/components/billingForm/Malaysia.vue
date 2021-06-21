@@ -106,6 +106,7 @@
                         v-model="setCountry"
                         :disabled="disabledFields['country']"
                         :required="true"
+                        :clearable="false"
                         class="mt-2 select-country"
                     ></VSelect>
                 </div>
