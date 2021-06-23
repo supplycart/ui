@@ -231,17 +231,19 @@ const currencies = [
         sign: "€",
         name: "Euro",
         code: "EUR",
-        precision: 2,
-        format: "0,0.00",
-        formatWithSign: "$0,0.00",
-    },
-    {
-        sign: "€",
-        name: "Euro",
-        code: "EUR",
         precision: 4,
         format: "0,0.0000",
         formatWithSign: "$0,0.0000",
+    },
+    {
+        country: "NORWAY",
+        sign: "kr",
+        name: "Krone",
+        code: "NOK",
+        precision: 2,
+        format: "0,0.00",
+        formatWithSign: "0,0.00 kr",
+        locale: "nb",
     },
 ];
 const DefaultCurrency = find(currencies, (item) => item.code === "MYR");
