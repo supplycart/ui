@@ -162,7 +162,7 @@ const currencies = [
         locale: "en-AU",
     },
     {
-        country: "UNITED STATES OF AMERICA",
+        country: "UNITED_STATES_OF_AMERICA",
         sign: "$",
         name: "Dollar",
         code: "USD",
@@ -172,7 +172,7 @@ const currencies = [
         locale: "en-US",
     },
     {
-        country: "UNITED STATES",
+        country: "UNITED_STATES_OF_AMERICA",
         sign: "$",
         name: "Dollar",
         code: "USD",
