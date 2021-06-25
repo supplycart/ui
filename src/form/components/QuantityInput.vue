@@ -37,6 +37,10 @@ export default {
         update(e) {
             this.$emit("input", e);
         },
+        blur(e) {
+            this.$emit("blur", e);
+            this.$emit("input", Number(e.target.value).toFixed(this.decimal));
+        },
     },
 };
 </script>
