@@ -21,6 +21,8 @@ export default {
         HongKongDeliveryAddress: () => import("./delivery/HongKong"),
         PhilippinesDeliveryAddress: () => import("./delivery/Philippines"),
         VietnamDeliveryAddress: () => import("./delivery/Vietnam"),
+        NorwayDeliveryAddress: () => import("./delivery/Norway"),
+        UnitedStatesOfAmericaAddress: () => import("./delivery/UnitedStatesOfAmerica"),
     },
     props: {
         value: {
