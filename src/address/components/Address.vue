@@ -22,7 +22,7 @@ export default {
         PhilippinesDeliveryAddress: () => import("./delivery/Philippines"),
         VietnamDeliveryAddress: () => import("./delivery/Vietnam"),
         NorwayDeliveryAddress: () => import("./delivery/Norway"),
-        UnitedStatesOfAmericaAddress: () => import("./delivery/UnitedStatesOfAmerica"),
+        UnitedStatesOfAmericaDeliveryAddress: () => import("./delivery/UnitedStatesOfAmerica"),
     },
     props: {
         value: {
