@@ -9,7 +9,7 @@
 
         <textarea
             v-model="input"
-            rows="4"
+            :rows="rows"
             v-bind="$attrs"
             class="h-textarea"
             :class="[showError ? 'error' : '', inputClass]"
@@ -42,6 +42,12 @@ import InputMixins from "../mixins/input";
 export default {
     mixins: [InputMixins],
     inheritAttrs: false,
+    props: {
+        rows: {
+            type: Number,
+            default: 4,
+        },
+    },
     data() {
         return {
             focused: false,
