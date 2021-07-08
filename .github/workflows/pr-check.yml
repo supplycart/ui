@@ -1,0 +1,61 @@
+name: PR Checks
+
+on:
+  pull_request:
+    types: [opened, reopened, edited, ready_for_review]
+
+env:
+  PR_URL: ${{github.event.pull_request.html_url}}
+
+jobs:
+  fix-pr-title:
+    name: Fix PR Title
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check title format
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        PR_BRANCH: ${{ github.head_ref }}
+      run: |
+        echo "PR URL: $PR_URL"
+        TITLE=$(gh pr view --json 'title' --jq '.title' "$PR_URL")
+        echo "current title: $TITLE"
+
+        if [[ $TITLE =~ ST-[0-9]{4}[[:space:]](FEAT|FIX)[[:space:]].* ]]; then
+          echo "INFO: PR title already in correct format"
+          exit 0
+        elif [[ $TITLE =~ S[Tt][[:space:]-]([0-9]{4})[[:space:]/-](FEAT|Feat|feat|FIX|Fix|fix)[[:space:]/-](.*) ]]; then
+          # match format "ST-1234 FIX message title"
+          JIRA_TICKET=ST-${BASH_REMATCH[1]}
+          OPS=${BASH_REMATCH[2]^^}
+          REST=${BASH_REMATCH[3]}
+          echo $JIRA_TICKET $OPS $REST
+        elif [[ $TITLE =~ S[Tt][[:space:]-]([0-9]{4})[[:space:]/-](.*) ]]; then
+          # match format "ST-1234 message title"
+          JIRA_TICKET=ST-${BASH_REMATCH[1]}
+          REST=${BASH_REMATCH[2]}
+
+          # parse OPS from PR source branch
+          if [[ $PR_BRANCH =~ [/-](FEAT|Feat|feat|FIX|Fix|fix)[/-] ]]; then
+            OPS=${BASH_REMATCH[1]^^}
+          fi
+
+          echo $JIRA_TICKET $OPS $REST
+        fi
+
+        if [[ -n $JIRA_TICKET && -n $OPS && -n $REST ]]; then
+          NEW_TITLE="$JIRA_TICKET $OPS $REST"
+          echo "new title: $NEW_TITLE"
+          gh pr edit --title="$NEW_TITLE" "$PR_URL"
+          echo "SUCCESS: PR title fixed"
+          exit 0
+        else
+          echo "ERROR: cannot automatically fix PR title"
+          ERROR_MESSAGE='ERROR: cannot automatically fix the PR title. Please make sure its formatted like `ST-1234 <FEAT or FIX> <message>`'
+          gh pr comment --body "$ERROR_MESSAGE" "$PR_URL"
+        fi
+
+    # - name: Enable auto-merge
+    #   run: gh pr merge --auto --squash "$PR_URL"
+    #   env:
+    #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
