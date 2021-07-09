@@ -11,6 +11,7 @@
             v-model="input"
             :rows="rows"
             v-bind="$attrs"
+            :placeholder="placeholder"
             class="h-textarea"
             :class="[showError ? 'error' : '', inputClass]"
             :required="required"
@@ -46,6 +47,9 @@ export default {
         rows: {
             type: Number,
             default: 4,
+        },
+        placeholder: {
+            type: String,
         },
     },
     data() {
