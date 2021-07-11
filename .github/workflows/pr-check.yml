@@ -14,7 +14,7 @@ jobs:
     steps:
     - name: Check title format
       env:
-        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        GITHUB_TOKEN: ${{secrets.SUPPLYCART_BOT_TOKEN}}
         PR_BRANCH: ${{ github.head_ref }}
       run: |
         echo "PR URL: $PR_URL"
@@ -51,11 +51,11 @@ jobs:
           exit 0
         else
           echo "ERROR: cannot automatically fix PR title"
-          ERROR_MESSAGE='ERROR: cannot automatically fix the PR title. Please make sure its formatted like `ST-1234 <FEAT or FIX> <message>`'
+          ERROR_MESSAGE='Sorry I cannot automatically fix the PR title 🙏. Please make sure its formatted like `ST-1234 <FEAT or FIX> <message>`. Thanks!'
           gh pr comment --body "$ERROR_MESSAGE" "$PR_URL"
         fi
 
-    # - name: Enable auto-merge
-    #   run: gh pr merge --auto --squash "$PR_URL"
-    #   env:
-    #     GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Enable auto-merge
+      run: gh pr merge --auto --squash "$PR_URL"
+      env:
+        GITHUB_TOKEN: ${{secrets.SUPPLYCART_BOT_TOKEN}}
