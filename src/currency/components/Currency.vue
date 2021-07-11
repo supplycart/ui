@@ -21,7 +21,9 @@ export default {
                 : Currencies.find(
                       (item) =>
                           item.country ===
-                              this.currency.toUpperCase().replaceAll(" ", "_") ||
+                              this.currency
+                                  .toUpperCase()
+                                  .replaceAll(" ", "_") ||
                           item.code === this.currency.toUpperCase()
                   );
 
