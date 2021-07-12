@@ -7,6 +7,7 @@
         :description="description"
         :required="required"
         :input-class="inputClass"
+        type="number"
         @input="update"
         @blur="blur"
     />
