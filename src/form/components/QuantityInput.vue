@@ -3,7 +3,6 @@
         v-bind="$attrs"
         :label="label"
         :value="value"
-        :regex="newRegex"
         :error="error"
         :description="description"
         :required="required"
@@ -21,16 +20,12 @@ export default {
     components: { BaseInput },
     mixins: [InputMixins],
     props: {
-        decimal: {
+        maxDecimal: {
             type: Number,
             default: 0,
         },
-    },
-    computed: {
-        newRegex() {
-            const firstExp = "^\\d*(\\.\\d{0,";
-            const lastExp = "})?$";
-            return new RegExp(firstExp + this.decimal + lastExp);
+        minDecimal: {
+            type: Number,
         },
     },
     methods: {
@@ -39,7 +34,21 @@ export default {
         },
         blur(e) {
             this.$emit("blur", e);
-            this.$emit("input", Number(e.target.value).toFixed(this.decimal));
+
+            if (this.maxDecimal > 0) {
+                const minDecimal = this.minDecimal
+                    ? this.minDecimal
+                    : this.maxDecimal;
+                this.$emit(
+                    "input",
+                    new Intl.NumberFormat("en", {
+                        style: "decimal",
+                        useGrouping: false,
+                        minimumFractionDigits: minDecimal,
+                        maximumFractionDigits: this.maxDecimal,
+                    }).format(e.target.value)
+                );
+            }
         },
     },
 };

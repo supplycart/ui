@@ -197,7 +197,7 @@
                         label="Quantity"
                         v-model="quantity"
                         :required="true"
-                        :decimal="4"
+                        :max-decimal="4"
                         class="w-1/2 mr-4 mb-4"
                         input-class="w-full mt-2 p-2 rounded border border-gray-200"
                     />
