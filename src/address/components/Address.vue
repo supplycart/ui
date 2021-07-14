@@ -47,14 +47,7 @@ export default {
             const type = startCase(this.type);
             const country = startCase(this.country);
 
-            if (this.country.match(/\s/g)) {
-                const split = this.country.split(" ");
-                const fName = split[0];
-                const lName = split[1];
-                return `${fName}${lName}${type}Address`;
-            }
-
-            return `${country}${type}Address`;
+            return `${country.split(" ").join("")}${type}Address`;
         },
     },
     render(createElement, context) {
