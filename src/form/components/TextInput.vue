@@ -96,7 +96,7 @@ export default {
     watch: {
         error: {
             handler(val) {
-                if (val && this.required) {
+                if (!val && this.required) {
                     this.showError = true;
                 }
             },
