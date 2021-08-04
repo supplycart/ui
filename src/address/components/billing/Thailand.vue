@@ -1,18 +1,28 @@
 <template>
     <div>
-        <div v-if="showAttribute('entity_name')">
+        <div>
             <p>
-                {{ value.entity_name }}
+                <span v-if="showAttribute('entity_name')">{{
+                    value.entity_name
+                }}</span>
+
+                <span
+                    v-if="
+                        showAttribute('registration_no') &&
+                        value.registration_no
+                    "
+                    >&nbsp;({{ value.registration_no }})</span
+                >
             </p>
         </div>
         <div>
             <div v-if="this.display.length > 0">
-                <div v-if="showAttribute('pic_name')">
+                <span v-if="showAttribute('pic_name')">
                     {{ value.pic_name }}
-                </div>
-                <div v-if="showAttribute('pic_phone')">
-                    {{ value.pic_phone }}
-                </div>
+                </span>
+                <span v-if="showAttribute('pic_phone')">
+                    - {{ value.pic_phone }}
+                </span>
             </div>
             <p v-else>{{ value.pic_name }} - {{ value.pic_phone }}</p>
         </div>
@@ -29,11 +39,6 @@
         <div v-if="showAttribute('einvoice_email')">
             <p v-if="value.einvoice_email">
                 E-Invoice Mailbox: {{ value.einvoice_email }}
-            </p>
-        </div>
-        <div v-if="showAttribute('registration_no')">
-            <p v-if="value.registration_no">
-                Registration No.: {{ value.registration_no }}
             </p>
         </div>
         <div v-if="showAttribute('ref_no')">
