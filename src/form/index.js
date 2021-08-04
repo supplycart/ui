@@ -10,3 +10,4 @@ export { default as TextInput } from "./components/TextInput";
 export { default as PasswordInput } from "./components/PasswordInput";
 export { default as TextareaInput } from "./components/TextareaInput";
 export { default as DropdownInput } from "./components/DropdownInput";
+export { default as DecimalField } from "./components/DecimalField";
