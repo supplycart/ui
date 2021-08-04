@@ -59,7 +59,7 @@ export default {
                 }
                 return new Intl.NumberFormat("en", {
                     style: "decimal",
-                    useGrouping: false,
+                    useGrouping: true,
                     minimumFractionDigits: this.minDecimal,
                     maximumFractionDigits: this.maxDecimal,
                 }).format(this.value);

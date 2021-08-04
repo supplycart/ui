@@ -280,7 +280,7 @@
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Display Decimal</h2>
                 <div class="mb-4">
-                    <DecimalField label="Quantity" :minDecimal="2" value="1.2"/>
+                    <DecimalField label="Quantity" :minDecimal="1" :maxDecimal="2" value="3500.567"/>
                 </div>
                 
             </div>
