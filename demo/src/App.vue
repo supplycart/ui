@@ -313,8 +313,9 @@
         PasswordInput,
         TextareaInput,
         DropdownInput,
-        DecimalField
+        DecimalField,
     } from "@supplycart/ui";
+    import { formatCents } from "@supplycart/ui";
     import moment from "moment";
 
     export default {
@@ -424,6 +425,8 @@
                 };
                 vm.minDate = "2020-01-01";
             }, 5000);
+            console.log('formatCents', formatCents(234564560, "MYR", false, true, 4));
+            
         },
         methods: {
             test(e) {

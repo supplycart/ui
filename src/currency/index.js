@@ -38,14 +38,21 @@ function format(amount, currency, sign = false) {
         .toFormat(format);
 }
 
-function formatCents(amount, currency, sign = false, intValue = true) {
+function formatCents(
+    amount,
+    currency,
+    sign = false,
+    intValue = true,
+    decimal = 2
+) {
     currency =
         typeof currency === "string"
             ? find(
                   Currencies,
                   (item) =>
-                      item.country === currency.toUpperCase() ||
-                      item.code === currency
+                      (item.country === currency.toUpperCase() ||
+                          item.code === currency) &&
+                      item.precision === decimal
               )
             : currency;
 
@@ -53,7 +60,7 @@ function formatCents(amount, currency, sign = false, intValue = true) {
 
     const val = intValue
         ? numeral(amount).value()
-        : numeral(amount).multiply(100).value();
+        : numeral(amount).multiply(Math.pow(10, decimal)).value();
 
     const format = sign ? currency.formatWithSign : currency.format;
 
