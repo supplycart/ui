@@ -284,6 +284,13 @@
                 </div>
                 
             </div>
+            <div class="p-12">
+                <h2 class="mb-2 font-bold text-gray-600">formatCents Function</h2>
+                <div class="mb-4">
+                    {{formatCents(234564560, "MYR", false, true, 4)}}
+                </div>
+                
+            </div>
         </div>
     </div>
 </template>
@@ -425,12 +432,10 @@
                 };
                 vm.minDate = "2020-01-01";
             }, 5000);
-
-            //how to use formatCents function 
-            console.log('formatCents', formatCents(234564560, "MYR", false, true, 4));
             
         },
         methods: {
+            formatCents,
             test(e) {
                 console.log('input dropdown', e)
             }
