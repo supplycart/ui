@@ -314,8 +314,8 @@
         TextareaInput,
         DropdownInput,
         DecimalField,
+        formatCents
     } from "@supplycart/ui";
-    import { formatCents } from "@supplycart/ui";
     import moment from "moment";
 
     export default {
