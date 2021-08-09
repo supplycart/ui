@@ -284,6 +284,13 @@
                 </div>
                 
             </div>
+            <div class="p-12">
+                <h2 class="mb-2 font-bold text-gray-600">formatCents Function</h2>
+                <div class="mb-4">
+                    {{formatCents(234564560, "MYR", false, true, 4)}}
+                </div>
+                
+            </div>
         </div>
     </div>
 </template>
@@ -313,7 +320,8 @@
         PasswordInput,
         TextareaInput,
         DropdownInput,
-        DecimalField
+        DecimalField,
+        formatCents
     } from "@supplycart/ui";
     import moment from "moment";
 
@@ -424,8 +432,10 @@
                 };
                 vm.minDate = "2020-01-01";
             }, 5000);
+            
         },
         methods: {
+            formatCents,
             test(e) {
                 console.log('input dropdown', e)
             }
