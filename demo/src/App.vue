@@ -425,6 +425,8 @@
                 };
                 vm.minDate = "2020-01-01";
             }, 5000);
+
+            //how to use formatCents function 
             console.log('formatCents', formatCents(234564560, "MYR", false, true, 4));
             
         },
