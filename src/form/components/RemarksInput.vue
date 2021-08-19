@@ -9,7 +9,7 @@
 
         <textarea
             v-model="input"
-            rows="4"
+            :rows="rows"
             v-bind="$attrs"
             class="h-textarea"
             :class="[showError || isInvalid ? 'error' : '', inputClass]"
@@ -86,6 +86,10 @@ export default {
         inputClass: {
             type: String,
             default: null,
+        },
+        rows: {
+            type: Number,
+            default: 4,
         },
     },
     data() {
