@@ -12,7 +12,7 @@ export default {
         },
         maxSize: {
             type: Number,
-            default: 100,
+            default: 10,
         },
         format: {
             type: Array,
