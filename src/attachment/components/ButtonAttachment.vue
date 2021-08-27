@@ -1,5 +1,10 @@
 <template>
-    <BaseAttachment v-model="input" @change="change" @deleted="deleted">
+    <BaseAttachment
+        v-model="input"
+        @change="change"
+        @deleted="deleted"
+        @onError="onError"
+    >
         <label
             slot-scope="{ setAttachment }"
             class="cursor-pointer inline-block flex justify-center fit-width"
@@ -67,6 +72,9 @@ export default {
         },
         deleted(val) {
             this.$emit("deleted", val);
+        },
+        onError(val) {
+            this.$emit("onError", val);
         },
     },
 };
