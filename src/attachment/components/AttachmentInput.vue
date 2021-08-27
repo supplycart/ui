@@ -12,6 +12,7 @@
             v-bind="$props"
             @change="change"
             @deleted="deleted"
+            @onError="onError"
         >
             <label
                 slot-scope="{ setAttachment, maxSize }"
@@ -54,6 +55,9 @@ export default {
         },
         maxSize: {
             type: Number,
+            validator: function (value) {
+                return value <= 10;
+            },
         },
         error: {
             type: [String, Boolean],
@@ -103,6 +107,9 @@ export default {
         },
         deleted(val) {
             this.$emit("deleted", val);
+        },
+        onError(val) {
+            this.$emit("onError", val);
         },
     },
 };
