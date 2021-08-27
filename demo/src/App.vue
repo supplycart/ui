@@ -162,8 +162,8 @@
                         icon="upload" label="">
                         <template
                         slot="icon">
-                        <FeatherIcon name="file" :size="14"/>
-                    </template>
+                            <FeatherIcon name="file" :size="14"/>
+                        </template>
                     </ButtonAttachment>
                     <ButtonAttachment
                         v-model="attachments"
@@ -171,6 +171,13 @@
                         icon="upload" label="Upload"/>
                     <AttachmentInput
                         v-model="attachments"
+                        :maxSize="10"
+                        @onError="displayError"
+                        :format="[
+                        'pdf',
+                        'csv',
+                        'xlsx'
+                        ]"
                         class="p-2 rounded border border-gray-200 w-1/2 mb-4"
                         />
                     <pre>{Attachment Count: {{ attachments.length }} }</pre>
@@ -289,6 +296,9 @@
                 <div class="mb-4">
                     {{formatCents(234564560, "MYR", false, true, 4)}}
                 </div>
+                
+            </div>
+            <div class="p-12">
                 
             </div>
         </div>
@@ -438,6 +448,9 @@
             formatCents,
             test(e) {
                 console.log('input dropdown', e)
+            },
+            displayError(message) {
+                console.table(message)
             }
         }
     };
