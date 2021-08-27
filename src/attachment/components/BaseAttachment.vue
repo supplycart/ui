@@ -1,4 +1,5 @@
 <script>
+import { validateAttachmentFormat, validateAttachmentSize } from "../index";
 export default {
     props: {
         value: {
@@ -27,17 +28,33 @@ export default {
         },
     },
     methods: {
+        validateAttachmentFormat,
+        validateAttachmentSize,
         async setAttachment(event) {
             this.attachments = this.attachments ? this.attachments : [];
 
             const file = event.target.files[0];
 
-            if (this.validateSize(file) && this.validateFormat(file)) {
+            if (
+                this.validateAttachmentSize(file, this.maxSize) &&
+                this.validateAttachmentFormat(file, this.format)
+            ) {
                 this.attachments.push(file);
                 this.$emit("input", this.attachments);
                 this.$emit("change", this.attachments);
 
                 event.target.value = null;
+            } else {
+                const message = [];
+                if (!this.validateAttachmentSize(file, this.maxSize)) {
+                    message.push(
+                        `File has exceeded limit of ${this.maxSize}MB`
+                    );
+                }
+                if (!this.validateAttachmentFormat(file, this.format)) {
+                    message.push(`File format not supported`);
+                }
+                this.$emit("onError", message);
             }
         },
 
@@ -48,25 +65,6 @@ export default {
             };
             this.$emit("deleted", data);
             this.attachments.splice(index, 1);
-        },
-
-        validateSize(file) {
-            return !(this.maxSize && file.size > this.maxSize * 1024 * 1024);
-        },
-
-        validateFormat(file) {
-            const fname = file.name;
-            let regex = null;
-
-            for (let index = 0; index < this.format.length; index++) {
-                const element = this.format[index];
-                const temp = element.toLowerCase();
-
-                regex = new RegExp(`(\\.${temp})$`, "i");
-                return regex.exec(fname);
-            }
-
-            return true;
         },
     },
     render() {
