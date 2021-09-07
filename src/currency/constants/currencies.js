@@ -1,4 +1,4 @@
-import { find } from "lodash";
+import { find, filter } from "lodash";
 
 const currencies = [
     {
@@ -245,8 +245,20 @@ const currencies = [
         formatWithSign: "0,0.00 kr",
         locale: "nb",
     },
+    {
+        country: "JAPAN",
+        sign: "¥",
+        name: "Yen",
+        code: "JPY",
+        precision: 0,
+        format: "0,0",
+        formatWithSign: "$0,0",
+        locale: "ja-JP",
+    },
 ];
 const DefaultCurrency = find(currencies, (item) => item.code === "MYR");
 
+const NoCentsCurrencies = filter(currencies, (item) => item.precision === 0);
+
 export default currencies;
-export { DefaultCurrency };
+export { DefaultCurrency, NoCentsCurrencies };
