@@ -2,7 +2,10 @@
 import Dinero from "dinero.js";
 import { find } from "lodash";
 import numeral from "numeral";
-import Currencies, { DefaultCurrency } from "../constants/currencies";
+import Currencies, {
+    DefaultCurrency,
+    NoCentsCurrencies,
+} from "../constants/currencies";
 
 export default {
     name: "Money",
@@ -37,6 +40,19 @@ export default {
         },
     },
     render(createElement) {
+        let precision = this.decimal;
+        // to check for currencies that has no precision
+        if (typeof this.currency === "string") {
+            const currencyCodeCountry = [];
+            NoCentsCurrencies.forEach((item) => {
+                currencyCodeCountry.push(item.code);
+                currencyCodeCountry.push(item.country);
+            });
+
+            if (currencyCodeCountry.includes(this.currency)) {
+                precision = 0;
+            }
+        }
         let currency =
             typeof this.currency === "string"
                 ? find(
@@ -44,7 +60,7 @@ export default {
                       (item) =>
                           (item.country === this.currency.toUpperCase() ||
                               item.code === this.currency) &&
-                          item.precision === this.decimal
+                          item.precision === precision
                   )
                 : this.currency;
 
