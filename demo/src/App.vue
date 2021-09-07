@@ -65,12 +65,14 @@
             </div>
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">MoneyInput</h2>
-                <MoneyInput v-model="moneyInput.integer"
-                            currency="MYR"
-                            :decimal="moneyInput.decimal"
+                <MoneyInput v-model="testMoneyVal"
+                :sign="true"
+                            currency="JPY"
                             class="mb-4 p-2 rounded border border-gray-200 w-1/2"/>
 
-                <pre>{value: {{ moneyInput.integer }} }</pre>
+                <pre>{value: <Money :sign="true"
+                       currency="JPY"
+                       :value="testMoneyVal"/> }</pre>
 
                 <br>
 
@@ -377,6 +379,7 @@
                     value: 10.00,
                     decimal: 4,
                 },
+                testMoneyVal:0,
                 money: {
                     integer: 102355,
                     value: 10.00,
