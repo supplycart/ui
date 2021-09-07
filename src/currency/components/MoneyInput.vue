@@ -43,7 +43,10 @@ input[type="text"] {
 }
 </style>
 <script>
-import Currencies, { DefaultCurrency } from "../constants/currencies";
+import Currencies, {
+    DefaultCurrency,
+    NoCentsCurrencies,
+} from "../constants/currencies";
 import FormLabel from "../../form/components/FormLabel";
 import { CurrencyInput } from "vue-currency-input";
 import { find } from "lodash";
@@ -119,6 +122,19 @@ export default {
             return this.errors && this.errors.length > 0;
         },
         currencyData() {
+            let precision = this.decimal;
+            // to check for currencies that has no precision
+            if (typeof this.currency === "string") {
+                const currencyCodeCountry = [];
+                NoCentsCurrencies.forEach((item) => {
+                    currencyCodeCountry.push(item.code);
+                    currencyCodeCountry.push(item.country);
+                });
+
+                if (currencyCodeCountry.includes(this.currency)) {
+                    precision = 0;
+                }
+            }
             const currency =
                 typeof this.currency === "string"
                     ? find(
@@ -127,7 +143,7 @@ export default {
                               (item.code === this.currency.toUpperCase() ||
                                   item.country ===
                                       this.currency.toUpperCase()) &&
-                              item.precision === this.decimal
+                              item.precision === precision
                       )
                     : this.currency;
 
