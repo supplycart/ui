@@ -13,6 +13,9 @@ export default {
         PhilippinesBillingAddressForm: () =>
             import("./billingForm/Philippines"),
         VietnamBillingAddressForm: () => import("./billingForm/Vietnam"),
+        JapanBillingAddressForm: () => import("./billingForm/Japan"),
+        UnitedStatesOfAmericaBillingAddressForm: () =>
+            import("./billingForm/UnitedStatesOfAmerica"),
 
         MalaysiaDeliveryAddressForm: () => import("./deliveryForm/Malaysia"),
         CambodiaDeliveryAddressForm: () => import("./deliveryForm/Cambodia"),
@@ -23,6 +26,9 @@ export default {
         PhilippinesDeliveryAddressForm: () =>
             import("./deliveryForm/Philippines"),
         VietnamDeliveryAddressForm: () => import("./deliveryForm/Vietnam"),
+        JapanDeliveryAddressForm: () => import("./deliveryForm/Japan"),
+        UnitedStatesOfAmericaDeliveryAddressForm: () =>
+            import("./deliveryForm/UnitedStatesOfAmerica"),
 
         MalaysiaGeneralAddressForm: () => import("./generalForm/Malaysia"),
         CambodiaGeneralAddressForm: () => import("./generalForm/Cambodia"),
@@ -33,6 +39,9 @@ export default {
         PhilippinesGeneralAddressForm: () =>
             import("./generalForm/Philippines"),
         VietnamGeneralAddressForm: () => import("./generalForm/Vietnam"),
+        JapanGeneralAddressForm: () => import("./generalForm/Japan"),
+        UnitedStatesOfAmericaGeneralAddressForm: () =>
+            import("./generalForm/UnitedStatesOfAmerica"),
     },
     props: {
         value: {
