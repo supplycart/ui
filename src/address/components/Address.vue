@@ -1,5 +1,5 @@
 <script>
-import { startCase, lowerCase } from "lodash";
+import { startCase } from "lodash";
 
 export default {
     name: "Address",
@@ -12,6 +12,9 @@ export default {
         HongKongBillingAddress: () => import("./billing/HongKong"),
         PhilippinesBillingAddress: () => import("./billing/Philippines"),
         VietnamBillingAddress: () => import("./billing/Vietnam"),
+        JapanBillingAddress: () => import("./billing/Japan"),
+        UnitedStatesOfAmericaBillingAddress: () =>
+            import("./billing/UnitedStatesOfAmerica"),
 
         MalaysiaDeliveryAddress: () => import("./delivery/Malaysia"),
         CambodiaDeliveryAddress: () => import("./delivery/Cambodia"),
@@ -22,6 +25,7 @@ export default {
         PhilippinesDeliveryAddress: () => import("./delivery/Philippines"),
         VietnamDeliveryAddress: () => import("./delivery/Vietnam"),
         NorwayDeliveryAddress: () => import("./delivery/Norway"),
+        JapanDeliveryAddress: () => import("./delivery/Japan"),
         UnitedStatesOfAmericaDeliveryAddress: () =>
             import("./delivery/UnitedStatesOfAmerica"),
     },
@@ -51,7 +55,7 @@ export default {
             return `${country.split(" ").join("")}${type}Address`;
         },
     },
-    render(createElement, context) {
+    render(createElement) {
         return createElement("keep-alive", [
             createElement("component", {
                 is: this.component,
