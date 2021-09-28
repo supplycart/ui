@@ -90,7 +90,7 @@
                     <h3 class="font-bold mb-2">Billing Address</h3>
                     <Address
                         v-model="malaysiaBillingAddress"
-                        country="Malaysia"
+                        country="test"
                         type="billing"/>
                 </div>
                 <div class="mb-4">
