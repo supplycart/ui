@@ -49,8 +49,41 @@ export default {
     },
     computed: {
         component() {
+            const supportedBillingAddressCountries = [
+                "Malaysia",
+                "Cambodia",
+                "Singapore",
+                "Indonesia",
+                "Thailand",
+                "HongKong",
+                "Philippines",
+                "Vietnam",
+            ];
+
+            const supportedDeliveryAddressCountries = [
+                "Malaysia",
+                "Cambodia",
+                "Singapore",
+                "Indonesia",
+                "Thailand",
+                "HongKong",
+                "Philippines",
+                "Vietnam",
+                "Norway",
+                "UnitedStatesOfAmerica",
+            ];
+
             const type = startCase(this.type);
-            const country = startCase(this.country);
+            let country = startCase(this.country);
+
+            if (
+                (type === "Billing" &&
+                    !supportedBillingAddressCountries.includes(country)) ||
+                (type === "Delivery" &&
+                    !supportedDeliveryAddressCountries.includes(country))
+            ) {
+                country = "Malaysia"; // Fall back to use Malaysia's
+            }
 
             return `${country.split(" ").join("")}${type}Address`;
         },
