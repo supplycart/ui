@@ -118,6 +118,7 @@ export default {
             this.$emit("change", e);
         },
         focus(e) {
+            this.$emit("focus", e);
             this.focused = true;
         },
     },
