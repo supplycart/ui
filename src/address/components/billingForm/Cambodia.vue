@@ -106,7 +106,7 @@
         </div>
         <div class="grid grid-cols-2 gap-2">
             <TextInput
-                label="E-Invoice Mailbox"
+                :label="LABELS.E_INVOICE_MAILBOX"
                 v-model="value.einvoice_email"
                 :disabled="disabledFields['einvoice_email']"
                 class="w-full mr-4 mb-4"
@@ -122,7 +122,7 @@
         </div>
         <div class="grid grid-cols-2 gap-2">
             <TextInput
-                label="Billing ID"
+                :label="LABELS.BILLING_ENTITY_CODE"
                 v-model="value.ref_no"
                 :disabled="disabledFields['ref_no']"
                 class="w-full mr-4 mb-4"

@@ -38,11 +38,13 @@
         </div>
         <div v-if="showAttribute('einvoice_email')">
             <p v-if="value.einvoice_email">
-                E-Invoice Mailbox: {{ value.einvoice_email }}
+                {{ LABELS.E_INVOICE_MAILBOX }}: {{ value.einvoice_email }}
             </p>
         </div>
         <div v-if="showAttribute('ref_no')">
-            <p v-if="value.ref_no">Billing ID: {{ value.ref_no }}</p>
+            <p v-if="value.ref_no">
+                {{ LABELS.BILLING_ENTITY_CODE }}: {{ value.ref_no }}
+            </p>
         </div>
     </div>
 </template>

@@ -84,6 +84,7 @@
 
                 <pre>{value: {{ moneyInput.value }} }</pre>
             </div>
+
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Display Address</h2>
                 <div class="mb-4">
@@ -206,7 +207,9 @@
                         label="Quantity"
                         v-model="quantity"
                         :required="true"
+                        :min-decimal="2"
                         :max-decimal="4"
+                        :allow-negative="true"
                         class="w-1/2 mr-4 mb-4"
                         input-class="w-full mt-2 p-2 rounded border border-gray-200"
                     />
@@ -398,7 +401,8 @@
                     postcode: "47301",
                     country: "Malaysia",
                     einvoice_email: "will@supplycart.my",
-                    registration_no: "REG0001"
+                    registration_no: "REG0001",
+                    ref_no: "REG0011A"
                 },
                 malaysiaDeliveryAddress: {
                     branch_name: "Supplycart",
