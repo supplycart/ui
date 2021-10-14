@@ -85,6 +85,21 @@
                 <pre>{value: {{ moneyInput.value }} }</pre>
             </div>
             <div class="p-12">
+                <h2 class="mb-2 font-bold text-gray-600">MoneyInputFormatted</h2>
+                <MoneyInputFormatted :decimal="4" v-model="moneyInputFormatted"
+                :sign="true"
+                            currency="MYR"
+                            class="mb-4 p-2 rounded border border-gray-200 w-1/2"/>
+
+                <pre>{value: <Money :sign="true"
+                       currency="JPY"
+                       :value="testMoneyVal"/> }</pre>
+
+                <br>
+
+                
+            </div>
+            <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Display Address</h2>
                 <div class="mb-4">
                     <h3 class="font-bold mb-2">Billing Address</h3>
@@ -206,7 +221,9 @@
                         label="Quantity"
                         v-model="quantity"
                         :required="true"
+                        :min-decimal="2"
                         :max-decimal="4"
+                        :allow-negative="true"
                         class="w-1/2 mr-4 mb-4"
                         input-class="w-full mt-2 p-2 rounded border border-gray-200"
                     />
@@ -321,6 +338,7 @@
         Money,
         FeatherIcon,
         MoneyInput,
+        MoneyInputFormatted,
         EmailInput,
         TextInput,
         PhoneInput,
@@ -352,6 +370,7 @@
             Money,
             FeatherIcon,
             MoneyInput,
+            MoneyInputFormatted,
             EmailInput,
             TextInput,
             PhoneInput,
@@ -380,6 +399,7 @@
                     decimal: 4,
                 },
                 testMoneyVal:0,
+                moneyInputFormatted: 0,
                 money: {
                     integer: 102355,
                     value: 10.00,
@@ -398,7 +418,8 @@
                     postcode: "47301",
                     country: "Malaysia",
                     einvoice_email: "will@supplycart.my",
-                    registration_no: "REG0001"
+                    registration_no: "REG0001",
+                    ref_no: "REG0011A"
                 },
                 malaysiaDeliveryAddress: {
                     branch_name: "Supplycart",

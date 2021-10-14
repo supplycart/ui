@@ -1,3 +1,4 @@
+import { LABELS } from "../constants/address";
 export default {
     props: {
         value: {
@@ -8,6 +9,11 @@ export default {
             type: Array,
             default: () => [],
         },
+    },
+    data() {
+        return {
+            LABELS,
+        };
     },
     methods: {
         showAttribute(display) {

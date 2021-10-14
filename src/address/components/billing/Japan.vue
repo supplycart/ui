@@ -42,7 +42,9 @@
             </p>
         </div>
         <div v-if="showAttribute('ref_no')">
-            <p v-if="value.ref_no">Billing ID: {{ value.ref_no }}</p>
+            <p v-if="value.ref_no">
+                {{ LABELS.BILLING_ENTITY_CODE }}: {{ value.ref_no }}
+            </p>
         </div>
     </div>
 </template>

@@ -1,5 +1,6 @@
 import "vue-select/dist/vue-select.css";
 import VSelect from "vue-select";
+import { LABELS } from "../constants/address";
 
 export default {
     components: { VSelect },
@@ -62,5 +63,10 @@ export default {
             },
             set(value) {},
         },
+    },
+    data() {
+        return {
+            LABELS,
+        };
     },
 };
