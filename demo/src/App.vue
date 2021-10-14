@@ -84,7 +84,7 @@
 
                 <pre>{value: {{ moneyInput.value }} }</pre>
             </div>
-           
+
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Display Address</h2>
                 <div class="mb-4">
@@ -324,7 +324,6 @@
         Money,
         FeatherIcon,
         MoneyInput,
-        MoneyInputFormatted,
         EmailInput,
         TextInput,
         PhoneInput,
@@ -356,7 +355,6 @@
             Money,
             FeatherIcon,
             MoneyInput,
-            MoneyInputFormatted,
             EmailInput,
             TextInput,
             PhoneInput,
@@ -385,7 +383,6 @@
                     decimal: 4,
                 },
                 testMoneyVal:0,
-                moneyInputFormatted: 0,
                 money: {
                     integer: 102355,
                     value: 10.00,
