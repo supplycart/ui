@@ -6,6 +6,7 @@
                 class="selections w-auto"
                 @change="$emit('change')"
             >
+                <option value="15">Per Page 15</option>
                 <option value="30">Per Page 30</option>
                 <option value="50">Per Page 50</option>
                 <option value="100">Per Page 100</option>
