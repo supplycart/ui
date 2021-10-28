@@ -22,7 +22,6 @@
                 <span v-if="value.building">{{ value.building }}</span>
             </p>
             <p>{{ value.city }}{{value.city && value.postcode ? ',' : ''}} {{ value.postcode }}</p>
-            <p>{{ value.city }}, {{ value.postcode }}</p>
             <p>{{ value.country }}</p>
         </div>
         <div>
