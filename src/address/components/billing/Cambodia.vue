@@ -33,7 +33,6 @@
                 <span v-if="value.building">{{ value.building }}</span>
             </p>
             <p>{{ value.street }}</p>
-            <p>{{ value.street }}</p>
             <p>{{ value.city }}{{value.city && value.postcode ? ',' : ''}} {{ value.postcode }}</p>
             <p>{{ value.state }}{{value.state && value.country ? ',' : ''}} {{ value.country }}</p>
         </div>
