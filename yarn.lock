@@ -1407,10 +1407,17 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.yarnpkg.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
   integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
-vue-currency-input@^1.17.3:
-  version "1.22.6"
-  resolved "https://registry.yarnpkg.com/vue-currency-input/-/vue-currency-input-1.22.6.tgz#1fed0dabb8a46a5537daca9371942f3d4f3a08fc"
-  integrity sha512-BUq8aysiZ1pdRyyWyIgxYz4+PBQwgVeAqxNr8ZOGaudA8YqEv2S5Plze0LjI/pbinX4+ma1sIIzStXZPxMy0/Q==
+vue-currency-input@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/vue-currency-input/-/vue-currency-input-2.1.2.tgz#6d1e435b306a975991c6b1c30597b007b30bba4f"
+  integrity sha512-Vy1ny/Q43piJ8Ak0F2IYZfurjHWvcycR1HCgH+W39K45CTBHzjEVdKcR9k7Qn0l+KavbxJ+6wChH8tC+ZPl35A==
+  dependencies:
+    vue-demi "^0.9.0"
+
+vue-demi@^0.9.0:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.9.1.tgz#25d6e1ebd4d4010757ff3571e2bf6a1d7bf3de82"
+  integrity sha512-7s1lufRD2l369eFWPjgLvhqCRk0XzGWJsQc7K4q+0mZtixyGIvsK1Cg88P4NcaRIEiBuuN4q1NN4SZKFKwQswA==
 
 vue-eslint-parser@^7.6.0:
   version "7.6.0"
