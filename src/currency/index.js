@@ -1,7 +1,10 @@
 import Dinero from "dinero.js";
 import { find } from "lodash";
 import numeral from "numeral";
-import Currencies, { DefaultCurrency } from "./constants/currencies";
+import Currencies, {
+    DefaultCurrency,
+    NoCentsCurrencies,
+} from "./constants/currencies";
 
 export * from "./components";
 export * from "./constants";
@@ -43,8 +46,23 @@ function formatCents(
     currency,
     sign = false,
     intValue = true,
-    decimal = 2
+    decimal = 2,
+    currencyformat = null,
+    convertPrecision = 2
 ) {
+    let precision = decimal;
+    // to check for currencies that has no precision
+    if (typeof currency === "string") {
+        const currencyCodeCountry = [];
+        NoCentsCurrencies.forEach((item) => {
+            currencyCodeCountry.push(item.code);
+            currencyCodeCountry.push(item.country);
+        });
+
+        if (currencyCodeCountry.includes(currency)) {
+            precision = 0;
+        }
+    }
     currency =
         typeof currency === "string"
             ? find(
@@ -52,7 +70,7 @@ function formatCents(
                   (item) =>
                       (item.country === currency.toUpperCase() ||
                           item.code === currency) &&
-                      item.precision === decimal
+                      item.precision === precision
               )
             : currency;
 
@@ -62,13 +80,18 @@ function formatCents(
         ? numeral(amount).value()
         : numeral(amount).multiply(Math.pow(10, decimal)).value();
 
-    const format = sign ? currency.formatWithSign : currency.format;
+    const format = currencyformat
+        ? currencyformat
+        : sign
+        ? currency.formatWithSign
+        : currency.format;
 
     return Dinero({
         amount: val,
         currency: currency.code,
         precision: currency.precision,
     })
+        .convertPrecision(convertPrecision, "HALF_UP")
         .setLocale(currency.locale)
         .toFormat(format);
 }
@@ -90,4 +113,13 @@ function currency(countryCurrency, type) {
     return currency[type];
 }
 
-export { isInt, isFloat, format, formatCents, currency };
+export {
+    isInt,
+    isFloat,
+    format,
+    formatCents,
+    currency,
+    Currencies,
+    DefaultCurrency,
+    NoCentsCurrencies,
+};
