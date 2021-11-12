@@ -39,20 +39,25 @@ export default {
             default: true,
         },
     },
-    render(createElement) {
-        let precision = this.decimal;
-        // to check for currencies that has no precision
-        if (typeof this.currency === "string") {
-            const currencyCodeCountry = [];
-            NoCentsCurrencies.forEach((item) => {
-                currencyCodeCountry.push(item.code);
-                currencyCodeCountry.push(item.country);
-            });
+    computed: {
+        noCentCurrency() {
+            if (typeof this.currency === "string") {
+                const currencyCodeCountry = [];
+                NoCentsCurrencies.forEach((item) => {
+                    currencyCodeCountry.push(item.code);
+                    currencyCodeCountry.push(item.country);
+                });
 
-            if (currencyCodeCountry.includes(this.currency)) {
-                precision = 0;
+                if (currencyCodeCountry.includes(this.currency)) {
+                    return true;
+                }
             }
-        }
+            return false;
+        },
+    },
+    render(createElement) {
+        const precision = this.noCentCurrency ? 0 : this.decimal;
+
         let currency =
             typeof this.currency === "string"
                 ? find(
@@ -66,9 +71,16 @@ export default {
 
         currency = currency ? currency : DefaultCurrency;
 
+        //alter the value passed if it is no cent currency
+        const alteredValue = this.noCentCurrency
+            ? numeral(this.value).divide(Math.pow(10, this.decimal)).value()
+            : this.value;
+
         const val = this.intValue
-            ? numeral(this.value).value()
-            : numeral(this.value).multiply(Math.pow(10, this.decimal)).value();
+            ? numeral(alteredValue).value()
+            : numeral(alteredValue)
+                  .multiply(Math.pow(10, this.decimal))
+                  .value();
 
         const format = this.format
             ? this.format
