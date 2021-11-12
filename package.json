@@ -1,6 +1,6 @@
 {
     "name": "@supplycart/ui",
-    "version": "1.12.15",
+    "version": "1.12.16",
     "repository": {
         "type": "git",
         "url": "https://github.com/supplycart/ui"
@@ -22,7 +22,7 @@
         "moment-timezone": "^0.5.28",
         "numeral": "^2.0.6",
         "vue": "^2.6.11",
-        "vue-currency-input": "^2.1.2",
+        "vue-currency-input": "^1.17.3",
         "vue-flatpickr-component": "^8.1.5",
         "vue-select": "^3.10.7"
     },
