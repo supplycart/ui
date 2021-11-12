@@ -121,9 +121,7 @@ export default {
         hasError() {
             return this.errors && this.errors.length > 0;
         },
-        currencyData() {
-            let precision = this.decimal;
-            // to check for currencies that has no precision
+        noCentCurrency() {
             if (typeof this.currency === "string") {
                 const currencyCodeCountry = [];
                 NoCentsCurrencies.forEach((item) => {
@@ -132,17 +130,24 @@ export default {
                 });
 
                 if (currencyCodeCountry.includes(this.currency)) {
-                    precision = 0;
+                    return true;
                 }
             }
+            return false;
+        },
+        currencyData() {
+            const precision = this.noCentCurrency ? 0 : this.decimal;
+
+            //treat as MYR if currency passed has no cent
+            const alteredCurrency = this.noCentCurrency ? "MYR" : this.currency;
             const currency =
-                typeof this.currency === "string"
+                typeof alteredCurrency === "string"
                     ? find(
                           Currencies,
                           (item) =>
-                              (item.code === this.currency.toUpperCase() ||
+                              (item.code === alteredCurrency.toUpperCase() ||
                                   item.country ===
-                                      this.currency.toUpperCase()) &&
+                                      alteredCurrency.toUpperCase()) &&
                               item.precision === precision
                       )
                     : this.currency;
