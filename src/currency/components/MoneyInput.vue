@@ -136,8 +136,6 @@ export default {
             return false;
         },
         currencyData() {
-            const precision = this.noCentCurrency ? 0 : this.decimal;
-
             //treat as MYR if currency passed has no cent
             const alteredCurrency = this.noCentCurrency ? "MYR" : this.currency;
             const currency =
@@ -148,7 +146,7 @@ export default {
                               (item.code === alteredCurrency.toUpperCase() ||
                                   item.country ===
                                       alteredCurrency.toUpperCase()) &&
-                              item.precision === precision
+                              item.precision === this.decimal
                       )
                     : this.currency;
 
