@@ -1,26 +1,8 @@
 <script>
 import numeral from "numeral";
 import { h } from "vue";
-const currencySettings = {
-    MYR: {
-        displayFormat: "0,0.00[00]",
-        inputFormat: "0.00[00]",
-        sign: "RM",
-        signPosition: "BEFORE",
-    },
-    IDR: {
-        displayFormat: "0,0",
-        inputFormat: "0[.0000]",
-        sign: "Rp",
-        signPosition: "BEFORE",
-    },
-    HKD: {
-        displayFormat: "0,0.00[00]",
-        inputFormat: "0.00[00]",
-        sign: "HK$",
-        signPosition: "BEFORE",
-    },
-};
+import CurrencySettings from "../constants/currencySettings";
+
 export default {
     props: {
         decimal: {
@@ -91,16 +73,16 @@ export default {
         displayFormat() {
             return this.format
                 ? this.format
-                : currencySettings[this.currency]["displayFormat"];
+                : CurrencySettings[this.currency]["displayFormat"];
         },
         inputFormat() {
-            return currencySettings[this.currency]["inputFormat"];
+            return CurrencySettings[this.currency]["inputFormat"];
         },
         currencySign() {
-            return currencySettings[this.currency]["sign"];
+            return CurrencySettings[this.currency]["sign"];
         },
         currencySignPos() {
-            return currencySettings[this.currency]["signPosition"];
+            return CurrencySettings[this.currency]["signPosition"];
         },
     },
     render: function (h) {
