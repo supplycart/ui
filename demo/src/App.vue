@@ -64,6 +64,7 @@
                 <pre>{value: {{ money.value }} }</pre>
             </div>
             <div class="p-12">
+                <MoneyInputV2 v-model="moneyv2" currency="MYR" :decimal="2" label="Unit Price" :disabled="true" :required="true" :withSign="true" format="0,0.00" :allow-negative="false"/>
                 <h2 class="mb-2 font-bold text-gray-600">MoneyInput</h2>
                 <MoneyInput v-model="testMoneyVal"
                 :sign="true"
@@ -324,6 +325,7 @@
         Money,
         FeatherIcon,
         MoneyInput,
+        MoneyInputV2,
         EmailInput,
         TextInput,
         PhoneInput,
@@ -355,6 +357,7 @@
             Money,
             FeatherIcon,
             MoneyInput,
+            MoneyInputV2,
             EmailInput,
             TextInput,
             PhoneInput,
@@ -370,6 +373,7 @@
         },
         data() {
             return {
+                moneyv2:0,
                 deliveryCountry: 'Malaysia',
                 attachments: [],
                 minDate: moment().format("YYYY-MM-DD"),
