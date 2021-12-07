@@ -39,7 +39,7 @@ export default {
             editing: false,
             inputValue: numeral(this.value)
                 .divide(Math.pow(10, this.decimal))
-                .format(this.inputFormat),
+                .value(),
         };
     },
     computed: {
@@ -49,7 +49,7 @@ export default {
                     numeral(this.inputValue)
                         .multiply(Math.pow(10, this.decimal))
                         .value()
-                        .toFixed()
+                        .toFixed(this.decimal)
                 );
             },
             set(val) {
