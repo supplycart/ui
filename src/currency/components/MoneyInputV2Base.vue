@@ -137,6 +137,7 @@ export default {
                     const oldValue = vm.inputValue;
 
                     vm.inputValue = e.target.value;
+                    vm.$emit("input", vm.rawValue);
                 },
             },
         });
