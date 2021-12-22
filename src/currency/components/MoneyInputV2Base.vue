@@ -37,23 +37,30 @@ export default {
     data() {
         return {
             editing: false,
-            inputValue: numeral(this.value)
-                .divide(Math.pow(10, this.decimal))
-                .value(),
         };
     },
     computed: {
         rawValue: {
             get() {
-                return Number(
-                    numeral(this.inputValue)
+                return this.value;
+            },
+            set(val) {
+                this.$emit("input", val);
+            },
+        },
+        inputValue: {
+            get() {
+                return numeral(this.rawValue)
+                    .divide(Math.pow(10, this.decimal))
+                    .value();
+            },
+            set(value) {
+                this.rawValue = Number(
+                    numeral(value)
                         .multiply(Math.pow(10, this.decimal))
                         .value()
                         .toFixed(this.decimal)
                 );
-            },
-            set(val) {
-                this.$emit("input", val);
             },
         },
         displayValue: {
@@ -135,9 +142,7 @@ export default {
                 },
                 input: function (e) {
                     const oldValue = vm.inputValue;
-
                     vm.inputValue = e.target.value;
-                    vm.$emit("input", vm.rawValue);
                 },
             },
         });
