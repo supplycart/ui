@@ -104,6 +104,23 @@
                 </div>
             </div>
             <div class="p-12">
+                <h2 class="mb-2 font-bold text-gray-600">Display Address New</h2>
+                <div class="mb-4">
+                    <h3 class="font-bold mb-2">Billing Address</h3>
+                    <AddressNew
+                        v-model="malaysiaBillingAddress"
+                        country="test"
+                        type="billing"/>
+                </div>
+                <div class="mb-4">
+                    <h3 class="font-bold mb-2">Delivery Address</h3>
+                    <AddressNew
+                        v-model="malaysiaDeliveryAddress"
+                        country="Malaysia"
+                        type="delivery"/>
+                </div>
+            </div>
+            <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Address Form</h2>
                 <div class="mb-4">
                     <h3 class="font-bold mb-2">Billing Address</h3>
@@ -314,6 +331,7 @@
 <script>
     import {
         Address,
+        AddressNew,
         AddressForm,
         AttachmentInput,
         ButtonAttachment,
@@ -346,6 +364,7 @@
         name: "App",
         components: {
             Address,
+            AddressNew,
             AddressForm,
             AttachmentInput,
             ButtonAttachment,
