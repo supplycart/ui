@@ -22,15 +22,18 @@ export default {
         };
     },
     computed: {
-        addressCountryConfig() {
+        addressCountry() {
             const supportedCountries = Object.keys(this.CONFIG);
-            const countryConfig = supportedCountries.includes(
+            const country = supportedCountries.includes(
                 this.country.toUpperCase()
             )
-                ? this.CONFIG[this.country]
-                : this.CONFIG["MALAYSIA"];
+                ? this.country.toUpperCase()
+                : "MALAYSIA";
 
-            return countryConfig;
+            return country;
+        },
+        addressCountryConfig() {
+            return this.CONFIG[this.addressCountry];
         },
     },
     methods: {

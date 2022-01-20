@@ -109,7 +109,7 @@
                     <h3 class="font-bold mb-2">Billing Address</h3>
                     <AddressNew
                         v-model="malaysiaBillingAddress"
-                        country="test"
+                        country="Cambodia"
                         type="billing"/>
                 </div>
                 <div class="mb-4">
@@ -118,6 +118,13 @@
                         v-model="malaysiaDeliveryAddress"
                         country="Malaysia"
                         type="delivery"/>
+                </div>
+                <div class="mb-4">
+                    <h3 class="font-bold mb-2">General Address</h3>
+                    <AddressNew
+                        v-model="malaysiaDeliveryAddress"
+                        country="Malaysia"
+                        type="general"/>
                 </div>
             </div>
             <div class="p-12">
