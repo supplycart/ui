@@ -1,0 +1,45 @@
+<script>
+import { startCase } from "lodash";
+
+export default {
+    name: "AddressNew",
+    components: {
+        DeliveryAddress: () => import("./DeliveryAddress"),
+        BillingAddress: () => import("./BillingAddress"),
+        GeneralAddress: () => import("./GeneralAddress"),
+    },
+    props: {
+        value: {
+            type: Object,
+            default: () => ({}),
+        },
+        country: {
+            type: String,
+            default: "Malaysia",
+        },
+        type: {
+            type: String,
+            required: true,
+        },
+        display: {
+            type: Array,
+            default: () => [],
+        },
+    },
+    computed: {
+        component() {
+            const type = startCase(this.type);
+
+            return `${type}Address`;
+        },
+    },
+    render(createElement) {
+        return createElement("keep-alive", [
+            createElement("component", {
+                is: this.component,
+                props: this.$props,
+            }),
+        ]);
+    },
+};
+</script>
