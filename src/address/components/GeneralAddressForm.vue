@@ -104,9 +104,9 @@
     </div>
 </template>
 <script>
-import TextInput from "../../../form/components/TextInput";
-import AddressFormMixins from "../../mixins/addressForm";
-import StateMixins from "../../mixins/malaysiaStates";
+import TextInput from "../../form/components/TextInput";
+import AddressFormMixins from "../mixins/addressFormNew";
+import StateMixins from "../mixins/malaysiaStates";
 export default {
     name: "MalaysiaDefaultAddressForm",
     mixins: [AddressFormMixins, StateMixins],
