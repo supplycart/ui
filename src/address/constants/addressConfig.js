@@ -32,7 +32,7 @@ const addressConfig = {
         district: false,
         postcode: true,
         zipcode: false,
-        state: false,
+        state: true,
         province: true,
     },
     THAILAND: {
