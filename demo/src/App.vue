@@ -134,6 +134,7 @@
                     <AddressForm
                         v-model="malaysiaBillingAddress"
                         country="Malaysia"
+                        :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia', 'Philippines', 'Singapore']"
                         type="billing"/>
                 </div>
                 <div class="mb-4">
@@ -148,6 +149,35 @@
                 <div class="mb-4">
                     <h3 class="font-bold mb-2">General Address</h3>
                     <AddressForm
+                        v-model="malaysiaDeliveryAddress"
+                        :country="deliveryCountry"
+                        :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia']"
+                        :disableFields="['country', 'state']"
+                        type="general"/>
+                </div>
+            </div>
+            <div class="p-12">
+                <h2 class="mb-2 font-bold text-gray-600">Address Form New</h2>
+                <div class="mb-4">
+                    <h3 class="font-bold mb-2">Billing Address</h3>
+                    <AddressFormNew
+                        v-model="malaysiaBillingAddress"
+                        country="Cambodia"
+                        :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia', 'Philippines']"
+                        type="billing"/>
+                </div>
+                <div class="mb-4">
+                    <h3 class="font-bold mb-2">Delivery Address</h3>
+                    <AddressFormNew
+                        v-model="malaysiaDeliveryAddress"
+                        :country="deliveryCountry"
+                        :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia']"
+                        :disableFields="[]"
+                        type="delivery"/>
+                </div>
+                <div class="mb-4">
+                    <h3 class="font-bold mb-2">General Address</h3>
+                    <AddressFormNew
                         v-model="malaysiaDeliveryAddress"
                         :country="deliveryCountry"
                         :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia']"
@@ -340,6 +370,7 @@
         Address,
         AddressNew,
         AddressForm,
+        AddressFormNew,
         AttachmentInput,
         ButtonAttachment,
         Checkbox,
@@ -373,6 +404,7 @@
             Address,
             AddressNew,
             AddressForm,
+            AddressFormNew,
             AttachmentInput,
             ButtonAttachment,
             Checkbox,

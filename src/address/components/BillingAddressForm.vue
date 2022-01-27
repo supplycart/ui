@@ -32,6 +32,7 @@
 
             <div class="grid grid-cols-3 gap-2">
                 <TextInput
+                    v-if="addressCountryConfig.unit"
                     label="Unit"
                     v-model="value.unit"
                     :disabled="disabledFields['unit']"
@@ -40,6 +41,7 @@
                 />
 
                 <TextInput
+                    v-if="addressCountryConfig.floor"
                     label="Floor"
                     v-model="value.floor"
                     :disabled="disabledFields['floor']"
@@ -48,6 +50,7 @@
                 />
 
                 <TextInput
+                    v-if="addressCountryConfig.building"
                     label="Building"
                     v-model="value.building"
                     :disabled="disabledFields['building']"
@@ -57,6 +60,7 @@
             </div>
             <div>
                 <TextInput
+                    v-if="addressCountryConfig.street"
                     label="Street"
                     v-model="value.street"
                     :disabled="disabledFields['street']"
@@ -67,6 +71,7 @@
             </div>
             <div class="grid grid-cols-2 gap-2">
                 <TextInput
+                    v-if="addressCountryConfig.city"
                     label="City"
                     v-model="value.city"
                     :disabled="disabledFields['city']"
@@ -76,7 +81,28 @@
                 />
 
                 <TextInput
+                    v-if="addressCountryConfig.district"
+                    label="District"
+                    v-model="value.city"
+                    :disabled="disabledFields['city']"
+                    :required="true"
+                    class="w-full mr-4 mb-4"
+                    input-class="p-2 rounded border border-gray-200"
+                />
+
+                <TextInput
+                    v-if="addressCountryConfig.postcode"
                     label="Postcode"
+                    v-model="value.postcode"
+                    :disabled="disabledFields['postcode']"
+                    :required="true"
+                    class="w-full mr-4 mb-4"
+                    input-class="p-2 rounded border border-gray-200"
+                />
+
+                <TextInput
+                    v-if="addressCountryConfig.zipcode"
+                    label="Zipcode"
                     v-model="value.postcode"
                     :disabled="disabledFields['postcode']"
                     :required="true"
@@ -85,7 +111,7 @@
                 />
             </div>
             <div class="grid grid-cols-2 gap-2">
-                <div>
+                <div v-if="addressCountryConfig.state">
                     <label for="state">
                         State <small class="italic text-red-600">*</small>
                     </label>
@@ -144,7 +170,7 @@ import AddressFormMixins from "../mixins/addressFormNew";
 import StateMixins from "../mixins/malaysiaStates";
 
 export default {
-    name: "MalaysiaBillingAddressForm",
+    name: "BillingAddressForm",
     mixins: [AddressFormMixins, StateMixins],
     components: {
         TextInput,
