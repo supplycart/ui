@@ -1,6 +1,6 @@
 {
     "name": "@supplycart/ui",
-    "version": "1.13.3",
+    "version": "1.13.4",
     "repository": {
         "type": "git",
         "url": "https://github.com/supplycart/ui"
@@ -15,7 +15,7 @@
         "core-js": "^3.6.4",
         "dinero.js": "^1.8.1",
         "feather-icons": "^4.28.0",
-        "flatpickr": "^4.6.3",
+        "flatpickr": "^4.6.9",
         "lodash": "^4.17.21",
         "luxon": "^1.22.0",
         "moment": "2.24.0",
