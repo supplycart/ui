@@ -103,30 +103,7 @@
                         type="delivery"/>
                 </div>
             </div>
-            <div class="p-12">
-                <h2 class="mb-2 font-bold text-gray-600">Display Address New</h2>
-                <div class="mb-4">
-                    <h3 class="font-bold mb-2">Billing Address</h3>
-                    <AddressNew
-                        v-model="malaysiaBillingAddress"
-                        country="Cambodia"
-                        type="billing"/>
-                </div>
-                <div class="mb-4">
-                    <h3 class="font-bold mb-2">Delivery Address</h3>
-                    <AddressNew
-                        v-model="malaysiaDeliveryAddress"
-                        country="Malaysia"
-                        type="delivery"/>
-                </div>
-                <div class="mb-4">
-                    <h3 class="font-bold mb-2">General Address</h3>
-                    <AddressNew
-                        v-model="malaysiaDeliveryAddress"
-                        country="Malaysia"
-                        type="general"/>
-                </div>
-            </div>
+           
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Address Form</h2>
                 <div class="mb-4">
@@ -156,35 +133,7 @@
                         type="general"/>
                 </div>
             </div>
-            <div class="p-12">
-                <h2 class="mb-2 font-bold text-gray-600">Address Form New</h2>
-                <div class="mb-4">
-                    <h3 class="font-bold mb-2">Billing Address</h3>
-                    <AddressFormNew
-                        v-model="malaysiaBillingAddress"
-                        country="Cambodia"
-                        :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia', 'Philippines']"
-                        type="billing"/>
-                </div>
-                <div class="mb-4">
-                    <h3 class="font-bold mb-2">Delivery Address</h3>
-                    <AddressFormNew
-                        v-model="malaysiaDeliveryAddress"
-                        :country="deliveryCountry"
-                        :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia']"
-                        :disableFields="[]"
-                        type="delivery"/>
-                </div>
-                <div class="mb-4">
-                    <h3 class="font-bold mb-2">General Address</h3>
-                    <AddressFormNew
-                        v-model="malaysiaDeliveryAddress"
-                        :country="deliveryCountry"
-                        :countries="['Malaysia', 'Indonesia', 'Hong Kong', 'Cambodia']"
-                        :disableFields="['country', 'state']"
-                        type="general"/>
-                </div>
-            </div>
+           
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Datetime</h2>
                 <div class="mb-4">
@@ -368,9 +317,7 @@
 <script>
     import {
         Address,
-        AddressNew,
         AddressForm,
-        AddressFormNew,
         AttachmentInput,
         ButtonAttachment,
         Checkbox,
@@ -402,9 +349,7 @@
         name: "App",
         components: {
             Address,
-            AddressNew,
             AddressForm,
-            AddressFormNew,
             AttachmentInput,
             ButtonAttachment,
             Checkbox,
