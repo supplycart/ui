@@ -128,7 +128,7 @@
 </template>
 <script>
 import TextInput from "../../form/components/TextInput";
-import AddressFormMixins from "../mixins/addressFormNew";
+import AddressFormMixins from "../mixins/addressForm";
 import StateMixins from "../mixins/malaysiaStates";
 export default {
     name: "AddressForm",

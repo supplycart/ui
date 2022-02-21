@@ -79,7 +79,7 @@
     </div>
 </template>
 <script>
-import AddressMixins from "../mixins/addressNew";
+import AddressMixins from "../mixins/address";
 export default {
     name: "BillingAddress",
     mixins: [AddressMixins],
