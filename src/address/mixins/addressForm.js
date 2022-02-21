@@ -1,6 +1,7 @@
 import "vue-select/dist/vue-select.css";
 import VSelect from "vue-select";
 import { LABELS } from "../constants/address";
+import addressConfig from "../constants/addressConfig";
 
 export default {
     components: { VSelect },
@@ -25,6 +26,9 @@ export default {
             set(value) {
                 this.$emit("changeCountry", value);
             },
+        },
+        addressCountryConfig() {
+            return this.CONFIG[this.setCountry.toUpperCase()];
         },
         disabledFields: {
             get() {
@@ -67,6 +71,7 @@ export default {
     data() {
         return {
             LABELS,
+            CONFIG: addressConfig,
         };
     },
 };

@@ -4,44 +4,9 @@ import { startCase, lowerCase } from "lodash";
 export default {
     name: "AddressForm",
     components: {
-        MalaysiaBillingAddressForm: () => import("./billingForm/Malaysia"),
-        CambodiaBillingAddressForm: () => import("./billingForm/Cambodia"),
-        SingaporeBillingAddressForm: () => import("./billingForm/Singapore"),
-        IndonesiaBillingAddressForm: () => import("./billingForm/Indonesia"),
-        ThailandBillingAddressForm: () => import("./billingForm/Thailand"),
-        HongKongBillingAddressForm: () => import("./billingForm/HongKong"),
-        PhilippinesBillingAddressForm: () =>
-            import("./billingForm/Philippines"),
-        VietnamBillingAddressForm: () => import("./billingForm/Vietnam"),
-        JapanBillingAddressForm: () => import("./billingForm/Japan"),
-        UnitedStatesOfAmericaBillingAddressForm: () =>
-            import("./billingForm/UnitedStatesOfAmerica"),
-
-        MalaysiaDeliveryAddressForm: () => import("./deliveryForm/Malaysia"),
-        CambodiaDeliveryAddressForm: () => import("./deliveryForm/Cambodia"),
-        SingaporeDeliveryAddressForm: () => import("./deliveryForm/Singapore"),
-        IndonesiaDeliveryAddressForm: () => import("./deliveryForm/Indonesia"),
-        ThailandDeliveryAddressForm: () => import("./deliveryForm/Thailand"),
-        HongKongDeliveryAddressForm: () => import("./deliveryForm/HongKong"),
-        PhilippinesDeliveryAddressForm: () =>
-            import("./deliveryForm/Philippines"),
-        VietnamDeliveryAddressForm: () => import("./deliveryForm/Vietnam"),
-        JapanDeliveryAddressForm: () => import("./deliveryForm/Japan"),
-        UnitedStatesOfAmericaDeliveryAddressForm: () =>
-            import("./deliveryForm/UnitedStatesOfAmerica"),
-
-        MalaysiaGeneralAddressForm: () => import("./generalForm/Malaysia"),
-        CambodiaGeneralAddressForm: () => import("./generalForm/Cambodia"),
-        SingaporeGeneralAddressForm: () => import("./generalForm/Singapore"),
-        IndonesiaGeneralAddressForm: () => import("./generalForm/Indonesia"),
-        ThailandGeneralAddressForm: () => import("./generalForm/Thailand"),
-        HongKongGeneralAddressForm: () => import("./generalForm/HongKong"),
-        PhilippinesGeneralAddressForm: () =>
-            import("./generalForm/Philippines"),
-        VietnamGeneralAddressForm: () => import("./generalForm/Vietnam"),
-        JapanGeneralAddressForm: () => import("./generalForm/Japan"),
-        UnitedStatesOfAmericaGeneralAddressForm: () =>
-            import("./generalForm/UnitedStatesOfAmerica"),
+        BillingAddressForm: () => import("./BillingAddressForm"),
+        DeliveryAddressForm: () => import("./DeliveryAddressForm"),
+        GeneralAddressForm: () => import("./GeneralAddressForm"),
     },
     props: {
         value: {
@@ -86,9 +51,7 @@ export default {
     render(createElement, context) {
         return createElement("keep-alive", [
             createElement("component", {
-                is: `${startCase(this.address.country)}${startCase(
-                    this.type
-                )}AddressForm`.replace(/\s+/g, ""),
+                is: `${startCase(this.type)}AddressForm`.replace(/\s+/g, ""),
                 props: {
                     countries: this.$props.countries,
                     disableFields: this.$props.disableFields,
