@@ -17,11 +17,24 @@
         <div v-if="showAttribute('address')">
             <p v-if="addressCountry == 'SINGAPORE'">{{ value.street }}</p>
             <p>
-                <span v-if="value.unit && addressCountryConfig.unit"
+                <span
+                    v-if="
+                        value.unit &&
+                        addressCountryConfig.unit &&
+                        addressCountry !== 'SINGAPORE'
+                    "
                     >{{ value.unit }},
                 </span>
                 <span v-if="value.floor && addressCountryConfig.floor"
                     >{{ value.floor }},
+                </span>
+                <span
+                    v-if="
+                        value.unit &&
+                        addressCountryConfig.unit &&
+                        addressCountry == 'SINGAPORE'
+                    "
+                    >{{ value.unit }},
                 </span>
                 <span v-if="value.building && addressCountryConfig.building">{{
                     value.building
