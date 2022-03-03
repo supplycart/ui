@@ -80,7 +80,12 @@
                 </span>
             </p>
             <p>
-                <span v-if="addressCountryConfig.state">
+                <span
+                    v-if="
+                        addressCountryConfig.state ||
+                        addressCountryConfig.province
+                    "
+                >
                     {{ value.state
                     }}{{ value.state && value.country ? "," : "" }}
                 </span>
