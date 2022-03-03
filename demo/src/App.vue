@@ -92,7 +92,7 @@
                     <h3 class="font-bold mb-2">Billing Address</h3>
                     <Address
                         v-model="malaysiaBillingAddress"
-                        country="test"
+                        country="Singapore"
                         type="billing"/>
                 </div>
                 <div class="mb-4">
@@ -406,7 +406,7 @@
                     city: "Petaling Jaya",
                     state: "Selangor",
                     postcode: "47301",
-                    country: "Malaysia",
+                    country: "Singapore",
                     einvoice_email: "will@supplycart.my",
                     registration_no: "REG0001",
                     ref_no: "REG0011A"
