@@ -96,7 +96,7 @@ const currencySettings = {
         signPosition: "BEFORE",
     },
     AZN: {
-        displayFormat: "0,0",
+        displayFormat: "0,0.00[00]",
         inputFormat: "0.00[00]",
         sign: "₼",
         signPosition: "AFTER",
