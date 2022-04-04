@@ -77,19 +77,24 @@ export default {
             },
             set(val) {},
         },
+        currentCurrency() {
+            return Object.keys(CurrencySettings).includes(this.currency)
+                ? this.currency
+                : "MYR";
+        },
         displayFormat() {
             return this.format
                 ? this.format
-                : CurrencySettings[this.currency]["displayFormat"];
+                : CurrencySettings[this.currentCurrency]["displayFormat"];
         },
         inputFormat() {
-            return CurrencySettings[this.currency]["inputFormat"];
+            return CurrencySettings[this.currentCurrency]["inputFormat"];
         },
         currencySign() {
-            return CurrencySettings[this.currency]["sign"];
+            return CurrencySettings[this.currentCurrency]["sign"];
         },
         currencySignPos() {
-            return CurrencySettings[this.currency]["signPosition"];
+            return CurrencySettings[this.currentCurrency]["signPosition"];
         },
     },
     render: function (h) {
