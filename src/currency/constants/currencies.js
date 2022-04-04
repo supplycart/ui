@@ -265,6 +265,26 @@ const currencies = [
         formatWithSign: "$0,0.0000",
         locale: "ja-JP",
     },
+    {
+        country: "AZERBAIJAN",
+        sign: "₼",
+        name: "MANAT",
+        code: "AZN",
+        precision: 2,
+        format: "0,0.00",
+        formatWithSign: "$0,0.00",
+        locale: "en-US",
+    },
+    {
+        country: "AZERBAIJAN",
+        sign: "₼",
+        name: "MANAT",
+        code: "AZN",
+        precision: 4,
+        format: "0,0.0000",
+        formatWithSign: "$0,0.0000",
+        locale: "en-US",
+    },
 ];
 const DefaultCurrency = find(currencies, (item) => item.code === "MYR");
 
