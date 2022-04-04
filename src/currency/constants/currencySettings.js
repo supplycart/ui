@@ -95,6 +95,12 @@ const currencySettings = {
         sign: "¥",
         signPosition: "BEFORE",
     },
+    AZN: {
+        displayFormat: "0,0.00[00]",
+        inputFormat: "0.00[00]",
+        sign: "₼",
+        signPosition: "AFTER",
+    },
 };
 
 export default currencySettings;
