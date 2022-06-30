@@ -100,9 +100,12 @@
             <div v-if="!this.display.length">
                 <p>Requires Permit: {{ value.requires_permit }}</p>
             </div>
+            <div v-if="showAttribute('warehouse')">
+                <p v-if="value.warehouse">Warehouse</p>
+            </div>
         </div>
         <div v-if="showAttribute('ref_no')">
-            <p v-if="value.ref_no">Branch ID: {{ value.ref_no }}</p>
+            <p v-if="value.ref_no">Location Code: {{ value.ref_no }}</p>
         </div>
     </div>
 </template>
