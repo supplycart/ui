@@ -305,6 +305,26 @@ const currencies = [
         formatWithSign: "$0,0.0000",
         locale: "en-US",
     },
+    {
+        country: "Sweden",
+        sign: "kr",
+        name: "krona",
+        code: "SEK",
+        precision: 2,
+        format: "0,0.00",
+        formatWithSign: "$0,0.00",
+        locale: "en-US",
+    },
+    {
+        country: "Sweden",
+        sign: "kr",
+        name: "krona",
+        code: "SEK",
+        precision: 4,
+        format: "0,0.0000",
+        formatWithSign: "$0,0.0000",
+        locale: "en-US",
+    },
 ];
 const DefaultCurrency = find(currencies, (item) => item.code === "MYR");
 
