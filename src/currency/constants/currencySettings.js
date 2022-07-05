@@ -101,6 +101,12 @@ const currencySettings = {
         sign: "₼",
         signPosition: "AFTER",
     },
+    SEK: {
+        displayFormat: "0,0.00[00]",
+        inputFormat: "0.00[00]",
+        sign: "kr",
+        signPosition: "AFTER",
+    },
 };
 
 export default currencySettings;
