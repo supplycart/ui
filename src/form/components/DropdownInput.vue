@@ -17,6 +17,7 @@
                 inputClass,
             ]"
             @search="search"
+            @close="blur"
         />
         <slot name="error">
             <p v-if="showError" class="italic text-red-600 text-xs mt-2">
@@ -98,6 +99,11 @@ export default {
                 this.showError = val.length ? false : true;
             } else {
                 this.showError = val ? false : true;
+            }
+        },
+        blur() {
+            if (this.required) {
+                this.showError = this.value == null;
             }
         },
     },
