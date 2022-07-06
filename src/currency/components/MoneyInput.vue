@@ -94,7 +94,7 @@ export default {
         },
         error: {
             type: String,
-            default: null,
+            default: "Please fill out this field.",
         },
         intValue: {
             type: Boolean,
@@ -171,6 +171,9 @@ export default {
         blur(e) {
             if (!this.allowZero) {
                 this.showError = e.target.value === 0;
+            }
+            if (this.required) {
+                this.showError = this.value == null;
             }
             this.$emit("blur", e);
         },
