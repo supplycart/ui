@@ -62,6 +62,11 @@
                        class="block mb-4 p-2 w-1/2"/>
 
                 <pre>{value: {{ money.value }} }</pre>
+                
+            </div>
+            <div class="p-12">
+                <h2 class="mb-2 font-bold text-gray-600">Money v2</h2>
+                <MoneyV2 :value="123830" :decimal="4" :with-sign="true" currency="SGD" />
             </div>
             <div class="p-12">
                 <MoneyInputV2 v-model="moneyv2" currency="MYR" :decimal="2" label="Unit Price" :disabled="true" :required="true" :withSign="true" format="0,0.00" :allow-negative="false"/>
@@ -326,6 +331,7 @@
         DateTime,
         TimePicker,
         Money,
+        MoneyV2,
         FeatherIcon,
         MoneyInput,
         MoneyInputV2,
@@ -358,6 +364,7 @@
             TimePicker,
             DateRangePicker,
             Money,
+            MoneyV2,
             FeatherIcon,
             MoneyInput,
             MoneyInputV2,
