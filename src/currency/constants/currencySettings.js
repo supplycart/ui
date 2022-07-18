@@ -107,6 +107,12 @@ const currencySettings = {
         sign: "kr",
         signPosition: "AFTER",
     },
+    INR: {
+        displayFormat: "0,0.00[00]",
+        inputFormat: "0.00[00]",
+        sign: "₹",
+        signPosition: "BEFORE",
+    },
 };
 
 export default currencySettings;
