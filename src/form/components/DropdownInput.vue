@@ -18,7 +18,11 @@
             ]"
             @search="search"
             @close="blur"
-        />
+        >
+            <template v-slot:option="option">
+                <slot name="option" :option="option" />
+            </template>
+        </VSelect>
         <slot name="error">
             <p v-if="showError" class="italic text-red-600 text-xs mt-2">
                 {{ error }}
