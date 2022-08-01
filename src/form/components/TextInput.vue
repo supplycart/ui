@@ -20,6 +20,7 @@
             class="w-full"
             @focus="focus"
             @blur="blur"
+            @keydown="keydown"
         />
 
         <slot name="error">
@@ -111,6 +112,9 @@ export default {
         },
         toggleError(val) {
             this.showError = val ? false : true;
+        },
+        keydown() {
+            this.$emit("keydown");
         },
     },
 };
