@@ -27,8 +27,8 @@
             <p v-else>{{ value.pic_name }} - {{ value.pic_phone }}</p>
         </div>
         <div v-if="showAttribute('address')">
-            <p v-if="addressCountry == 'SINGAPORE'">{{ value.street }}</p>
             <p>
+                <span v-if="addressCountry == 'SINGAPORE'"> {{ value.street }}</span>
                 <span
                     v-if="
                         value.unit &&
@@ -51,16 +51,14 @@
                 <span v-if="value.building && addressCountryConfig.building">{{
                     value.building
                 }}</span>
-            </p>
-            <p
+            <span
                 v-if="
                     addressCountryConfig.street &&
                     addressCountry !== 'SINGAPORE'
                 "
             >
                 {{ value.street }}
-            </p>
-            <p>
+            </span>
                 <span
                     v-if="
                         addressCountryConfig.city ||
@@ -78,8 +76,6 @@
                 >
                     {{ value.postcode }}
                 </span>
-            </p>
-            <p>
                 <span
                     v-if="
                         addressCountryConfig.state ||
@@ -92,9 +88,14 @@
                 {{ value.country }}
             </p>
         </div>
-        <div v-if="showAttribute('einvoice_email')">
-            <p v-if="value.einvoice_email">
-                {{ LABELS.E_INVOICE_MAILBOX }}: {{ value.einvoice_email }}
+        <div v-if="showAttribute('sales_tax_registration_no')">
+            <p v-if="value.sales_tax_registration_no">
+                {{ LABELS.SALES_TAX_REGISTRATION_NO }}: {{ value.sales_tax_registration_no }}
+            </p>
+        </div>
+        <div v-if="showAttribute('service_tax_registration_no')">
+            <p v-if="value.service_tax_registration_no">
+                {{ LABELS.SERVICE_TAX_REGISTRATION_NO }}: {{ value.service_tax_registration_no }}
             </p>
         </div>
         <div v-if="showAttribute('ref_no')">
@@ -102,6 +103,11 @@
                 {{ LABELS.BILLING_ENTITY_CODE }}: {{ value.ref_no }}
             </p>
         </div>
+        <div v-if="showAttribute('einvoice_email')">
+            <p v-if="value.einvoice_email">
+                {{ LABELS.E_INVOICE_MAILBOX }}: {{ value.einvoice_email }}
+            </p>
+        </div> 
     </div>
 </template>
 <script>

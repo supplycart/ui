@@ -15,8 +15,8 @@
             <p v-if="value.recipient_phone">{{ value.recipient_phone }}</p>
         </div>
         <div v-if="showAttribute('address')">
-            <p v-if="addressCountry == 'SINGAPORE'">{{ value.street }}</p>
             <p>
+                <span v-if="addressCountry == 'SINGAPORE'"> {{ value.street }}</span>
                 <span
                     v-if="
                         value.unit &&
@@ -39,16 +39,14 @@
                 <span v-if="value.building && addressCountryConfig.building">{{
                     value.building
                 }}</span>
-            </p>
-            <p
+            <span
                 v-if="
                     addressCountryConfig.street &&
                     addressCountry !== 'SINGAPORE'
                 "
             >
                 {{ value.street }}
-            </p>
-            <p>
+            </span>
                 <span
                     v-if="
                         addressCountryConfig.city ||
@@ -66,8 +64,7 @@
                 >
                     {{ value.postcode }}
                 </span>
-            </p>
-            <p>
+
                 <span
                     v-if="
                         addressCountryConfig.state ||
