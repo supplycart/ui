@@ -17,6 +17,7 @@
             :required="required"
             @blur="blur"
             @focus="focus"
+            @keydown="keydown"
         />
 
         <slot name="error">
@@ -73,6 +74,9 @@ export default {
     methods: {
         focus(e) {
             this.focused = true;
+        },
+        keydown() {
+            this.$emit("keydown");
         },
     },
 };
