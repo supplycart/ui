@@ -137,6 +137,7 @@ export default {
                     return;
                 }
             }
+            this.$emit("keydown");
         },
     },
 };
