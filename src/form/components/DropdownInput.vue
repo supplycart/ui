@@ -18,9 +18,14 @@
             ]"
             @search="search"
             @close="blur"
+            :taggable="taggable"
+            :multiple="multiple"
         >
             <template v-slot:option="option">
                 <slot name="option" :option="option" />
+            </template>
+            <template v-slot:no-options>
+                <slot name="no-option" />
             </template>
         </VSelect>
         <slot name="error">
@@ -65,6 +70,14 @@ export default {
             default: () => [],
         },
         disabled: {
+            type: Boolean,
+            default: false,
+        },
+        multiple: {
+            type: Boolean,
+            default: false,
+        },
+        taggable: {
             type: Boolean,
             default: false,
         },
