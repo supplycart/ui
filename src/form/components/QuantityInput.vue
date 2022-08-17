@@ -14,6 +14,7 @@
     <BaseInput
         v-else
         v-bind="$attrs"
+        type="text"
         :label="label"
         :value="formattedInput"
         :error="error"
