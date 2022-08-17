@@ -9,10 +9,11 @@
                 {{ pagination.to || 0 | toFullNumber }} of
                 {{ pagination.total | toFullNumber }}
             </div>
-            <div class="btn-group ml-4">
+            <div class="btn-group ml-2">
                 <button
                     :disabled="pagination.current_page === 1"
                     class="btn btn-default"
+                    style="font-size: 0.75rem"
                     type="button"
                     @click="goToPage(1)"
                 >
@@ -24,6 +25,7 @@
                     :key="page"
                     :class="[selected === page ? 'active' : '']"
                     class="btn btn-default"
+                    style="font-size: 0.75rem"
                     type="button"
                     @click="goToPage(page)"
                 >
@@ -33,6 +35,7 @@
                 <button
                     :disabled="pagination.current_page === pagination.last_page"
                     class="btn btn-default"
+                    style="font-size: 0.75rem"
                     type="button"
                     @click="goToPage(pagination.last_page)"
                 >
