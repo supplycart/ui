@@ -3,7 +3,7 @@
         <slot name="label">
             <label v-if="label" class="font-bold">{{ label }}</label>
         </slot>
-        <div v-if="value" class="leading-normal">
+        <div v-if="value !== null" class="leading-normal">
             <slot>
                 {{ input }}
             </slot>
@@ -11,7 +11,7 @@
         <div v-if="showError" class="italic text-red-500">
             {{ errorMessage }}
         </div>
-        <div v-if="!value && showDefault && !showError" class="italic">
+        <div v-if="value == null && showDefault && !showError" class="italic">
             {{ defaultMessage }}
         </div>
     </div>
