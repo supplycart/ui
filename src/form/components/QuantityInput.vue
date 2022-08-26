@@ -2,6 +2,7 @@
     <BaseInput
         v-if="onFocus"
         v-bind="$attrs"
+        type="number"
         :label="label"
         v-model="input"
         :error="error"
