@@ -13,7 +13,7 @@
             :disabled="disabled"
             :options="options"
             :class="[
-                showError ? 'input-error dropdown-input-error' : '',
+                !isValid ? 'input-error dropdown-input-error' : '',
                 inputClass,
             ]"
             @search="search"
@@ -29,7 +29,7 @@
             </template>
         </VSelect>
         <slot name="error">
-            <p v-if="showError" class="italic text-red-600 text-xs mt-2">
+            <p v-if="!isValid" class="italic text-red-600 text-xs mt-2">
                 {{ error }}
             </p>
         </slot>
@@ -81,6 +81,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        invalid: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -96,6 +100,9 @@ export default {
                 this.$emit("input", e);
                 this.required && this.toggleError(e);
             },
+        },
+        isValid() {
+            return !(this.invalid || this.showError);
         },
     },
     watch: {
