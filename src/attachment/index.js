@@ -18,6 +18,18 @@ function validateAttachmentFormat(file, format) {
         "png",
         "jpeg",
         "jpg",
+        "gif",
+        "ai",
+        "svg",
+        "eps",
+        "ppt",
+        "pptx",
+        "wav",
+        "mp3",
+        "mp4",
+        "mpg",
+        "mov",
+        "wmv",
     ];
 
     const useFormat = format.length ? format : defaultFormat;
