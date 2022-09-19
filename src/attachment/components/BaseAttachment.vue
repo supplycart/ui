@@ -33,29 +33,35 @@ export default {
         async setAttachment(event) {
             this.attachments = this.attachments ? this.attachments : [];
 
-            const file = event.target.files[0];
+            const files =
+                this.mode === "single"
+                    ? [event.target.files[0]]
+                    : Array.from(event.target.files);
 
-            if (
-                this.validateAttachmentSize(file, this.maxSize) &&
-                this.validateAttachmentFormat(file, this.format)
-            ) {
-                this.attachments.push(file);
-                this.$emit("input", this.attachments);
-                this.$emit("change", this.attachments);
-
-                event.target.value = null;
-            } else {
-                const message = [];
-                if (!this.validateAttachmentSize(file, this.maxSize)) {
-                    message.push(
-                        `File has exceeded limit of ${this.maxSize}MB`
-                    );
+            files.forEach((file) => {
+                if (
+                    this.validateAttachmentSize(file, this.maxSize) &&
+                    this.validateAttachmentFormat(file, this.format)
+                ) {
+                    this.attachments.push(file);
+                } else {
+                    const message = [];
+                    if (!this.validateAttachmentSize(file, this.maxSize)) {
+                        message.push(
+                            `File ${file.name} has exceeded limit of ${this.maxSize}MB`
+                        );
+                    }
+                    if (!this.validateAttachmentFormat(file, this.format)) {
+                        message.push(
+                            `File format for ${file.name} not supported`
+                        );
+                    }
+                    this.$emit("onError", message);
                 }
-                if (!this.validateAttachmentFormat(file, this.format)) {
-                    message.push(`File format not supported`);
-                }
-                this.$emit("onError", message);
-            }
+            });
+            event.target.value = null;
+            this.$emit("input", this.attachments);
+            this.$emit("change", this.attachments);
         },
 
         async deleteAttachment(index) {
