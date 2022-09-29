@@ -21,11 +21,14 @@
             :taggable="taggable"
             :multiple="multiple"
         >
-            <template v-slot:option="option">
+            <template #option="option">
                 <slot name="option" :option="option" />
             </template>
-            <template v-slot:no-options>
+            <template #no-options>
                 <slot name="no-option" />
+            </template>
+            <template #selected-option="option">
+                <slot name="selected-option" :option="option" />
             </template>
         </VSelect>
         <slot name="error">
