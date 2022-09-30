@@ -127,7 +127,7 @@
     </div>
 </template>
 <script>
-import TextInput from "../../form/components/TextInput";
+import TextInput from "../../form/components/TextInput.vue";
 import AddressFormMixins from "../mixins/addressForm";
 import StateMixins from "../mixins/malaysiaStates";
 export default {
