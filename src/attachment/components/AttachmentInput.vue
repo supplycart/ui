@@ -36,7 +36,7 @@
     </div>
 </template>
 <script>
-import BaseAttachment from "./BaseAttachment";
+import BaseAttachment from "./BaseAttachment.vue";
 
 export default {
     components: { BaseAttachment },

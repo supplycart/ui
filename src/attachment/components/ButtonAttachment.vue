@@ -30,8 +30,8 @@
     </BaseAttachment>
 </template>
 <script>
-import BaseAttachment from "./BaseAttachment";
-import FeatherIcon from "../../icon/components/FeatherIcon";
+import BaseAttachment from "./BaseAttachment.vue";
+import FeatherIcon from "../../icon/components/FeatherIcon.vue";
 
 export default {
     components: {

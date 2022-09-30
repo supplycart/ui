@@ -1,6 +1,6 @@
-export { default as AttachmentInput } from "./components/AttachmentInput";
-export { default as BaseAttachment } from "./components/BaseAttachment";
-export { default as ButtonAttachment } from "./components/ButtonAttachment";
+export { default as AttachmentInput } from "./components/AttachmentInput.vue";
+export { default as BaseAttachment } from "./components/BaseAttachment.vue";
+export { default as ButtonAttachment } from "./components/ButtonAttachment.vue";
 
 function validateAttachmentFormat(file, format) {
     const fname = file.name;

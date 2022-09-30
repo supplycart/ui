@@ -47,7 +47,7 @@ import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
 } from "../constants/currencies";
-import FormLabel from "../../form/components/FormLabel";
+import FormLabel from "../../form/components/FormLabel.vue";
 import { CurrencyInput } from "vue-currency-input";
 import { find } from "lodash";
 import numeral from "numeral";
