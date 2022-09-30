@@ -4,9 +4,9 @@ import { startCase, lowerCase } from "lodash";
 export default {
     name: "AddressForm",
     components: {
-        BillingAddressForm: () => import("./BillingAddressForm"),
-        DeliveryAddressForm: () => import("./DeliveryAddressForm"),
-        GeneralAddressForm: () => import("./GeneralAddressForm"),
+        BillingAddressForm: () => import("./BillingAddressForm.vue"),
+        DeliveryAddressForm: () => import("./DeliveryAddressForm.vue"),
+        GeneralAddressForm: () => import("./GeneralAddressForm.vue"),
     },
     props: {
         value: {

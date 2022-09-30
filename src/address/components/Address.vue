@@ -4,9 +4,9 @@ import { startCase } from "lodash";
 export default {
     name: "AddressNew",
     components: {
-        DeliveryAddress: () => import("./DeliveryAddress"),
-        BillingAddress: () => import("./BillingAddress"),
-        GeneralAddress: () => import("./GeneralAddress"),
+        DeliveryAddress: () => import("./DeliveryAddress.vue"),
+        BillingAddress: () => import("./BillingAddress.vue"),
+        GeneralAddress: () => import("./GeneralAddress.vue"),
     },
     props: {
         value: {

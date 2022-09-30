@@ -39,7 +39,7 @@
     </div>
 </template>
 <script>
-import FormLabel from "./FormLabel";
+import FormLabel from "./FormLabel.vue";
 
 export default {
     components: { FormLabel },

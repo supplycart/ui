@@ -46,7 +46,7 @@
     </div>
 </template>
 <script>
-import PerPageSelect from "./PerPageSelect";
+import PerPageSelect from "./PerPageSelect.vue";
 
 export default {
     components: { PerPageSelect },

@@ -14,7 +14,7 @@
     />
 </template>
 <script>
-import BaseInput from "./BaseInput";
+import BaseInput from "./BaseInput.vue";
 import InputMixins from "./../mixins/input";
 
 export default {
