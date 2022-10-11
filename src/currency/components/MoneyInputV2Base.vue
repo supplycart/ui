@@ -42,7 +42,7 @@ export default {
     computed: {
         rawValue: {
             get() {
-                return this.value;
+                return this.value ?? 0;
             },
             set(val) {
                 this.$emit("input", val);
