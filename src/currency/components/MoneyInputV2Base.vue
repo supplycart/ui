@@ -33,6 +33,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        placeholder: {
+            type: String,
+            default: null,
+        },
     },
     data() {
         return {
@@ -65,15 +69,15 @@ export default {
         },
         displayValue: {
             get() {
-                return (
-                    (this.withSign && this.currencySignPos == "BEFORE"
-                        ? `${this.currencySign} `
-                        : "") +
-                    numeral(this.inputValue).format(this.displayFormat) +
-                    (this.withSign && this.currencySignPos == "AFTER"
-                        ? ` ${this.currencySign}`
-                        : "")
-                );
+                return this.value
+                    ? (this.withSign && this.currencySignPos == "BEFORE"
+                          ? `${this.currencySign} `
+                          : "") +
+                          numeral(this.inputValue).format(this.displayFormat) +
+                          (this.withSign && this.currencySignPos == "AFTER"
+                              ? ` ${this.currencySign}`
+                              : "")
+                    : null;
             },
             set(val) {},
         },
@@ -108,6 +112,7 @@ export default {
                     (vm.editing ? " hidden" : ""),
                 pattern: "[0-9.!a-zA-Z0]",
                 disabled: vm.disabled,
+                placeholder: vm.placeholder,
             },
             domProps: {
                 value: vm.displayValue,
@@ -131,6 +136,7 @@ export default {
                     "border border-red-300 rounded p-2 text-right mb-2" +
                     (!vm.editing ? " hidden" : ""),
                 pattern: "[0-9.!a-zA-Z0]",
+                placeholder: vm.placeholder,
             },
             domProps: {
                 value: vm.inputValue,
