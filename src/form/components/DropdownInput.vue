@@ -4,6 +4,7 @@
             <label v-if="formLabel" :for="$attrs.id">
                 {{ formLabel }}
                 <small v-if="required" class="italic text-red-600">*</small>
+                <slot name="info" />
             </label>
         </slot>
 
