@@ -21,6 +21,7 @@
             @close="blur"
             :taggable="taggable"
             :multiple="multiple"
+            appendToBody
         >
             <template #option="option">
                 <slot name="option" :option="option" />
