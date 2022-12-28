@@ -148,8 +148,8 @@ export default {
                     if (!vm.allowNegative && vm.rawValue < 0) {
                         emitVal *= -1;
                         vm.inputValue *= -1;
+                        vm.$emit("input", emitVal);
                     }
-                    vm.$emit("input", emitVal);
                 },
                 input: function (e) {
                     const oldValue = vm.inputValue;
