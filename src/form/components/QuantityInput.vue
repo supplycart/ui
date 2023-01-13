@@ -46,6 +46,10 @@ export default {
             type: Boolean,
             default: true,
         },
+        nullable: {
+            type: Boolean,
+            default: false,
+        },
     },
     computed: {
         input: {
@@ -57,6 +61,9 @@ export default {
             },
         },
         formattedInput() {
+            if (this.nullable && (this.input == "" || this.input == null)) {
+                return null;
+            }
             return numeral(this.input).format(this.numeralFormat);
         },
         numeralFormat() {
