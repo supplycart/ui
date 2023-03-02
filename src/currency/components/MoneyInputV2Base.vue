@@ -69,15 +69,15 @@ export default {
         },
         displayValue: {
             get() {
-                return this.value
-                    ? (this.withSign && this.currencySignPos == "BEFORE"
-                          ? `${this.currencySign} `
-                          : "") +
-                          numeral(this.inputValue).format(this.displayFormat) +
-                          (this.withSign && this.currencySignPos == "AFTER"
-                              ? ` ${this.currencySign}`
-                              : "")
-                    : null;
+                return (
+                    (this.withSign && this.currencySignPos == "BEFORE"
+                        ? `${this.currencySign} `
+                        : "") +
+                    numeral(this.inputValue).format(this.displayFormat) +
+                    (this.withSign && this.currencySignPos == "AFTER"
+                        ? ` ${this.currencySign}`
+                        : "")
+                );
             },
             set(val) {},
         },
