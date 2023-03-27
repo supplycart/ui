@@ -155,6 +155,9 @@ export default {
                     const oldValue = vm.inputValue;
                     vm.inputValue = e.target.value;
                 },
+                keydown: function(e) {
+                    vm.$emit("keydown")
+                }
             },
         });
 
