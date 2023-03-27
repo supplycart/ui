@@ -15,6 +15,7 @@
             :class="[showError ? 'input-error' : '', inputClass]"
             :disabled="disabled"
             :required="required"
+            @keydown="$emit('keydown')"
         />
 
         <slot name="error">
