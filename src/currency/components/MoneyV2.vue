@@ -24,12 +24,20 @@ export default {
             type: String,
             default: null,
         },
+        convertPrecision: {
+            type: Number,
+            default: -1,
+        },
     },
     computed: {
         displayValue() {
-            const processedVal = numeral(this.value)
+            let processedVal = numeral(this.value)
                 .divide(Math.pow(10, this.decimal))
                 .value();
+
+            if (this.convertPrecision > -1) {
+                processedVal = processedVal.toFixed(this.convertPrecision);
+            }
             return (
                 (this.withSign && this.currencySignPos == "BEFORE"
                     ? `${this.currencySign} `

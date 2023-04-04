@@ -66,7 +66,7 @@
             </div>
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Money v2</h2>
-                <MoneyV2 :value="123830" :decimal="4" :with-sign="true" currency="SGD" />
+                <MoneyV2 :value="1238338" :decimal="4" :with-sign="true" currency="SGD" :convert-precision="2"  />
             </div>
             <div class="p-12">
                 <MoneyInputV2 v-model="moneyv2" currency="MYR" :decimal="2" label="Unit Price" :disabled="true" :required="true" :withSign="true" format="0,0.00" :allow-negative="false"/>
