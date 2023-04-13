@@ -1,6 +1,5 @@
 <script>
-import Currencies from "../constants/currencies";
-import { DefaultCurrency } from "../constants/currencies";
+import CurrencySettings from "../constants/currencySettings";
 
 export default {
     name: "Currency",
@@ -18,17 +17,10 @@ export default {
         let currency =
             typeof this.currency === "object"
                 ? this.currency
-                : Currencies.find(
-                      (item) =>
-                          item.country ===
-                              this.currency
-                                  .toUpperCase()
-                                  .replaceAll(" ", "_") ||
-                          item.code === this.currency.toUpperCase()
-                  );
+                : CurrencySettings[this.currency];
 
         if (!currency) {
-            currency = DefaultCurrency;
+            currency = CurrencySettings["MYR"];
         }
 
         return createElement("span", currency[this.type]);
