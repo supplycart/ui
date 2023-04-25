@@ -77,8 +77,8 @@ const currencySettings = {
         signPosition: "BEFORE",
     },
     CNY: {
-        displayFormat: "0,0",
-        inputFormat: "0[.0000]",
+        displayFormat: "0,0.00[00]",
+        inputFormat: "0.00[00]",
         sign: "¥",
         code: "CNY",
         signPosition: "BEFORE",
