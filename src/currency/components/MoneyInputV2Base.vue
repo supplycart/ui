@@ -10,7 +10,7 @@ export default {
             default: 2,
         },
         currency: {
-            type: String,
+            type: [String, Object],
             default: "MYR",
         },
         value: {
@@ -82,8 +82,12 @@ export default {
             set(val) {},
         },
         currentCurrency() {
-            return Object.keys(CurrencySettings).includes(this.currency)
-                ? this.currency
+            const currencyStr =
+                typeof this.currency == "object"
+                    ? this.currency.code
+                    : this.currency;
+            return Object.keys(CurrencySettings).includes(currencyStr)
+                ? currencyStr
                 : "MYR";
         },
         displayFormat() {
@@ -155,9 +159,9 @@ export default {
                     const oldValue = vm.inputValue;
                     vm.inputValue = e.target.value;
                 },
-                keydown: function(e) {
-                    vm.$emit("keydown")
-                }
+                keydown: function (e) {
+                    vm.$emit("keydown");
+                },
             },
         });
 
