@@ -16,6 +16,7 @@
             :placeholder="placeholder"
             :required="required"
             :disabled="disabled"
+            :maxlength="maxLength"
             :class="[showError ? 'input-error' : '', inputClass]"
             class="w-full"
             @focus="focus"
@@ -75,6 +76,10 @@ export default {
         },
         inputClass: {
             type: String,
+            default: null,
+        },
+        maxLength: {
+            type: Number,
             default: null,
         },
     },
