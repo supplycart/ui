@@ -33,7 +33,11 @@
             </p>
         </slot>
         <slot name="description">
-            <p v-if="description" class="italic text-xs mt-2">
+            <p
+                v-if="description"
+                class="italic text-xs mt-1"
+                :class="inputDescClass"
+            >
                 {{ description }}
             </p>
         </slot>
@@ -82,6 +86,10 @@ export default {
             type: Number,
             default: null,
         },
+        inputDescClass: {
+            type: String,
+            default: null,
+        },
     },
     data() {
         return {
@@ -113,6 +121,7 @@ export default {
             this.$emit("blur", e.target.value);
         },
         focus() {
+            this.$emit("focus");
             this.required && this.toggleError(this.input);
         },
         toggleError(val) {
