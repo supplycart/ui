@@ -1,23 +1,41 @@
 <template>
-    <FlatPickr
-        :id="id"
-        v-model="input"
-        :config="dateConfig"
-        :disabled="disabled"
-    />
+    <div>
+        <FormLabel
+            :id="id"
+            :label="label"
+            :required="required"
+            :disabled="disabled"
+            :class="labelClass"
+        />
+        <FlatPickr
+            :id="id"
+            v-model="input"
+            :config="dateConfig"
+            :disabled="disabled"
+        />
+    </div>
 </template>
 <script>
 import FlatPickr from "vue-flatpickr-component";
-import moment from "moment";
+import FormLabel from "../../form/components/FormLabel.vue";
 import { merge } from "lodash";
 import { Timezones } from "../constants";
 import { DefaultConfig } from "../constants/flatpickr";
 
 export default {
+    components: { FlatPickr, FormLabel },
     props: {
         id: {
             type: String,
             default: null,
+        },
+        label: {
+            type: String,
+            default: null,
+        },
+        labelClass: {
+            type: String,
+            default: 'inline-block mb-2',
         },
         value: {
             type: [String, Date],
@@ -37,8 +55,11 @@ export default {
             type: Boolean,
             default: false,
         },
+        required: {
+            type: Boolean,
+            default: false,
+        },
     },
-    components: { FlatPickr },
     data() {
         return {
             dateConfig: {},
