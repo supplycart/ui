@@ -18,7 +18,6 @@
 <script>
 import FlatPickr from "vue-flatpickr-component";
 import FormLabel from "../../form/components/FormLabel.vue";
-import { merge } from "lodash";
 import { Timezones } from "../constants";
 import { DefaultConfig } from "../constants/flatpickr";
 
@@ -78,7 +77,10 @@ export default {
     watch: {
         config: {
             handler: function (val) {
-                this.dateConfig = merge(DefaultConfig, val);
+                this.dateConfig = {
+                    ...DefaultConfig, 
+                    ...val
+                };            
             },
             deep: true,
             immediate: true,
