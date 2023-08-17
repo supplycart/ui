@@ -3,6 +3,7 @@
         v-if="onFocus"
         v-bind="$attrs"
         type="number"
+        :max="maximumValue"
         :label="label"
         v-model="input"
         :error="error"
@@ -34,6 +35,10 @@ export default {
     components: { BaseInput },
     mixins: [InputMixins],
     props: {
+        maximumValue: {
+            type: Number,
+            default: null,
+        },
         maxDecimal: {
             type: Number,
             default: 0,
@@ -104,6 +109,11 @@ export default {
             if (!this.allowNegative && value < 0) {
                 emitValue = Number(value) * -1;
             }
+
+            if (this.maximumValue != null && emitValue > this.maximumValue) {
+                emitValue = this.maximumValue
+            }
+
             return emitValue;
         },
         blur(e) {
