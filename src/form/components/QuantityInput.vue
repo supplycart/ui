@@ -50,6 +50,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        maximumValue: {
+            type: Number,
+            default: null,
+        },
     },
     computed: {
         input: {
@@ -103,6 +107,10 @@ export default {
             let emitValue = value;
             if (!this.allowNegative && value < 0) {
                 emitValue = Number(value) * -1;
+            }
+
+            if (this.maximumValue !== null && emitValue > this.maximumValue) {
+                emitValue = this.maximumValue;
             }
             return emitValue;
         },

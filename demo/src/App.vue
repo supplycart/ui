@@ -222,6 +222,7 @@
                         :allow-negative="true"
                         class="w-1/2 mr-4 mb-4"
                         input-class="w-full mt-2 p-2 rounded border border-gray-200"
+                        :maximum-value="10"
                     />
                     <PhoneInput
                         label='Phone'
