@@ -217,6 +217,7 @@
                         label="Quantity"
                         v-model="quantity"
                         :required="true"
+                        :maximum-value="100"
                         :min-decimal="2"
                         :max-decimal="4"
                         :allow-negative="true"
