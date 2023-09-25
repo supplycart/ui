@@ -6,7 +6,7 @@
         :max="maximumValue"
         :label="label"
         v-model="input"
-        :error="error"
+        :error="error || showMaxValueError"
         :description="description"
         :required="required"
         :input-class="inputClass"
@@ -19,7 +19,7 @@
         type="text"
         :label="label"
         :value="formattedInput"
-        :error="error"
+        :error="error || showMaxValueError"
         :description="description"
         :required="required"
         :input-class="inputClass"
@@ -98,6 +98,8 @@ export default {
     data() {
         return {
             onFocus: false,
+            maxValueErrorMessage: `Maximum number allowed is ${this.maximumValue}`,
+            showMaxValueError: null,
         };
     },
     methods: {
@@ -111,7 +113,10 @@ export default {
             }
 
             if (this.maximumValue != null && emitValue > this.maximumValue) {
-                emitValue = this.maximumValue
+                this.showMaxValueError = this.maxValueErrorMessage;
+                emitValue = this.maximumValue;
+            } else {
+                this.showMaxValueError = null;
             }
 
             return emitValue;

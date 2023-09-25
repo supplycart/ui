@@ -1,9 +1,7 @@
 <template>
     <label v-if="label" :for="id">
         {{ label }}
-        <small v-if="required && !disabled" class="italic text-red-600"
-            >*</small
-        >
+        <small v-if="required" class="italic text-red-600">*</small>
         <slot name="append"></slot>
     </label>
 </template>
