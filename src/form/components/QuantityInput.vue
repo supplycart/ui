@@ -23,7 +23,10 @@
         :description="description"
         :required="required"
         :input-class="inputClass"
-        @focus="onFocus = true"
+        @focus="
+            onFocus = true;
+            focus();
+        "
     />
 </template>
 <script>
@@ -124,6 +127,13 @@ export default {
         blur(e) {
             this.$emit("blur", e);
             this.onFocus = false;
+        },
+        focus() {
+            this.$nextTick(function () {
+                const input = this.$el.querySelector("input");
+                input.focus();
+                input.select();
+            });
         },
     },
 };
