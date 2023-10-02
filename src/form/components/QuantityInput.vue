@@ -105,6 +105,11 @@ export default {
             showMaxValueError: null,
         };
     },
+    created() {
+        if (this.maximumValue != null && this.input > this.maximumValue) {
+            this.update(this.maximumValue);
+        }
+    },
     methods: {
         update(e) {
             this.$emit("input", this.getEmitValue(e));
