@@ -4,9 +4,10 @@
         v-bind="$attrs"
         type="number"
         :max="maximumValue"
+        :min="minimumValue"
         :label="label"
         v-model="input"
-        :error="error || showMaxValueError"
+        :error="error || showMaxValueError || showMinValueError"
         :description="description"
         :required="required"
         :input-class="inputClass"
@@ -19,7 +20,7 @@
         type="text"
         :label="label"
         :value="formattedInput"
-        :error="error || showMaxValueError"
+        :error="error || showMaxValueError || showMinValueError"
         :description="description"
         :required="required"
         :input-class="inputClass"
@@ -39,6 +40,10 @@ export default {
     mixins: [InputMixins],
     props: {
         maximumValue: {
+            type: Number,
+            default: null,
+        },
+        minimumValue: {
             type: Number,
             default: null,
         },
@@ -102,8 +107,15 @@ export default {
         return {
             onFocus: false,
             maxValueErrorMessage: `Maximum number allowed is ${this.maximumValue}`,
+            minValueErrorMessage: `Minimum number allowed is ${this.minimumValue}`,
             showMaxValueError: null,
+            showMinValueError: null,
         };
+    },
+    created() {
+        if (this.maximumValue != null && this.input > this.maximumValue) {
+            this.update(this.maximumValue);
+        }
     },
     methods: {
         update(e) {
@@ -118,8 +130,17 @@ export default {
             if (this.maximumValue != null && emitValue > this.maximumValue) {
                 this.showMaxValueError = this.maxValueErrorMessage;
                 emitValue = this.maximumValue;
+                this.$emit("error", this.maxValueErrorMessage);
             } else {
                 this.showMaxValueError = null;
+            }
+
+            if (this.minimumValue != null && emitValue < this.minimumValue) {
+                this.showMinValueError = this.minValueErrorMessage;
+                emitValue = this.minimumValue;
+                this.$emit("error", this.minValueErrorMessage);
+            } else {
+                this.showMinValueError = null;
             }
 
             return emitValue;
