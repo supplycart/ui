@@ -72,7 +72,7 @@ export default {
         },
         error: {
             type: String,
-            default: "Please fill out this field.",
+            default: "Please fill in this field.",
         },
         description: {
             type: String,
