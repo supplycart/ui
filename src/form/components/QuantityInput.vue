@@ -137,7 +137,6 @@ export default {
 
             if (this.minimumValue != null && emitValue < this.minimumValue) {
                 this.showMinValueError = this.minValueErrorMessage;
-                emitValue = this.minimumValue;
                 this.$emit("error", this.minValueErrorMessage);
             } else {
                 this.showMinValueError = null;

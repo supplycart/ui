@@ -101,17 +101,14 @@ export default {
             handler(val) {
                 if (val && this.required) {
                     this.showError = true;
+                } else {
+                    this.showError = false;
                 }
             },
         },
     },
     methods: {
         blur(e) {
-            if (!e.target.value && this.required) {
-                this.showError = true;
-            } else {
-                this.showError = false;
-            }
             this.$emit("blur", e);
         },
         change(e) {
