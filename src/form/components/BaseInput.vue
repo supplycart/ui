@@ -14,6 +14,7 @@
             @focus="focus"
             @change="change"
             @blur="blur"
+            @keydown="keydown"
         />
 
         <slot name="error" :invalid="isInvalid">
@@ -117,6 +118,9 @@ export default {
         focus(e) {
             this.$emit("focus", e);
             this.focused = true;
+        },
+        keydown() {
+            this.$emit("keydown");
         },
     },
 };
