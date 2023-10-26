@@ -13,6 +13,7 @@
         :input-class="inputClass"
         @input="update"
         @blur="blur"
+        @keydown="keydown"
     />
     <BaseInput
         v-else
@@ -154,6 +155,9 @@ export default {
                 input.focus();
                 input.select();
             });
+        },
+        keydown() {
+            this.$emit("keydown");
         },
     },
 };

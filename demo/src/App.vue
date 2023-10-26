@@ -217,6 +217,7 @@
                         label="Quantity"
                         v-model="quantity"
                         :required="true"
+                        :minimum-value="5"
                         :maximum-value="100"
                         :min-decimal="2"
                         :max-decimal="4"
@@ -440,7 +441,7 @@
                     first: null,
                     last: null
                 },
-                quantity: null,
+                quantity: 200,
                 phone: '019-1234566',
                 time: null,
                 check: false,

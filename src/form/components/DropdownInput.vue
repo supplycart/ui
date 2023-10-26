@@ -19,6 +19,7 @@
             ]"
             @search="search"
             @close="blur"
+            @open="open"
             :taggable="taggable"
             :multiple="multiple"
             appendToBody
@@ -134,6 +135,9 @@ export default {
             if (this.required) {
                 this.showError = this.value == null;
             }
+        },
+        open() {
+            this.$emit("open");
         },
     },
 };
