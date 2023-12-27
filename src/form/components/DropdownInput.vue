@@ -14,7 +14,7 @@
             :disabled="disabled"
             :options="options"
             :class="[
-                !isValid ? 'input-error dropdown-input-error' : '',
+                showError ? 'input-error dropdown-input-error' : '',
                 inputClass,
             ]"
             @search="search"
@@ -35,8 +35,8 @@
             </template>
         </VSelect>
         <slot name="error">
-            <p v-if="!isValid" class="italic text-red-600 text-xs mt-2">
-                {{ error }}
+            <p v-if="showError" class="italic text-red-600 text-xs mt-2">
+                {{ errorMessage }}
             </p>
         </slot>
     </div>
@@ -61,7 +61,7 @@ export default {
         },
         error: {
             type: String,
-            default: "Please fill out this field.",
+            default: null,
         },
         required: {
             type: Boolean,
@@ -94,7 +94,8 @@ export default {
     },
     data() {
         return {
-            showError: false,
+            focused: false,
+            originalValue: this.value,
         };
     },
     computed: {
@@ -103,40 +104,39 @@ export default {
                 return this.value;
             },
             set(e) {
+                this.focused = false;
                 this.$emit("input", e);
-                this.required && this.toggleError(e);
             },
         },
-        isValid() {
-            return !(this.invalid || this.showError);
+        isEmpty() {
+            return Array.isArray(this.value)
+                ? this.value.length == 0
+                : this.value == null;
         },
-    },
-    watch: {
-        error: {
-            handler(val) {
-                if (val && this.required) {
-                    this.showError = true;
-                }
-            },
+        showError() {
+            return (
+                (this.required && this.focused && this.isEmpty) ||
+                (this.error !== null && this.originalValue == this.value) ||
+                this.invalid
+            );
+        },
+        errorMessage() {
+            if (this.required && this.focused && this.isEmpty) {
+                return "Please fill in this field";
+            } else {
+                return this.error;
+            }
         },
     },
     methods: {
         search(e) {
             this.$emit("search", e);
         },
-        toggleError(val) {
-            if (Array.isArray(val)) {
-                this.showError = val.length ? false : true;
-            } else {
-                this.showError = val ? false : true;
-            }
-        },
         blur() {
-            if (this.required) {
-                this.showError = this.value == null;
-            }
+            this.$emit("blur");
         },
         open() {
+            this.focused = true;
             this.$emit("open");
         },
     },
