@@ -20,6 +20,7 @@
             @search="search"
             @close="blur"
             @open="open"
+            @option:deselecting="optionDeselecting"
             :taggable="taggable"
             :multiple="multiple"
             appendToBody
@@ -138,6 +139,9 @@ export default {
         open() {
             this.focused = true;
             this.$emit("open");
+        },
+        optionDeselecting(option) {
+            this.$emit("deselecting", option);
         },
     },
 };
