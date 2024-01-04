@@ -14,7 +14,7 @@
             :disabled="disabled"
             :options="options"
             :class="[
-                showError ? 'input-error dropdown-input-error' : '',
+                !!errorMessage ? 'input-error dropdown-input-error' : '',
                 inputClass,
             ]"
             @search="search"
@@ -36,7 +36,7 @@
             </template>
         </VSelect>
         <slot name="error">
-            <p v-if="showError" class="italic text-red-600 text-xs mt-2">
+            <p v-if="!!errorMessage" class="italic text-red-600 text-xs mt-2">
                 {{ errorMessage }}
             </p>
         </slot>
@@ -97,6 +97,8 @@ export default {
         return {
             focused: false,
             originalValue: this.value,
+            errorMessage: this.error,
+            emptyMessage: "Please fill in this field",
         };
     },
     computed: {
@@ -107,6 +109,12 @@ export default {
             set(e) {
                 this.focused = false;
                 this.$emit("input", e);
+
+                if (Array.isArray(e) ? e.length == 0 : e == null) {
+                    this.errorMessage = this.emptyMessage;
+                } else {
+                    this.errorMessage = null;
+                }
             },
         },
         isEmpty() {
@@ -114,19 +122,12 @@ export default {
                 ? this.value.length == 0
                 : this.value == null;
         },
-        showError() {
-            return (
-                (this.required && this.focused && this.isEmpty) ||
-                (this.error !== null && this.originalValue == this.value) ||
-                this.invalid
-            );
-        },
-        errorMessage() {
-            if (this.required && this.focused && this.isEmpty) {
-                return "Please fill in this field";
-            } else {
-                return this.error;
-            }
+    },
+    watch: {
+        error: {
+            handler(message) {
+                this.errorMessage = message;
+            },
         },
     },
     methods: {
@@ -135,6 +136,9 @@ export default {
         },
         blur() {
             this.$emit("blur");
+            if (this.required && this.isEmpty) {
+                this.errorMessage = this.emptyMessage;
+            }
         },
         open() {
             this.focused = true;

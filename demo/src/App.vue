@@ -299,7 +299,15 @@
                     label="label"
                     @input="test"
                     :filterable="false"
-                    form-label="Dropdown Input"/>
+                    form-label="Dropdown Input" 
+                    :error="dropdownError" />
+
+                <TextInput
+                    label="Error"
+                    v-model="dropdownError"
+                    class="w-1/2 mr-4 mb-4"
+                    input-class="p-2 rounded border border-gray-200"
+                />
             </div>
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Display Decimal</h2>
@@ -384,7 +392,7 @@
             TextareaInput,
             DropdownInput,
             DecimalField,
-            Currency
+            Currency,
         },
         data() {
             return {
@@ -455,7 +463,8 @@
                     current_page: 1,
                 },
                 state: null,
-                stateOptions: [{id:1,label:'Pahang'},{id:2,label:'Perak'}, {id:3,label:'Melaka'}]
+                stateOptions: [{id:1,label:'Pahang'},{id:2,label:'Perak'}, {id:3,label:'Melaka'}],
+                dropdownError: null
             };
         },
         mounted() {
