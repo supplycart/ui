@@ -112,7 +112,7 @@ export default {
             attrs: {
                 type: "text",
                 class:
-                    "border border-gray-300 rounded p-2 text-right mb-2" +
+                    "border border-gray-300 rounded p-2 text-right" +
                     (vm.editing ? " hidden" : ""),
                 pattern: "[0-9.!a-zA-Z0]",
                 disabled: vm.disabled,
@@ -137,7 +137,7 @@ export default {
             attrs: {
                 type: "text",
                 class:
-                    "border border-red-300 rounded p-2 text-right mb-2" +
+                    "border border-red-300 rounded p-2 text-right" +
                     (!vm.editing ? " hidden" : ""),
                 pattern: "[0-9.!a-zA-Z0]",
                 placeholder: vm.placeholder,
