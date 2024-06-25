@@ -56,7 +56,7 @@ export default {
         maxSize: {
             type: Number,
             validator: function (value) {
-                return value <= 10;
+                return value <= 30;
             },
         },
         error: {
