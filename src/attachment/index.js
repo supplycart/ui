@@ -48,11 +48,12 @@ function validateAttachmentFormat(file, format) {
     return false;
 }
 
+/**
+ * @param {File} file
+ * @param {number} maxSize
+ * @returns {boolean}
+ */
 function validateAttachmentSize(file, maxSize) {
-    //hard limit 10mb for all files accross adam and hub
-    if (maxSize > 10) {
-        return false;
-    }
     return !(maxSize && file.size > maxSize * 1024 * 1024);
 }
 
