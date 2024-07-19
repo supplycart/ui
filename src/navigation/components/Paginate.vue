@@ -5,9 +5,9 @@
         </slot>
         <div class="w-full flex md:flex-1 items-center justify-end">
             <div v-if="showItemInterval">
-                {{ pagination.from || 0 | toFullNumber }} -
-                {{ pagination.to || 0 | toFullNumber }} of
-                {{ pagination.total | toFullNumber }}
+                {{ toFullNumber(pagination.from || 0) }} -
+                {{ toFullNumber(pagination.to || 0) }} of
+                {{ toFullNumber(pagination.total) }}
             </div>
             <div class="btn-group ml-2">
                 <button
@@ -115,6 +115,13 @@ export default {
                 page,
                 perPage: this.perPage,
             });
+        },
+        toFullNumber(value) {
+            if (value === undefined || value === null) {
+                return 0;
+            }
+            value = parseInt(value, 10);
+            return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
         },
     },
 };
