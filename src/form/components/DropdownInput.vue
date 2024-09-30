@@ -57,7 +57,7 @@ export default {
             default: null,
         },
         value: {
-            type: [String, Number, Array],
+            type: [String, Number, Array, Object],
             default: null,
         },
         error: {
