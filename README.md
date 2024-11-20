@@ -64,20 +64,6 @@ If you want to use this repo as the `@supplycart/ui` packages for ADAM/HUB/EVA r
 | --- | --- | --- | --- |
 | value | int, string | null | Input value |
 
-#### ButtonAttachment
-| Props | Type | Default | Description |
-| --- | --- | --- | --- |
-| value | Array | [] | Input value |
-| label | String |  | Button label |
-| icon | String |  | Button Icon |
-| mode | String | multiple | Only 'single' or 'multiple' accepted |
-| maxSize | Number | 20000000 | Maximum size of file to be upload |
-| format | Array | [] | List of allowed format. (csv, pdf, etc)  |
-
-| Event | Description |
-| --- | --- |
-| deleted | return deleted data contains index and deleted file |
-
 #### AttachmentInput
 | Props | Type | Default | Description |
 | --- | --- | --- | --- |
