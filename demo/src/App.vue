@@ -169,19 +169,7 @@
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">Attachment</h2>
                 <div class="mb-4">
-                    <ButtonAttachment
-                        v-model="attachments"
-                        class="p-1 rounded border border-gray-200 mb-4"
-                        icon="upload" label="">
-                        <template
-                        slot="icon">
-                            <FeatherIcon name="file" :size="14"/>
-                        </template>
-                    </ButtonAttachment>
-                    <ButtonAttachment
-                        v-model="attachments"
-                        class="p-1 rounded border border-gray-200 mb-4"
-                        icon="upload" label="Upload"/>
+                   
                     <AttachmentInput
                         v-model="attachments"
                         :maxSize="10"
@@ -267,11 +255,6 @@
                     <SubmitButton
                         class="p-2 rounded bg-blue-300 cursor-pointer mb-4"
                         :loading="true"/>
-                    <IconButton
-                        class="p-2 rounded bg-blue-300 hover:bg-blue-200 ease-in ease-out cursor-pointer flex"
-                        label="Button with Icon">
-                        <FeatherIcon name="download" :size="15" class="inline-block mr-2"/>
-                    </IconButton>
                 </div>
             </div>
             <div class="p-12">
@@ -335,7 +318,6 @@
         Address,
         AddressForm,
         AttachmentInput,
-        ButtonAttachment,
         Checkbox,
         DatePicker,
         DateRangePicker,
@@ -343,7 +325,6 @@
         TimePicker,
         Money,
         MoneyV2,
-        FeatherIcon,
         MoneyInput,
         MoneyInputV2,
         EmailInput,
@@ -352,7 +333,6 @@
         RemarksInput,
         QuantityInput,
         SubmitButton,
-        IconButton,
         Paginate,
         PasswordInput,
         TextareaInput,
@@ -369,7 +349,6 @@
             Address,
             AddressForm,
             AttachmentInput,
-            ButtonAttachment,
             Checkbox,
             DateTime,
             DatePicker,
@@ -377,7 +356,6 @@
             DateRangePicker,
             Money,
             MoneyV2,
-            FeatherIcon,
             MoneyInput,
             MoneyInputV2,
             EmailInput,
@@ -386,7 +364,6 @@
             RemarksInput,
             SubmitButton,
             QuantityInput,
-            IconButton,
             Paginate,
             PasswordInput,
             TextareaInput,
