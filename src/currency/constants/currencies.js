@@ -1,4 +1,5 @@
-import { find, filter } from "lodash";
+import find from "lodash/find";
+import filter from "lodash/filter";
 
 const currencies = [
     {

@@ -1,5 +1,5 @@
 <script>
-import { startCase, lowerCase } from "lodash";
+import startCase from "lodash/startCase";
 
 export default {
     name: "AddressForm",

@@ -1,11 +1,11 @@
 <script>
 import Dinero from "dinero.js";
-import { find } from "lodash";
+import find from "lodash/find";
 import numeral from "numeral";
 import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
-} from "../constants/currencies";
+} from "../constants/currencies.js";
 
 export default {
     name: "Money",
@@ -65,7 +65,7 @@ export default {
                       (item) =>
                           (item.country === this.currency.toUpperCase() ||
                               item.code === this.currency) &&
-                          item.precision === precision
+                          item.precision === precision,
                   )
                 : this.currency;
 
@@ -85,8 +85,8 @@ export default {
         const format = this.format
             ? this.format
             : this.sign
-            ? currency.formatWithSign
-            : currency.format;
+              ? currency.formatWithSign
+              : currency.format;
 
         // EUR and GBP are the currencies that is being used by many countries
         if (currency.code === "EUR" || currency.code === "GBP") {
@@ -98,7 +98,7 @@ export default {
                     precision: currency.precision,
                 })
                     .convertPrecision(this.convertPrecision, "HALF_UP")
-                    .toFormat(format)
+                    .toFormat(format),
             );
         } else {
             return createElement(
@@ -110,7 +110,7 @@ export default {
                 })
                     .convertPrecision(this.convertPrecision, "HALF_UP")
                     .setLocale(currency.locale)
-                    .toFormat(format)
+                    .toFormat(format),
             );
         }
     },
