@@ -1,118 +1,78 @@
-<script>
-import Dinero from "dinero.js";
-import { find } from "lodash";
-import numeral from "numeral";
+<template>
+    <span>{{ formattedMoney }}</span>
+</template>
+
+<script setup>
+import { computed, defineProps } from "vue";
+import find from "lodash/find"
 import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
 } from "../constants/currencies";
+import { format as formatMoney } from "../index";
 
-export default {
-    name: "Money",
-    props: {
-        value: {
-            type: [String, Number],
-            default: () => "0.00",
-        },
-        currency: {
-            type: [String, Object],
-            default: null,
-        },
-        decimal: {
-            type: Number,
-            default: 2,
-        },
-        convertPrecision: {
-            type: Number,
-            default: 2,
-        },
-        sign: {
-            type: Boolean,
-            default: false,
-        },
-        format: {
-            type: String,
-            default: null,
-        },
-        intValue: {
-            type: Boolean,
-            default: true,
-        },
+const props = defineProps({
+    value: {
+        type: [String, Number],
+        default: () => "0.00",
     },
-    computed: {
-        noCentCurrency() {
-            if (typeof this.currency === "string") {
-                const currencyCodeCountry = [];
-                NoCentsCurrencies.forEach((item) => {
-                    currencyCodeCountry.push(item.code);
-                    currencyCodeCountry.push(item.country);
-                });
-
-                if (currencyCodeCountry.includes(this.currency)) {
-                    return true;
-                }
-            }
-            return false;
-        },
+    currency: {
+        type: [String, Object],
+        default: null,
     },
-    render(createElement) {
-        const precision = this.noCentCurrency ? 0 : this.decimal;
-
-        let currency =
-            typeof this.currency === "string"
-                ? find(
-                      Currencies,
-                      (item) =>
-                          (item.country === this.currency.toUpperCase() ||
-                              item.code === this.currency) &&
-                          item.precision === precision
-                  )
-                : this.currency;
-
-        currency = currency ? currency : DefaultCurrency;
-
-        //alter the value passed if it is no cent currency
-        const alteredValue = this.noCentCurrency
-            ? numeral(this.value).divide(Math.pow(10, this.decimal)).value()
-            : this.value;
-
-        const val = this.intValue
-            ? numeral(alteredValue).value()
-            : numeral(alteredValue)
-                  .multiply(Math.pow(10, this.decimal))
-                  .value();
-
-        const format = this.format
-            ? this.format
-            : this.sign
-            ? currency.formatWithSign
-            : currency.format;
-
-        // EUR and GBP are the currencies that is being used by many countries
-        if (currency.code === "EUR" || currency.code === "GBP") {
-            return createElement(
-                "span",
-                Dinero({
-                    amount: val,
-                    currency: currency.code,
-                    precision: currency.precision,
-                })
-                    .convertPrecision(this.convertPrecision, "HALF_UP")
-                    .toFormat(format)
-            );
-        } else {
-            return createElement(
-                "span",
-                Dinero({
-                    amount: val,
-                    currency: currency.code,
-                    precision: currency.precision,
-                })
-                    .convertPrecision(this.convertPrecision, "HALF_UP")
-                    .setLocale(currency.locale)
-                    .toFormat(format)
-            );
-        }
+    decimal: {
+        type: Number,
+        default: 2,
     },
-};
+    sign: {
+        type: Boolean,
+        default: false,
+    },
+    format: {
+        type: String,
+        default: null,
+    },
+    intValue: {
+        type: Boolean,
+        default: true,
+    },
+});
+
+const noCentCurrency = computed(() => {
+    if (typeof props.currency === "string") {
+        const currencyCodeCountry = NoCentsCurrencies.flatMap((item) => [
+            item.code,
+            item.country,
+        ]);
+        return currencyCodeCountry.includes(props.currency.toUpperCase());
+    }
+    return false;
+});
+
+const formattedMoney = computed(() => {
+    const precision = noCentCurrency.value ? 0 : props.decimal;
+
+    let currency =
+        typeof props.currency === "string"
+            ? find(
+                  Currencies,
+                  (item) =>
+                      (item.country === props.currency.toUpperCase() ||
+                          item.code === props.currency) &&
+                      item.precision === precision
+              )
+            : props.currency;
+
+    currency = currency || DefaultCurrency;
+
+    const value = noCentCurrency.value
+        ? Number(props.value) / Math.pow(10, props.decimal)
+        : props.value;
+
+    const amount = props.intValue
+        ? Number(value)
+        : Number(value) * Math.pow(10, props.decimal);
+
+    return formatMoney(amount, currency, props.sign);
+});
 </script>

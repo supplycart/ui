@@ -361,7 +361,6 @@
         formatCents,
         Currency
     } from "@supplycart/ui";
-    import moment from "moment";
 
     export default {
         name: "App",
@@ -374,7 +373,7 @@
             DateTime,
             DatePicker,
             TimePicker,
-            DateRangePicker,
+        DateRangePicker,
             Money,
             MoneyV2,
             FeatherIcon,

@@ -31,10 +31,10 @@
         "
     />
 </template>
+
 <script>
 import BaseInput from "./BaseInput.vue";
 import InputMixins from "./../mixins/input";
-import numeral from "numeral";
 
 export default {
     components: { BaseInput },
@@ -75,33 +75,10 @@ export default {
             },
         },
         formattedInput() {
-            if (this.nullable && (this.input == "" || this.input == null)) {
+            if (this.nullable && (this.input === "" || this.input === null)) {
                 return null;
             }
-            return numeral(this.input).format(this.numeralFormat);
-        },
-        numeralFormat() {
-            let format = "0,0";
-            if (this.minDecimal > 0) {
-                format += ".";
-                let i = 0;
-                while (i < this.minDecimal) {
-                    format += "0";
-                    i++;
-                }
-                // in case no maxDecimal prop passed
-                if (this.maxDecimal > this.minDecimal) {
-                    const remainingDP = this.maxDecimal - this.minDecimal;
-                    let appendOptionalDP = "";
-                    let i = 0;
-                    while (i < remainingDP) {
-                        appendOptionalDP += "0";
-                        i++;
-                    }
-                    format = `${format}[${appendOptionalDP}]`;
-                }
-            }
-            return format;
+            return this.formatNumber(this.input);
         },
     },
     data() {
@@ -119,6 +96,14 @@ export default {
         }
     },
     methods: {
+        formatNumber(value) {
+            const options = {
+                minimumFractionDigits: this.minDecimal,
+                maximumFractionDigits: this.maxDecimal,
+                useGrouping: true,
+            };
+            return new Intl.NumberFormat("en-US", options).format(value);
+        },
         update(e) {
             this.$emit("input", this.getEmitValue(e));
         },

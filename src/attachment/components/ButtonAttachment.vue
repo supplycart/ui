@@ -11,11 +11,11 @@
             :for="id"
         >
             <slot name="icon">
-                <FeatherIcon
+                <!-- <FeatherIcon
                     :name="icon"
                     class="inline-block mx-1"
                     :size="15"
-                />
+                /> -->
             </slot>
             <input
                 :id="id"
@@ -31,12 +31,12 @@
 </template>
 <script>
 import BaseAttachment from "./BaseAttachment.vue";
-import FeatherIcon from "../../icon/components/FeatherIcon.vue";
+// import FeatherIcon from "../../icon/components/FeatherIcon.vue";
 
 export default {
     components: {
         BaseAttachment,
-        FeatherIcon,
+        // FeatherIcon,
     },
     props: {
         id: {

@@ -37,146 +37,126 @@
         <slot name="description" />
     </div>
 </template>
-<style scoped>
-input[type="text"] {
-    text-align: right;
-}
-</style>
-<script>
+
+<script setup>
+import { computed, ref, watch, defineProps } from "vue";
+import find from "lodash/find";
 import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
 } from "../constants/currencies";
 import FormLabel from "../../form/components/FormLabel.vue";
 import { CurrencyInput } from "vue-currency-input";
-import { find } from "lodash";
-import numeral from "numeral";
 
-export default {
-    name: "MoneyInput",
-    components: {
-        FormLabel,
-        CurrencyInput,
+const props = defineProps({
+    label: {
+        type: String,
+        default: null,
     },
-    inheritAttrs: false,
-    props: {
-        label: {
-            type: String,
-            default: null,
-        },
-        value: {
-            type: [Number, String],
-            default: 0,
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        currency: {
-            type: [String, Object],
-            default: null,
-        },
-        decimal: {
-            type: Number,
-            default: 2,
-        },
-        sign: {
-            type: Boolean,
-            default: false,
-        },
-        inputClass: {
-            type: [String, Object],
-            default: null,
-        },
-        error: {
-            type: String,
-            default: "Please fill out this field.",
-        },
-        intValue: {
-            type: Boolean,
-            default: true,
-        },
-        allowNegative: {
-            type: Boolean,
-            default: false,
-        },
-        allowZero: {
-            type: Boolean,
-            default: true,
-        },
+    modelValue: {
+        type: [Number, String],
+        default: 0,
     },
-    computed: {
-        input: {
-            get() {
-                return numeral(this.value).value();
-            },
-            set(value) {
-                this.$emit("input", numeral(value).value());
-            },
-        },
-        hasError() {
-            return this.errors && this.errors.length > 0;
-        },
-        noCentCurrency() {
-            if (typeof this.currency === "string") {
-                const currencyCodeCountry = [];
-                NoCentsCurrencies.forEach((item) => {
-                    currencyCodeCountry.push(item.code);
-                    currencyCodeCountry.push(item.country);
-                });
+    required: {
+        type: Boolean,
+        default: false,
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+    currency: {
+        type: [String, Object],
+        default: null,
+    },
+    decimal: {
+        type: Number,
+        default: 2,
+    },
+    sign: {
+        type: Boolean,
+        default: false,
+    },
+    inputClass: {
+        type: [String, Object],
+        default: null,
+    },
+    error: {
+        type: String,
+        default: "Please fill out this field.",
+    },
+    intValue: {
+        type: Boolean,
+        default: true,
+    },
+    allowNegative: {
+        type: Boolean,
+        default: false,
+    },
+    allowZero: {
+        type: Boolean,
+        default: true,
+    },
+});
 
-                if (currencyCodeCountry.includes(this.currency)) {
-                    return true;
-                }
-            }
-            return false;
-        },
-        currencyData() {
-            //treat as MYR if currency passed has no cent
-            const alteredCurrency = this.noCentCurrency ? "MYR" : this.currency;
-            const currency =
-                typeof alteredCurrency === "string"
-                    ? find(
-                          Currencies,
-                          (item) =>
-                              (item.code === alteredCurrency.toUpperCase() ||
-                                  item.country ===
-                                      alteredCurrency.toUpperCase()) &&
-                              item.precision === this.decimal
-                      )
-                    : this.currency;
+const emit = defineEmits(["update:modelValue", "blur"]);
 
-            return currency ? currency : DefaultCurrency;
-        },
-    },
-    data() {
-        return {
-            showError: false,
-        };
-    },
-    watch: {
-        error: {
-            handler(val) {
-                if (val && this.required) {
-                    this.showError = true;
-                }
-            },
-        },
-    },
-    methods: {
-        blur(e) {
-            if (!this.allowZero) {
-                this.showError = e.target.value === 0;
-            }
-            if (this.required) {
-                this.showError = this.value == null;
-            }
-            this.$emit("blur", e);
-        },
-    },
+const showError = ref(false);
+
+const input = computed({
+    get: () => props.modelValue,
+    set: (value) => emit("update:modelValue", value),
+});
+
+const noCentCurrency = computed(() => {
+    if (typeof props.currency === "string") {
+        const currencyCodeCountry = NoCentsCurrencies.flatMap((item) => [
+            item.code,
+            item.country,
+        ]);
+        return currencyCodeCountry.includes(props.currency);
+    }
+    return false;
+});
+
+const currencyData = computed(() => {
+    const alteredCurrency = noCentCurrency.value ? "MYR" : props.currency;
+    const currency =
+        typeof alteredCurrency === "string"
+            ? find(
+                  Currencies,
+                  (item) =>
+                      (item.code === alteredCurrency.toUpperCase() ||
+                          item.country === alteredCurrency.toUpperCase()) &&
+                      item.precision === props.decimal
+              )
+            : props.currency;
+
+    return currency || DefaultCurrency;
+});
+
+watch(
+    () => props.error,
+    (val) => {
+        if (val && props.required) {
+            showError.value = true;
+        }
+    }
+);
+
+const blur = (e) => {
+    if (!props.allowZero) {
+        showError.value = e.target.value === 0;
+    }
+    if (props.required) {
+        showError.value = props.modelValue == null;
+    }
+    emit("blur", e);
 };
 </script>
+
+<style scoped>
+input[type="text"] {
+    text-align: right;
+}
+</style>

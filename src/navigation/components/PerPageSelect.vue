@@ -13,18 +13,22 @@
                 <option value="100">Per Page 100</option>
             </select>
             <div class="pointer" style="padding-right: 0.2rem">
-                <FeatherIcon name="chevron-down" :size="16" />
+                <ChevronDown :size="16" />
             </div>
         </div>
     </div>
 </template>
 <script>
+import { ChevronDown } from "lucide-vue";
 export default {
     props: {
         value: {
             type: [Number, String],
             default: 30,
         },
+    },
+    components: {
+        ChevronDown,
     },
     computed: {
         limit: {

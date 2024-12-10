@@ -1,6 +1,7 @@
 {
     "name": "@supplycart/ui",
     "version": "1.15.1",
+    "type": "module",
     "repository": {
         "type": "git",
         "url": "https://github.com/supplycart/ui"
@@ -14,14 +15,12 @@
     "dependencies": {
         "core-js": "^3.6.4",
         "dinero.js": "^1.8.1",
-        "feather-icons": "^4.28.0",
         "flatpickr": "^4.6.9",
         "lodash": "^4.17.21",
-        "luxon": "^1.22.0",
-        "moment": "2.24.0",
-        "moment-timezone": "^0.5.28",
-        "numeral": "^2.0.6",
-        "vue": "^2.6.11",
+        "lucide-vue": "^0.446.0",
+        "moment": "^2.30.1",
+        "moment-timezone": "^0.5.46",
+        "vue": "^2.7.16",
         "vue-currency-input": "^1.17.3",
         "vue-flatpickr-component": "^8.1.5",
         "vue-select": "^3.10.7"

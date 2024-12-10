@@ -1,172 +1,148 @@
-<script>
-import numeral from "numeral";
-import { h } from "vue";
+<template>
+    <div>
+        <input
+            v-if="!editing"
+            type="text"
+            class="border border-gray-300 rounded p-2 text-right"
+            :disabled="disabled"
+            :placeholder="placeholder"
+            :value="displayValue"
+            @focus="onFocus"
+        />
+        <input
+            v-if="editing"
+            type="text"
+            class="border border-red-300 rounded p-2 text-right"
+            :placeholder="placeholder"
+            :value="inputValue"
+            @blur="onBlur"
+            @input="onInput"
+            @keydown="onKeydown"
+        />
+    </div>
+</template>
+
+<script setup>
+import { ref, computed, watch, defineProps, defineEmits } from "vue";
 import CurrencySettings from "../constants/currencySettings";
 
-export default {
-    props: {
-        decimal: {
-            type: Number,
-            default: 2,
-        },
-        currency: {
-            type: [String, Object],
-            default: "MYR",
-        },
-        value: {
-            type: Number,
-            default: 0,
-        },
-        withSign: {
-            type: Boolean,
-            default: false,
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        format: {
-            type: String,
-            default: null,
-        },
-        allowNegative: {
-            type: Boolean,
-            default: false,
-        },
-        placeholder: {
-            type: String,
-            default: null,
-        },
+const props = defineProps({
+    decimal: {
+        type: Number,
+        default: 2,
     },
-    data() {
-        return {
-            editing: false,
-        };
+    currency: {
+        type: [String, Object],
+        default: "MYR",
     },
-    computed: {
-        rawValue: {
-            get() {
-                return this.value ?? 0;
-            },
-            set(val) {
-                this.$emit("input", val);
-            },
-        },
-        inputValue: {
-            get() {
-                return numeral(this.rawValue)
-                    .divide(Math.pow(10, this.decimal))
-                    .value();
-            },
-            set(value) {
-                this.rawValue = Number(
-                    numeral(value)
-                        .multiply(Math.pow(10, this.decimal))
-                        .value()
-                        .toFixed(this.decimal)
-                );
-            },
-        },
-        displayValue: {
-            get() {
-                return (
-                    (this.withSign && this.currencySignPos == "BEFORE"
-                        ? `${this.currencySign} `
-                        : "") +
-                    numeral(this.inputValue).format(this.displayFormat) +
-                    (this.withSign && this.currencySignPos == "AFTER"
-                        ? ` ${this.currencySign}`
-                        : "")
-                );
-            },
-            set(val) {},
-        },
-        currentCurrency() {
-            const currencyStr =
-                typeof this.currency == "object"
-                    ? this.currency.code
-                    : this.currency;
-            return Object.keys(CurrencySettings).includes(currencyStr)
-                ? currencyStr
-                : "MYR";
-        },
-        displayFormat() {
-            return this.format
-                ? this.format
-                : CurrencySettings[this.currentCurrency]["displayFormat"];
-        },
-        inputFormat() {
-            return CurrencySettings[this.currentCurrency]["inputFormat"];
-        },
-        currencySign() {
-            return CurrencySettings[this.currentCurrency]["sign"];
-        },
-        currencySignPos() {
-            return CurrencySettings[this.currentCurrency]["signPosition"];
-        },
+    value: {
+        type: Number,
+        default: 0,
     },
-    render: function (h) {
-        const vm = this;
-
-        const display = h("input", {
-            attrs: {
-                type: "text",
-                class:
-                    "border border-gray-300 rounded p-2 text-right" +
-                    (vm.editing ? " hidden" : ""),
-                pattern: "[0-9.!a-zA-Z0]",
-                disabled: vm.disabled,
-                placeholder: vm.placeholder,
-            },
-            domProps: {
-                value: vm.displayValue,
-            },
-            on: {
-                focus: function (e) {
-                    vm.editing = true;
-
-                    vm.$nextTick(function () {
-                        input.elm.focus();
-                        input.elm.select();
-                    });
-                },
-            },
-        });
-
-        const input = h("input", {
-            attrs: {
-                type: "text",
-                class:
-                    "border border-red-300 rounded p-2 text-right" +
-                    (!vm.editing ? " hidden" : ""),
-                pattern: "[0-9.!a-zA-Z0]",
-                placeholder: vm.placeholder,
-            },
-            domProps: {
-                value: vm.inputValue,
-            },
-            on: {
-                blur: function (e) {
-                    vm.editing = false;
-                    let emitVal = vm.rawValue;
-                    if (!vm.allowNegative && vm.rawValue < 0) {
-                        emitVal *= -1;
-                        vm.inputValue *= -1;
-                        vm.$emit("input", emitVal);
-                    }
-                },
-                input: function (e) {
-                    const oldValue = vm.inputValue;
-                    vm.inputValue = e.target.value;
-                },
-                keydown: function (e) {
-                    vm.$emit("keydown");
-                },
-            },
-        });
-
-        return h("div", [display, input]);
+    withSign: {
+        type: Boolean,
+        default: false,
     },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+    format: {
+        type: String,
+        default: null,
+    },
+    allowNegative: {
+        type: Boolean,
+        default: false,
+    },
+    placeholder: {
+        type: String,
+        default: null,
+    },
+});
+
+const emit = defineEmits(["input", "keydown"]);
+
+const editing = ref(false);
+const rawValue = ref(props.value ?? 0);
+
+watch(
+    () => props.value,
+    (newValue) => {
+        rawValue.value = newValue ?? 0;
+    }
+);
+
+const inputValue = computed({
+    get() {
+        return (rawValue.value / Math.pow(10, props.decimal)).toFixed(
+            props.decimal
+        );
+    },
+    set(value) {
+        const newValue = Number(value) * Math.pow(10, props.decimal);
+        rawValue.value = Math.round(newValue); // Ensure rounding to avoid floating-point precision issues
+        emit("input", rawValue.value);
+    },
+});
+
+const currentCurrency = computed(() => {
+    const currencyStr =
+        typeof props.currency === "object"
+            ? props.currency.code
+            : props.currency;
+    return CurrencySettings[currencyStr] ? currencyStr : "MYR";
+});
+
+const currencySign = computed(() => {
+    return CurrencySettings[currentCurrency.value].sign;
+});
+
+const currencySignPos = computed(() => {
+    return CurrencySettings[currentCurrency.value].signPosition;
+});
+
+const displayValue = computed(() => {
+    const formattedValue = new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: props.decimal,
+        maximumFractionDigits: props.decimal,
+    }).format(inputValue.value);
+    return (
+        (props.withSign && currencySignPos.value === "BEFORE"
+            ? `${currencySign.value} `
+            : "") +
+        formattedValue +
+        (props.withSign && currencySignPos.value === "AFTER"
+            ? ` ${currencySign.value}`
+            : "")
+    );
+});
+
+const onFocus = () => {
+    editing.value = true;
+    setTimeout(() => {
+        const input = document.querySelector("input");
+        input.focus();
+        input.select();
+    }, 0);
+};
+
+const onBlur = () => {
+    editing.value = false;
+    let emitVal = rawValue.value;
+    if (!props.allowNegative && rawValue.value < 0) {
+        emitVal = Math.abs(emitVal);
+        inputValue.value = Math.abs(inputValue.value);
+        emit("input", emitVal);
+    }
+};
+
+const onInput = (e) => {
+    inputValue.value = e.target.value;
+};
+
+const onKeydown = () => {
+    emit("keydown");
 };
 </script>
 
