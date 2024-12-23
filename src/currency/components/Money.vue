@@ -4,7 +4,7 @@
 
 <script setup>
 import { computed, defineProps } from "vue";
-import find from "lodash/find"
+import find from "lodash-es/find";
 import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
