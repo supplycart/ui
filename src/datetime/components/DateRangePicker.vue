@@ -2,7 +2,7 @@
     <input ref="input" type="text" />
 </template>
 <script>
-import merge from "lodash-es/merge";
+import merge from "lodash/merge";
 import flatpickr from "flatpickr";
 
 export default {
