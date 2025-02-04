@@ -9,8 +9,8 @@
     "scripts": {
         "install-demo": "cd ./demo && yarn install && yarn link @supplycart/ui",
         "serve": "cd ./demo && yarn serve",
-        "lint": "eslint --ext .js,.vue src",
-        "lint-fix": "eslint --fix --ext .js,.vue src"
+        "lint": "eslint src --format stylish",
+        "lint-fix": "eslint src --fix --format stylish"
     },
     "dependencies": {
         "core-js": "^3.6.4",
@@ -28,12 +28,17 @@
     "license": "MIT",
     "devDependencies": {
         "@babel/runtime": "^7.12.18",
+        "@eslint/compat": "^1.2.4",
+        "@eslint/js": "^9.18.0",
         "@types/lodash": "^4.17.14",
-        "@vue/eslint-config-prettier": "^6.0.0",
-        "eslint": "^6.8.0",
-        "eslint-plugin-prettier": "^3.3.1",
-        "eslint-plugin-vue": "^7.5.0",
-        "prettier": "^2.2.1",
-        "prettier-eslint": "^12.0.0"
+        "@vue/eslint-config-prettier": "^10.2.0",
+        "eslint": "^9.18.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-import": "^2.31.0",
+        "eslint-plugin-prettier": "^5.2.3",
+        "eslint-plugin-vue": "^9.32.0",
+        "prettier": "^3.4.2",
+        "prettier-eslint": "^16.3.0",
+        "vue-eslint-parser": "^9.4.3"
     }
 }
