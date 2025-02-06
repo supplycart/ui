@@ -75,10 +75,33 @@ export default {
             },
         },
         formattedInput() {
-            if (this.nullable && (this.input === "" || this.input === null)) {
+            if (this.nullable && (this.input === "" || this.input == null)) {
                 return null;
             }
-            return this.formatNumber(this.input);
+            return this.formatNumber(this.input, this.numeralFormat);
+        },
+        numeralFormat() {
+            let format = "0,0";
+            if (this.minDecimal > 0) {
+                format += ".";
+                let i = 0;
+                while (i < this.minDecimal) {
+                    format += "0";
+                    i++;
+                }
+                // in case no maxDecimal prop passed
+                if (this.maxDecimal > this.minDecimal) {
+                    const remainingDP = this.maxDecimal - this.minDecimal;
+                    let appendOptionalDP = "";
+                    let i = 0;
+                    while (i < remainingDP) {
+                        appendOptionalDP += "0";
+                        i++;
+                    }
+                    format = `${format}[${appendOptionalDP}]`;
+                }
+            }
+            return format;
         },
     },
     data() {
@@ -96,13 +119,55 @@ export default {
         }
     },
     methods: {
-        formatNumber(value) {
-            const options = {
-                minimumFractionDigits: this.minDecimal,
-                maximumFractionDigits: this.maxDecimal,
-                useGrouping: true,
-            };
-            return new Intl.NumberFormat("en-US", options).format(value);
+        formatNumber(number, format) {
+            // Handle null/undefined/empty values
+            if (number === null || number === undefined || number === '') {
+                return '0';
+            }
+
+            const num = parseFloat(number);
+            if (isNaN(num)) return '0';
+
+            // Parse format string (e.g., "0,0.00[00]")
+            const [intFormat, decFormat] = format.split('.');
+            const hasDecimals = !!decFormat;
+            
+            // Handle optional decimals in format like "0,0.00[00]"
+            let requiredDecimals = 0;
+            let optionalDecimals = 0;
+            if (hasDecimals) {
+                const match = decFormat.match(/^(\d+)(?:\[(\d+)\])?$/);
+                if (match) {
+                    requiredDecimals = match[1].length;
+                    optionalDecimals = match[2] ? match[2].length : 0;
+                }
+            }
+
+            // Calculate total decimal places based on the actual number
+            const actualDecimals = this.getDecimalPlaces(num);
+            const decimalPlaces = Math.min(
+                Math.max(actualDecimals, requiredDecimals),
+                requiredDecimals + optionalDecimals
+            );
+
+            // Format the number with the calculated decimal places
+            const formatted = Math.abs(num).toFixed(decimalPlaces);
+            const [intPart, decPart] = formatted.split('.');
+
+            // Add thousand separators
+            const withCommas = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+            // Combine the parts
+            const result = hasDecimals && decPart 
+                ? `${withCommas}.${decPart}`
+                : withCommas;
+
+            // Handle negative numbers
+            return num < 0 ? `-${result}` : result;
+        },
+        getDecimalPlaces(num) {
+            if (Math.floor(num) === num) return 0;
+            return num.toString().split('.')[1]?.length || 0;
         },
         update(e) {
             this.$emit("input", this.getEmitValue(e));

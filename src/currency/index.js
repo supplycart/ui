@@ -1,7 +1,23 @@
+import Dinero from "dinero.js";
+import { find } from "lodash";
 import Currencies, { DefaultCurrency } from "./constants/currencies";
 
 export * from "./components";
 export * from "./constants";
+
+function parseValue(value) {
+    if (value === null || value === undefined || value === '') {
+        return 0;
+    }
+    // Handle string values
+    if (typeof value === 'string') {
+        // Remove any non-numeric characters except decimal point and minus
+        value = value.replace(/[^\d.-]/g, '');
+        return parseFloat(value) || 0;
+    }
+    // Handle number values
+    return typeof value === 'number' ? value : 0;
+}
 
 function isInt(n) {
     return Number.isInteger(n);
@@ -24,12 +40,33 @@ function formatCents(
     intValue = true,
     decimal = 2
 ) {
-    const currencyObj = findCurrency(currency, decimal);
-    const formatter = createFormatter(currencyObj, sign);
-    const value = intValue
-        ? amount
-        : Math.round(amount * Math.pow(10, decimal));
-    return formatter.format(value / Math.pow(10, currencyObj.precision));
+    currency =
+        typeof currency === "string"
+            ? find(
+                  Currencies,
+                  (item) =>
+                      (item.country === currency.toUpperCase() ||
+                          item.code === currency) &&
+                      item.precision === decimal
+              )
+            : currency;
+
+    currency = currency ? currency : DefaultCurrency;
+
+    const parsedAmount = parseValue(amount);
+    const val = intValue
+        ? Math.floor(parsedAmount)
+        : Math.round(parsedAmount * Math.pow(10, decimal));
+
+    const format = sign ? currency.formatWithSign : currency.format;
+
+    return Dinero({
+        amount: val,
+        currency: currency.code,
+        precision: currency.precision,
+    })
+        .setLocale(currency.locale)
+        .toFormat(format);
 }
 
 function currency(countryCurrency, type) {
