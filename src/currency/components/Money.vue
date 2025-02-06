@@ -1,6 +1,7 @@
 <script>
 import Dinero from "dinero.js";
-import { find } from "lodash";
+import find from "lodash/find";
+import Decimal from "decimal.js";
 import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
@@ -57,13 +58,12 @@ export default {
     },
     methods: {
         parseValue(value) {
-            // Convert string to number if needed
-            return typeof value === 'string' ? parseFloat(value) : value;
+            try {
+                return new Decimal(value || 0);
+            } catch (e) {
+                return new Decimal(0);
+            }
         },
-        roundToDecimal(value, decimals) {
-            const multiplier = Math.pow(10, decimals);
-            return Math.round(value * multiplier) / multiplier;
-        }
     },
     render(createElement) {
         const precision = this.noCentCurrency ? 0 : this.decimal;
@@ -81,18 +81,19 @@ export default {
 
     currency = currency || DefaultCurrency;
 
-        // Parse and handle the value
-        let parsedValue = this.parseValue(this.value);
+        // Create Decimal instances for precise calculations
+        const value = this.parseValue(this.value);
+        const powerTen = new Decimal(10).pow(this.decimal);
 
-        // Handle no cents currency
+        // Handle no cent currency
         const alteredValue = this.noCentCurrency
-            ? parsedValue / Math.pow(10, this.decimal)
-            : parsedValue;
+            ? value.dividedBy(powerTen)
+            : value;
 
-        // Handle integer value conversion
+        // Calculate final value with proper precision
         const val = this.intValue
-            ? Math.floor(alteredValue)
-            : Math.round(alteredValue * Math.pow(10, this.decimal));
+            ? alteredValue.floor()
+            : alteredValue.times(powerTen).round();
 
         const format = this.format
             ? this.format
@@ -100,12 +101,15 @@ export default {
             ? currency.formatWithSign
             : currency.format;
 
-        // EUR and GBP special handling
+        // Convert Decimal to number for Dinero
+        const amount = parseInt(val.toString());
+
+        // EUR and GBP are the currencies that is being used by many countries
         if (currency.code === "EUR" || currency.code === "GBP") {
             return createElement(
                 "span",
                 Dinero({
-                    amount: val,
+                    amount: amount,
                     currency: currency.code,
                     precision: currency.precision,
                 })
@@ -116,7 +120,7 @@ export default {
             return createElement(
                 "span",
                 Dinero({
-                    amount: val,
+                    amount: amount,
                     currency: currency.code,
                     precision: currency.precision,
                 })

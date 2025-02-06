@@ -1,5 +1,6 @@
 import Dinero from "dinero.js";
-import { find } from "lodash";
+import find from "lodash/find";
+import Decimal from "decimal.js";
 import Currencies, { DefaultCurrency } from "./constants/currencies";
 
 export * from "./components";
@@ -20,17 +21,57 @@ function parseValue(value) {
 }
 
 function isInt(n) {
-    return Number.isInteger(n);
+    try {
+        const decimal = new Decimal(n);
+        return decimal.isInteger();
+    } catch (e) {
+        return false;
+    }
 }
 
 function isFloat(n) {
-    return Number(n) === n && !Number.isInteger(n);
+    try {
+        const decimal = new Decimal(n);
+        return !decimal.isInteger() && decimal.isFinite();
+    } catch (e) {
+        return false;
+    }
+}
+
+function parseValue(value) {
+    try {
+        return new Decimal(value || 0);
+    } catch (e) {
+        return new Decimal(0);
+    }
 }
 
 function format(amount, currency, sign = false) {
-    const currencyObj = findCurrency(currency);
-    const formatter = createFormatter(currencyObj, sign);
-    return formatter.format(amount / Math.pow(10, currencyObj.precision));
+    currency =
+        typeof currency === "string"
+            ? find(
+                  Currencies,
+                  (item) =>
+                      item.country === currency.toUpperCase() ||
+                      item.code === currency
+              )
+            : currency;
+
+    currency = currency ? currency : DefaultCurrency;
+
+    const format = sign ? currency.formatWithSign : currency.format;
+
+    // Convert to integer for Dinero
+    const amountDecimal = parseValue(amount);
+    const dineroAmount = parseInt(amountDecimal.toString());
+
+    return Dinero({
+        amount: dineroAmount,
+        currency: currency.code,
+        precision: currency.precision,
+    })
+        .setLocale(currency.locale)
+        .toFormat(format);
 }
 
 function formatCents(
@@ -53,15 +94,21 @@ function formatCents(
 
     currency = currency ? currency : DefaultCurrency;
 
-    const parsedAmount = parseValue(amount);
+    const amountDecimal = parseValue(amount);
+    const powerTen = new Decimal(10).pow(decimal);
+
+    // Calculate value with proper precision
     const val = intValue
-        ? Math.floor(parsedAmount)
-        : Math.round(parsedAmount * Math.pow(10, decimal));
+        ? amountDecimal.floor()
+        : amountDecimal.times(powerTen).round();
 
     const format = sign ? currency.formatWithSign : currency.format;
 
+    // Convert to integer for Dinero
+    const dineroAmount = parseInt(val.toString());
+
     return Dinero({
-        amount: val,
+        amount: dineroAmount,
         currency: currency.code,
         precision: currency.precision,
     })
@@ -72,30 +119,6 @@ function formatCents(
 function currency(countryCurrency, type) {
     const currencyObj = findCurrency(countryCurrency);
     return currencyObj[type];
-}
-
-function findCurrency(countryCurrency, precision) {
-    if (typeof countryCurrency === "object") return countryCurrency;
-
-    const found = Currencies.find(
-        (item) =>
-            item.country === countryCurrency?.toUpperCase() ||
-            item.code === countryCurrency?.toUpperCase()
-    );
-
-    return found && (!precision || found.precision === precision)
-        ? found
-        : DefaultCurrency;
-}
-
-function createFormatter(currencyObj, sign) {
-    return new Intl.NumberFormat(currencyObj.locale, {
-        style: "currency",
-        currency: currencyObj.code,
-        minimumFractionDigits: currencyObj.precision,
-        maximumFractionDigits: currencyObj.precision,
-        signDisplay: sign ? "always" : "auto",
-    });
 }
 
 export { isInt, isFloat, format, formatCents, currency };

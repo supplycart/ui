@@ -1,5 +1,6 @@
 <script>
 import { h } from "vue";
+import Decimal from "decimal.js";
 import CurrencySettings from "../constants/currencySettings";
 
 export default {
@@ -45,38 +46,53 @@ export default {
     computed: {
         rawValue: {
             get() {
-                return this.value ?? 0;
+                try {
+                    return new Decimal(this.value ?? 0);
+                } catch (e) {
+                    return new Decimal(0);
+                }
             },
             set(val) {
-                this.$emit("input", val);
+                try {
+                    const decimal = new Decimal(val);
+                    this.$emit("input", decimal.toNumber());
+                } catch (e) {
+                    this.$emit("input", 0);
+                }
             },
         },
         inputValue: {
             get() {
-                return this.rawValue / Math.pow(10, this.decimal);
+                const powerTen = new Decimal(10).pow(this.decimal);
+                return this.rawValue.dividedBy(powerTen).toString();
             },
             set(value) {
-                const parsedValue = this.parseValue(value);
-                this.rawValue = Number(
-                    (parsedValue * Math.pow(10, this.decimal)).toFixed(this.decimal)
-                );
+                try {
+                    const decimal = new Decimal(value || 0);
+                    const powerTen = new Decimal(10).pow(this.decimal);
+                    const result = decimal.times(powerTen).toFixed(this.decimal);
+                    this.rawValue = new Decimal(result);
+                } catch (e) {
+                    this.rawValue = new Decimal(0);
+                }
             },
         },
         displayValue: {
             get() {
-                const formattedValue = this.formatNumber(
-                    this.inputValue,
-                    this.displayFormat
-                );
-                return (
-                    (this.withSign && this.currencySignPos == "BEFORE"
-                        ? `${this.currencySign} `
-                        : "") +
-                    formattedValue +
-                    (this.withSign && this.currencySignPos == "AFTER"
-                        ? ` ${this.currencySign}`
-                        : "")
-                );
+                try {
+                    const formatted = this.formatNumber(this.inputValue, this.displayFormat);
+                    return (
+                        (this.withSign && this.currencySignPos == "BEFORE"
+                            ? `${this.currencySign} `
+                            : "") +
+                        formatted +
+                        (this.withSign && this.currencySignPos == "AFTER"
+                            ? ` ${this.currencySign}`
+                            : "")
+                    );
+                } catch (e) {
+                    return "0";
+                }
             },
             set(val) {},
         },
@@ -105,41 +121,35 @@ export default {
         },
     },
     methods: {
-        parseValue(value) {
-            if (value === null || value === undefined || value === '') {
-                return 0;
+        formatNumber(value, format) {
+            try {
+                const decimal = new Decimal(value);
+                
+                // Parse format string (e.g., "0,0.00")
+                const parts = format.split('.');
+                const hasDecimals = parts.length > 1;
+                const decimalPlaces = hasDecimals ? parts[1].length : 0;
+
+                // Get the absolute value for formatting
+                const absValue = decimal.abs();
+                
+                // Format with proper decimal places
+                const formatted = absValue.toFixed(decimalPlaces);
+                const [intPart, decPart] = formatted.split('.');
+
+                // Add thousand separators
+                const withCommas = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+                // Combine the parts
+                const result = hasDecimals && decPart 
+                    ? `${withCommas}.${decPart}`
+                    : withCommas;
+
+                // Handle negative numbers
+                return decimal.isNegative() ? `-${result}` : result;
+            } catch (e) {
+                return '0';
             }
-            // Handle string values
-            if (typeof value === 'string') {
-                // Remove any non-numeric characters except decimal point and minus
-                value = value.replace(/[^\d.-]/g, '');
-                return parseFloat(value) || 0;
-            }
-            // Handle number values
-            return typeof value === 'number' ? value : 0;
-        },
-        formatNumber(number, format) {
-            // Handle the formatting based on the format string
-            // Example format: "0,0.00"
-            const num = parseFloat(number);
-            if (isNaN(num)) return '0';
-
-            const parts = format.split('.');
-            const hasDecimals = parts.length > 1;
-            const decimalPlaces = hasDecimals ? parts[1].length : 0;
-
-            // Format the number with the specified decimal places
-            const formatted = Math.abs(num).toFixed(decimalPlaces);
-            const [intPart, decPart] = formatted.split('.');
-
-            // Add thousand separators
-            const withCommas = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-
-            // Combine the parts
-            const result = hasDecimals ? `${withCommas}.${decPart}` : withCommas;
-
-            // Handle negative numbers
-            return num < 0 ? `-${result}` : result;
         }
     },
     render() {
@@ -186,14 +196,13 @@ export default {
                 blur: function (e) {
                     vm.editing = false;
                     let emitVal = vm.rawValue;
-                    if (!vm.allowNegative && vm.rawValue < 0) {
-                        emitVal *= -1;
-                        vm.inputValue *= -1;
-                        vm.$emit("input", emitVal);
+                    if (!vm.allowNegative && vm.rawValue.isNegative()) {
+                        emitVal = emitVal.negated();
+                        vm.inputValue = vm.rawValue.negated().toString();
+                        vm.$emit("input", emitVal.toNumber());
                     }
                 },
                 input: function (e) {
-                    const oldValue = vm.inputValue;
                     vm.inputValue = e.target.value;
                 },
                 keydown: function (e) {

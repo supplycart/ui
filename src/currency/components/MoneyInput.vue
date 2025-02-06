@@ -51,7 +51,8 @@ import Currencies, {
 } from "../constants/currencies";
 import FormLabel from "../../form/components/FormLabel.vue";
 import { CurrencyInput } from "vue-currency-input";
-import { find } from "lodash";
+import find from "lodash/find";
+import Decimal from "decimal.js";
 
 export default {
     name: "MoneyInput",
@@ -113,10 +114,20 @@ export default {
     computed: {
         input: {
             get() {
-                return this.parseValue(this.value);
+                try {
+                    const decimal = new Decimal(this.value || 0);
+                    return decimal.toNumber();
+                } catch (e) {
+                    return 0;
+                }
             },
             set(value) {
-                this.$emit("input", this.parseValue(value));
+                try {
+                    const decimal = new Decimal(value || 0);
+                    this.$emit("input", decimal.toNumber());
+                } catch (e) {
+                    this.$emit("input", 0);
+                }
             },
         },
         hasError() {
@@ -184,7 +195,7 @@ export default {
         },
         blur(e) {
             if (!this.allowZero) {
-                this.showError = e.target.value === 0;
+                this.showError = new Decimal(e.target.value || 0).isZero();
             }
             if (this.required) {
                 this.showError = this.value == null;
