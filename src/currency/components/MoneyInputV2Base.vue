@@ -1,7 +1,7 @@
 <script>
 import { h } from "vue";
 import Decimal from "decimal.js";
-import CurrencySettings from "../constants/currencySettings";
+import CurrencySettings from "../constants/currencySettings.js";
 
 export default {
     props: {
@@ -70,7 +70,9 @@ export default {
                 try {
                     const decimal = new Decimal(value || 0);
                     const powerTen = new Decimal(10).pow(this.decimal);
-                    const result = decimal.times(powerTen).toFixed(this.decimal);
+                    const result = decimal
+                        .times(powerTen)
+                        .toFixed(this.decimal);
                     this.rawValue = new Decimal(result);
                 } catch (e) {
                     this.rawValue = new Decimal(0);
@@ -80,7 +82,10 @@ export default {
         displayValue: {
             get() {
                 try {
-                    const formatted = this.formatNumber(this.inputValue, this.displayFormat);
+                    const formatted = this.formatNumber(
+                        this.inputValue,
+                        this.displayFormat,
+                    );
                     return (
                         (this.withSign && this.currencySignPos == "BEFORE"
                             ? `${this.currencySign} `
@@ -124,33 +129,37 @@ export default {
         formatNumber(value, format) {
             try {
                 const decimal = new Decimal(value);
-                
+
                 // Parse format string (e.g., "0,0.00")
-                const parts = format.split('.');
+                const parts = format.split(".");
                 const hasDecimals = parts.length > 1;
                 const decimalPlaces = hasDecimals ? parts[1].length : 0;
 
                 // Get the absolute value for formatting
                 const absValue = decimal.abs();
-                
+
                 // Format with proper decimal places
                 const formatted = absValue.toFixed(decimalPlaces);
-                const [intPart, decPart] = formatted.split('.');
+                const [intPart, decPart] = formatted.split(".");
 
                 // Add thousand separators
-                const withCommas = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                const withCommas = intPart.replace(
+                    /\B(?=(\d{3})+(?!\d))/g,
+                    ",",
+                );
 
                 // Combine the parts
-                const result = hasDecimals && decPart 
-                    ? `${withCommas}.${decPart}`
-                    : withCommas;
+                const result =
+                    hasDecimals && decPart
+                        ? `${withCommas}.${decPart}`
+                        : withCommas;
 
                 // Handle negative numbers
                 return decimal.isNegative() ? `-${result}` : result;
             } catch (e) {
-                return '0';
+                return "0";
             }
-        }
+        },
     },
     render() {
         const vm = this;

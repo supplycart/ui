@@ -48,7 +48,7 @@ input[type="text"] {
 import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
-} from "../constants/currencies";
+} from "../constants/currencies.js";
 import FormLabel from "../../form/components/FormLabel.vue";
 import { CurrencyInput } from "vue-currency-input";
 import find from "lodash/find";
@@ -158,7 +158,7 @@ export default {
                               (item.code === alteredCurrency.toUpperCase() ||
                                   item.country ===
                                       alteredCurrency.toUpperCase()) &&
-                              item.precision === this.decimal
+                              item.precision === this.decimal,
                       )
                     : this.currency;
 
@@ -181,17 +181,17 @@ export default {
     },
     methods: {
         parseValue(value) {
-            if (value === null || value === undefined || value === '') {
+            if (value === null || value === undefined || value === "") {
                 return 0;
             }
             // Handle string values
-            if (typeof value === 'string') {
+            if (typeof value === "string") {
                 // Remove any non-numeric characters except decimal point and minus
-                value = value.replace(/[^\d.-]/g, '');
+                value = value.replace(/[^\d.-]/g, "");
                 return parseFloat(value) || 0;
             }
             // Handle number values
-            return typeof value === 'number' ? value : 0;
+            return typeof value === "number" ? value : 0;
         },
         blur(e) {
             if (!this.allowZero) {
