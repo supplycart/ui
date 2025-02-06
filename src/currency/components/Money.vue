@@ -5,8 +5,7 @@ import Decimal from "decimal.js";
 import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
-} from "../constants/currencies";
-import { format as formatMoney } from "../index";
+} from "../constants/currencies.js";
 
 export default {
     name: "Money",
@@ -68,18 +67,18 @@ export default {
     render(createElement) {
         const precision = this.noCentCurrency ? 0 : this.decimal;
 
-    let currency =
-        typeof props.currency === "string"
-            ? find(
-                  Currencies,
-                  (item) =>
-                      (item.country === props.currency.toUpperCase() ||
-                          item.code === props.currency) &&
-                      item.precision === precision
-              )
-            : props.currency;
+        let currency =
+            typeof this.currency === "string"
+                ? find(
+                      Currencies,
+                      (item) =>
+                          (item.country === this.currency.toUpperCase() ||
+                              item.code === this.currency) &&
+                          item.precision === precision,
+                  )
+                : this.currency;
 
-    currency = currency || DefaultCurrency;
+        currency = currency || DefaultCurrency;
 
         // Create Decimal instances for precise calculations
         const value = this.parseValue(this.value);
@@ -98,8 +97,8 @@ export default {
         const format = this.format
             ? this.format
             : this.sign
-            ? currency.formatWithSign
-            : currency.format;
+              ? currency.formatWithSign
+              : currency.format;
 
         // Convert Decimal to number for Dinero
         const amount = parseInt(val.toString());
@@ -114,7 +113,7 @@ export default {
                     precision: currency.precision,
                 })
                     .convertPrecision(this.convertPrecision, "HALF_UP")
-                    .toFormat(format)
+                    .toFormat(format),
             );
         } else {
             return createElement(
@@ -126,7 +125,7 @@ export default {
                 })
                     .convertPrecision(this.convertPrecision, "HALF_UP")
                     .setLocale(currency.locale)
-                    .toFormat(format)
+                    .toFormat(format),
             );
         }
     },
