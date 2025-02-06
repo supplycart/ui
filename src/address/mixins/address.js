@@ -3,7 +3,7 @@ import addressConfig from "../constants/addressConfig";
 export default {
     props: {
         value: {
-            type: Object,
+            type: [Array, Object],
             default: () => ({}),
         },
         display: {
