@@ -32,16 +32,12 @@
     </div>
 </template>
 <script>
-import { ChevronDown } from "lucide-vue";
 export default {
     props: {
         value: {
             type: [Number, String],
             default: 30,
         },
-    },
-    components: {
-        ChevronDown,
     },
     computed: {
         limit: {
