@@ -64,7 +64,7 @@ export default {
         inputValue: {
             get() {
                 const powerTen = new Decimal(10).pow(this.decimal);
-                return this.rawValue.dividedBy(powerTen).toString();
+                return this.rawValue.dividedBy(powerTen).toFixed(this.decimal);
             },
             set(value) {
                 try {

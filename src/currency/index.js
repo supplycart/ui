@@ -6,20 +6,6 @@ import Currencies, { DefaultCurrency } from "./constants/currencies";
 export * from "./components";
 export * from "./constants";
 
-function parseValue(value) {
-    if (value === null || value === undefined || value === '') {
-        return 0;
-    }
-    // Handle string values
-    if (typeof value === 'string') {
-        // Remove any non-numeric characters except decimal point and minus
-        value = value.replace(/[^\d.-]/g, '');
-        return parseFloat(value) || 0;
-    }
-    // Handle number values
-    return typeof value === 'number' ? value : 0;
-}
-
 function isInt(n) {
     try {
         const decimal = new Decimal(n);
@@ -53,7 +39,7 @@ function format(amount, currency, sign = false) {
                   Currencies,
                   (item) =>
                       item.country === currency.toUpperCase() ||
-                      item.code === currency
+                      item.code === currency,
               )
             : currency;
 
@@ -79,7 +65,7 @@ function formatCents(
     currency,
     sign = false,
     intValue = true,
-    decimal = 2
+    decimal = 2,
 ) {
     currency =
         typeof currency === "string"
@@ -88,7 +74,7 @@ function formatCents(
                   (item) =>
                       (item.country === currency.toUpperCase() ||
                           item.code === currency) &&
-                      item.precision === decimal
+                      item.precision === decimal,
               )
             : currency;
 
@@ -117,8 +103,20 @@ function formatCents(
 }
 
 function currency(countryCurrency, type) {
-    const currencyObj = findCurrency(countryCurrency);
-    return currencyObj[type];
+    let currency =
+        typeof countryCurrency === "object"
+            ? countryCurrency
+            : Currencies.find(
+                  (item) =>
+                      item.country === countryCurrency.toUpperCase() ||
+                      item.code === countryCurrency.toUpperCase(),
+              );
+
+    if (!currency) {
+        currency = DefaultCurrency;
+    }
+
+    return currency[type];
 }
 
 export { isInt, isFloat, format, formatCents, currency };
