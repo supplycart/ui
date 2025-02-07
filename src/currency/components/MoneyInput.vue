@@ -37,13 +37,11 @@
         <slot name="description" />
     </div>
 </template>
-
 <style scoped>
 input[type="text"] {
     text-align: right;
 }
 </style>
-
 <script>
 import Currencies, {
     DefaultCurrency,
@@ -52,7 +50,7 @@ import Currencies, {
 import FormLabel from "../../form/components/FormLabel.vue";
 import { CurrencyInput } from "vue-currency-input";
 import find from "lodash/find";
-import Decimal from "decimal.js";
+import numeral from "numeral";
 
 export default {
     name: "MoneyInput",
@@ -114,20 +112,10 @@ export default {
     computed: {
         input: {
             get() {
-                try {
-                    const decimal = new Decimal(this.value || 0);
-                    return decimal.toNumber();
-                } catch (e) {
-                    return 0;
-                }
+                return numeral(this.value).value();
             },
             set(value) {
-                try {
-                    const decimal = new Decimal(value || 0);
-                    this.$emit("input", decimal.toNumber());
-                } catch (e) {
-                    this.$emit("input", 0);
-                }
+                this.$emit("input", numeral(value).value());
             },
         },
         hasError() {
@@ -180,22 +168,9 @@ export default {
         },
     },
     methods: {
-        parseValue(value) {
-            if (value === null || value === undefined || value === "") {
-                return 0;
-            }
-            // Handle string values
-            if (typeof value === "string") {
-                // Remove any non-numeric characters except decimal point and minus
-                value = value.replace(/[^\d.-]/g, "");
-                return parseFloat(value) || 0;
-            }
-            // Handle number values
-            return typeof value === "number" ? value : 0;
-        },
         blur(e) {
             if (!this.allowZero) {
-                this.showError = new Decimal(e.target.value || 0).isZero();
+                this.showError = e.target.value === 0;
             }
             if (this.required) {
                 this.showError = this.value == null;

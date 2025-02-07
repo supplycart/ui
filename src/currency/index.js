@@ -1,35 +1,17 @@
 import Dinero from "dinero.js";
 import find from "lodash/find";
-import Decimal from "decimal.js";
-import Currencies, { DefaultCurrency } from "./constants/currencies";
+import numeral from "numeral";
+import Currencies, { DefaultCurrency } from "./constants/currencies.js";
 
-export * from "./components";
-export * from "./constants";
+export * from "./components/index.js";
+export * from "./constants/index.js";
 
 function isInt(n) {
-    try {
-        const decimal = new Decimal(n);
-        return decimal.isInteger();
-    } catch (e) {
-        return false;
-    }
+    return Number(n) === n && n % 1 === 0;
 }
 
 function isFloat(n) {
-    try {
-        const decimal = new Decimal(n);
-        return !decimal.isInteger() && decimal.isFinite();
-    } catch (e) {
-        return false;
-    }
-}
-
-function parseValue(value) {
-    try {
-        return new Decimal(value || 0);
-    } catch (e) {
-        return new Decimal(0);
-    }
+    return Number(n) === n && n % 1 !== 0;
 }
 
 function format(amount, currency, sign = false) {
@@ -47,12 +29,8 @@ function format(amount, currency, sign = false) {
 
     const format = sign ? currency.formatWithSign : currency.format;
 
-    // Convert to integer for Dinero
-    const amountDecimal = parseValue(amount);
-    const dineroAmount = parseInt(amountDecimal.toString());
-
     return Dinero({
-        amount: dineroAmount,
+        amount: amount,
         currency: currency.code,
         precision: currency.precision,
     })
@@ -80,21 +58,14 @@ function formatCents(
 
     currency = currency ? currency : DefaultCurrency;
 
-    const amountDecimal = parseValue(amount);
-    const powerTen = new Decimal(10).pow(decimal);
-
-    // Calculate value with proper precision
     const val = intValue
-        ? amountDecimal.floor()
-        : amountDecimal.times(powerTen).round();
+        ? numeral(amount).value()
+        : numeral(amount).multiply(Math.pow(10, decimal)).value();
 
     const format = sign ? currency.formatWithSign : currency.format;
 
-    // Convert to integer for Dinero
-    const dineroAmount = parseInt(val.toString());
-
     return Dinero({
-        amount: dineroAmount,
+        amount: val,
         currency: currency.code,
         precision: currency.precision,
     })

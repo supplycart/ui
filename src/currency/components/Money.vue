@@ -1,7 +1,7 @@
 <script>
 import Dinero from "dinero.js";
 import find from "lodash/find";
-import Decimal from "decimal.js";
+import numeral from "numeral";
 import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
@@ -55,15 +55,6 @@ export default {
             return false;
         },
     },
-    methods: {
-        parseValue(value) {
-            try {
-                return new Decimal(value || 0);
-            } catch (e) {
-                return new Decimal(0);
-            }
-        },
-    },
     render(createElement) {
         const precision = this.noCentCurrency ? 0 : this.decimal;
 
@@ -78,21 +69,18 @@ export default {
                   )
                 : this.currency;
 
-        currency = currency || DefaultCurrency;
+        currency = currency ? currency : DefaultCurrency;
 
-        // Create Decimal instances for precise calculations
-        const value = this.parseValue(this.value);
-        const powerTen = new Decimal(10).pow(this.decimal);
-
-        // Handle no cent currency
+        //alter the value passed if it is no cent currency
         const alteredValue = this.noCentCurrency
-            ? value.dividedBy(powerTen)
-            : value;
+            ? numeral(this.value).divide(Math.pow(10, this.decimal)).value()
+            : this.value;
 
-        // Calculate final value with proper precision
         const val = this.intValue
-            ? alteredValue.floor()
-            : alteredValue.times(powerTen).round();
+            ? numeral(alteredValue).value()
+            : numeral(alteredValue)
+                  .multiply(Math.pow(10, this.decimal))
+                  .value();
 
         const format = this.format
             ? this.format
@@ -100,15 +88,12 @@ export default {
               ? currency.formatWithSign
               : currency.format;
 
-        // Convert Decimal to number for Dinero
-        const amount = parseInt(val.toString());
-
         // EUR and GBP are the currencies that is being used by many countries
         if (currency.code === "EUR" || currency.code === "GBP") {
             return createElement(
                 "span",
                 Dinero({
-                    amount: amount,
+                    amount: val,
                     currency: currency.code,
                     precision: currency.precision,
                 })
@@ -119,7 +104,7 @@ export default {
             return createElement(
                 "span",
                 Dinero({
-                    amount: amount,
+                    amount: val,
                     currency: currency.code,
                     precision: currency.precision,
                 })

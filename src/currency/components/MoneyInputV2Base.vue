@@ -1,6 +1,6 @@
 <script>
+import numeral from "numeral";
 import { h } from "vue";
-import Decimal from "decimal.js";
 import CurrencySettings from "../constants/currencySettings.js";
 
 export default {
@@ -46,58 +46,38 @@ export default {
     computed: {
         rawValue: {
             get() {
-                try {
-                    return new Decimal(this.value ?? 0);
-                } catch (e) {
-                    return new Decimal(0);
-                }
+                return this.value ?? 0;
             },
             set(val) {
-                try {
-                    const decimal = new Decimal(val);
-                    this.$emit("input", decimal.toNumber());
-                } catch (e) {
-                    this.$emit("input", 0);
-                }
+                this.$emit("input", val);
             },
         },
         inputValue: {
             get() {
-                const powerTen = new Decimal(10).pow(this.decimal);
-                return this.rawValue.dividedBy(powerTen).toFixed(this.decimal);
+                return numeral(this.rawValue)
+                    .divide(Math.pow(10, this.decimal))
+                    .value();
             },
             set(value) {
-                try {
-                    const decimal = new Decimal(value || 0);
-                    const powerTen = new Decimal(10).pow(this.decimal);
-                    const result = decimal
-                        .times(powerTen)
-                        .toFixed(this.decimal);
-                    this.rawValue = new Decimal(result);
-                } catch (e) {
-                    this.rawValue = new Decimal(0);
-                }
+                this.rawValue = Number(
+                    numeral(value)
+                        .multiply(Math.pow(10, this.decimal))
+                        .value()
+                        .toFixed(this.decimal),
+                );
             },
         },
         displayValue: {
             get() {
-                try {
-                    const formatted = this.formatNumber(
-                        this.inputValue,
-                        this.displayFormat,
-                    );
-                    return (
-                        (this.withSign && this.currencySignPos == "BEFORE"
-                            ? `${this.currencySign} `
-                            : "") +
-                        formatted +
-                        (this.withSign && this.currencySignPos == "AFTER"
-                            ? ` ${this.currencySign}`
-                            : "")
-                    );
-                } catch (e) {
-                    return "0";
-                }
+                return (
+                    (this.withSign && this.currencySignPos == "BEFORE"
+                        ? `${this.currencySign} `
+                        : "") +
+                    numeral(this.inputValue).format(this.displayFormat) +
+                    (this.withSign && this.currencySignPos == "AFTER"
+                        ? ` ${this.currencySign}`
+                        : "")
+                );
             },
             set(val) {},
         },
@@ -125,43 +105,7 @@ export default {
             return CurrencySettings[this.currentCurrency]["signPosition"];
         },
     },
-    methods: {
-        formatNumber(value, format) {
-            try {
-                const decimal = new Decimal(value);
-
-                // Parse format string (e.g., "0,0.00")
-                const parts = format.split(".");
-                const hasDecimals = parts.length > 1;
-                const decimalPlaces = hasDecimals ? parts[1].length : 0;
-
-                // Get the absolute value for formatting
-                const absValue = decimal.abs();
-
-                // Format with proper decimal places
-                const formatted = absValue.toFixed(decimalPlaces);
-                const [intPart, decPart] = formatted.split(".");
-
-                // Add thousand separators
-                const withCommas = intPart.replace(
-                    /\B(?=(\d{3})+(?!\d))/g,
-                    ",",
-                );
-
-                // Combine the parts
-                const result =
-                    hasDecimals && decPart
-                        ? `${withCommas}.${decPart}`
-                        : withCommas;
-
-                // Handle negative numbers
-                return decimal.isNegative() ? `-${result}` : result;
-            } catch (e) {
-                return "0";
-            }
-        },
-    },
-    render() {
+    render: function (h) {
         const vm = this;
 
         const display = h("input", {
@@ -205,13 +149,14 @@ export default {
                 blur: function (e) {
                     vm.editing = false;
                     let emitVal = vm.rawValue;
-                    if (!vm.allowNegative && vm.rawValue.isNegative()) {
-                        emitVal = emitVal.negated();
-                        vm.inputValue = vm.rawValue.negated().toString();
-                        vm.$emit("input", emitVal.toNumber());
+                    if (!vm.allowNegative && vm.rawValue < 0) {
+                        emitVal *= -1;
+                        vm.inputValue *= -1;
+                        vm.$emit("input", emitVal);
                     }
                 },
                 input: function (e) {
+                    const oldValue = vm.inputValue;
                     vm.inputValue = e.target.value;
                 },
                 keydown: function (e) {
