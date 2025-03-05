@@ -5,8 +5,10 @@
         </slot>
     </div>
 </template>
+
 <script>
-import moment from "moment-timezone";
+import { format, parseISO } from "date-fns";
+import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
 
 export default {
     props: {
@@ -21,7 +23,7 @@ export default {
         },
         format: {
             type: String,
-            default: "YYYY-MM-DD HH:mm:ss",
+            default: "yyyy-MM-dd HH:mm:ss",
         },
         isUtc: {
             type: Boolean,
@@ -30,19 +32,20 @@ export default {
     },
     computed: {
         localTime() {
-            // set default timezone as UTC
-            moment.tz.setDefault("Etc/UTC");
+            // Convert the value to a Date object
+            const dateValue = parseISO(this.value);
 
-            // return in utc format and specified timezone
+            // If isUtc is true, convert to UTC and format
             if (this.isUtc) {
+                const utcDate = zonedTimeToUtc(dateValue, this.timezone);
                 return (
-                    moment(this.value).format(this.format) +
-                    moment().tz(this.timezone).format("Z")
+                    format(utcDate, this.format) + " " + format(utcDate, "XXX")
                 );
             }
 
-            // convert value into timezone local time
-            return moment(this.value).tz(this.timezone).format(this.format);
+            // Convert value into timezone local time and format
+            const zonedDate = utcToZonedTime(dateValue, this.timezone);
+            return format(zonedDate, this.format);
         },
     },
 };
