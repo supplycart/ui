@@ -15,6 +15,7 @@
         />
     </div>
 </template>
+
 <script>
 import FlatPickr from "vue-flatpickr-component";
 import FormLabel from "../../form/components/FormLabel.vue";
@@ -34,7 +35,7 @@ export default {
         },
         labelClass: {
             type: String,
-            default: 'inline-block mb-2',
+            default: "inline-block mb-2",
         },
         value: {
             type: [String, Date],
@@ -78,9 +79,9 @@ export default {
         config: {
             handler: function (val) {
                 this.dateConfig = {
-                    ...DefaultConfig, 
-                    ...val
-                };            
+                    ...DefaultConfig,
+                    ...val,
+                };
             },
             deep: true,
             immediate: true,
