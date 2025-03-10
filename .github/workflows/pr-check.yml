@@ -12,50 +12,120 @@ jobs:
     name: Fix PR Title
     runs-on: ubuntu-latest
     steps:
-    - name: Check title format
-      env:
-        GITHUB_TOKEN: ${{secrets.SUPPLYCART_BOT_TOKEN}}
-        PR_BRANCH: ${{ github.head_ref }}
-      run: |
-        echo "PR URL: $PR_URL"
-        TITLE=$(gh pr view --json 'title' --jq '.title' "$PR_URL")
-        echo "current title: $TITLE"
+      - name: Check title format
+        env:
+          GITHUB_TOKEN: ${{secrets.SUPPLYCART_BOT_TOKEN}}
+          PR_BRANCH: ${{ github.head_ref }}
+        run: |
+          echo "PR URL: $PR_URL"
+          TITLE=$(gh pr view --json 'title' --jq '.title' "$PR_URL")
+          echo "Current title: $TITLE"
 
-        if [[ $TITLE =~ ST-[0-9]{4}[[:space:]](FEAT|FIX)[[:space:]].* ]]; then
-          echo "INFO: PR title already in correct format"
-          exit 0
-        elif [[ $TITLE =~ S[Tt][[:space:]-]([0-9]{4})[[:space:]/-](FEAT|Feat|feat|FIX|Fix|fix)[[:space:]/-](.*) ]]; then
-          # match format "ST-1234 FIX message title"
-          JIRA_TICKET=ST-${BASH_REMATCH[1]}
-          OPS=${BASH_REMATCH[2]^^}
-          REST=${BASH_REMATCH[3]}
-          echo $JIRA_TICKET $OPS $REST
-        elif [[ $TITLE =~ S[Tt][[:space:]-]([0-9]{4})[[:space:]/-](.*) ]]; then
-          # match format "ST-1234 message title"
-          JIRA_TICKET=ST-${BASH_REMATCH[1]}
-          REST=${BASH_REMATCH[2]}
+          ALLOWED_OPERATIONS=("FIX" "FEAT" "UPDATE" "PATCH" "DEPLOYMENT" "CHERRY-PICK")
 
-          # parse OPS from PR source branch
-          if [[ $PR_BRANCH =~ [/-](FEAT|Feat|feat|FIX|Fix|fix)[/-] ]]; then
-            OPS=${BASH_REMATCH[1]^^}
+          # Convert the ticket and operation to uppercase while keeping the rest intact
+          format_title() {
+              local title="$1"
+              local ticket="${title%% *}"
+              local operation="${title#* }"
+              local rest="${title#* * }"
+              ticket=$(echo "$ticket" | tr '[:lower:]' '[:upper:]') # ticket="${ticket^^}"
+
+              if [[ $ticket == "ST" ]]; then
+                  local ticket_code="${title#* *}"
+                  ticket="$ticket-${ticket_code%% *}"
+                  ticket=$(echo "$ticket" | tr '[:lower:]' '[:upper:]')
+                  operation="${operation#* *}"
+                  rest="${rest#* *}"
+              fi
+
+              operation="${operation%% *}"
+              operation=$(echo "$operation" | tr '[:lower:]' '[:upper:]') # operation=${operation^^}
+
+              echo "$ticket $operation $rest"
+          }
+
+          validate_ticket_format() {
+              local ticket="$1"
+              [[ "$ticket" =~ ^ST-[0-9]+$ ]]
+          }
+
+          validate_operation() {
+              local operation="$1"
+              for op in "${ALLOWED_OPERATIONS[@]}"; do
+                  [[ "$op" == "$operation" ]] && return 0
+              done
+              return 1
+          }
+
+          extract_ticket_from_branch() {
+              local branch="$1"
+              local ticket_pattern="^(ST-[0-9]+)"
+
+              if [[ $branch =~ $ticket_pattern ]]; then
+                  echo "${BASH_REMATCH[1]}" | tr '[:lower:]' '[:upper:]'
+                  return 0
+              fi
+
+              echo "ERROR: Unable to extract a valid ticket from branch '$branch'." >&2
+              return 1
+          }
+
+          extract_operation_from_branch() {
+              local branch=$(echo "$1" | tr '[:lower:]' '[:upper:]')
+              local operation_pattern="[/-]($(IFS=\|; echo "${ALLOWED_OPERATIONS[*]}"))[/-]"
+
+              if [[ $branch =~ $operation_pattern ]]; then
+                  echo "${BASH_REMATCH[1]}" | tr '[:lower:]' '[:upper:]' #echo "${BASH_REMATCH[1]^^}"  # Convert to uppercase
+                  return 0
+              fi
+
+              echo "ERROR: Unable to extract a valid operation from branch '$branch'." >&2
+              return 1
+          }
+
+          post_error_and_exit() {
+              local error_message='ERROR: TITLE format is incorrect. Must be `<jira-ticket> <operation> <rest>`.'
+              gh pr comment --body "$error_message" "$PR_URL"
+              exit 1
+          }
+
+          # Get PR Title and format it
+          FORMATTED_TITLE=$(format_title "$TITLE")
+          JIRA_TICKET="${FORMATTED_TITLE%% *}"
+          OPS="${FORMATTED_TITLE#* }"
+          OPS="${OPS%% *}"
+          REST="${FORMATTED_TITLE#* * }"
+
+          # Validate ticket format
+          if validate_ticket_format "$JIRA_TICKET"; then
+              echo "INFO: Jira Ticket => $JIRA_TICKET"
+          else
+              echo "INFO: Invalid ticket format in PR title. Extracting from branch..."
+              JIRA_TICKET=$(extract_ticket_from_branch "$PR_BRANCH") || post_error_and_exit
           fi
 
-          echo $JIRA_TICKET $OPS $REST
-        fi
+          # Validate operations
+          if validate_operation "$OPS"; then
+              echo "INFO: Operations => $OPS"
+          else
+              echo "INFO: Invalid operation in PR title. Extracting from branch..."
+              OPS=$(extract_operation_from_branch "$PR_BRANCH") || post_error_and_exit
+          fi
 
-        if [[ -n $JIRA_TICKET && -n $OPS && -n $REST ]]; then
+          # Final validation
+          if ! validate_ticket_format "$JIRA_TICKET" || ! validate_operation "$OPS"; then
+              post_error_and_exit
+          fi
+
+          # Success case
           NEW_TITLE="$JIRA_TICKET $OPS $REST"
-          echo "new title: $NEW_TITLE"
+          echo "New title: $NEW_TITLE"
           gh pr edit --title="$NEW_TITLE" "$PR_URL"
           echo "SUCCESS: PR title fixed"
           exit 0
-        else
-          echo "ERROR: cannot automatically fix PR title"
-          ERROR_MESSAGE='Sorry I cannot automatically fix the PR title 🙏. Please make sure its formatted like `ST-1234 <FEAT or FIX> <message>`. Thanks!'
-          gh pr comment --body "$ERROR_MESSAGE" "$PR_URL"
-        fi
 
-    - name: Enable auto-merge
-      run: gh pr merge --auto --squash "$PR_URL"
-      env:
-        GITHUB_TOKEN: ${{secrets.SUPPLYCART_BOT_TOKEN}}
+      - name: Enable auto-merge
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          GITHUB_TOKEN: ${{secrets.SUPPLYCART_BOT_TOKEN}}
