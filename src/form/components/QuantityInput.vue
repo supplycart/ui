@@ -33,7 +33,7 @@
 </template>
 <script>
 import BaseInput from "./BaseInput.vue";
-import InputMixins from "./../mixins/input";
+import InputMixins from "./../mixins/input.js";
 import numeral from "numeral";
 
 export default {
