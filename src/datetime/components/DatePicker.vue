@@ -17,12 +17,14 @@
 </template>
 <script>
 import FlatPickr from "vue-flatpickr-component";
-import FormLabel from "../../form/components/FormLabel.vue";
 import { Timezones } from "../constants";
 import { DefaultConfig } from "../constants/flatpickr";
 
 export default {
-    components: { FlatPickr, FormLabel },
+    components: {
+        FlatPickr,
+        FormLabel: () => import("../../form/components/FormLabel.vue"),
+    },
     props: {
         id: {
             type: String,
@@ -34,7 +36,7 @@ export default {
         },
         labelClass: {
             type: String,
-            default: 'inline-block mb-2',
+            default: "inline-block mb-2",
         },
         value: {
             type: [String, Date],
@@ -78,9 +80,9 @@ export default {
         config: {
             handler: function (val) {
                 this.dateConfig = {
-                    ...DefaultConfig, 
-                    ...val
-                };            
+                    ...DefaultConfig,
+                    ...val,
+                };
             },
             deep: true,
             immediate: true,

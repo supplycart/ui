@@ -44,10 +44,8 @@
     </div>
 </template>
 <script>
-import FormLabel from "./FormLabel.vue";
-
 export default {
-    components: { FormLabel },
+    components: { FormLabel: () => import("./FormLabel.vue") },
     inheritAttrs: false,
     props: {
         value: {

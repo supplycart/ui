@@ -127,14 +127,13 @@
     </div>
 </template>
 <script>
-import TextInput from "../../form/components/TextInput.vue";
 import AddressFormMixins from "../mixins/addressForm";
 import StateMixins from "../mixins/malaysiaStates";
 export default {
     name: "AddressForm",
     mixins: [AddressFormMixins, StateMixins],
     components: {
-        TextInput,
+        TextInput: () => import("../../form/components/TextInput.vue"),
     },
 };
 </script>

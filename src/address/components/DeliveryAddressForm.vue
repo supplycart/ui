@@ -163,14 +163,15 @@
 </template>
 
 <script>
-import Checkbox from "../../form/components/Checkbox.vue";
-import TextInput from "../../form/components/TextInput.vue";
 import AddressFormMixins from "../mixins/addressForm";
 import StateMixins from "../mixins/malaysiaStates";
 
 export default {
     name: "DeliveryAddressForm",
-    components: { TextInput, Checkbox },
+    components: {
+        TextInput: () => import("../../form/components/TextInput.vue"),
+        Checkbox: () => import("../../form/components/Checkbox.vue"),
+    },
     mixins: [AddressFormMixins, StateMixins],
 };
 </script>
