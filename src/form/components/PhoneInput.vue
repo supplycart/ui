@@ -14,10 +14,9 @@
 </template>
 <script>
 import InputMixins from "../mixins/input";
-import BaseInput from "../components/BaseInput.vue";
 
 export default {
-    components: { BaseInput },
+    components: { BaseInput: () => import("./BaseInput.vue") },
     mixins: [InputMixins],
     data() {
         return {

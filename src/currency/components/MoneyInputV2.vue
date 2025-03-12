@@ -27,11 +27,10 @@
     </div>
 </template>
 <script>
-import FormLabel from "../../form/components/FormLabel.vue";
 import MoneyInputBase from "./MoneyInputV2Base.vue";
 export default {
     components: {
-        FormLabel,
+        FormLabel: () => import("../../form/components/FormLabel.vue"),
         MoneyInputBase,
     },
     props: {
