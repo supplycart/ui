@@ -146,24 +146,24 @@
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'DD MMM YY'"/>
+                        :format="'dd MMM yy'"/>
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'DD MMM YYYY'"/>
+                        :format="'dd MMM yyyy'"/>
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'DD MMM YYYY hh:mmA'"/>
+                        :format="'dd MMM yyyy hh:mma'"/>
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'ddd, DD MMM YYYY HH:mm'"/>
+                        :format="'EEE, dd MMM yyyy HH:mm'"/>
                     <DateTime
                         :value="currentTime"
                         :is-utc="true"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'ddd, DD MMM YYYY HH:mm'"/>
+                        :format="'EEE, dd MMM yyyy HH:mm'"/>
                 </div>
             </div>
             <div class="p-12">
@@ -331,8 +331,8 @@
         TextInput,
         PhoneInput,
         RemarksInput,
-        QuantityInput,
         SubmitButton,
+        QuantityInput,
         Paginate,
         PasswordInput,
         TextareaInput,
@@ -341,7 +341,8 @@
         formatCents,
         Currency
     } from "@supplycart/ui";
-    import moment from "moment";
+    import { format } from "date-fns";
+    import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
 
     export default {
         name: "App",
@@ -373,10 +374,10 @@
         },
         data() {
             return {
-                moneyv2:0,
-                deliveryCountry: 'Malaysia',
+                moneyv2: 0,
+                deliveryCountry: "Malaysia",
                 attachments: [],
-                minDate: moment().format("YYYY-MM-DD"),
+                minDate: format(zonedTimeToUtc(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd"),
                 dateRange: {
                     from: "2020-03-19",
                     to: "2020-03-24"
@@ -386,7 +387,7 @@
                     value: 10.00,
                     decimal: 4,
                 },
-                testMoneyVal:0,
+                testMoneyVal: 0,
                 money: {
                     integer: 102355,
                     value: 10.00,
@@ -427,11 +428,11 @@
                     last: null
                 },
                 quantity: 200,
-                phone: '019-1234566',
+                phone: "019-1234566",
                 time: null,
                 check: false,
-                password: '',
-                currentTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+                password: "",
+                currentTime: format(utcToZonedTime(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd HH:mm:ss"),
                 meta: {
                     total: 180,
                     last_page: 10,
@@ -440,7 +441,11 @@
                     current_page: 1,
                 },
                 state: null,
-                stateOptions: [{id:1,label:'Pahang'},{id:2,label:'Perak'}, {id:3,label:'Melaka'}],
+                stateOptions: [
+                    { id: 1, label: "Pahang" },
+                    { id: 2, label: "Perak" },
+                    { id: 3, label: "Melaka" }
+                ],
                 dropdownError: null
             };
         },
@@ -454,15 +459,14 @@
                 };
                 vm.minDate = "2020-01-01";
             }, 5000);
-            
         },
         methods: {
             formatCents,
             test(e) {
-                console.log('input dropdown', e)
+                console.log("input dropdown", e);
             },
             displayError(message) {
-                console.table(message)
+                console.table(message);
             }
         }
     };
