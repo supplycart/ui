@@ -1,10 +1,10 @@
 import Dinero from "dinero.js";
-import { find } from "lodash";
+import find from "lodash/find";
 import numeral from "numeral";
-import Currencies, { DefaultCurrency } from "./constants/currencies";
+import Currencies, { DefaultCurrency } from "./constants/currencies.js";
 
-export * from "./components";
-export * from "./constants";
+export * from "./components/index.js";
+export * from "./constants/index.js";
 
 function isInt(n) {
     return Number(n) === n && n % 1 === 0;
@@ -21,7 +21,7 @@ function format(amount, currency, sign = false) {
                   Currencies,
                   (item) =>
                       item.country === currency.toUpperCase() ||
-                      item.code === currency
+                      item.code === currency,
               )
             : currency;
 
@@ -43,7 +43,7 @@ function formatCents(
     currency,
     sign = false,
     intValue = true,
-    decimal = 2
+    decimal = 2,
 ) {
     currency =
         typeof currency === "string"
@@ -52,7 +52,7 @@ function formatCents(
                   (item) =>
                       (item.country === currency.toUpperCase() ||
                           item.code === currency) &&
-                      item.precision === decimal
+                      item.precision === decimal,
               )
             : currency;
 
@@ -80,7 +80,7 @@ function currency(countryCurrency, type) {
             : Currencies.find(
                   (item) =>
                       item.country === countryCurrency.toUpperCase() ||
-                      item.code === countryCurrency.toUpperCase()
+                      item.code === countryCurrency.toUpperCase(),
               );
 
     if (!currency) {

@@ -13,7 +13,7 @@
             v-if="currencyData"
             v-model="input"
             v-bind="$attrs"
-            class="text-right text-right w-full"
+            class="text-right w-full"
             :class="[showError ? 'input-error' : '', inputClass]"
             :disabled="disabled"
             :required="required"
@@ -46,16 +46,15 @@ input[type="text"] {
 import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
-} from "../constants/currencies";
-import FormLabel from "../../form/components/FormLabel.vue";
+} from "../constants/currencies.js";
 import { CurrencyInput } from "vue-currency-input";
-import { find } from "lodash";
+import find from "lodash/find";
 import numeral from "numeral";
 
 export default {
     name: "MoneyInput",
     components: {
-        FormLabel,
+        FormLabel: () => import("../../form/components/FormLabel.vue"),
         CurrencyInput,
     },
     inheritAttrs: false,
@@ -146,7 +145,7 @@ export default {
                               (item.code === alteredCurrency.toUpperCase() ||
                                   item.country ===
                                       alteredCurrency.toUpperCase()) &&
-                              item.precision === this.decimal
+                              item.precision === this.decimal,
                       )
                     : this.currency;
 

@@ -32,12 +32,11 @@
     />
 </template>
 <script>
-import BaseInput from "./BaseInput.vue";
-import InputMixins from "./../mixins/input";
+import InputMixins from "./../mixins/input.js";
 import numeral from "numeral";
 
 export default {
-    components: { BaseInput },
+    components: { BaseInput: () => import("./BaseInput.vue") },
     mixins: [InputMixins],
     props: {
         maximumValue: {

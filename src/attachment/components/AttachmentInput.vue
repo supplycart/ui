@@ -36,10 +36,8 @@
     </div>
 </template>
 <script>
-import BaseAttachment from "./BaseAttachment.vue";
-
 export default {
-    components: { BaseAttachment },
+    components: { BaseAttachment: () => import("./BaseAttachment.vue") },
     props: {
         value: {
             type: Array,

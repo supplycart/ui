@@ -1,7 +1,7 @@
 <script>
 import numeral from "numeral";
 import { h } from "vue";
-import CurrencySettings from "../constants/currencySettings";
+import CurrencySettings from "../constants/currencySettings.js";
 
 export default {
     props: {
@@ -63,7 +63,7 @@ export default {
                     numeral(value)
                         .multiply(Math.pow(10, this.decimal))
                         .value()
-                        .toFixed(this.decimal)
+                        .toFixed(this.decimal),
                 );
             },
         },

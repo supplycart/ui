@@ -1,6 +1,6 @@
 <script>
 import numeral from "numeral";
-import CurrencySettings from "../constants/currencySettings";
+import CurrencySettings from "../constants/currencySettings.js";
 
 export default {
     props: {

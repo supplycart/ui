@@ -18,12 +18,14 @@
 
 <script>
 import FlatPickr from "vue-flatpickr-component";
-import FormLabel from "../../form/components/FormLabel.vue";
 import { Timezones } from "../constants";
 import { DefaultConfig } from "../constants/flatpickr";
 
 export default {
-    components: { FlatPickr, FormLabel },
+    components: {
+        FlatPickr,
+        FormLabel: () => import("../../form/components/FormLabel.vue"),
+    },
     props: {
         id: {
             type: String,
