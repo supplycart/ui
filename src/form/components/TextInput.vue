@@ -44,90 +44,101 @@
         </slot>
     </div>
 </template>
-<script>
-import FormLabel from "./FormLabel.vue";
+<script setup>
+import { ref, watch } from 'vue'
+import FormLabel from "./FormLabel.vue"
 
-export default {
-    components: { FormLabel },
-    inheritAttrs: false,
-    emits: ["update:modelValue", "blur", "focus", "keydown"],
-    props: {
-        modelValue: {
-            type: [String, Number],
-            default: null,
-        },
-        label: {
-            type: String,
-            default: null,
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-        placeholder: {
-            type: String,
-            default: null,
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        error: {
-            type: String,
-            default: "Please fill in this field.",
-        },
-        description: {
-            type: String,
-            default: null,
-        },
-        inputClass: {
-            type: String,
-            default: null,
-        },
-        maxLength: {
-            type: Number,
-            default: null,
-        },
-        inputDescClass: {
-            type: String,
-            default: null,
-        },
+// Define props with defaults
+const props = defineProps({
+    modelValue: {
+        type: [String, Number],
+        default: null,
     },
-    data() {
-        return {
-            showError: false,
-        };
+    label: {
+        type: String,
+        default: null,
     },
-    watch: {
-        error: {
-            handler(val) {
-                if (!val && this.required) {
-                    this.showError = true;
-                }
-            },
-        },
+    required: {
+        type: Boolean,
+        default: false,
     },
-    methods: {
-        handleInput(e) {
-            const val = e.target.value;
-            this.$emit("update:modelValue", val);
-            this.required && this.toggleError(val);
-        },
-        blur(e) {
-            this.$emit("blur", e.target.value);
-        },
-        focus() {
-            this.$emit("focus");
-            this.required && this.toggleError(this.modelValue);
-        },
-        toggleError(val) {
-            this.showError = val ? false : true;
-        },
-        keydown() {
-            this.$emit("keydown");
-        },
+    placeholder: {
+        type: String,
+        default: null,
     },
-};
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+    error: {
+        type: String,
+        default: "Please fill in this field.",
+    },
+    description: {
+        type: String,
+        default: null,
+    },
+    inputClass: {
+        type: String,
+        default: null,
+    },
+    maxLength: {
+        type: Number,
+        default: null,
+    },
+    inputDescClass: {
+        type: String,
+        default: null,
+    },
+})
+
+// Define emits
+const emit = defineEmits(["update:modelValue", "blur", "focus", "keydown"])
+
+// Reactive state
+const showError = ref(false)
+
+// Watch for error changes
+watch(() => props.error, (val) => {
+    if (!val && props.required) {
+        showError.value = true
+    }
+})
+
+// Methods
+const handleInput = (e) => {
+    const target = e.target
+    const val = target.value
+    emit("update:modelValue", val)
+    if (props.required) {
+        toggleError(val)
+    }
+}
+
+const blur = (e) => {
+    const target = e.target
+    emit("blur", target.value)
+}
+
+const focus = () => {
+    emit("focus")
+    if (props.required) {
+        toggleError(props.modelValue?.toString() || '')
+    }
+}
+
+const toggleError = (val) => {
+    showError.value = !val
+}
+
+const keydown = () => {
+    emit("keydown")
+}
+
+// Define options for Vue component
+defineOptions({
+    inheritAttrs: false
+})
 </script>
 <style>
 .input-error {

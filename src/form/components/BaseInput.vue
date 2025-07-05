@@ -34,90 +34,98 @@
         </slot>
     </div>
 </template>
-<script>
-export default {
-    inheritAttrs: false,
-    emits: ["update:modelValue", "blur", "change", "focus", "keydown"],
-    props: {
-        id: {
-            type: String,
-            default: null,
-        },
-        label: {
-            type: String,
-            default: null,
-        },
-        modelValue: {
-            type: [String, Number],
-            default: null,
-        },
-        error: {
-            type: String,
-            default: null,
-        },
-        description: {
-            type: String,
-            default: null,
-        },
-        regex: {
-            type: RegExp,
-            default: null,
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-        format: {
-            type: String,
-            default: "Invalid format",
-        },
-        inputClass: {
-            type: String,
-            default: null,
-        },
-    },
-    data() {
-        return {
-            focused: false,
-            showError: false,
-        };
-    },
-    computed: {
-        isInvalid() {
-            if (!this.regex) return false;
+<script setup>
+import { ref, computed, watch } from 'vue'
 
-            const value = this.regex.test(this.modelValue);
-            return !value && this.focused && this.modelValue;
-        },
+// Define props
+const props = defineProps({
+    id: {
+        type: String,
+        default: null,
     },
-    watch: {
-        error: {
-            handler(val) {
-                if (val && this.required) {
-                    this.showError = true;
-                } else {
-                    this.showError = false;
-                }
-            },
-        },
+    label: {
+        type: String,
+        default: null,
     },
-    methods: {
-        handleInput(e) {
-            this.$emit("update:modelValue", e.target.value);
-        },
-        blur(e) {
-            this.$emit("blur", e);
-        },
-        change(e) {
-            this.$emit("change", e);
-        },
-        focus(e) {
-            this.$emit("focus", e);
-            this.focused = true;
-        },
-        keydown() {
-            this.$emit("keydown");
-        },
+    modelValue: {
+        type: [String, Number],
+        default: null,
     },
-};
+    error: {
+        type: String,
+        default: null,
+    },
+    description: {
+        type: String,
+        default: null,
+    },
+    regex: {
+        type: RegExp,
+        default: null,
+    },
+    required: {
+        type: Boolean,
+        default: false,
+    },
+    format: {
+        type: String,
+        default: "Invalid format",
+    },
+    inputClass: {
+        type: String,
+        default: null,
+    },
+})
+
+// Define emits
+const emit = defineEmits(["update:modelValue", "blur", "change", "focus", "keydown"])
+
+// Reactive state
+const focused = ref(false)
+const showError = ref(false)
+
+// Computed properties
+const isInvalid = computed(() => {
+    if (!props.regex) return false
+    
+    const value = props.regex.test(props.modelValue?.toString() || '')
+    return !value && focused.value && props.modelValue
+})
+
+// Watchers
+watch(() => props.error, (val) => {
+    if (val && props.required) {
+        showError.value = true
+    } else {
+        showError.value = false
+    }
+})
+
+// Methods
+const handleInput = (e) => {
+    const target = e.target
+    emit("update:modelValue", target.value)
+}
+
+const blur = (e) => {
+    emit("blur", e)
+}
+
+const change = (e) => {
+    emit("change", e)
+}
+
+const focus = (e) => {
+    emit("focus", e)
+    focused.value = true
+}
+
+const keydown = () => {
+    emit("keydown")
+}
+
+// Define options
+defineOptions({
+    inheritAttrs: false
+})
 </script>

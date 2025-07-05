@@ -13,17 +13,59 @@
         @blur="blur"
     />
 </template>
-<script>
-import InputMixins from "./../mixins/input";
-import BaseInput from "./BaseInput.vue";
+<script setup>
+import { ref } from 'vue'
+import BaseInput from "./BaseInput.vue"
 
-export default {
-    components: { BaseInput },
-    mixins: [InputMixins],
-    data() {
-        return {
-            regex: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
-        };
+// Define props
+const props = defineProps({
+    id: {
+        type: String,
+        default: null,
     },
-};
+    label: {
+        type: String,
+        default: null,
+    },
+    modelValue: {
+        type: [String, Number],
+        default: null,
+    },
+    error: {
+        type: String,
+        default: null,
+    },
+    description: {
+        type: String,
+        default: null,
+    },
+    required: {
+        type: Boolean,
+        default: false,
+    },
+    inputClass: {
+        type: String,
+        default: null,
+    },
+})
+
+// Define emits
+const emit = defineEmits(["update:modelValue", "blur"])
+
+// Methods
+const blur = (e) => {
+    emit('blur', e)
+}
+
+const update = (value) => {
+    emit('update:modelValue', value)
+}
+
+// Email-specific regex
+const regex = ref(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/)
+
+// Define options
+defineOptions({
+    inheritAttrs: false
+})
 </script>

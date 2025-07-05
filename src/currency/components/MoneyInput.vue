@@ -34,83 +34,80 @@ input[type="text"] {
     text-align: right;
 }
 </style>
-<script>
+<script setup>
+import { ref, computed, watch } from "vue"
+import { useCurrencyInput } from "vue-currency-input"
+import { find } from "lodash-es"
+import FormLabel from "../../form/components/FormLabel.vue"
 import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
-} from "../constants/currencies.js";
-import { useCurrencyInput } from "vue-currency-input";
-import { find } from "lodash-es";
-import numeral from "numeral";
-import { ref, computed, watch } from "vue";
-import FormLabel from "../../form/components/FormLabel.vue";
+} from "../constants/currencies.js"
 
-export default {
-    name: "MoneyInput",
-    components: {
-        FormLabel,
+// Define props
+// Note: 'value' prop is kept for backward compatibility
+const props = defineProps({
+    label: {
+        type: String,
+        default: null,
     },
-    inheritAttrs: false,
-    emits: ["update:modelValue", "input", "blur"],
-    props: {
-        label: {
-            type: String,
-            default: null,
-        },
-        modelValue: {
-            type: [Number, String],
-            default: 0,
-        },
-        // Keep value for backward compatibility
-        value: {
-            type: [Number, String],
-            default: 0,
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        currency: {
-            type: [String, Object],
-            default: null,
-        },
-        decimal: {
-            type: Number,
-            default: 2,
-        },
-        sign: {
-            type: Boolean,
-            default: false,
-        },
-        inputClass: {
-            type: [String, Object],
-            default: null,
-        },
-        error: {
-            type: String,
-            default: "Please fill out this field.",
-        },
-        intValue: {
-            type: Boolean,
-            default: true,
-        },
-        allowNegative: {
-            type: Boolean,
-            default: false,
-        },
-        allowZero: {
-            type: Boolean,
-            default: true,
-        },
+    modelValue: {
+        type: [Number, String],
+        default: 0,
     },
-    setup(props, { emit }) {
-        const showError = ref(false);
+    value: {
+        type: [Number, String],
+        default: 0,
+    },
+    required: {
+        type: Boolean,
+        default: false,
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+    currency: {
+        type: [String, Object],
+        default: null,
+    },
+    decimal: {
+        type: Number,
+        default: 2,
+    },
+    sign: {
+        type: Boolean,
+        default: false,
+    },
+    inputClass: {
+        type: [String, Object],
+        default: null,
+    },
+    error: {
+        type: String,
+        default: "Please fill out this field.",
+    },
+    intValue: {
+        type: Boolean,
+        default: true,
+    },
+    allowNegative: {
+        type: Boolean,
+        default: false,
+    },
+    allowZero: {
+        type: Boolean,
+        default: true,
+    },
+})
 
-        const noCentCurrency = computed(() => {
+// Define emits
+const emit = defineEmits(["update:modelValue", "input", "blur"])
+
+// Reactive state and logic
+const showError = ref(false)
+
+const noCentCurrency = computed(() => {
             if (typeof props.currency === "string") {
                 const currencyCodeCountry = [];
                 NoCentsCurrencies.forEach((item) => {
@@ -203,12 +200,9 @@ export default {
             emit("blur", e);
         };
 
-        return {
-            inputRef,
-            showError,
-            currencyData,
-            blur,
-        };
-    },
-};
+// Define options
+defineOptions({
+    name: "MoneyInput",
+    inheritAttrs: false
+})
 </script>

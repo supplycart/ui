@@ -1,32 +1,40 @@
-<script>
-import { h } from "vue";
-import CurrencySettings from "../constants/currencySettings";
+<script setup>
+import { computed } from "vue"
+import CurrencySettings from "../constants/currencySettings"
 
-export default {
-    name: "Currency",
-    props: {
-        type: {
-            type: String,
-            default: "sign",
-        },
-        currency: {
-            type: [String, Object],
-            default: () => "MYR",
-        },
+// Define props
+const props = defineProps({
+    type: {
+        type: String,
+        default: "sign",
     },
-    render() {
-        let currency =
-            typeof this.currency === "object"
-                ? this.currency
-                : CurrencySettings[this.currency];
-
-        if (!currency) {
-            currency = CurrencySettings["MYR"];
-        }
-
-        return h("span", currency[this.type]);
+    currency: {
+        type: [String, Object],
+        default: "MYR",
     },
-};
+})
+
+// Computed currency data
+const currencyData = computed(() => {
+    let currency = typeof props.currency === "object"
+        ? props.currency
+        : CurrencySettings[props.currency]
+
+    if (!currency) {
+        currency = CurrencySettings["MYR"]
+    }
+
+    return currency
+})
+
+// Define options
+defineOptions({
+    name: "Currency"
+})
 </script>
+
+<template>
+    <span>{{ currencyData[type] }}</span>
+</template>
 
 <style scoped></style>

@@ -5,25 +5,24 @@
         <slot name="append"></slot>
     </label>
 </template>
-<script>
-export default {
-    props: {
-        id: {
-            type: String,
-            default: null,
-        },
-        label: {
-            type: String,
-            default: null,
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
+<script setup>
+// Define props with defaults
+defineProps({
+    id: {
+        type: String,
+        default: null,
     },
-};
+    label: {
+        type: String,
+        default: null,
+    },
+    required: {
+        type: Boolean,
+        default: false,
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+})
 </script>

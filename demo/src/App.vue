@@ -313,187 +313,134 @@
     </div>
 </template>
 
-<script>
-    import { ref, reactive, onMounted } from 'vue'
-    import {
-        Address,
-        AddressForm,
-        AttachmentInput,
-        Checkbox,
-        DatePicker,
-        DateRangePicker,
-        DateTime,
-        TimePicker,
-        Money,
-        MoneyV2,
-        MoneyInput,
-        MoneyInputV2,
-        EmailInput,
-        TextInput,
-        PhoneInput,
-        RemarksInput,
-        SubmitButton,
-        QuantityInput,
-        Paginate,
-        PasswordInput,
-        TextareaInput,
-        DropdownInput,
-        DecimalField,
-        formatCents,
-        Currency
-    } from "@supplycart/ui";
-    import { format } from "date-fns";
-    import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
+<script setup>
+import { ref, reactive, onMounted } from 'vue'
+import {
+    Address,
+    AddressForm,
+    AttachmentInput,
+    Checkbox,
+    DatePicker,
+    DateRangePicker,
+    DateTime,
+    TimePicker,
+    Money,
+    MoneyV2,
+    MoneyInput,
+    MoneyInputV2,
+    EmailInput,
+    TextInput,
+    PhoneInput,
+    RemarksInput,
+    SubmitButton,
+    QuantityInput,
+    Paginate,
+    PasswordInput,
+    TextareaInput,
+    DropdownInput,
+    DecimalField,
+    formatCents,
+    Currency
+} from "@supplycart/ui"
+import { format } from "date-fns"
+import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz"
 
-    export default {
-        name: "App",
-        components: {
-            Address,
-            AddressForm,
-            AttachmentInput,
-            Checkbox,
-            DateTime,
-            DatePicker,
-            TimePicker,
-            DateRangePicker,
-            Money,
-            MoneyV2,
-            MoneyInput,
-            MoneyInputV2,
-            EmailInput,
-            TextInput,
-            PhoneInput,
-            RemarksInput,
-            SubmitButton,
-            QuantityInput,
-            Paginate,
-            PasswordInput,
-            TextareaInput,
-            DropdownInput,
-            DecimalField,
-            Currency,
-        },
-        setup() {
-            const moneyv2 = ref(0)
-            const deliveryCountry = ref("Malaysia")
-            const attachments = ref([])
-            const minDate = ref(format(zonedTimeToUtc(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd"))
-            const dateRange = reactive({
-                from: "2020-03-19",
-                to: "2020-03-24"
-            })
-            const moneyInput = reactive({
-                integer: 1000,
-                value: 10.00,
-                decimal: 4,
-            })
-            const testMoneyVal = ref(0)
-            const money = reactive({
-                integer: 102355,
-                value: 10.00,
-                decimal: 4,
-            })
-            const malaysiaBillingAddress = reactive({
-                entity_name: "Supplycart",
-                pic_name: "Will",
-                pic_phone: "012340545343",
-                unit: "PG02",
-                floor: "Ground Floor",
-                building: "Phoenix Tower",
-                street: "Jalan BM1/8 Taman Bukit Mayang Emas",
-                city: "Petaling Jaya",
-                state: "Selangor",
-                postcode: "47301",
-                country: "Singapore",
-                einvoice_email: "will@supplycart.my",
-                registration_no: "REG0001",
-                ref_no: "REG0011A"
-            })
-            const malaysiaDeliveryAddress = reactive({
-                branch_name: "Supplycart",
-                unit: "PG02",
-                floor: "Ground Floor",
-                building: "Phoenix Tower",
-                street: "Jalan BM1/8 Taman Bukit Mayang Emas",
-                city: "Petaling Jaya",
-                state: "Selangor",
-                postcode: "47301",
-                country: "Malaysia",
-                pic_phone: "012340545343",
-                lift_access: true,
-                requires_permit: false
-            })
-            const name = reactive({
-                first: null,
-                last: null
-            })
-            const quantity = ref(200)
-            const phone = ref("019-1234566")
-            const time = ref(null)
-            const check = ref(false)
-            const password = ref("")
-            const currentTime = ref(format(utcToZonedTime(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd HH:mm:ss"))
-            const meta = reactive({
-                total: 180,
-                last_page: 10,
-                from: 1,
-                to: 8,
-                current_page: 1,
-            })
-            const state = ref(null)
-            const stateOptions = ref([
-                { id: 1, label: "Pahang" },
-                { id: 2, label: "Perak" },
-                { id: 3, label: "Melaka" }
-            ])
-            const dropdownError = ref(null)
-            const email = ref("")
+// Reactive state
+const moneyv2 = ref(0)
+const deliveryCountry = ref("Malaysia")
+const attachments = ref([])
+const minDate = ref(format(zonedTimeToUtc(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd"))
+const dateRange = reactive({
+    from: "2020-03-19",
+    to: "2020-03-24"
+})
+const moneyInput = reactive({
+    integer: 1000,
+    value: 10.00,
+    decimal: 4,
+})
+const testMoneyVal = ref(0)
+const money = reactive({
+    integer: 102355,
+    value: 10.00,
+    decimal: 4,
+})
+const malaysiaBillingAddress = reactive({
+    entity_name: "Supplycart",
+    pic_name: "Will",
+    pic_phone: "012340545343",
+    unit: "PG02",
+    floor: "Ground Floor",
+    building: "Phoenix Tower",
+    street: "Jalan BM1/8 Taman Bukit Mayang Emas",
+    city: "Petaling Jaya",
+    state: "Selangor",
+    postcode: "47301",
+    country: "Singapore",
+    einvoice_email: "will@supplycart.my",
+    registration_no: "REG0001",
+    ref_no: "REG0011A"
+})
+const malaysiaDeliveryAddress = reactive({
+    branch_name: "Supplycart",
+    unit: "PG02",
+    floor: "Ground Floor",
+    building: "Phoenix Tower",
+    street: "Jalan BM1/8 Taman Bukit Mayang Emas",
+    city: "Petaling Jaya",
+    state: "Selangor",
+    postcode: "47301",
+    country: "Malaysia",
+    pic_phone: "012340545343",
+    lift_access: true,
+    requires_permit: false
+})
+const name = reactive({
+    first: null,
+    last: null
+})
+const quantity = ref(200)
+const phone = ref("019-1234566")
+const time = ref(null)
+const check = ref(false)
+const password = ref("")
+const currentTime = ref(format(utcToZonedTime(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd HH:mm:ss"))
+const meta = reactive({
+    total: 180,
+    last_page: 10,
+    from: 1,
+    to: 8,
+    current_page: 1,
+})
+const state = ref(null)
+const stateOptions = ref([
+    { id: 1, label: "Pahang" },
+    { id: 2, label: "Perak" },
+    { id: 3, label: "Melaka" }
+])
+const dropdownError = ref(null)
+const email = ref("")
 
-            onMounted(() => {
-                setTimeout(() => {
-                    dateRange.from = "2020-01-01"
-                    dateRange.to = "2020-03-31"
-                    minDate.value = "2020-01-01"
-                }, 5000)
-            })
+onMounted(() => {
+    setTimeout(() => {
+        dateRange.from = "2020-01-01"
+        dateRange.to = "2020-03-31"
+        minDate.value = "2020-01-01"
+    }, 5000)
+})
 
-            const test = (e) => {
-                console.log("input dropdown", e)
-            }
+const test = (e) => {
+    console.log("input dropdown", e)
+}
 
-            const displayError = (message) => {
-                console.table(message)
-            }
+const displayError = (message) => {
+    console.table(message)
+}
 
-            return {
-                moneyv2,
-                deliveryCountry,
-                attachments,
-                minDate,
-                dateRange,
-                moneyInput,
-                testMoneyVal,
-                money,
-                malaysiaBillingAddress,
-                malaysiaDeliveryAddress,
-                name,
-                quantity,
-                phone,
-                time,
-                check,
-                password,
-                currentTime,
-                meta,
-                state,
-                stateOptions,
-                dropdownError,
-                email,
-                formatCents,
-                test,
-                displayError
-            }
-        }
-    };
+// Define component name
+defineOptions({
+    name: "App"
+})
 </script>
 
 <style>
