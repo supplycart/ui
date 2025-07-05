@@ -1,5 +1,5 @@
 import Dinero from "dinero.js";
-import find from "lodash/find";
+import { find } from "lodash-es";
 import numeral from "numeral";
 import Currencies, { DefaultCurrency } from "./constants/currencies.js";
 

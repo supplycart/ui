@@ -25,7 +25,7 @@ export default {
         addressCountry() {
             const supportedCountries = Object.keys(this.CONFIG);
             const country = supportedCountries.includes(
-                this.country.toUpperCase()
+                this.country.toUpperCase(),
             )
                 ? this.country.toUpperCase()
                 : "MALAYSIA";

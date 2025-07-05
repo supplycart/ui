@@ -2,7 +2,7 @@
     <input ref="input" type="text" />
 </template>
 <script>
-import merge from "lodash/merge";
+import { merge } from "lodash-es";
 import flatpickr from "flatpickr";
 
 export default {
@@ -53,11 +53,11 @@ export default {
                 this.$emit("input", {
                     from: flatpickr.formatDate(
                         selectedDates[0],
-                        this.instance.config.dateFormat
+                        this.instance.config.dateFormat,
                     ),
                     to: flatpickr.formatDate(
                         selectedDates[1],
-                        this.instance.config.dateFormat
+                        this.instance.config.dateFormat,
                     ),
                 });
             }
@@ -71,7 +71,7 @@ export default {
                 altFormat: "j M Y",
                 minDate: "today",
             },
-            this.config
+            this.config,
         );
 
         this.instance = flatpickr(this.$refs.input, {
@@ -86,7 +86,7 @@ export default {
         ) {
             this.instance.set(
                 "minDate",
-                flatpickr.parseDate(this.selected.from)
+                flatpickr.parseDate(this.selected.from),
             );
             this.instance.setDate(Object.values(this.selected));
         }

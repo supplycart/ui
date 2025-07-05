@@ -446,7 +446,8 @@
                     { id: 2, label: "Perak" },
                     { id: 3, label: "Melaka" }
                 ],
-                dropdownError: null
+                dropdownError: null,
+                email: ""
             };
         },
         mounted() {

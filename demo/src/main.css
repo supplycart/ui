@@ -1,2 +1,3 @@
 @import "https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css";
-@import "~flatpickr/dist/flatpickr.css";
+@import "flatpickr/dist/flatpickr.css";
+@import "vue-select/dist/vue-select.css";

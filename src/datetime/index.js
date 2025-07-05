@@ -8,7 +8,7 @@ function displayDate(
     value,
     formatString = "yyyy-MM-dd HH:mm:ss",
     timezone = "Asia/Kuala_Lumpur",
-    isUtc = false
+    isUtc = false,
 ) {
     if (!value) return "";
 

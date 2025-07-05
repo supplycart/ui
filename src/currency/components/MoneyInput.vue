@@ -48,7 +48,7 @@ import Currencies, {
     NoCentsCurrencies,
 } from "../constants/currencies.js";
 import { CurrencyInput } from "vue-currency-input";
-import find from "lodash/find";
+import { find } from "lodash-es";
 import numeral from "numeral";
 
 export default {

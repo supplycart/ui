@@ -48,12 +48,12 @@ export default {
                     const message = [];
                     if (!this.validateAttachmentSize(file, this.maxSize)) {
                         message.push(
-                            `File ${file.name} has exceeded limit of ${this.maxSize}MB`
+                            `File ${file.name} has exceeded limit of ${this.maxSize}MB`,
                         );
                     }
                     if (!this.validateAttachmentFormat(file, this.format)) {
                         message.push(
-                            `File format for ${file.name} not supported`
+                            `File format for ${file.name} not supported`,
                         );
                     }
                     this.$emit("onError", message);

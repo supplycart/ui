@@ -23,7 +23,7 @@
             @option:deselecting="optionDeselecting"
             :taggable="taggable"
             :multiple="multiple"
-            appendToBody
+            append-to-body
         >
             <template #option="option">
                 <slot name="option" :option="option" />
