@@ -6,7 +6,16 @@ import { merge } from "lodash-es";
 import flatpickr from "flatpickr";
 
 export default {
+    emits: ["update:modelValue", "input"],
     props: {
+        modelValue: {
+            type: Object,
+            default: () => ({
+                from: null,
+                to: null,
+            }),
+        },
+        // Keep value for backward compatibility
         value: {
             type: Object,
             default: () => ({
@@ -20,17 +29,25 @@ export default {
         },
     },
     data() {
+        const currentValue = this.modelValue || this.value;
         return {
             instance: null,
             selected: {
-                from: this.value.from,
-                to: this.value.to,
+                from: currentValue.from,
+                to: currentValue.to,
             },
         };
     },
     watch: {
+        modelValue(val) {
+            if (val) {
+                this.selected = val;
+            }
+        },
         value(val) {
-            this.selected = val;
+            if (val && !this.modelValue) {
+                this.selected = val;
+            }
         },
         selected(val) {
             if (this.instance.config._minDate > flatpickr.parseDate(val.from)) {
@@ -50,7 +67,7 @@ export default {
                 // set to hours to end of day
                 selectedDates[1].setHours(23, 59, 59, 999);
 
-                this.$emit("input", {
+                const result = {
                     from: flatpickr.formatDate(
                         selectedDates[0],
                         this.instance.config.dateFormat,
@@ -59,7 +76,11 @@ export default {
                         selectedDates[1],
                         this.instance.config.dateFormat,
                     ),
-                });
+                };
+
+                this.$emit("update:modelValue", result);
+                // Keep backward compatibility with input event
+                this.$emit("input", result);
             }
         },
     },
@@ -99,7 +120,7 @@ export default {
             this.instance.setDate(Object.values(this.selected));
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.instance.destroy();
     },
 };

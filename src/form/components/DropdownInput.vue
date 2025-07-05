@@ -9,7 +9,7 @@
         </slot>
 
         <VSelect
-            v-model="input"
+            :model-value="modelValue"
             v-bind="$attrs"
             :disabled="disabled"
             :options="options"
@@ -17,6 +17,7 @@
                 !!errorMessage ? 'input-error dropdown-input-error' : '',
                 inputClass,
             ]"
+            @update:model-value="handleUpdate"
             @search="search"
             @close="blur"
             @open="open"
@@ -47,6 +48,7 @@
 import VSelect from "vue-select";
 export default {
     components: { VSelect },
+    emits: ["update:modelValue", "search", "blur", "open", "deselecting"],
     props: {
         id: {
             type: String,
@@ -56,7 +58,7 @@ export default {
             type: String,
             default: null,
         },
-        value: {
+        modelValue: {
             type: [String, Number, Array, Object, Boolean],
             default: null,
         },
@@ -96,31 +98,16 @@ export default {
     data() {
         return {
             focused: false,
-            originalValue: this.value,
+            originalValue: this.modelValue,
             errorMessage: this.error,
             emptyMessage: "Please fill in this field",
         };
     },
     computed: {
-        input: {
-            get() {
-                return this.value;
-            },
-            set(e) {
-                this.focused = false;
-                this.$emit("input", e);
-
-                if (Array.isArray(e) ? e.length == 0 : e == null) {
-                    this.errorMessage = this.emptyMessage;
-                } else {
-                    this.errorMessage = null;
-                }
-            },
-        },
         isEmpty() {
-            return Array.isArray(this.value)
-                ? this.value.length == 0
-                : this.value == null;
+            return Array.isArray(this.modelValue)
+                ? this.modelValue.length == 0
+                : this.modelValue == null;
         },
     },
     watch: {
@@ -131,6 +118,16 @@ export default {
         },
     },
     methods: {
+        handleUpdate(e) {
+            this.focused = false;
+            this.$emit("update:modelValue", e);
+
+            if (Array.isArray(e) ? e.length == 0 : e == null) {
+                this.errorMessage = this.emptyMessage;
+            } else {
+                this.errorMessage = null;
+            }
+        },
         search(e) {
             this.$emit("search", e);
         },

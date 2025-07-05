@@ -3,15 +3,15 @@
         <slot name="label">
             <label class="font-bold">{{ label }}</label>
         </slot>
-        <div v-if="value" class="leading-normal">
+        <div v-if="modelValue" class="leading-normal">
             <slot>
-                {{ value }}
+                {{ modelValue }}
             </slot>
         </div>
-        <div v-if="!value && showError" class="italic text-red-500">
+        <div v-if="!modelValue && showError" class="italic text-red-500">
             {{ errorMessage }}
         </div>
-        <div v-if="!value && showDefault && !showError" class="italic">
+        <div v-if="!modelValue && showDefault && !showError" class="italic">
             {{ defaultMessage }}
         </div>
     </div>
@@ -23,7 +23,7 @@ export default {
             type: String,
             default: "Label",
         },
-        value: {
+        modelValue: {
             type: String,
             default: null,
         },

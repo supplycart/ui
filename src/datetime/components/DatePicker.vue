@@ -20,12 +20,14 @@
 import FlatPickr from "vue-flatpickr-component";
 import { Timezones } from "../constants";
 import { DefaultConfig } from "../constants/flatpickr";
+import FormLabel from "../../form/components/FormLabel.vue";
 
 export default {
     components: {
         FlatPickr,
-        FormLabel: () => import("../../form/components/FormLabel.vue"),
+        FormLabel,
     },
+    emits: ["update:modelValue", "input"],
     props: {
         id: {
             type: String,
@@ -39,6 +41,11 @@ export default {
             type: String,
             default: "inline-block mb-2",
         },
+        modelValue: {
+            type: [String, Date],
+            default: null,
+        },
+        // Keep value for backward compatibility
         value: {
             type: [String, Date],
             default: null,
@@ -70,9 +77,14 @@ export default {
     computed: {
         input: {
             get() {
-                return this.value;
+                // Use modelValue if provided, otherwise fall back to value for backward compatibility
+                return this.modelValue !== undefined
+                    ? this.modelValue
+                    : this.value;
             },
             set(val) {
+                this.$emit("update:modelValue", val);
+                // Keep backward compatibility with input event
                 this.$emit("input", val);
             },
         },

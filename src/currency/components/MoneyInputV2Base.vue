@@ -4,6 +4,7 @@ import { h } from "vue";
 import CurrencySettings from "../constants/currencySettings.js";
 
 export default {
+    emits: ["update:modelValue", "input", "keydown"],
     props: {
         decimal: {
             type: Number,
@@ -13,6 +14,11 @@ export default {
             type: [String, Object],
             default: "MYR",
         },
+        modelValue: {
+            type: Number,
+            default: 0,
+        },
+        // Keep value for backward compatibility
         value: {
             type: Number,
             default: 0,
@@ -46,9 +52,16 @@ export default {
     computed: {
         rawValue: {
             get() {
-                return this.value ?? 0;
+                // Use modelValue if provided, otherwise fall back to value for backward compatibility
+                const currentValue =
+                    this.modelValue !== undefined
+                        ? this.modelValue
+                        : this.value;
+                return currentValue ?? 0;
             },
             set(val) {
+                this.$emit("update:modelValue", val);
+                // Keep backward compatibility with input event
                 this.$emit("input", val);
             },
         },
@@ -105,63 +118,56 @@ export default {
             return CurrencySettings[this.currentCurrency]["signPosition"];
         },
     },
-    render: function (h) {
+    render() {
         const vm = this;
 
         const display = h("input", {
-            attrs: {
-                type: "text",
-                class:
-                    "border border-gray-300 rounded p-2 text-right" +
-                    (vm.editing ? " hidden" : ""),
-                pattern: "[0-9.!a-zA-Z0]",
-                disabled: vm.disabled,
-                placeholder: vm.placeholder,
-            },
-            domProps: {
-                value: vm.displayValue,
-            },
-            on: {
-                focus: function (e) {
-                    vm.editing = true;
+            type: "text",
+            class:
+                "border border-gray-300 rounded p-2 text-right" +
+                (vm.editing ? " hidden" : ""),
+            pattern: "[0-9.!a-zA-Z0]",
+            disabled: vm.disabled,
+            placeholder: vm.placeholder,
+            value: vm.displayValue,
+            onFocus: function (e) {
+                vm.editing = true;
 
-                    vm.$nextTick(function () {
-                        input.elm.focus();
-                        input.elm.select();
-                    });
-                },
+                vm.$nextTick(function () {
+                    const inputEl = vm.$refs.inputRef;
+                    if (inputEl) {
+                        inputEl.focus();
+                        inputEl.select();
+                    }
+                });
             },
         });
 
         const input = h("input", {
-            attrs: {
-                type: "text",
-                class:
-                    "border border-red-300 rounded p-2 text-right" +
-                    (!vm.editing ? " hidden" : ""),
-                pattern: "[0-9.!a-zA-Z0]",
-                placeholder: vm.placeholder,
+            ref: 'inputRef',
+            type: "text",
+            class:
+                "border border-red-300 rounded p-2 text-right" +
+                (!vm.editing ? " hidden" : ""),
+            pattern: "[0-9.!a-zA-Z0]",
+            placeholder: vm.placeholder,
+            value: vm.inputValue,
+            onBlur: function (e) {
+                vm.editing = false;
+                let emitVal = vm.rawValue;
+                if (!vm.allowNegative && vm.rawValue < 0) {
+                    emitVal *= -1;
+                    vm.inputValue *= -1;
+                    vm.$emit("update:modelValue", emitVal);
+                    vm.$emit("input", emitVal);
+                }
             },
-            domProps: {
-                value: vm.inputValue,
+            onInput: function (e) {
+                const oldValue = vm.inputValue;
+                vm.inputValue = e.target.value;
             },
-            on: {
-                blur: function (e) {
-                    vm.editing = false;
-                    let emitVal = vm.rawValue;
-                    if (!vm.allowNegative && vm.rawValue < 0) {
-                        emitVal *= -1;
-                        vm.inputValue *= -1;
-                        vm.$emit("input", emitVal);
-                    }
-                },
-                input: function (e) {
-                    const oldValue = vm.inputValue;
-                    vm.inputValue = e.target.value;
-                },
-                keydown: function (e) {
-                    vm.$emit("keydown");
-                },
+            onKeydown: function (e) {
+                vm.$emit("keydown");
             },
         });
 

@@ -1,15 +1,19 @@
 <script>
 import { startCase } from "lodash-es";
+import { defineComponent, h, reactive, watch } from "vue";
+import BillingAddressForm from "./BillingAddressForm.vue";
+import DeliveryAddressForm from "./DeliveryAddressForm.vue";
+import GeneralAddressForm from "./GeneralAddressForm.vue";
 
-export default {
+export default defineComponent({
     name: "AddressForm",
     components: {
-        BillingAddressForm: () => import("./BillingAddressForm.vue"),
-        DeliveryAddressForm: () => import("./DeliveryAddressForm.vue"),
-        GeneralAddressForm: () => import("./GeneralAddressForm.vue"),
+        BillingAddressForm,
+        DeliveryAddressForm,
+        GeneralAddressForm,
     },
     props: {
-        value: {
+        modelValue: {
             type: Object,
             default: () => ({}),
         },
@@ -30,40 +34,61 @@ export default {
             default: () => [],
         },
     },
-    computed: {
-        address: {
-            get() {
-                const address = this.value;
-                if (!Object.prototype.hasOwnProperty.call(address, "country")) {
-                    this.$set(address, "country", this.country);
-                }
-                return address;
-            },
-            set(value) {},
-        },
-    },
+    emits: ["update:modelValue", "changeCountry"],
+    setup(props, { emit }) {
+        const address = reactive({ ...props.modelValue });
 
-    methods: {
-        changeCountry(country) {
-            this.address.country = country;
-        },
+        // Ensure country is set
+        if (!Object.prototype.hasOwnProperty.call(address, "country")) {
+            address.country = props.country;
+        }
+
+        // Watch for changes in modelValue prop
+        watch(
+            () => props.modelValue,
+            (newValue) => {
+                Object.assign(address, newValue);
+                if (!Object.prototype.hasOwnProperty.call(address, "country")) {
+                    address.country = props.country;
+                }
+            },
+            { deep: true },
+        );
+
+        // Watch for changes in address and emit updates
+        watch(
+            () => address,
+            (newAddress) => {
+                emit("update:modelValue", newAddress);
+            },
+            { deep: true },
+        );
+
+        const changeCountry = (country) => {
+            address.country = country;
+            emit("changeCountry", country);
+        };
+
+        return {
+            address,
+            changeCountry,
+        };
     },
-    render(createElement, context) {
-        return createElement("keep-alive", [
-            createElement("component", {
+    render() {
+        return h("keep-alive", [
+            h("component", {
                 is: `${startCase(this.type)}AddressForm`.replace(/\s+/g, ""),
-                props: {
-                    countries: this.$props.countries,
-                    disableFields: this.$props.disableFields,
-                    value: this.address,
+                countries: this.countries,
+                disableFields: this.disableFields,
+                modelValue: this.address,
+                "onUpdate:modelValue": (value) => {
+                    Object.assign(this.address, value);
                 },
-                on: {
-                    changeCountry: this.changeCountry,
-                },
+                onChangeCountry: this.changeCountry,
             }),
         ]);
     },
-};
+});
 </script>
 <style>
 .select-country .vs__dropdown-toggle {

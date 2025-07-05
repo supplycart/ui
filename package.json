@@ -25,11 +25,11 @@
         "lucide-vue": "^0.446.0",
         "luxon": "^1.22.0",
         "numeral": "^2.0.6",
-        "portal-vue": "2",
-        "vue": "^2.7.16",
-        "vue-currency-input": "^1.17.3",
-        "vue-flatpickr-component": "^8.1.5",
-        "vue-select": "^3.10.7"
+        "vue": "^3.5.13",
+        "@vue/compat": "^3.5.13",
+        "vue-currency-input": "^3.1.0",
+        "vue-flatpickr-component": "^11.0.4",
+        "vue-select": "4.0.0-beta.6"
     },
     "license": "MIT",
     "devDependencies": {

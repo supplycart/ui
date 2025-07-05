@@ -1,8 +1,11 @@
 <script>
+import { defineComponent, computed, h } from "vue";
 import { validateAttachmentFormat, validateAttachmentSize } from "../index";
-export default {
+
+export default defineComponent({
+    name: "BaseAttachment",
     props: {
-        value: {
+        modelValue: {
             type: Array,
             default: () => [],
         },
@@ -20,66 +23,67 @@ export default {
             default: () => [],
         },
     },
-    computed: {
-        attachments: {
-            get() {
-                return this.value;
-            },
-        },
-    },
-    methods: {
-        validateAttachmentFormat,
-        validateAttachmentSize,
-        async setAttachment(event) {
-            this.attachments = this.attachments ? this.attachments : [];
+    emits: ["update:modelValue", "change", "deleted", "onError"],
+    setup(props, { emit, slots }) {
+        const attachments = computed(() => {
+            return props.modelValue || [];
+        });
+
+        const setAttachment = async (event) => {
+            let currentAttachments = [...attachments.value];
 
             const files =
-                this.mode === "single"
+                props.mode === "single"
                     ? [event.target.files[0]]
                     : Array.from(event.target.files);
 
             files.forEach((file) => {
                 if (
-                    this.validateAttachmentSize(file, this.maxSize) &&
-                    this.validateAttachmentFormat(file, this.format)
+                    validateAttachmentSize(file, props.maxSize) &&
+                    validateAttachmentFormat(file, props.format)
                 ) {
-                    this.attachments.push(file);
+                    currentAttachments.push(file);
                 } else {
                     const message = [];
-                    if (!this.validateAttachmentSize(file, this.maxSize)) {
+                    if (!validateAttachmentSize(file, props.maxSize)) {
                         message.push(
-                            `File ${file.name} has exceeded limit of ${this.maxSize}MB`,
+                            `File ${file.name} has exceeded limit of ${props.maxSize}MB`,
                         );
                     }
-                    if (!this.validateAttachmentFormat(file, this.format)) {
+                    if (!validateAttachmentFormat(file, props.format)) {
                         message.push(
                             `File format for ${file.name} not supported`,
                         );
                     }
-                    this.$emit("onError", message);
+                    emit("onError", message);
                 }
             });
-            event.target.value = null;
-            this.$emit("input", this.attachments);
-            this.$emit("change", this.attachments);
-        },
 
-        async deleteAttachment(index) {
+            event.target.value = null;
+            emit("update:modelValue", currentAttachments);
+            emit("change", currentAttachments);
+        };
+
+        const deleteAttachment = async (index) => {
             const data = {
                 index: index,
-                file: this.attachments[index],
+                file: attachments.value[index],
             };
-            this.$emit("deleted", data);
-            this.attachments.splice(index, 1);
-        },
+            emit("deleted", data);
+
+            const updatedAttachments = [...attachments.value];
+            updatedAttachments.splice(index, 1);
+            emit("update:modelValue", updatedAttachments);
+        };
+
+        return () => {
+            return slots.default?.({
+                attachments: attachments.value,
+                setAttachment,
+                deleteAttachment,
+                maxSize: props.maxSize,
+            });
+        };
     },
-    render() {
-        return this.$scopedSlots.default({
-            attachments: this.value,
-            setAttachment: this.setAttachment,
-            deleteAttachment: this.deleteAttachment,
-            maxSize: this.maxSize,
-        });
-    },
-};
+});
 </script>

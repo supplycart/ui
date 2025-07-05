@@ -1,19 +1,20 @@
 <template>
     <label>
         <input
-            v-model="input"
+            :checked="modelValue"
             type="checkbox"
             :class="inputClass"
             :disabled="disabled"
-            @change="change"
+            @change="handleChange"
         />
         <slot>{{ label }}</slot>
     </label>
 </template>
 <script>
 export default {
+    emits: ["update:modelValue", "change"],
     props: {
-        value: {
+        modelValue: {
             type: Boolean,
             default: false,
         },
@@ -30,18 +31,9 @@ export default {
             default: false,
         },
     },
-    computed: {
-        input: {
-            get() {
-                return this.value;
-            },
-            set(val) {
-                this.$emit("input", val);
-            },
-        },
-    },
     methods: {
-        change(e) {
+        handleChange(e) {
+            this.$emit("update:modelValue", e.target.checked);
             this.$emit("change", e);
         },
     },

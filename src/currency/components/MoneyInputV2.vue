@@ -28,11 +28,14 @@
 </template>
 <script>
 import MoneyInputBase from "./MoneyInputV2Base.vue";
+import FormLabel from "../../form/components/FormLabel.vue";
+
 export default {
     components: {
-        FormLabel: () => import("../../form/components/FormLabel.vue"),
+        FormLabel,
         MoneyInputBase,
     },
+    emits: ["update:modelValue", "input", "keydown"],
     props: {
         label: {
             type: String,
@@ -46,6 +49,11 @@ export default {
             type: Boolean,
             default: false,
         },
+        modelValue: {
+            type: [Number, String],
+            default: 0,
+        },
+        // Keep value for backward compatibility
         value: {
             type: [Number, String],
             default: 0,
@@ -58,9 +66,14 @@ export default {
     computed: {
         input: {
             get() {
-                return this.value;
+                // Use modelValue if provided, otherwise fall back to value for backward compatibility
+                return this.modelValue !== undefined
+                    ? this.modelValue
+                    : this.value;
             },
             set(value) {
+                this.$emit("update:modelValue", value);
+                // Keep backward compatibility with input event
                 this.$emit("input", value);
             },
         },

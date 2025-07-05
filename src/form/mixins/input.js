@@ -1,5 +1,6 @@
 export default {
     inheritAttrs: false,
+    emits: ["update:modelValue", "blur"],
     props: {
         id: {
             type: String,
@@ -9,8 +10,8 @@ export default {
             type: String,
             default: null,
         },
-        value: {
-            type: String | Number,
+        modelValue: {
+            type: [String, Number],
             default: null,
         },
         error: {
@@ -40,7 +41,7 @@ export default {
             this.$emit("blur", e);
         },
         update(e) {
-            this.$emit("input", e);
+            this.$emit("update:modelValue", e);
         },
     },
 };

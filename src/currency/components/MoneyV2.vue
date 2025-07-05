@@ -1,4 +1,5 @@
 <script>
+import { h } from "vue";
 import numeral from "numeral";
 import CurrencySettings from "../constants/currencySettings.js";
 
@@ -69,8 +70,8 @@ export default {
                 : CurrencySettings[this.currentCurrency]["displayFormat"];
         },
     },
-    render(createElement) {
-        return createElement("span", this.displayValue);
+    render() {
+        return h("span", this.displayValue);
     },
 };
 </script>

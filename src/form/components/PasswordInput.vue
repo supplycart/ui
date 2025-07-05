@@ -2,22 +2,23 @@
     <BaseInput
         v-bind="$attrs"
         :label="label"
-        :value="value"
+        :model-value="modelValue"
         :regex="regex"
         :error="error"
         :input-class="inputClass"
         :description="description"
         :required="required"
         type="password"
-        @input="update"
+        @update:model-value="update"
         @blur="blur"
     />
 </template>
 <script>
 import InputMixins from "../mixins/input";
+import BaseInput from "./BaseInput.vue";
 
 export default {
-    components: { BaseInput: () => import("./BaseInput.vue") },
+    components: { BaseInput },
     mixins: [InputMixins],
     data() {
         return {

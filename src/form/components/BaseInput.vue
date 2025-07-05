@@ -7,10 +7,11 @@
             </label>
         </slot>
         <input
-            v-model="input"
+            :value="modelValue"
             v-bind="$attrs"
             :class="[{ 'input-error': showError || isInvalid }, inputClass]"
             :required="required"
+            @input="handleInput"
             @focus="focus"
             @change="change"
             @blur="blur"
@@ -36,6 +37,7 @@
 <script>
 export default {
     inheritAttrs: false,
+    emits: ["update:modelValue", "blur", "change", "focus", "keydown"],
     props: {
         id: {
             type: String,
@@ -45,7 +47,7 @@ export default {
             type: String,
             default: null,
         },
-        value: {
+        modelValue: {
             type: [String, Number],
             default: null,
         },
@@ -81,20 +83,11 @@ export default {
         };
     },
     computed: {
-        input: {
-            get() {
-                return this.value;
-            },
-            set(e) {
-                this.$emit("input", e);
-                this.$forceUpdate();
-            },
-        },
         isInvalid() {
             if (!this.regex) return false;
 
-            const value = this.regex.test(this.input);
-            return !value && this.focused && this.input;
+            const value = this.regex.test(this.modelValue);
+            return !value && this.focused && this.modelValue;
         },
     },
     watch: {
@@ -109,6 +102,9 @@ export default {
         },
     },
     methods: {
+        handleInput(e) {
+            this.$emit("update:modelValue", e.target.value);
+        },
         blur(e) {
             this.$emit("blur", e);
         },

@@ -117,9 +117,37 @@
     </div>
 </template>
 <script>
-import AddressMixins from "../mixins/address";
-export default {
+import { defineComponent } from "vue";
+import { useAddress } from "../composables/useAddress";
+
+export default defineComponent({
     name: "BillingAddress",
-    mixins: [AddressMixins],
-};
+    props: {
+        modelValue: {
+            type: [Array, Object],
+            default: () => ({}),
+        },
+        display: {
+            type: Array,
+            default: () => [],
+        },
+        country: {
+            type: String,
+            default: "Malaysia",
+        },
+    },
+    setup(props) {
+        const { LABELS, addressCountry, addressCountryConfig, showAttribute } =
+            useAddress(props);
+
+        return {
+            value: props.modelValue,
+            display: props.display,
+            LABELS,
+            addressCountry,
+            addressCountryConfig,
+            showAttribute,
+        };
+    },
+});
 </script>

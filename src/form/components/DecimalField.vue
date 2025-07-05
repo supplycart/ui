@@ -3,7 +3,7 @@
         <slot name="label">
             <label v-if="label" class="font-bold">{{ label }}</label>
         </slot>
-        <div v-if="value !== null" class="leading-normal">
+        <div v-if="modelValue !== null" class="leading-normal">
             <slot>
                 {{ input }}
             </slot>
@@ -11,7 +11,10 @@
         <div v-if="showError" class="italic text-red-500">
             {{ errorMessage }}
         </div>
-        <div v-if="value == null && showDefault && !showError" class="italic">
+        <div
+            v-if="modelValue == null && showDefault && !showError"
+            class="italic"
+        >
             {{ defaultMessage }}
         </div>
     </div>
@@ -22,7 +25,7 @@ export default {
         label: {
             type: String,
         },
-        value: {
+        modelValue: {
             type: [String, Number],
             default: null,
         },
@@ -55,16 +58,16 @@ export default {
         input() {
             if (this.minDecimal > 0 || this.maxDecimal > 0) {
                 if (this.maxDecimal < this.minDecimal) {
-                    return this.value;
+                    return this.modelValue;
                 }
                 return new Intl.NumberFormat("en", {
                     style: "decimal",
                     useGrouping: true,
                     minimumFractionDigits: this.minDecimal,
                     maximumFractionDigits: this.maxDecimal,
-                }).format(this.value);
+                }).format(this.modelValue);
             } else {
-                return this.value;
+                return this.modelValue;
             }
         },
     },

@@ -82,10 +82,10 @@
             </p>
         </div>
         <div>
-            <div v-if="showAttribute('lift_access') && this.display.length > 0">
+            <div v-if="showAttribute('lift_access') && display.length > 0">
                 <p v-if="value.lift_access">Lift Access</p>
             </div>
-            <div v-if="!this.display.length">
+            <div v-if="!display.length">
                 <p>Lift Access: {{ value.lift_access }}</p>
             </div>
         </div>
@@ -93,12 +93,12 @@
         <div>
             <div
                 v-if="
-                    showAttribute('requires_permit') && this.display.length > 0
+                    showAttribute('requires_permit') && display.length > 0
                 "
             >
                 <p v-if="value.requires_permit">Requires Permit</p>
             </div>
-            <div v-if="!this.display.length">
+            <div v-if="!display.length">
                 <p>Requires Permit: {{ value.requires_permit }}</p>
             </div>
             <div v-if="showAttribute('warehouse')">
@@ -112,10 +112,36 @@
 </template>
 
 <script>
-import AddressMixins from "../mixins/address";
+import { defineComponent } from "vue";
+import { useAddress } from "../composables/useAddress";
 
-export default {
+export default defineComponent({
     name: "DeliveryAddress",
-    mixins: [AddressMixins],
-};
+    props: {
+        modelValue: {
+            type: [Array, Object],
+            default: () => ({}),
+        },
+        display: {
+            type: Array,
+            default: () => [],
+        },
+        country: {
+            type: String,
+            default: "Malaysia",
+        },
+    },
+    setup(props) {
+        const { LABELS, addressCountry, addressCountryConfig, showAttribute } = useAddress(props);
+
+        return {
+            value: props.modelValue,
+            display: props.display,
+            LABELS,
+            addressCountry,
+            addressCountryConfig,
+            showAttribute,
+        };
+    },
+});
 </script>

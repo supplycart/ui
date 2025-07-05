@@ -1,4 +1,5 @@
 <script>
+import { h } from "vue";
 import CurrencySettings from "../constants/currencySettings";
 
 export default {
@@ -13,7 +14,7 @@ export default {
             default: () => "MYR",
         },
     },
-    render(createElement, context) {
+    render() {
         let currency =
             typeof this.currency === "object"
                 ? this.currency
@@ -23,7 +24,7 @@ export default {
             currency = CurrencySettings["MYR"];
         }
 
-        return createElement("span", currency[this.type]);
+        return h("span", currency[this.type]);
     },
 };
 </script>

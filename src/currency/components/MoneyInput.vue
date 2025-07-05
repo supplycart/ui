@@ -9,23 +9,15 @@
             />
         </slot>
 
-        <CurrencyInput
+        <input
             v-if="currencyData"
-            v-model="input"
+            ref="inputRef"
             v-bind="$attrs"
+            type="text"
             class="text-right w-full"
             :class="[showError ? 'input-error' : '', inputClass]"
             :disabled="disabled"
             :required="required"
-            :locale="currencyData.locale"
-            :currency="
-                sign
-                    ? { currency: currencyData.code, prefix: currencyData.sign }
-                    : null
-            "
-            :precision="currencyData.precision"
-            :value-as-integer="intValue"
-            :allow-negative="allowNegative"
             @blur="blur"
         />
 
@@ -47,22 +39,29 @@ import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
 } from "../constants/currencies.js";
-import { CurrencyInput } from "vue-currency-input";
+import { useCurrencyInput } from "vue-currency-input";
 import { find } from "lodash-es";
 import numeral from "numeral";
+import { ref, computed, watch } from "vue";
+import FormLabel from "../../form/components/FormLabel.vue";
 
 export default {
     name: "MoneyInput",
     components: {
-        FormLabel: () => import("../../form/components/FormLabel.vue"),
-        CurrencyInput,
+        FormLabel,
     },
     inheritAttrs: false,
+    emits: ["update:modelValue", "input", "blur"],
     props: {
         label: {
             type: String,
             default: null,
         },
+        modelValue: {
+            type: [Number, String],
+            default: 0,
+        },
+        // Keep value for backward compatibility
         value: {
             type: [Number, String],
             default: 0,
@@ -108,35 +107,29 @@ export default {
             default: true,
         },
     },
-    computed: {
-        input: {
-            get() {
-                return numeral(this.value).value();
-            },
-            set(value) {
-                this.$emit("input", numeral(value).value());
-            },
-        },
-        hasError() {
-            return this.errors && this.errors.length > 0;
-        },
-        noCentCurrency() {
-            if (typeof this.currency === "string") {
+    setup(props, { emit }) {
+        const showError = ref(false);
+
+        const noCentCurrency = computed(() => {
+            if (typeof props.currency === "string") {
                 const currencyCodeCountry = [];
                 NoCentsCurrencies.forEach((item) => {
                     currencyCodeCountry.push(item.code);
                     currencyCodeCountry.push(item.country);
                 });
 
-                if (currencyCodeCountry.includes(this.currency)) {
+                if (currencyCodeCountry.includes(props.currency)) {
                     return true;
                 }
             }
             return false;
-        },
-        currencyData() {
+        });
+
+        const currencyData = computed(() => {
             //treat as MYR if currency passed has no cent
-            const alteredCurrency = this.noCentCurrency ? "MYR" : this.currency;
+            const alteredCurrency = noCentCurrency.value
+                ? "MYR"
+                : props.currency;
             const currency =
                 typeof alteredCurrency === "string"
                     ? find(
@@ -145,37 +138,77 @@ export default {
                               (item.code === alteredCurrency.toUpperCase() ||
                                   item.country ===
                                       alteredCurrency.toUpperCase()) &&
-                              item.precision === this.decimal,
+                              item.precision === props.decimal,
                       )
-                    : this.currency;
+                    : props.currency;
 
             return currency ? currency : DefaultCurrency;
-        },
-    },
-    data() {
-        return {
-            showError: false,
-        };
-    },
-    watch: {
-        error: {
-            handler(val) {
-                if (val && this.required) {
-                    this.showError = true;
+        });
+
+        const currencyOptions = computed(() => ({
+            currency: currencyData.value.code,
+            locale: currencyData.value.locale,
+            precision: currencyData.value.precision,
+            hideCurrencySymbolOnFocus: true,
+            hideGroupingSeparatorOnFocus: true,
+            allowNegative: props.allowNegative,
+            valueAsInteger: props.intValue,
+            currencyDisplay: props.sign ? "symbol" : "code",
+        }));
+
+        const { inputRef, numberValue } = useCurrencyInput(
+            currencyOptions.value,
+            false,
+        );
+
+        // Watch for value changes and emit
+        watch(numberValue, (newValue) => {
+            if (newValue !== undefined) {
+                emit("update:modelValue", newValue);
+                emit("input", newValue); // Keep backward compatibility
+            }
+        });
+
+        // Watch for external value changes
+        watch(
+            () =>
+                props.modelValue !== undefined ? props.modelValue : props.value,
+            (newValue) => {
+                if (newValue !== numberValue.value) {
+                    numberValue.value = newValue;
                 }
             },
-        },
-    },
-    methods: {
-        blur(e) {
-            if (!this.allowZero) {
-                this.showError = e.target.value === 0;
+            { immediate: true },
+        );
+
+        // Watch for error changes
+        watch(
+            () => props.error,
+            (val) => {
+                if (val && props.required) {
+                    showError.value = true;
+                }
+            },
+        );
+
+        const blur = (e) => {
+            const currentValue =
+                props.modelValue !== undefined ? props.modelValue : props.value;
+            if (!props.allowZero) {
+                showError.value = e.target.value === 0;
             }
-            if (this.required) {
-                this.showError = this.value == null;
+            if (props.required) {
+                showError.value = currentValue == null;
             }
-            this.$emit("blur", e);
-        },
+            emit("blur", e);
+        };
+
+        return {
+            inputRef,
+            showError,
+            currencyData,
+            blur,
+        };
     },
 };
 </script>

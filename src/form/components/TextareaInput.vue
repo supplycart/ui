@@ -8,13 +8,14 @@
         </slot>
 
         <textarea
-            v-model="input"
+            :value="modelValue"
             :rows="rows"
             v-bind="$attrs"
             :placeholder="placeholder"
             class="h-textarea"
             :class="[showError ? 'error' : '', inputClass]"
             :required="required"
+            @input="handleInput"
             @blur="blur"
             @focus="focus"
             @keydown="keydown"
@@ -44,6 +45,7 @@ import InputMixins from "../mixins/input";
 export default {
     mixins: [InputMixins],
     inheritAttrs: false,
+    emits: ["update:modelValue", "keydown"],
     props: {
         rows: {
             type: Number,
@@ -59,19 +61,16 @@ export default {
         };
     },
     computed: {
-        input: {
-            get() {
-                return this.value;
-            },
-            set(e) {
-                this.$emit("input", e);
-            },
-        },
         showError() {
-            return this.error && this.required && !this.input && this.focused;
+            return (
+                this.error && this.required && !this.modelValue && this.focused
+            );
         },
     },
     methods: {
+        handleInput(e) {
+            this.$emit("update:modelValue", e.target.value);
+        },
         focus(e) {
             this.focused = true;
         },

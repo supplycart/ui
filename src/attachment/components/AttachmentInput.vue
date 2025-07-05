@@ -8,27 +8,29 @@
         </slot>
 
         <BaseAttachment
-            v-model="input"
+            :model-value="modelValue"
             v-bind="$props"
+            @update:model-value="updateValue"
             @change="change"
             @deleted="deleted"
             @onError="onError"
         >
-            <label
-                slot-scope="{ setAttachment, maxSize }"
-                for="attachment_input"
-                class="block cursor-pointer"
-            >
-                <input
-                    id="attachment_input"
-                    type="file"
-                    class="hidden"
-                    @change="setAttachment"
-                />
-                <div class="w-full">
-                    <span>Click to Attach Document (max {{ maxSize }}mb)</span>
-                </div>
-            </label>
+            <template #default="{ setAttachment, maxSize }">
+                <label for="attachment_input" class="block cursor-pointer">
+                    <input
+                        id="attachment_input"
+                        type="file"
+                        class="hidden"
+                        @change="setAttachment"
+                    />
+                    <div class="w-full">
+                        <span
+                            >Click to Attach Document (max
+                            {{ maxSize }}mb)</span
+                        >
+                    </div>
+                </label>
+            </template>
         </BaseAttachment>
 
         <slot name="error" />
@@ -36,10 +38,14 @@
     </div>
 </template>
 <script>
-export default {
-    components: { BaseAttachment: () => import("./BaseAttachment.vue") },
+import { defineComponent, ref, watch } from "vue";
+import BaseAttachment from "./BaseAttachment.vue";
+
+export default defineComponent({
+    name: "AttachmentInput",
+    components: { BaseAttachment },
     props: {
-        value: {
+        modelValue: {
             type: Array,
             default: () => [],
         },
@@ -66,49 +72,55 @@ export default {
             default: false,
         },
     },
-    computed: {
-        input: {
-            set(val) {
-                this.$emit("input", val);
-            },
-            get() {
-                return this.value;
-            },
-        },
-    },
-    watch: {
-        error: {
-            handler(val) {
-                if (val && this.required) {
-                    this.showError = true;
+    emits: ["update:modelValue", "change", "deleted", "onError"],
+    setup(props, { emit }) {
+        const showError = ref(false);
+
+        const updateValue = (val) => {
+            emit("update:modelValue", val);
+        };
+
+        const change = (val) => {
+            emit("change", val);
+        };
+
+        const deleted = (val) => {
+            emit("deleted", val);
+        };
+
+        const onError = (val) => {
+            emit("onError", val);
+        };
+
+        // Watch for error changes
+        watch(
+            () => props.error,
+            (val) => {
+                if (val && props.required) {
+                    showError.value = true;
                 }
             },
-        },
-        input: {
-            handler(val) {
-                if (!val.length && this.required) {
-                    this.showError = true;
+        );
+
+        // Watch for input changes
+        watch(
+            () => props.modelValue,
+            (val) => {
+                if (!val.length && props.required) {
+                    showError.value = true;
                 } else {
-                    this.showError = false;
+                    showError.value = false;
                 }
             },
-        },
-    },
-    data() {
+        );
+
         return {
-            showError: false,
+            showError,
+            updateValue,
+            change,
+            deleted,
+            onError,
         };
     },
-    methods: {
-        change(val) {
-            this.$emit("change", val);
-        },
-        deleted(val) {
-            this.$emit("deleted", val);
-        },
-        onError(val) {
-            this.$emit("onError", val);
-        },
-    },
-};
+});
 </script>

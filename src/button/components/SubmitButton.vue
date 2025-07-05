@@ -9,7 +9,10 @@
     </button>
 </template>
 <script>
-export default {
+import { defineComponent, computed } from "vue";
+
+export default defineComponent({
+    name: "SubmitButton",
     props: {
         disabled: {
             type: Boolean,
@@ -28,17 +31,24 @@ export default {
             default: "button",
         },
     },
-    computed: {
-        isDisabled() {
-            return this.disabled || this.loading;
-        },
+    emits: ["submit"],
+    setup(props, { emit }) {
+        const isDisabled = computed(() => {
+            return props.disabled || props.loading;
+        });
+
+        const submit = () => {
+            if (!isDisabled.value) {
+                emit("submit");
+            }
+        };
+
+        return {
+            isDisabled,
+            submit,
+        };
     },
-    methods: {
-        submit() {
-            if (!this.isDisabled) this.$emit("submit");
-        },
-    },
-};
+});
 </script>
 <style>
 .loader {

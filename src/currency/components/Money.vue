@@ -1,4 +1,5 @@
 <script>
+import { h } from "vue";
 import Dinero from "dinero.js";
 import { find } from "lodash-es";
 import numeral from "numeral";
@@ -55,7 +56,7 @@ export default {
             return false;
         },
     },
-    render(createElement) {
+    render() {
         const precision = this.noCentCurrency ? 0 : this.decimal;
 
         let currency =
@@ -90,7 +91,7 @@ export default {
 
         // EUR and GBP are the currencies that is being used by many countries
         if (currency.code === "EUR" || currency.code === "GBP") {
-            return createElement(
+            return h(
                 "span",
                 Dinero({
                     amount: val,
@@ -101,7 +102,7 @@ export default {
                     .toFormat(format),
             );
         } else {
-            return createElement(
+            return h(
                 "span",
                 Dinero({
                     amount: val,

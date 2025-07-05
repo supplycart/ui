@@ -11,7 +11,7 @@
         </slot>
         <input
             :id="$attrs.id"
-            v-model="input"
+            :value="modelValue"
             v-bind="$attrs"
             :placeholder="placeholder"
             :required="required"
@@ -19,6 +19,7 @@
             :maxlength="maxLength"
             :class="[showError ? 'input-error' : '', inputClass]"
             class="w-full"
+            @input="handleInput"
             @focus="focus"
             @blur="blur"
             @keydown="keydown"
@@ -26,7 +27,7 @@
 
         <slot name="error">
             <p
-                v-if="showError && !input"
+                v-if="showError && !modelValue"
                 class="italic text-red-600 text-xs mt-2"
             >
                 {{ error }}
@@ -44,11 +45,14 @@
     </div>
 </template>
 <script>
+import FormLabel from "./FormLabel.vue";
+
 export default {
-    components: { FormLabel: () => import("./FormLabel.vue") },
+    components: { FormLabel },
     inheritAttrs: false,
+    emits: ["update:modelValue", "blur", "focus", "keydown"],
     props: {
-        value: {
+        modelValue: {
             type: [String, Number],
             default: null,
         },
@@ -94,17 +98,6 @@ export default {
             showError: false,
         };
     },
-    computed: {
-        input: {
-            set(val) {
-                this.$emit("input", val);
-                this.required && this.toggleError(val);
-            },
-            get() {
-                return this.value;
-            },
-        },
-    },
     watch: {
         error: {
             handler(val) {
@@ -115,12 +108,17 @@ export default {
         },
     },
     methods: {
+        handleInput(e) {
+            const val = e.target.value;
+            this.$emit("update:modelValue", val);
+            this.required && this.toggleError(val);
+        },
         blur(e) {
             this.$emit("blur", e.target.value);
         },
         focus() {
             this.$emit("focus");
-            this.required && this.toggleError(this.input);
+            this.required && this.toggleError(this.modelValue);
         },
         toggleError(val) {
             this.showError = val ? false : true;

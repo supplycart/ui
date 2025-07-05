@@ -6,12 +6,12 @@
         :max="maximumValue"
         :min="minimumValue"
         :label="label"
-        v-model="input"
+        :model-value="modelValue"
         :error="error || showMaxValueError || showMinValueError"
         :description="description"
         :required="required"
         :input-class="inputClass"
-        @input="update"
+        @update:model-value="update"
         @blur="blur"
         @keydown="keydown"
     />
@@ -20,7 +20,7 @@
         v-bind="$attrs"
         type="text"
         :label="label"
-        :value="formattedInput"
+        :model-value="formattedInput"
         :error="error || showMaxValueError || showMinValueError"
         :description="description"
         :required="required"
@@ -34,10 +34,12 @@
 <script>
 import InputMixins from "./../mixins/input.js";
 import numeral from "numeral";
+import BaseInput from "./BaseInput.vue";
 
 export default {
-    components: { BaseInput: () => import("./BaseInput.vue") },
+    components: { BaseInput },
     mixins: [InputMixins],
+    emits: ["update:modelValue", "error", "keydown"],
     props: {
         maximumValue: {
             type: Number,
@@ -65,19 +67,14 @@ export default {
         },
     },
     computed: {
-        input: {
-            get() {
-                return this.value;
-            },
-            set(value) {
-                this.$emit("input", this.getEmitValue(value));
-            },
-        },
         formattedInput() {
-            if (this.nullable && (this.input == "" || this.input == null)) {
+            if (
+                this.nullable &&
+                (this.modelValue == "" || this.modelValue == null)
+            ) {
                 return null;
             }
-            return numeral(this.input).format(this.numeralFormat);
+            return numeral(this.modelValue).format(this.numeralFormat);
         },
         numeralFormat() {
             let format = "0,0";
@@ -113,13 +110,13 @@ export default {
         };
     },
     created() {
-        if (this.maximumValue != null && this.input > this.maximumValue) {
+        if (this.maximumValue != null && this.modelValue > this.maximumValue) {
             this.update(this.maximumValue);
         }
     },
     methods: {
         update(e) {
-            this.$emit("input", this.getEmitValue(e));
+            this.$emit("update:modelValue", this.getEmitValue(e));
         },
         getEmitValue(value) {
             let emitValue = value;

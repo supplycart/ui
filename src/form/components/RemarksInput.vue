@@ -8,12 +8,13 @@
         </slot>
 
         <textarea
-            v-model="input"
+            :value="modelValue"
             :rows="rows"
             v-bind="$attrs"
             class="h-textarea"
             :class="[showError || isInvalid ? 'error' : '', inputClass]"
             :required="required"
+            @input="handleInput"
             @focus="focus"
             @blur="blur"
             @keydown="charCount($event)"
@@ -50,6 +51,7 @@
 <script>
 export default {
     inheritAttrs: false,
+    emits: ["update:modelValue", "blur", "keydown"],
     props: {
         id: {
             type: String,
@@ -59,7 +61,7 @@ export default {
             type: String,
             default: null,
         },
-        value: {
+        modelValue: {
             type: String,
             default: null,
         },
@@ -98,30 +100,28 @@ export default {
         };
     },
     computed: {
-        input: {
-            get() {
-                return this.value;
-            },
-            set(e) {
-                var str = e.slice(0, 255);
-                this.$emit("input", str);
-                this.$forceUpdate();
-            },
-        },
         showError() {
-            return this.error && this.required && !this.input && this.focused;
+            return (
+                this.error && this.required && !this.modelValue && this.focused
+            );
         },
         isInvalid() {
             if (!this.regex) return false;
-            const value = this.input ? this.input.length <= 255 : false;
+            const value = this.modelValue
+                ? this.modelValue.length <= 255
+                : false;
 
-            return !value && this.focused && this.input;
+            return !value && this.focused && this.modelValue;
         },
         charLeft() {
-            return this.input ? 255 - this.input.length : 255;
+            return this.modelValue ? 255 - this.modelValue.length : 255;
         },
     },
     methods: {
+        handleInput(e) {
+            var str = e.target.value.slice(0, 255);
+            this.$emit("update:modelValue", str);
+        },
         blur(e) {
             this.$emit("blur", e);
         },
@@ -129,9 +129,9 @@ export default {
             this.focused = true;
         },
         charCount(event) {
-            if (!this.input) return;
+            if (!this.modelValue) return;
 
-            if (this.input.length >= 255) {
+            if (this.modelValue.length >= 255) {
                 if (event.keyCode >= 48 && event.keyCode <= 90) {
                     event.preventDefault();
                     return;

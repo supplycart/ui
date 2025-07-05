@@ -14,11 +14,17 @@ import { DefaultTimeConfig } from "../constants/flatpickr";
 export default {
     name: "TimePicker",
     components: { FlatPickr },
+    emits: ["update:modelValue", "input"],
     props: {
         id: {
             type: String,
             default: null,
         },
+        modelValue: {
+            type: String,
+            default: null,
+        },
+        // Keep value for backward compatibility
         value: {
             type: String,
             default: null,
@@ -35,9 +41,14 @@ export default {
     computed: {
         input: {
             get() {
-                return this.value;
+                // Use modelValue if provided, otherwise fall back to value for backward compatibility
+                return this.modelValue !== undefined
+                    ? this.modelValue
+                    : this.value;
             },
             set(val) {
+                this.$emit("update:modelValue", val);
+                // Keep backward compatibility with input event
                 this.$emit("input", val);
             },
         },

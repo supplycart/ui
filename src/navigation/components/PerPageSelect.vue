@@ -2,10 +2,10 @@
     <div class="perpage text-right ml-1">
         <div class="inline-block dropdown relative">
             <select
-                v-model="limit"
+                :value="modelValue"
                 class="selections"
                 style="padding-right: 1.2rem; padding-left: 0.5rem"
-                @change="$emit('change')"
+                @change="updateValue"
             >
                 <option value="15">Per Page 15</option>
                 <option value="30">Per Page 30</option>
@@ -32,22 +32,27 @@
     </div>
 </template>
 <script>
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
+    name: "PerPageSelect",
     props: {
-        value: {
+        modelValue: {
             type: [Number, String],
             default: 30,
         },
     },
-    computed: {
-        limit: {
-            get() {
-                return this.value;
-            },
-            set(value) {
-                this.$emit("input", value);
-            },
-        },
+    emits: ["update:modelValue", "change"],
+    setup(props, { emit }) {
+        const updateValue = (event) => {
+            const value = event.target.value;
+            emit("update:modelValue", value);
+            emit("change", value);
+        };
+
+        return {
+            updateValue,
+        };
     },
-};
+});
 </script>

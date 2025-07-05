@@ -1,15 +1,19 @@
 <script>
 import { startCase } from "lodash-es";
+import { defineComponent, h } from "vue";
+import DeliveryAddress from "./DeliveryAddress.vue";
+import BillingAddress from "./BillingAddress.vue";
+import GeneralAddress from "./GeneralAddress.vue";
 
-export default {
+export default defineComponent({
     name: "AddressNew",
     components: {
-        DeliveryAddress: () => import("./DeliveryAddress.vue"),
-        BillingAddress: () => import("./BillingAddress.vue"),
-        GeneralAddress: () => import("./GeneralAddress.vue"),
+        DeliveryAddress,
+        BillingAddress,
+        GeneralAddress,
     },
     props: {
-        value: {
+        modelValue: {
             type: [Array, Object],
             default: () => ({}),
         },
@@ -26,20 +30,20 @@ export default {
             default: () => [],
         },
     },
+    emits: ["update:modelValue"],
     computed: {
         component() {
             const type = startCase(this.type);
-
             return `${type}Address`;
         },
     },
-    render(createElement) {
-        return createElement("keep-alive", [
-            createElement("component", {
+    render() {
+        return h("keep-alive", [
+            h("component", {
                 is: this.component,
-                props: this.$props,
+                ...this.$props,
             }),
         ]);
     },
-};
+});
 </script>

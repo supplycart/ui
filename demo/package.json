@@ -14,13 +14,13 @@
     "date-fns": "2.16.1",
     "date-fns-tz": "1.1.7",
     "lodash-es": "^4.17.21",
-    "vue": "^2.7.16"
+    "vue": "^3.5.13",
+    "@vue/compat": "^3.5.13"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.4",
     "@eslint/js": "^9.18.0",
-    "@vitejs/plugin-vue2": "^2.3.1",
-    "@vue/compiler-sfc": "^3.5.13",
+    "@vitejs/plugin-vue": "^5.2.1",
     "@vue/eslint-config-prettier": "^10.2.0",
     "eslint": "^9.18.0",
     "eslint-plugin-import": "^2.31.0",
