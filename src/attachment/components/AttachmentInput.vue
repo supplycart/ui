@@ -83,7 +83,8 @@ watch(
 
         <BaseAttachment
             :model-value="modelValue"
-            v-bind="$props"
+            :format="format"
+            :max-size="maxSize"
             @update:model-value="updateValue"
             @change="change"
             @deleted="deleted"
