@@ -1,127 +1,134 @@
-<template>
-    <input ref="input" type="text" />
-</template>
-<script>
+<script setup>
+import { ref, watch, onMounted, onBeforeUnmount } from "vue";
 import { merge } from "lodash-es";
 import flatpickr from "flatpickr";
 
-export default {
-    emits: ["update:modelValue", "input"],
-    props: {
-        modelValue: {
-            type: Object,
-            default: () => ({
-                from: null,
-                to: null,
-            }),
-        },
-        // Keep value for backward compatibility
-        value: {
-            type: Object,
-            default: () => ({
-                from: null,
-                to: null,
-            }),
-        },
-        config: {
-            type: Object,
-            default: () => ({}),
-        },
+const props = defineProps({
+    modelValue: {
+        type: Object,
+        default: () => ({
+            from: null,
+            to: null,
+        }),
     },
-    data() {
-        const currentValue = this.modelValue || this.value;
-        return {
-            instance: null,
-            selected: {
-                from: currentValue.from,
-                to: currentValue.to,
-            },
+    value: {
+        type: Object,
+        default: () => ({
+            from: null,
+            to: null,
+        }),
+    },
+    config: {
+        type: Object,
+        default: () => ({}),
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "input"]);
+
+const input = ref(null);
+const instance = ref(null);
+const currentValue = props.modelValue || props.value;
+const selected = ref({
+    from: currentValue.from,
+    to: currentValue.to,
+});
+
+const onClose = (selectedDates, dateStr, instanceRef) => {
+    if (selectedDates.length === 2) {
+        selectedDates[1].setHours(23, 59, 59, 999);
+
+        const result = {
+            from: flatpickr.formatDate(
+                selectedDates[0],
+                instance.value.config.dateFormat,
+            ),
+            to: flatpickr.formatDate(
+                selectedDates[1],
+                instance.value.config.dateFormat,
+            ),
         };
-    },
-    watch: {
-        modelValue(val) {
-            if (val) {
-                this.selected = val;
-            }
-        },
-        value(val) {
-            if (val && !this.modelValue) {
-                this.selected = val;
-            }
-        },
-        selected(val) {
-            if (this.instance.config._minDate > flatpickr.parseDate(val.from)) {
-                this.instance.set("minDate", flatpickr.parseDate(val.from));
-            }
 
-            if (this.instance.config._maxDate < flatpickr.parseDate(val.to)) {
-                this.instance.set("maxDate", flatpickr.parseDate(val.to));
-            }
-
-            this.instance.setDate(Object.values(val));
-        },
-    },
-    methods: {
-        onClose(selectedDates, dateStr, instance) {
-            if (selectedDates.length === 2) {
-                // set to hours to end of day
-                selectedDates[1].setHours(23, 59, 59, 999);
-
-                const result = {
-                    from: flatpickr.formatDate(
-                        selectedDates[0],
-                        this.instance.config.dateFormat,
-                    ),
-                    to: flatpickr.formatDate(
-                        selectedDates[1],
-                        this.instance.config.dateFormat,
-                    ),
-                };
-
-                this.$emit("update:modelValue", result);
-                // Keep backward compatibility with input event
-                this.$emit("input", result);
-            }
-        },
-    },
-    mounted() {
-        const config = merge(
-            {
-                mode: "range",
-                altInput: true,
-                altFormat: "j M Y",
-                minDate: "today",
-            },
-            this.config,
-        );
-
-        this.instance = flatpickr(this.$refs.input, {
-            ...config,
-            onClose: this.onClose,
-            defaultDate: Object.values(this.selected),
-        });
-
-        if (
-            this.instance.config._minDate >
-            flatpickr.parseDate(this.selected.from)
-        ) {
-            this.instance.set(
-                "minDate",
-                flatpickr.parseDate(this.selected.from),
-            );
-            this.instance.setDate(Object.values(this.selected));
-        }
-
-        if (
-            this.instance.config._maxDate <
-            flatpickr.parseDate(this.selected.to)
-        ) {
-            this.instance.set("maxDate", flatpickr.parseDate(this.selected.to));
-            this.instance.setDate(Object.values(this.selected));
-        }
-    },
-    beforeUnmount() {
-        this.instance.destroy();
-    },
+        emit("update:modelValue", result);
+        emit("input", result);
+    }
 };
+
+watch(
+    () => props.modelValue,
+    (val) => {
+        if (val) {
+            selected.value = val;
+        }
+    }
+);
+
+watch(
+    () => props.value,
+    (val) => {
+        if (val && !props.modelValue) {
+            selected.value = val;
+        }
+    }
+);
+
+watch(
+    selected,
+    (val) => {
+        if (instance.value.config._minDate > flatpickr.parseDate(val.from)) {
+            instance.value.set("minDate", flatpickr.parseDate(val.from));
+        }
+
+        if (instance.value.config._maxDate < flatpickr.parseDate(val.to)) {
+            instance.value.set("maxDate", flatpickr.parseDate(val.to));
+        }
+
+        instance.value.setDate(Object.values(val));
+    }
+);
+
+onMounted(() => {
+    const config = merge(
+        {
+            mode: "range",
+            altInput: true,
+            altFormat: "j M Y",
+            minDate: "today",
+        },
+        props.config,
+    );
+
+    instance.value = flatpickr(input.value, {
+        ...config,
+        onClose: onClose,
+        defaultDate: Object.values(selected.value),
+    });
+
+    if (
+        instance.value.config._minDate >
+        flatpickr.parseDate(selected.value.from)
+    ) {
+        instance.value.set(
+            "minDate",
+            flatpickr.parseDate(selected.value.from),
+        );
+        instance.value.setDate(Object.values(selected.value));
+    }
+
+    if (
+        instance.value.config._maxDate <
+        flatpickr.parseDate(selected.value.to)
+    ) {
+        instance.value.set("maxDate", flatpickr.parseDate(selected.value.to));
+        instance.value.setDate(Object.values(selected.value));
+    }
+});
+
+onBeforeUnmount(() => {
+    instance.value.destroy();
+});
 </script>
+
+<template>
+    <input ref="input" type="text" />
+</template>

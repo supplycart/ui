@@ -1,3 +1,59 @@
+<script setup>
+import { computed } from "vue"
+
+// Define props
+const props = defineProps({
+    label: {
+        type: String,
+    },
+    modelValue: {
+        type: [String, Number],
+        default: null,
+    },
+    showError: {
+        type: Boolean,
+        default: false,
+    },
+    errorMessage: {
+        type: String,
+        default: "Missing information",
+    },
+    showDefault: {
+        type: Boolean,
+        default: true,
+    },
+    defaultMessage: {
+        type: String,
+        default: "N/A",
+    },
+    maxDecimal: {
+        type: Number,
+        default: 0,
+    },
+    minDecimal: {
+        type: Number,
+        default: 0,
+    },
+})
+
+// Computed properties
+const input = computed(() => {
+    if (props.minDecimal > 0 || props.maxDecimal > 0) {
+        if (props.maxDecimal < props.minDecimal) {
+            return props.modelValue
+        }
+        return new Intl.NumberFormat("en", {
+            style: "decimal",
+            useGrouping: true,
+            minimumFractionDigits: props.minDecimal,
+            maximumFractionDigits: props.maxDecimal,
+        }).format(props.modelValue)
+    } else {
+        return props.modelValue
+    }
+})
+</script>
+
 <template>
     <div>
         <slot name="label">
@@ -19,57 +75,3 @@
         </div>
     </div>
 </template>
-<script>
-export default {
-    props: {
-        label: {
-            type: String,
-        },
-        modelValue: {
-            type: [String, Number],
-            default: null,
-        },
-        showError: {
-            type: Boolean,
-            default: false,
-        },
-        errorMessage: {
-            type: String,
-            default: "Missing information",
-        },
-        showDefault: {
-            type: Boolean,
-            default: true,
-        },
-        defaultMessage: {
-            type: String,
-            default: "N/A",
-        },
-        maxDecimal: {
-            type: Number,
-            default: 0,
-        },
-        minDecimal: {
-            type: Number,
-            default: 0,
-        },
-    },
-    computed: {
-        input() {
-            if (this.minDecimal > 0 || this.maxDecimal > 0) {
-                if (this.maxDecimal < this.minDecimal) {
-                    return this.modelValue;
-                }
-                return new Intl.NumberFormat("en", {
-                    style: "decimal",
-                    useGrouping: true,
-                    minimumFractionDigits: this.minDecimal,
-                    maximumFractionDigits: this.maxDecimal,
-                }).format(this.modelValue);
-            } else {
-                return this.modelValue;
-            }
-        },
-    },
-};
-</script>

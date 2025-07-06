@@ -21,7 +21,7 @@ const currencyData = computed(() => {
         : CurrencySettings[props.currency]
 
     if (!currency) {
-        currency = CurrencySettings["MYR"]
+        currency = CurrencySettings.MYR
     }
 
     return currency

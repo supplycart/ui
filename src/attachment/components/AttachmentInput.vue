@@ -1,3 +1,77 @@
+<script setup>
+import { ref, watch } from "vue";
+import BaseAttachment from "./BaseAttachment.vue";
+
+const props = defineProps({
+    modelValue: {
+        type: Array,
+        default: () => [],
+    },
+    format: {
+        type: Array,
+        default: () => [],
+    },
+    label: {
+        type: String,
+        default: null,
+    },
+    maxSize: {
+        type: Number,
+        validator: function (value) {
+            return value <= 30;
+        },
+    },
+    error: {
+        type: [String, Boolean],
+        default: null,
+    },
+    required: {
+        type: Boolean,
+        default: false,
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "change", "deleted", "onError"]);
+
+const showError = ref(false);
+
+const updateValue = (val) => {
+    emit("update:modelValue", val);
+};
+
+const change = (val) => {
+    emit("change", val);
+};
+
+const deleted = (val) => {
+    emit("deleted", val);
+};
+
+const onError = (val) => {
+    emit("onError", val);
+};
+
+watch(
+    () => props.error,
+    (val) => {
+        if (val && props.required) {
+            showError.value = true;
+        }
+    },
+);
+
+watch(
+    () => props.modelValue,
+    (val) => {
+        if (!val.length && props.required) {
+            showError.value = true;
+        } else {
+            showError.value = false;
+        }
+    },
+);
+</script>
+
 <template>
     <div :class="{ 'input-error': showError }">
         <slot name="label">
@@ -37,90 +111,3 @@
         <slot name="description" />
     </div>
 </template>
-<script>
-import { defineComponent, ref, watch } from "vue";
-import BaseAttachment from "./BaseAttachment.vue";
-
-export default defineComponent({
-    name: "AttachmentInput",
-    components: { BaseAttachment },
-    props: {
-        modelValue: {
-            type: Array,
-            default: () => [],
-        },
-        format: {
-            type: Array,
-            default: () => [],
-        },
-        label: {
-            type: String,
-            default: null,
-        },
-        maxSize: {
-            type: Number,
-            validator: function (value) {
-                return value <= 30;
-            },
-        },
-        error: {
-            type: [String, Boolean],
-            default: null,
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    emits: ["update:modelValue", "change", "deleted", "onError"],
-    setup(props, { emit }) {
-        const showError = ref(false);
-
-        const updateValue = (val) => {
-            emit("update:modelValue", val);
-        };
-
-        const change = (val) => {
-            emit("change", val);
-        };
-
-        const deleted = (val) => {
-            emit("deleted", val);
-        };
-
-        const onError = (val) => {
-            emit("onError", val);
-        };
-
-        // Watch for error changes
-        watch(
-            () => props.error,
-            (val) => {
-                if (val && props.required) {
-                    showError.value = true;
-                }
-            },
-        );
-
-        // Watch for input changes
-        watch(
-            () => props.modelValue,
-            (val) => {
-                if (!val.length && props.required) {
-                    showError.value = true;
-                } else {
-                    showError.value = false;
-                }
-            },
-        );
-
-        return {
-            showError,
-            updateValue,
-            change,
-            deleted,
-            onError,
-        };
-    },
-});
-</script>

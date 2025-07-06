@@ -1,3 +1,56 @@
+<script setup>
+import { computed, ref } from "vue";
+import MoneyInputBase from "./MoneyInputV2Base.vue";
+import FormLabel from "../../form/components/FormLabel.vue";
+
+const props = defineProps({
+    label: {
+        type: String,
+        default: null,
+    },
+    required: {
+        type: Boolean,
+        default: false,
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+    modelValue: {
+        type: [Number, String],
+        default: 0,
+    },
+    value: {
+        type: [Number, String],
+        default: 0,
+    },
+    inputClass: {
+        type: [String, Object],
+        default: null,
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "input", "keydown"]);
+
+const showError = ref(false);
+
+const input = computed({
+    get() {
+        return props.modelValue !== undefined
+            ? props.modelValue
+            : props.value;
+    },
+    set(value) {
+        emit("update:modelValue", value);
+        emit("input", value);
+    },
+});
+
+const handleKeydown = () => {
+    emit("keydown");
+};
+</script>
+
 <template>
     <div>
         <slot name="label">
@@ -15,7 +68,7 @@
             :class="[showError ? 'input-error' : '', inputClass]"
             :disabled="disabled"
             :required="required"
-            @keydown="$emit('keydown')"
+            @keydown="handleKeydown"
         />
 
         <slot name="error">
@@ -26,62 +79,3 @@
         <slot name="description" />
     </div>
 </template>
-<script>
-import MoneyInputBase from "./MoneyInputV2Base.vue";
-import FormLabel from "../../form/components/FormLabel.vue";
-
-export default {
-    components: {
-        FormLabel,
-        MoneyInputBase,
-    },
-    emits: ["update:modelValue", "input", "keydown"],
-    props: {
-        label: {
-            type: String,
-            default: null,
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        modelValue: {
-            type: [Number, String],
-            default: 0,
-        },
-        // Keep value for backward compatibility
-        value: {
-            type: [Number, String],
-            default: 0,
-        },
-        inputClass: {
-            type: [String, Object],
-            default: null,
-        },
-    },
-    computed: {
-        input: {
-            get() {
-                // Use modelValue if provided, otherwise fall back to value for backward compatibility
-                return this.modelValue !== undefined
-                    ? this.modelValue
-                    : this.value;
-            },
-            set(value) {
-                this.$emit("update:modelValue", value);
-                // Keep backward compatibility with input event
-                this.$emit("input", value);
-            },
-        },
-    },
-    data() {
-        return {
-            showError: false,
-        };
-    },
-};
-</script>

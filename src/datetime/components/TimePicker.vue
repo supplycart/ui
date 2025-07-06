@@ -1,3 +1,51 @@
+<script setup>
+import { computed } from "vue";
+import FlatPickr from "vue-flatpickr-component";
+import { merge } from "lodash-es";
+import { DefaultTimeConfig } from "../constants/flatpickr";
+
+const props = defineProps({
+    id: {
+        type: String,
+        default: null,
+    },
+    modelValue: {
+        type: String,
+        default: null,
+    },
+    value: {
+        type: String,
+        default: null,
+    },
+    config: {
+        type: Object,
+        default: () => {},
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "input"]);
+
+const input = computed({
+    get() {
+        return props.modelValue !== undefined
+            ? props.modelValue
+            : props.value;
+    },
+    set(val) {
+        emit("update:modelValue", val);
+        emit("input", val);
+    },
+});
+
+const timeConfig = computed(() => {
+    return merge(DefaultTimeConfig, props.config);
+});
+</script>
+
 <template>
     <FlatPickr
         :id="id"
@@ -6,55 +54,3 @@
         :disabled="disabled"
     />
 </template>
-<script>
-import FlatPickr from "vue-flatpickr-component";
-import { merge } from "lodash-es";
-import { DefaultTimeConfig } from "../constants/flatpickr";
-
-export default {
-    name: "TimePicker",
-    components: { FlatPickr },
-    emits: ["update:modelValue", "input"],
-    props: {
-        id: {
-            type: String,
-            default: null,
-        },
-        modelValue: {
-            type: String,
-            default: null,
-        },
-        // Keep value for backward compatibility
-        value: {
-            type: String,
-            default: null,
-        },
-        config: {
-            type: Object,
-            default: () => {},
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    computed: {
-        input: {
-            get() {
-                // Use modelValue if provided, otherwise fall back to value for backward compatibility
-                return this.modelValue !== undefined
-                    ? this.modelValue
-                    : this.value;
-            },
-            set(val) {
-                this.$emit("update:modelValue", val);
-                // Keep backward compatibility with input event
-                this.$emit("input", val);
-            },
-        },
-        timeConfig() {
-            return merge(DefaultTimeConfig, this.config);
-        },
-    },
-};
-</script>

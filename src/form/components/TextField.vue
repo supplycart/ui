@@ -1,3 +1,33 @@
+<script setup>
+// Define props
+const props = defineProps({
+    label: {
+        type: String,
+        default: "Label",
+    },
+    modelValue: {
+        type: String,
+        default: null,
+    },
+    showError: {
+        type: Boolean,
+        default: false,
+    },
+    errorMessage: {
+        type: String,
+        default: "Missing information",
+    },
+    showDefault: {
+        type: Boolean,
+        default: true,
+    },
+    defaultMessage: {
+        type: String,
+        default: "N/A",
+    },
+})
+</script>
+
 <template>
     <div>
         <slot name="label">
@@ -16,33 +46,3 @@
         </div>
     </div>
 </template>
-<script>
-export default {
-    props: {
-        label: {
-            type: String,
-            default: "Label",
-        },
-        modelValue: {
-            type: String,
-            default: null,
-        },
-        showError: {
-            type: Boolean,
-            default: false,
-        },
-        errorMessage: {
-            type: String,
-            default: "Missing information",
-        },
-        showDefault: {
-            type: Boolean,
-            default: true,
-        },
-        defaultMessage: {
-            type: String,
-            default: "N/A",
-        },
-    },
-};
-</script>

@@ -1,3 +1,35 @@
+<script setup>
+import { useAddress } from "../composables/useAddress"
+
+// Define props
+const props = defineProps({
+    modelValue: {
+        type: [Array, Object],
+        default: () => ({}),
+    },
+    display: {
+        type: Array,
+        default: () => [],
+    },
+    country: {
+        type: String,
+        default: "Malaysia",
+    },
+})
+
+// Use address composable
+const { LABELS, addressCountry, addressCountryConfig, showAttribute } = useAddress(props)
+
+// Values (same as original)
+const value = props.modelValue
+const display = props.display
+
+// Define component options
+defineOptions({
+    name: "BillingAddress"
+})
+</script>
+
 <template>
     <div>
         <div>
@@ -16,7 +48,7 @@
             </p>
         </div>
         <div>
-            <div v-if="this.display.length > 0">
+            <div v-if="display.length > 0">
                 <span v-if="showAttribute('pic_name')">
                     {{ value.pic_name }}
                 </span>
@@ -50,32 +82,16 @@
                     "
                     >{{ value.unit }},
                 </span>
-                <span v-if="value.building && addressCountryConfig.building">{{
-                    value.building
-                }}</span>
-                <span
-                    v-if="
-                        addressCountryConfig.street &&
-                        addressCountry !== 'SINGAPORE'
-                    "
-                >
-                    {{ value.street }}
+                <span v-if="value.building">{{ value.building }}, </span>
+                <span v-if="addressCountry !== 'SINGAPORE'">
+                    {{ value.street }},
                 </span>
+                <span v-if="value.city"> {{ value.city }}, </span>
                 <span
                     v-if="
-                        addressCountryConfig.city ||
-                        addressCountryConfig.district
-                    "
-                >
-                    {{ value.city
-                    }}{{ value.city && value.postcode ? "," : "" }}
-                </span>
-            </p>
-            <p>
-                <span
-                    v-if="
-                        addressCountryConfig.postcode ||
-                        addressCountryConfig.zipcode
+                        value.postcode &&
+                        (addressCountryConfig.state ||
+                            addressCountryConfig.province)
                     "
                 >
                     {{ value.postcode }}
@@ -116,38 +132,3 @@
         </div>
     </div>
 </template>
-<script>
-import { defineComponent } from "vue";
-import { useAddress } from "../composables/useAddress";
-
-export default defineComponent({
-    name: "BillingAddress",
-    props: {
-        modelValue: {
-            type: [Array, Object],
-            default: () => ({}),
-        },
-        display: {
-            type: Array,
-            default: () => [],
-        },
-        country: {
-            type: String,
-            default: "Malaysia",
-        },
-    },
-    setup(props) {
-        const { LABELS, addressCountry, addressCountryConfig, showAttribute } =
-            useAddress(props);
-
-        return {
-            value: props.modelValue,
-            display: props.display,
-            LABELS,
-            addressCountry,
-            addressCountryConfig,
-            showAttribute,
-        };
-    },
-});
-</script>

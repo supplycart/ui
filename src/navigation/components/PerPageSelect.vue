@@ -1,3 +1,20 @@
+<script setup>
+const props = defineProps({
+    modelValue: {
+        type: [Number, String],
+        default: 30,
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "change"]);
+
+const updateValue = (event) => {
+    const value = event.target.value;
+    emit("update:modelValue", value);
+    emit("change", value);
+};
+</script>
+
 <template>
     <div class="perpage text-right ml-1">
         <div class="inline-block dropdown relative">
@@ -31,28 +48,3 @@
         </div>
     </div>
 </template>
-<script>
-import { defineComponent } from "vue";
-
-export default defineComponent({
-    name: "PerPageSelect",
-    props: {
-        modelValue: {
-            type: [Number, String],
-            default: 30,
-        },
-    },
-    emits: ["update:modelValue", "change"],
-    setup(props, { emit }) {
-        const updateValue = (event) => {
-            const value = event.target.value;
-            emit("update:modelValue", value);
-            emit("change", value);
-        };
-
-        return {
-            updateValue,
-        };
-    },
-});
-</script>

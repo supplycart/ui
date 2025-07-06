@@ -1,79 +1,85 @@
-<script>
-import { h } from "vue";
+<script setup>
+import { h, computed } from "vue";
 import numeral from "numeral";
 import CurrencySettings from "../constants/currencySettings.js";
 
-export default {
-    props: {
-        decimal: {
-            type: Number,
-            default: 2,
-        },
-        currency: {
-            type: [String, Object],
-            default: "MYR",
-        },
-        value: {
-            type: Number,
-            default: 0,
-        },
-        withSign: {
-            type: Boolean,
-            default: false,
-        },
-        format: {
-            type: String,
-            default: null,
-        },
-        convertPrecision: {
-            type: Number,
-            default: -1,
-        },
+const props = defineProps({
+    decimal: {
+        type: Number,
+        default: 2,
     },
-    computed: {
-        displayValue() {
-            let processedVal = numeral(this.value)
-                .divide(Math.pow(10, this.decimal))
-                .value();
+    currency: {
+        type: [String, Object],
+        default: "MYR",
+    },
+    value: {
+        type: Number,
+        default: 0,
+    },
+    withSign: {
+        type: Boolean,
+        default: false,
+    },
+    format: {
+        type: String,
+        default: null,
+    },
+    convertPrecision: {
+        type: Number,
+        default: -1,
+    },
+});
 
-            if (this.convertPrecision > -1) {
-                processedVal = processedVal.toFixed(this.convertPrecision);
-            }
-            return (
-                (this.withSign && this.currencySignPos == "BEFORE"
-                    ? `${this.currencySign} `
-                    : "") +
-                numeral(processedVal).format(this.displayFormat) +
-                (this.withSign && this.currencySignPos == "AFTER"
-                    ? ` ${this.currencySign}`
-                    : "")
-            );
-        },
-        currentCurrency() {
-            const currencyStr =
-                typeof this.currency == "object"
-                    ? this.currency.code
-                    : this.currency;
-            return Object.keys(CurrencySettings).includes(currencyStr)
-                ? currencyStr
-                : "MYR";
-        },
-        currencySign() {
-            return CurrencySettings[this.currentCurrency]["sign"];
-        },
-        currencySignPos() {
-            return CurrencySettings[this.currentCurrency]["signPosition"];
-        },
-        displayFormat() {
-            return this.format
-                ? this.format
-                : CurrencySettings[this.currentCurrency]["displayFormat"];
-        },
-    },
-    render() {
-        return h("span", this.displayValue);
-    },
+const currentCurrency = computed(() => {
+    const currencyStr =
+        typeof props.currency == "object"
+            ? props.currency.code
+            : props.currency;
+    return Object.keys(CurrencySettings).includes(currencyStr)
+        ? currencyStr
+        : "MYR";
+});
+
+const currencySign = computed(() => {
+    return CurrencySettings[currentCurrency.value]["sign"];
+});
+
+const currencySignPos = computed(() => {
+    return CurrencySettings[currentCurrency.value]["signPosition"];
+});
+
+const displayFormat = computed(() => {
+    return props.format
+        ? props.format
+        : CurrencySettings[currentCurrency.value]["displayFormat"];
+});
+
+const displayValue = computed(() => {
+    let processedVal = numeral(props.value)
+        .divide(Math.pow(10, props.decimal))
+        .value();
+
+    if (props.convertPrecision > -1) {
+        processedVal = processedVal.toFixed(props.convertPrecision);
+    }
+    return (
+        (props.withSign && currencySignPos.value == "BEFORE"
+            ? `${currencySign.value} `
+            : "") +
+        numeral(processedVal).format(displayFormat.value) +
+        (props.withSign && currencySignPos.value == "AFTER"
+            ? ` ${currencySign.value}`
+            : "")
+    );
+});
+
+const renderMoney = () => {
+    return h("span", displayValue.value);
 };
 </script>
+
+<template>
+    <component :is="renderMoney" />
+</template>
 
 <style></style>

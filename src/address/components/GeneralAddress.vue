@@ -1,3 +1,35 @@
+<script setup>
+import { useAddress } from "../composables/useAddress"
+
+// Define props
+const props = defineProps({
+    modelValue: {
+        type: [Array, Object],
+        default: () => ({}),
+    },
+    display: {
+        type: Array,
+        default: () => [],
+    },
+    country: {
+        type: String,
+        default: "Malaysia",
+    },
+})
+
+// Use address composable
+const { LABELS, addressCountry, addressCountryConfig, showAttribute } = useAddress(props)
+
+// Values (same as original)
+const value = props.modelValue
+const display = props.display
+
+// Define component options
+defineOptions({
+    name: "GeneralAddress"
+})
+</script>
+
 <template>
     <div>
         <div>
@@ -42,38 +74,3 @@
         </div>
     </div>
 </template>
-
-<script>
-import { defineComponent } from "vue";
-import { useAddress } from "../composables/useAddress";
-
-export default defineComponent({
-    name: "GeneralAddress",
-    props: {
-        modelValue: {
-            type: [Array, Object],
-            default: () => ({}),
-        },
-        display: {
-            type: Array,
-            default: () => [],
-        },
-        country: {
-            type: String,
-            default: "Malaysia",
-        },
-    },
-    setup(props) {
-        const { LABELS, addressCountry, addressCountryConfig, showAttribute } = useAddress(props);
-
-        return {
-            value: props.modelValue,
-            display: props.display,
-            LABELS,
-            addressCountry,
-            addressCountryConfig,
-            showAttribute,
-        };
-    },
-});
-</script>

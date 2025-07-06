@@ -1,49 +1,58 @@
-<script>
-import { startCase } from "lodash-es";
-import { defineComponent, h } from "vue";
-import DeliveryAddress from "./DeliveryAddress.vue";
-import BillingAddress from "./BillingAddress.vue";
-import GeneralAddress from "./GeneralAddress.vue";
+<script setup>
+import { computed } from "vue"
+import { startCase } from "lodash-es"
+import DeliveryAddress from "./DeliveryAddress.vue"
+import BillingAddress from "./BillingAddress.vue"
+import GeneralAddress from "./GeneralAddress.vue"
 
-export default defineComponent({
-    name: "AddressNew",
-    components: {
-        DeliveryAddress,
-        BillingAddress,
-        GeneralAddress,
+// Define props
+const props = defineProps({
+    modelValue: {
+        type: [Array, Object],
+        default: () => ({}),
     },
-    props: {
-        modelValue: {
-            type: [Array, Object],
-            default: () => ({}),
-        },
-        country: {
-            type: String,
-            default: "Malaysia",
-        },
-        type: {
-            type: String,
-            required: true,
-        },
-        display: {
-            type: Array,
-            default: () => [],
-        },
+    country: {
+        type: String,
+        default: "Malaysia",
     },
-    emits: ["update:modelValue"],
-    computed: {
-        component() {
-            const type = startCase(this.type);
-            return `${type}Address`;
-        },
+    type: {
+        type: String,
+        required: true,
     },
-    render() {
-        return h("keep-alive", [
-            h("component", {
-                is: this.component,
-                ...this.$props,
-            }),
-        ]);
+    display: {
+        type: Array,
+        default: () => [],
     },
-});
+})
+
+// Define emits
+defineEmits(["update:modelValue"])
+
+// Component map for dynamic rendering
+const components = {
+    BillingAddress,
+    DeliveryAddress,
+    GeneralAddress
+}
+
+// Computed component name
+const component = computed(() => {
+    const type = startCase(props.type)
+    const componentName = `${type}Address`
+    return components[componentName]
+})
+
+// Define options
+defineOptions({
+    name: "AddressNew"
+})
 </script>
+
+<template>
+    <component 
+        :is="component"
+        :model-value="props.modelValue"
+        :country="props.country"
+        :display="props.display"
+    />
+</template>

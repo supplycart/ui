@@ -1,3 +1,114 @@
+<script setup>
+import { ref, computed, watch } from "vue"
+import VSelect from "vue-select"
+
+// Define props
+const props = defineProps({
+    id: {
+        type: String,
+        default: null,
+    },
+    formLabel: {
+        type: String,
+        default: null,
+    },
+    modelValue: {
+        type: [String, Number, Array, Object, Boolean],
+        default: null,
+    },
+    error: {
+        type: String,
+        default: null,
+    },
+    required: {
+        type: Boolean,
+        default: false,
+    },
+    inputClass: {
+        type: String,
+        default: null,
+    },
+    options: {
+        type: Array,
+        default: () => [],
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+    multiple: {
+        type: Boolean,
+        default: false,
+    },
+    taggable: {
+        type: Boolean,
+        default: false,
+    },
+    invalid: {
+        type: Boolean,
+        default: false,
+    },
+})
+
+// Define emits
+const emit = defineEmits(["update:modelValue", "search", "blur", "open", "deselecting"])
+
+// Reactive state
+const focused = ref(false)
+const originalValue = ref(props.modelValue)
+const errorMessage = ref(props.error)
+const emptyMessage = "Please fill in this field"
+
+// Computed properties
+const isEmpty = computed(() => {
+    return Array.isArray(props.modelValue)
+        ? props.modelValue.length == 0
+        : props.modelValue == null
+})
+
+// Watchers
+watch(() => props.error, (message) => {
+    errorMessage.value = message
+})
+
+// Methods
+const handleUpdate = (e) => {
+    focused.value = false
+    emit("update:modelValue", e)
+
+    if (Array.isArray(e) ? e.length == 0 : e == null) {
+        errorMessage.value = emptyMessage
+    } else {
+        errorMessage.value = null
+    }
+}
+
+const search = (e) => {
+    emit("search", e)
+}
+
+const blur = () => {
+    emit("blur")
+    if (props.required && isEmpty.value) {
+        errorMessage.value = emptyMessage
+    }
+}
+
+const open = () => {
+    focused.value = true
+    emit("open")
+}
+
+const optionDeselecting = (option) => {
+    emit("deselecting", option)
+}
+
+// Define options
+defineOptions({
+    inheritAttrs: false
+})
+</script>
+
 <template>
     <div class="input-holder">
         <slot name="label">
@@ -43,110 +154,6 @@
         </slot>
     </div>
 </template>
-
-<script>
-import VSelect from "vue-select";
-export default {
-    components: { VSelect },
-    emits: ["update:modelValue", "search", "blur", "open", "deselecting"],
-    props: {
-        id: {
-            type: String,
-            default: null,
-        },
-        formLabel: {
-            type: String,
-            default: null,
-        },
-        modelValue: {
-            type: [String, Number, Array, Object, Boolean],
-            default: null,
-        },
-        error: {
-            type: String,
-            default: null,
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-        inputClass: {
-            type: String,
-            default: null,
-        },
-        options: {
-            type: Array,
-            default: () => [],
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        multiple: {
-            type: Boolean,
-            default: false,
-        },
-        taggable: {
-            type: Boolean,
-            default: false,
-        },
-        invalid: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    data() {
-        return {
-            focused: false,
-            originalValue: this.modelValue,
-            errorMessage: this.error,
-            emptyMessage: "Please fill in this field",
-        };
-    },
-    computed: {
-        isEmpty() {
-            return Array.isArray(this.modelValue)
-                ? this.modelValue.length == 0
-                : this.modelValue == null;
-        },
-    },
-    watch: {
-        error: {
-            handler(message) {
-                this.errorMessage = message;
-            },
-        },
-    },
-    methods: {
-        handleUpdate(e) {
-            this.focused = false;
-            this.$emit("update:modelValue", e);
-
-            if (Array.isArray(e) ? e.length == 0 : e == null) {
-                this.errorMessage = this.emptyMessage;
-            } else {
-                this.errorMessage = null;
-            }
-        },
-        search(e) {
-            this.$emit("search", e);
-        },
-        blur() {
-            this.$emit("blur");
-            if (this.required && this.isEmpty) {
-                this.errorMessage = this.emptyMessage;
-            }
-        },
-        open() {
-            this.focused = true;
-            this.$emit("open");
-        },
-        optionDeselecting(option) {
-            this.$emit("deselecting", option);
-        },
-    },
-};
-</script>
 
 <style scoped>
 .dropdown-input-error {

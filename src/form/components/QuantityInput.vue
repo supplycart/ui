@@ -1,3 +1,123 @@
+<script setup>
+import BaseInput from "./BaseInput.vue";
+import { useInput } from "../composables/useInput";
+import { ref, computed, onMounted, nextTick, getCurrentInstance } from "vue";
+import numeral from "numeral";
+
+const props = defineProps({
+    label: { type: String },
+    modelValue: { type: [String, Number], default: "" },
+    error: { type: String },
+    inputClass: { type: String },
+    description: { type: String },
+    required: { type: Boolean, default: false },
+    maximumValue: { type: Number, default: null },
+    minimumValue: { type: Number, default: null },
+    maxDecimal: { type: Number, default: 0 },
+    minDecimal: { type: Number, default: 0 },
+    allowNegative: { type: Boolean, default: true },
+    nullable: { type: Boolean, default: false },
+});
+
+const emit = defineEmits(["update:modelValue", "error", "keydown", "blur"]);
+
+const { blur: useInputBlur } = useInput(emit);
+const instance = getCurrentInstance();
+
+const onFocus = ref(false);
+const showMaxValueError = ref(null);
+const showMinValueError = ref(null);
+
+const maxValueErrorMessage = computed(() => `Maximum number allowed is ${props.maximumValue}`);
+const minValueErrorMessage = computed(() => `Minimum number allowed is ${props.minimumValue}`);
+
+const formattedInput = computed(() => {
+    if (props.nullable && (props.modelValue == "" || props.modelValue == null)) {
+        return null;
+    }
+    return numeral(props.modelValue).format(numeralFormat.value);
+});
+
+const numeralFormat = computed(() => {
+    let format = "0,0";
+    if (props.minDecimal > 0) {
+        format += ".";
+        let i = 0;
+        while (i < props.minDecimal) {
+            format += "0";
+            i++;
+        }
+        if (props.maxDecimal > props.minDecimal) {
+            const remainingDP = props.maxDecimal - props.minDecimal;
+            let appendOptionalDP = "";
+            let i = 0;
+            while (i < remainingDP) {
+                appendOptionalDP += "0";
+                i++;
+            }
+            format = `${format}[${appendOptionalDP}]`;
+        }
+    }
+    return format;
+});
+
+const getEmitValue = (value) => {
+    let emitValue = value;
+    if (!props.allowNegative && value < 0) {
+        emitValue = Number(value) * -1;
+    }
+
+    if (props.maximumValue != null && emitValue > props.maximumValue) {
+        showMaxValueError.value = maxValueErrorMessage.value;
+        emitValue = props.maximumValue;
+        emit("error", maxValueErrorMessage.value);
+    } else {
+        showMaxValueError.value = null;
+    }
+
+    if (props.minimumValue != null && emitValue < props.minimumValue) {
+        showMinValueError.value = minValueErrorMessage.value;
+        emit("error", minValueErrorMessage.value);
+    } else {
+        showMinValueError.value = null;
+    }
+
+    return emitValue;
+};
+
+const update = (e) => {
+    emit("update:modelValue", getEmitValue(e));
+};
+
+const blur = (e) => {
+    emit("blur", e);
+    onFocus.value = false;
+};
+
+const focus = () => {
+    nextTick(() => {
+        const input = instance.proxy.$el.querySelector("input");
+        input.focus();
+        input.select();
+    });
+};
+
+const keydown = () => {
+    emit("keydown");
+};
+
+const handleFocus = () => {
+    onFocus.value = true;
+    focus();
+};
+
+onMounted(() => {
+    if (props.maximumValue != null && props.modelValue > props.maximumValue) {
+        update(props.maximumValue);
+    }
+});
+</script>
+
 <template>
     <BaseInput
         v-if="onFocus"
@@ -25,136 +145,6 @@
         :description="description"
         :required="required"
         :input-class="inputClass"
-        @focus="
-            onFocus = true;
-            focus();
-        "
+        @focus="handleFocus"
     />
 </template>
-<script>
-import InputMixins from "./../mixins/input.js";
-import numeral from "numeral";
-import BaseInput from "./BaseInput.vue";
-
-export default {
-    components: { BaseInput },
-    mixins: [InputMixins],
-    emits: ["update:modelValue", "error", "keydown"],
-    props: {
-        maximumValue: {
-            type: Number,
-            default: null,
-        },
-        minimumValue: {
-            type: Number,
-            default: null,
-        },
-        maxDecimal: {
-            type: Number,
-            default: 0,
-        },
-        minDecimal: {
-            type: Number,
-            default: 0,
-        },
-        allowNegative: {
-            type: Boolean,
-            default: true,
-        },
-        nullable: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    computed: {
-        formattedInput() {
-            if (
-                this.nullable &&
-                (this.modelValue == "" || this.modelValue == null)
-            ) {
-                return null;
-            }
-            return numeral(this.modelValue).format(this.numeralFormat);
-        },
-        numeralFormat() {
-            let format = "0,0";
-            if (this.minDecimal > 0) {
-                format += ".";
-                let i = 0;
-                while (i < this.minDecimal) {
-                    format += "0";
-                    i++;
-                }
-                // in case no maxDecimal prop passed
-                if (this.maxDecimal > this.minDecimal) {
-                    const remainingDP = this.maxDecimal - this.minDecimal;
-                    let appendOptionalDP = "";
-                    let i = 0;
-                    while (i < remainingDP) {
-                        appendOptionalDP += "0";
-                        i++;
-                    }
-                    format = `${format}[${appendOptionalDP}]`;
-                }
-            }
-            return format;
-        },
-    },
-    data() {
-        return {
-            onFocus: false,
-            maxValueErrorMessage: `Maximum number allowed is ${this.maximumValue}`,
-            minValueErrorMessage: `Minimum number allowed is ${this.minimumValue}`,
-            showMaxValueError: null,
-            showMinValueError: null,
-        };
-    },
-    created() {
-        if (this.maximumValue != null && this.modelValue > this.maximumValue) {
-            this.update(this.maximumValue);
-        }
-    },
-    methods: {
-        update(e) {
-            this.$emit("update:modelValue", this.getEmitValue(e));
-        },
-        getEmitValue(value) {
-            let emitValue = value;
-            if (!this.allowNegative && value < 0) {
-                emitValue = Number(value) * -1;
-            }
-
-            if (this.maximumValue != null && emitValue > this.maximumValue) {
-                this.showMaxValueError = this.maxValueErrorMessage;
-                emitValue = this.maximumValue;
-                this.$emit("error", this.maxValueErrorMessage);
-            } else {
-                this.showMaxValueError = null;
-            }
-
-            if (this.minimumValue != null && emitValue < this.minimumValue) {
-                this.showMinValueError = this.minValueErrorMessage;
-                this.$emit("error", this.minValueErrorMessage);
-            } else {
-                this.showMinValueError = null;
-            }
-
-            return emitValue;
-        },
-        blur(e) {
-            this.$emit("blur", e);
-            this.onFocus = false;
-        },
-        focus() {
-            this.$nextTick(function () {
-                const input = this.$el.querySelector("input");
-                input.focus();
-                input.select();
-            });
-        },
-        keydown() {
-            this.$emit("keydown");
-        },
-    },
-};
-</script>

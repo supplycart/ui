@@ -1,3 +1,53 @@
+<script setup>
+import { computed } from "vue";
+import { useAddressForm } from "../composables/useAddressForm";
+import { useMalaysiaStates } from "../composables/useMalaysiaStates";
+import "vue-select/dist/vue-select.css";
+import VSelect from "vue-select";
+import TextInput from "../../form/components/TextInput.vue";
+import Checkbox from "../../form/components/Checkbox.vue";
+
+const props = defineProps({
+    modelValue: {
+        type: Object,
+        default: () => ({}),
+    },
+    countries: {
+        type: [Object, Array],
+        default: () => ["Malaysia"],
+    },
+    disableFields: {
+        type: Array,
+        default: () => [],
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "changeCountry"]);
+
+const { labels: LABELS, addressCountryConfig, disabledFields } = useAddressForm(props);
+const { states } = useMalaysiaStates();
+
+const value = computed({
+    get() {
+        return props.modelValue || {};
+    },
+    set(newValue) {
+        emit("update:modelValue", newValue);
+    },
+});
+
+const setCountry = computed({
+    get() {
+        return value.value.country || "Malaysia";
+    },
+    set(newCountry) {
+        const updatedValue = { ...value.value, country: newCountry };
+        emit("update:modelValue", updatedValue);
+        emit("changeCountry", newCountry);
+    },
+});
+</script>
+
 <template>
     <div>
         <div>
@@ -150,71 +200,3 @@
         </div>
     </div>
 </template>
-
-<script>
-import { defineComponent, computed } from "vue";
-import { useAddressForm } from "../composables/useAddressForm";
-import { useMalaysiaStates } from "../composables/useMalaysiaStates";
-import "vue-select/dist/vue-select.css";
-import VSelect from "vue-select";
-import TextInput from "../../form/components/TextInput.vue";
-import Checkbox from "../../form/components/Checkbox.vue";
-
-export default defineComponent({
-    name: "DeliveryAddressForm",
-    components: {
-        TextInput,
-        Checkbox,
-        VSelect,
-    },
-    props: {
-        modelValue: {
-            type: Object,
-            default: () => ({}),
-        },
-        countries: {
-            type: [Object, Array],
-            default: () => ["Malaysia"],
-        },
-        disableFields: {
-            type: Array,
-            default: () => [],
-        },
-    },
-    emits: ["update:modelValue", "changeCountry"],
-    setup(props, { emit }) {
-        const { LABELS, addressCountryConfig, disabledFields } = useAddressForm(props);
-        const { states } = useMalaysiaStates();
-
-        const value = computed({
-            get() {
-                return props.modelValue || {};
-            },
-            set(newValue) {
-                emit("update:modelValue", newValue);
-            },
-        });
-
-        const setCountry = computed({
-            get() {
-                return value.value.country || "Malaysia";
-            },
-            set(newCountry) {
-                const updatedValue = { ...value.value, country: newCountry };
-                emit("update:modelValue", updatedValue);
-                emit("changeCountry", newCountry);
-            },
-        });
-
-        return {
-            value,
-            setCountry,
-            LABELS,
-            addressCountryConfig,
-            disabledFields,
-            states,
-            countries: props.countries,
-        };
-    },
-});
-</script>

@@ -1,3 +1,38 @@
+<script setup>
+import { computed } from "vue";
+
+const props = defineProps({
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+    loading: {
+        type: Boolean,
+        default: false,
+    },
+    title: {
+        type: String,
+        default: "Submit",
+    },
+    type: {
+        type: String,
+        default: "button",
+    },
+});
+
+const emit = defineEmits(["submit"]);
+
+const isDisabled = computed(() => {
+    return props.disabled || props.loading;
+});
+
+const submit = () => {
+    if (!isDisabled.value) {
+        emit("submit");
+    }
+};
+</script>
+
 <template>
     <button :type="type" :disabled="isDisabled" @click="submit()">
         <span v-if="loading" id="btn-loader" class="loader">
@@ -8,48 +43,6 @@
         <span>{{ title }}</span>
     </button>
 </template>
-<script>
-import { defineComponent, computed } from "vue";
-
-export default defineComponent({
-    name: "SubmitButton",
-    props: {
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        loading: {
-            type: Boolean,
-            default: false,
-        },
-        title: {
-            type: String,
-            default: "Submit",
-        },
-        type: {
-            type: String,
-            default: "button",
-        },
-    },
-    emits: ["submit"],
-    setup(props, { emit }) {
-        const isDisabled = computed(() => {
-            return props.disabled || props.loading;
-        });
-
-        const submit = () => {
-            if (!isDisabled.value) {
-                emit("submit");
-            }
-        };
-
-        return {
-            isDisabled,
-            submit,
-        };
-    },
-});
-</script>
 <style>
 .loader {
     display: inline-block;

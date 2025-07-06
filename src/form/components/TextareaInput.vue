@@ -1,3 +1,44 @@
+<script setup>
+import { useInput } from "../composables/useInput";
+import { ref, computed } from "vue";
+
+const props = defineProps({
+    label: { type: String },
+    modelValue: { type: String, default: "" },
+    error: { type: String },
+    inputClass: { type: String },
+    description: { type: String },
+    required: { type: Boolean, default: false },
+    rows: { type: Number, default: 4 },
+    placeholder: { type: String },
+});
+
+const emit = defineEmits(["update:modelValue", "keydown", "blur"]);
+
+const { blur } = useInput(emit);
+const focused = ref(false);
+
+const showError = computed(() => {
+    return props.error && props.required && !props.modelValue && focused.value;
+});
+
+const handleInput = (e) => {
+    emit("update:modelValue", e.target.value);
+};
+
+const focus = (e) => {
+    focused.value = true;
+};
+
+const keydown = () => {
+    emit("keydown");
+};
+
+defineOptions({
+    inheritAttrs: false,
+});
+</script>
+
 <template>
     <div class="input-holder">
         <slot name="label">
@@ -34,49 +75,10 @@
         </slot>
     </div>
 </template>
+
 <style>
 .h-textarea {
     resize: none;
     overflow-y: auto;
 }
 </style>
-<script>
-import InputMixins from "../mixins/input";
-export default {
-    mixins: [InputMixins],
-    inheritAttrs: false,
-    emits: ["update:modelValue", "keydown"],
-    props: {
-        rows: {
-            type: Number,
-            default: 4,
-        },
-        placeholder: {
-            type: String,
-        },
-    },
-    data() {
-        return {
-            focused: false,
-        };
-    },
-    computed: {
-        showError() {
-            return (
-                this.error && this.required && !this.modelValue && this.focused
-            );
-        },
-    },
-    methods: {
-        handleInput(e) {
-            this.$emit("update:modelValue", e.target.value);
-        },
-        focus(e) {
-            this.focused = true;
-        },
-        keydown() {
-            this.$emit("keydown");
-        },
-    },
-};
-</script>

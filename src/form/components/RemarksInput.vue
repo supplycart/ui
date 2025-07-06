@@ -1,3 +1,106 @@
+<script setup>
+import { ref, computed } from "vue"
+
+// Define props
+const props = defineProps({
+    id: {
+        type: String,
+        default: null,
+    },
+    label: {
+        type: String,
+        default: null,
+    },
+    modelValue: {
+        type: String,
+        default: null,
+    },
+    error: {
+        type: String,
+        default: null,
+    },
+    description: {
+        type: String,
+        default: null,
+    },
+    regex: {
+        type: RegExp,
+        default: () => /^.{0,255}$/,
+    },
+    required: {
+        type: Boolean,
+        default: false,
+    },
+    format: {
+        type: String,
+        default: "Max 255 characters",
+    },
+    inputClass: {
+        type: String,
+        default: null,
+    },
+    rows: {
+        type: Number,
+        default: 4,
+    },
+})
+
+// Define emits
+const emit = defineEmits(["update:modelValue", "blur", "keydown"])
+
+// Reactive state
+const focused = ref(false)
+
+// Computed properties
+const showError = computed(() => {
+    return props.error && props.required && !props.modelValue && focused.value
+})
+
+const isInvalid = computed(() => {
+    if (!props.regex) return false
+    const value = props.modelValue
+        ? props.modelValue.length <= 255
+        : false
+
+    return !value && focused.value && props.modelValue
+})
+
+const charLeft = computed(() => {
+    return props.modelValue ? 255 - props.modelValue.length : 255
+})
+
+// Methods
+const handleInput = (e) => {
+    const str = e.target.value.slice(0, 255)
+    emit("update:modelValue", str)
+}
+
+const blur = (e) => {
+    emit("blur", e)
+}
+
+const focus = (e) => {
+    focused.value = true
+}
+
+const charCount = (event) => {
+    if (!props.modelValue) return
+
+    if (props.modelValue.length >= 255) {
+        if (event.keyCode >= 48 && event.keyCode <= 90) {
+            event.preventDefault()
+            return
+        }
+    }
+    emit("keydown")
+}
+
+// Define options
+defineOptions({
+    inheritAttrs: false
+})
+</script>
+
 <template>
     <div class="input-holder">
         <slot name="label">
@@ -42,103 +145,10 @@
         </slot>
     </div>
 </template>
+
 <style>
 .h-textarea {
     resize: none;
     overflow-y: auto;
 }
 </style>
-<script>
-export default {
-    inheritAttrs: false,
-    emits: ["update:modelValue", "blur", "keydown"],
-    props: {
-        id: {
-            type: String,
-            default: null,
-        },
-        label: {
-            type: String,
-            default: null,
-        },
-        modelValue: {
-            type: String,
-            default: null,
-        },
-        error: {
-            type: String,
-            default: null,
-        },
-        description: {
-            type: String,
-            default: null,
-        },
-        regex: {
-            type: RegExp,
-            default: () => /^.{0,255}$/,
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-        format: {
-            type: String,
-            default: "Max 255 characters",
-        },
-        inputClass: {
-            type: String,
-            default: null,
-        },
-        rows: {
-            type: Number,
-            default: 4,
-        },
-    },
-    data() {
-        return {
-            focused: false,
-        };
-    },
-    computed: {
-        showError() {
-            return (
-                this.error && this.required && !this.modelValue && this.focused
-            );
-        },
-        isInvalid() {
-            if (!this.regex) return false;
-            const value = this.modelValue
-                ? this.modelValue.length <= 255
-                : false;
-
-            return !value && this.focused && this.modelValue;
-        },
-        charLeft() {
-            return this.modelValue ? 255 - this.modelValue.length : 255;
-        },
-    },
-    methods: {
-        handleInput(e) {
-            var str = e.target.value.slice(0, 255);
-            this.$emit("update:modelValue", str);
-        },
-        blur(e) {
-            this.$emit("blur", e);
-        },
-        focus(e) {
-            this.focused = true;
-        },
-        charCount(event) {
-            if (!this.modelValue) return;
-
-            if (this.modelValue.length >= 255) {
-                if (event.keyCode >= 48 && event.keyCode <= 90) {
-                    event.preventDefault();
-                    return;
-                }
-            }
-            this.$emit("keydown");
-        },
-    },
-};
-</script>
