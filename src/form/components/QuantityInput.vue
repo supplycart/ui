@@ -1,7 +1,7 @@
 <script setup>
 import BaseInput from "./BaseInput.vue";
 import { useInput } from "../composables/useInput";
-import { ref, computed, onMounted, nextTick, getCurrentInstance } from "vue";
+import { ref, computed, onMounted, nextTick } from "vue";
 import numeral from "numeral";
 
 const props = defineProps({
@@ -22,7 +22,7 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue", "error", "keydown", "blur"]);
 
 const { blur: useInputBlur } = useInput(emit);
-const instance = getCurrentInstance();
+const inputRef = ref(null);
 
 const onFocus = ref(false);
 const showMaxValueError = ref(null);
@@ -96,9 +96,13 @@ const blur = (e) => {
 
 const focus = () => {
     nextTick(() => {
-        const input = instance.proxy.$el.querySelector("input");
-        input.focus();
-        input.select();
+        if (inputRef.value) {
+            const input = inputRef.value.$el.querySelector("input");
+            if (input) {
+                input.focus();
+                input.select();
+            }
+        }
     });
 };
 
@@ -121,6 +125,7 @@ onMounted(() => {
 <template>
     <BaseInput
         v-if="onFocus"
+        ref="inputRef"
         v-bind="$attrs"
         type="number"
         :max="maximumValue"
@@ -137,6 +142,7 @@ onMounted(() => {
     />
     <BaseInput
         v-else
+        ref="inputRef"
         v-bind="$attrs"
         type="text"
         :label="label"
