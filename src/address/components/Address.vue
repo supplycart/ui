@@ -1,9 +1,9 @@
 <script setup>
-import { computed } from "vue"
-import { startCase } from "lodash-es"
-import DeliveryAddress from "./DeliveryAddress.vue"
-import BillingAddress from "./BillingAddress.vue"
-import GeneralAddress from "./GeneralAddress.vue"
+import { computed } from "vue";
+import { startCase } from "lodash-es";
+import DeliveryAddress from "./DeliveryAddress.vue";
+import BillingAddress from "./BillingAddress.vue";
+import GeneralAddress from "./GeneralAddress.vue";
 
 // Define props
 const props = defineProps({
@@ -23,33 +23,33 @@ const props = defineProps({
         type: Array,
         default: () => [],
     },
-})
+});
 
 // Define emits
-defineEmits(["update:modelValue"])
+defineEmits(["update:modelValue"]);
 
 // Component map for dynamic rendering
 const components = {
     BillingAddress,
     DeliveryAddress,
-    GeneralAddress
-}
+    GeneralAddress,
+};
 
 // Computed component name
 const component = computed(() => {
-    const type = startCase(props.type)
-    const componentName = `${type}Address`
-    return components[componentName]
-})
+    const type = startCase(props.type);
+    const componentName = `${type}Address`;
+    return components[componentName];
+});
 
 // Define options
 defineOptions({
-    name: "AddressNew"
-})
+    name: "AddressNew",
+});
 </script>
 
 <template>
-    <component 
+    <component
         :is="component"
         :model-value="props.modelValue"
         :country="props.country"

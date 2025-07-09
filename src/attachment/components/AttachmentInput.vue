@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import BaseAttachment from "./BaseAttachment.vue";
+import { useFilteredAttrs } from "../../form/composables/useFilteredAttrs.js";
 
 const props = defineProps({
     modelValue: {
@@ -70,12 +71,20 @@ watch(
         }
     },
 );
+
+// Use filtered attrs to handle Vue 3 compatibility
+const { filteredAttrs } = useFilteredAttrs();
+
+// Define options
+defineOptions({
+    inheritAttrs: false,
+});
 </script>
 
 <template>
     <div :class="{ 'input-error': showError }">
         <slot name="label">
-            <label v-if="label" :for="$attrs.id">
+            <label v-if="label" :for="filteredAttrs.id">
                 {{ label }}
                 <small v-if="required" class="italic text-red-600">*</small>
             </label>

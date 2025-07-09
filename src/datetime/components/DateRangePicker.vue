@@ -61,7 +61,7 @@ watch(
         if (val) {
             selected.value = val;
         }
-    }
+    },
 );
 
 watch(
@@ -70,23 +70,20 @@ watch(
         if (val && !props.modelValue) {
             selected.value = val;
         }
-    }
+    },
 );
 
-watch(
-    selected,
-    (val) => {
-        if (instance.value.config._minDate > flatpickr.parseDate(val.from)) {
-            instance.value.set("minDate", flatpickr.parseDate(val.from));
-        }
-
-        if (instance.value.config._maxDate < flatpickr.parseDate(val.to)) {
-            instance.value.set("maxDate", flatpickr.parseDate(val.to));
-        }
-
-        instance.value.setDate(Object.values(val));
+watch(selected, (val) => {
+    if (instance.value.config._minDate > flatpickr.parseDate(val.from)) {
+        instance.value.set("minDate", flatpickr.parseDate(val.from));
     }
-);
+
+    if (instance.value.config._maxDate < flatpickr.parseDate(val.to)) {
+        instance.value.set("maxDate", flatpickr.parseDate(val.to));
+    }
+
+    instance.value.setDate(Object.values(val));
+});
 
 onMounted(() => {
     const config = merge(
@@ -109,16 +106,12 @@ onMounted(() => {
         instance.value.config._minDate >
         flatpickr.parseDate(selected.value.from)
     ) {
-        instance.value.set(
-            "minDate",
-            flatpickr.parseDate(selected.value.from),
-        );
+        instance.value.set("minDate", flatpickr.parseDate(selected.value.from));
         instance.value.setDate(Object.values(selected.value));
     }
 
     if (
-        instance.value.config._maxDate <
-        flatpickr.parseDate(selected.value.to)
+        instance.value.config._maxDate < flatpickr.parseDate(selected.value.to)
     ) {
         instance.value.set("maxDate", flatpickr.parseDate(selected.value.to));
         instance.value.setDate(Object.values(selected.value));

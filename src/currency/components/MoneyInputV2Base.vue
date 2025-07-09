@@ -51,9 +51,7 @@ const instance = getCurrentInstance();
 const rawValue = computed({
     get() {
         const currentValue =
-            props.modelValue !== undefined
-                ? props.modelValue
-                : props.value;
+            props.modelValue !== undefined ? props.modelValue : props.value;
         return currentValue ?? 0;
     },
     set(val) {
@@ -155,7 +153,7 @@ const handleKeydown = () => {
             type="text"
             :class="[
                 'border border-gray-300 rounded p-2 text-right',
-                { hidden: editing }
+                { hidden: editing },
             ]"
             pattern="[0-9.!a-zA-Z0]"
             :disabled="disabled"
@@ -168,7 +166,7 @@ const handleKeydown = () => {
             type="text"
             :class="[
                 'border border-red-300 rounded p-2 text-right',
-                { hidden: !editing }
+                { hidden: !editing },
             ]"
             pattern="[0-9.!a-zA-Z0]"
             :placeholder="placeholder"

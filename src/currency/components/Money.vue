@@ -76,9 +76,7 @@ const renderMoney = () => {
 
     const val = props.intValue
         ? numeral(alteredValue).value()
-        : numeral(alteredValue)
-              .multiply(Math.pow(10, props.decimal))
-              .value();
+        : numeral(alteredValue).multiply(Math.pow(10, props.decimal)).value();
 
     const format = props.format
         ? props.format

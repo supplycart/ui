@@ -2,7 +2,7 @@
     <div>
         <slot name="label">
             <FormLabel
-                :id="$attrs.id"
+                :id="filteredAttrs.id"
                 :label="label"
                 :required="required"
                 :disabled="disabled"
@@ -12,10 +12,10 @@
         <input
             v-if="currencyData"
             ref="inputRef"
-            v-bind="$attrs"
+            v-bind="filteredAttrs"
             type="text"
             class="text-right w-full"
-            :class="[showError ? 'input-error' : '', inputClass]"
+            :class="[showError ? 'input-error' : '', inputClass, attrsClass]"
             :disabled="disabled"
             :required="required"
             @blur="blur"
@@ -36,14 +36,14 @@ input[type="text"] {
 </style>
 <script setup>
 import { ref, computed, watch } from "vue"
-import "vue-currency-input/dist/style.css";
 import { useCurrencyInput } from "vue-currency-input"
 import { find } from "lodash-es"
 import FormLabel from "../../form/components/FormLabel.vue"
+import { useFilteredAttrs } from "../../form/composables/useFilteredAttrs.js";
 import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
-} from "../constants/currencies.js"
+} from "../constants/currencies.js";
 
 // Define props
 // Note: 'value' prop is kept for backward compatibility
@@ -100,110 +100,109 @@ const props = defineProps({
         type: Boolean,
         default: true,
     },
-})
+});
 
 // Define emits
-const emit = defineEmits(["update:modelValue", "input", "blur"])
+const emit = defineEmits(["update:modelValue", "input", "blur"]);
 
 // Reactive state and logic
-const showError = ref(false)
+const showError = ref(false);
 
 const noCentCurrency = computed(() => {
-            if (typeof props.currency === "string") {
-                const currencyCodeCountry = [];
-                NoCentsCurrencies.forEach((item) => {
-                    currencyCodeCountry.push(item.code);
-                    currencyCodeCountry.push(item.country);
-                });
-
-                if (currencyCodeCountry.includes(props.currency)) {
-                    return true;
-                }
-            }
-            return false;
+    if (typeof props.currency === "string") {
+        const currencyCodeCountry = [];
+        NoCentsCurrencies.forEach((item) => {
+            currencyCodeCountry.push(item.code);
+            currencyCodeCountry.push(item.country);
         });
 
-        const currencyData = computed(() => {
-            //treat as MYR if currency passed has no cent
-            const alteredCurrency = noCentCurrency.value
-                ? "MYR"
-                : props.currency;
-            const currency =
-                typeof alteredCurrency === "string"
-                    ? find(
-                          Currencies,
-                          (item) =>
-                              (item.code === alteredCurrency.toUpperCase() ||
-                                  item.country ===
-                                      alteredCurrency.toUpperCase()) &&
-                              item.precision === props.decimal,
-                      )
-                    : props.currency;
+        if (currencyCodeCountry.includes(props.currency)) {
+            return true;
+        }
+    }
+    return false;
+});
 
-            return currency ? currency : DefaultCurrency;
-        });
+const currencyData = computed(() => {
+    //treat as MYR if currency passed has no cent
+    const alteredCurrency = noCentCurrency.value ? "MYR" : props.currency;
+    const currency =
+        typeof alteredCurrency === "string"
+            ? find(
+                  Currencies,
+                  (item) =>
+                      (item.code === alteredCurrency.toUpperCase() ||
+                          item.country === alteredCurrency.toUpperCase()) &&
+                      item.precision === props.decimal,
+              )
+            : props.currency;
 
-        const currencyOptions = computed(() => ({
-            currency: currencyData.value.code,
-            locale: currencyData.value.locale,
-            precision: currencyData.value.precision,
-            hideCurrencySymbolOnFocus: true,
-            hideGroupingSeparatorOnFocus: true,
-            allowNegative: props.allowNegative,
-            valueAsInteger: props.intValue,
-            currencyDisplay: props.sign ? "symbol" : "code",
-        }));
+    return currency ? currency : DefaultCurrency;
+});
 
-        const { inputRef, numberValue } = useCurrencyInput(
-            currencyOptions.value,
-            false,
-        );
+const currencyOptions = computed(() => ({
+    currency: currencyData.value.code,
+    locale: currencyData.value.locale,
+    precision: currencyData.value.precision,
+    hideCurrencySymbolOnFocus: true,
+    hideGroupingSeparatorOnFocus: true,
+    allowNegative: props.allowNegative,
+    valueAsInteger: props.intValue,
+    currencyDisplay: props.sign ? "symbol" : "code",
+}));
 
-        // Watch for value changes and emit
-        watch(numberValue, (newValue) => {
-            if (newValue !== undefined) {
-                emit("update:modelValue", newValue);
-                emit("input", newValue); // Keep backward compatibility
-            }
-        });
+const { inputRef, numberValue } = useCurrencyInput(
+    currencyOptions.value,
+    false,
+);
 
-        // Watch for external value changes
-        watch(
-            () =>
-                props.modelValue !== undefined ? props.modelValue : props.value,
-            (newValue) => {
-                if (newValue !== numberValue.value) {
-                    numberValue.value = newValue;
-                }
-            },
-            { immediate: true },
-        );
+// Watch for value changes and emit
+watch(numberValue, (newValue) => {
+    if (newValue !== undefined) {
+        emit("update:modelValue", newValue);
+        emit("input", newValue); // Keep backward compatibility
+    }
+});
 
-        // Watch for error changes
-        watch(
-            () => props.error,
-            (val) => {
-                if (val && props.required) {
-                    showError.value = true;
-                }
-            },
-        );
+// Watch for external value changes
+watch(
+    () => (props.modelValue !== undefined ? props.modelValue : props.value),
+    (newValue) => {
+        if (newValue !== numberValue.value) {
+            numberValue.value = newValue;
+        }
+    },
+    { immediate: true },
+);
 
-        const blur = (e) => {
-            const currentValue =
-                props.modelValue !== undefined ? props.modelValue : props.value;
-            if (!props.allowZero) {
-                showError.value = e.target.value === 0;
-            }
-            if (props.required) {
-                showError.value = currentValue == null;
-            }
-            emit("blur", e);
-        };
+// Watch for error changes
+watch(
+    () => props.error,
+    (val) => {
+        if (val && props.required) {
+            showError.value = true;
+        }
+    },
+);
+
+const blur = (e) => {
+    const currentValue =
+        props.modelValue !== undefined ? props.modelValue : props.value;
+    if (!props.allowZero) {
+        showError.value = e.target.value === 0;
+    }
+    if (props.required) {
+        showError.value = currentValue == null;
+    }
+    emit("blur", e);
+};
+
+// Use filtered attrs to handle Vue 3 compatibility
+const { filteredAttrs, attrsClass } = useFilteredAttrs();
 
 // Define options
 defineOptions({
     name: "MoneyInput",
-    inheritAttrs: false
-})
+    inheritAttrs: false,
+});
 </script>

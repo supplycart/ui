@@ -2,6 +2,7 @@
 import { computed, ref } from "vue";
 import MoneyInputBase from "./MoneyInputV2Base.vue";
 import FormLabel from "../../form/components/FormLabel.vue";
+import { useFilteredAttrs } from "../../form/composables/useFilteredAttrs.js";
 
 const props = defineProps({
     label: {
@@ -36,9 +37,7 @@ const showError = ref(false);
 
 const input = computed({
     get() {
-        return props.modelValue !== undefined
-            ? props.modelValue
-            : props.value;
+        return props.modelValue !== undefined ? props.modelValue : props.value;
     },
     set(value) {
         emit("update:modelValue", value);
@@ -49,13 +48,21 @@ const input = computed({
 const handleKeydown = () => {
     emit("keydown");
 };
+
+// Use filtered attrs to handle Vue 3 compatibility
+const { filteredAttrs, attrsClass } = useFilteredAttrs();
+
+// Define options
+defineOptions({
+    inheritAttrs: false,
+});
 </script>
 
 <template>
     <div>
         <slot name="label">
             <FormLabel
-                :id="$attrs.id"
+                :id="filteredAttrs.id"
                 :label="label"
                 :required="required"
                 :disabled="disabled"
@@ -64,8 +71,8 @@ const handleKeydown = () => {
 
         <MoneyInputBase
             v-model="input"
-            v-bind="$attrs"
-            :class="[showError ? 'input-error' : '', inputClass]"
+            v-bind="filteredAttrs"
+            :class="[showError ? 'input-error' : '', inputClass, attrsClass]"
             :disabled="disabled"
             :required="required"
             @keydown="handleKeydown"

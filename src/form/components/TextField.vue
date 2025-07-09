@@ -25,7 +25,7 @@ const props = defineProps({
         type: String,
         default: "N/A",
     },
-})
+});
 </script>
 
 <template>

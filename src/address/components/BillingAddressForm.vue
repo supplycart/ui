@@ -23,7 +23,11 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue", "changeCountry"]);
 
-const { labels: LABELS, addressCountryConfig, disabledFields } = useAddressForm(props);
+const {
+    labels: LABELS,
+    addressCountryConfig,
+    disabledFields,
+} = useAddressForm(props);
 const { states } = useMalaysiaStates();
 
 const value = computed({

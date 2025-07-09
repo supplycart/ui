@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed } from "vue";
+import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 
 // Define props
 const props = defineProps({
@@ -43,68 +44,69 @@ const props = defineProps({
         type: Number,
         default: 4,
     },
-})
+});
 
 // Define emits
-const emit = defineEmits(["update:modelValue", "blur", "keydown"])
+const emit = defineEmits(["update:modelValue", "blur", "keydown"]);
 
 // Reactive state
-const focused = ref(false)
+const focused = ref(false);
 
 // Computed properties
 const showError = computed(() => {
-    return props.error && props.required && !props.modelValue && focused.value
-})
+    return props.error && props.required && !props.modelValue && focused.value;
+});
 
 const isInvalid = computed(() => {
-    if (!props.regex) return false
-    const value = props.modelValue
-        ? props.modelValue.length <= 255
-        : false
+    if (!props.regex) return false;
+    const value = props.modelValue ? props.modelValue.length <= 255 : false;
 
-    return !value && focused.value && props.modelValue
-})
+    return !value && focused.value && props.modelValue;
+});
 
 const charLeft = computed(() => {
-    return props.modelValue ? 255 - props.modelValue.length : 255
-})
+    return props.modelValue ? 255 - props.modelValue.length : 255;
+});
 
 // Methods
 const handleInput = (e) => {
-    const str = e.target.value.slice(0, 255)
-    emit("update:modelValue", str)
-}
+    const str = e.target.value.slice(0, 255);
+    emit("update:modelValue", str);
+};
 
 const blur = (e) => {
-    emit("blur", e)
-}
+    emit("blur", e);
+};
 
 const focus = (e) => {
-    focused.value = true
-}
+    focused.value = true;
+};
 
 const charCount = (event) => {
-    if (!props.modelValue) return
+    if (!props.modelValue) return;
 
     if (props.modelValue.length >= 255) {
         if (event.keyCode >= 48 && event.keyCode <= 90) {
-            event.preventDefault()
-            return
+            event.preventDefault();
+            return;
         }
     }
-    emit("keydown")
-}
+    emit("keydown");
+};
+
+// Use filtered attrs to handle Vue 3 compatibility
+const { filteredAttrs, attrsClass } = useFilteredAttrs();
 
 // Define options
 defineOptions({
-    inheritAttrs: false
-})
+    inheritAttrs: false,
+});
 </script>
 
 <template>
     <div class="input-holder">
         <slot name="label">
-            <label v-if="label" :for="$attrs.id">
+            <label v-if="label" :for="filteredAttrs.id">
                 {{ label }}
                 <small v-if="required" class="italic text-red-600">*</small>
             </label>
@@ -113,9 +115,13 @@ defineOptions({
         <textarea
             :value="modelValue"
             :rows="rows"
-            v-bind="$attrs"
+            v-bind="filteredAttrs"
             class="h-textarea"
-            :class="[showError || isInvalid ? 'error' : '', inputClass]"
+            :class="[
+                showError || isInvalid ? 'error' : '',
+                inputClass,
+                attrsClass,
+            ]"
             :required="required"
             @input="handleInput"
             @focus="focus"

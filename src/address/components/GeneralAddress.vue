@@ -1,5 +1,5 @@
 <script setup>
-import { useAddress } from "../composables/useAddress"
+import { useAddress } from "../composables/useAddress";
 
 // Define props
 const props = defineProps({
@@ -15,19 +15,20 @@ const props = defineProps({
         type: String,
         default: "Malaysia",
     },
-})
+});
 
 // Use address composable
-const { LABELS, addressCountry, addressCountryConfig, showAttribute } = useAddress(props)
+const { LABELS, addressCountry, addressCountryConfig, showAttribute } =
+    useAddress(props);
 
 // Values (same as original)
-const value = props.modelValue
-const display = props.display
+const value = props.modelValue;
+const display = props.display;
 
 // Define component options
 defineOptions({
-    name: "GeneralAddress"
-})
+    name: "GeneralAddress",
+});
 </script>
 
 <template>

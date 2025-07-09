@@ -1,6 +1,6 @@
 <script setup>
-import { computed } from "vue"
-import CurrencySettings from "../constants/currencySettings"
+import { computed } from "vue";
+import CurrencySettings from "../constants/currencySettings";
 
 // Define props
 const props = defineProps({
@@ -12,25 +12,26 @@ const props = defineProps({
         type: [String, Object],
         default: "MYR",
     },
-})
+});
 
 // Computed currency data
 const currencyData = computed(() => {
-    let currency = typeof props.currency === "object"
-        ? props.currency
-        : CurrencySettings[props.currency]
+    let currency =
+        typeof props.currency === "object"
+            ? props.currency
+            : CurrencySettings[props.currency];
 
     if (!currency) {
-        currency = CurrencySettings.MYR
+        currency = CurrencySettings.MYR;
     }
 
-    return currency
-})
+    return currency;
+});
 
 // Define options
 defineOptions({
-    name: "Currency"
-})
+    name: "Currency",
+});
 </script>
 
 <template>

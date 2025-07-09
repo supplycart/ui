@@ -1,5 +1,5 @@
 <script setup>
-import { useAddress } from "../composables/useAddress"
+import { useAddress } from "../composables/useAddress";
 
 // Define props
 const props = defineProps({
@@ -15,19 +15,20 @@ const props = defineProps({
         type: String,
         default: "Malaysia",
     },
-})
+});
 
 // Use address composable
-const { LABELS, addressCountry, addressCountryConfig, showAttribute } = useAddress(props)
+const { LABELS, addressCountry, addressCountryConfig, showAttribute } =
+    useAddress(props);
 
 // Values (same as original)
-const value = props.modelValue
-const display = props.display
+const value = props.modelValue;
+const display = props.display;
 
 // Define component options
 defineOptions({
-    name: "DeliveryAddress"
-})
+    name: "DeliveryAddress",
+});
 </script>
 
 <template>
@@ -123,11 +124,7 @@ defineOptions({
         </div>
 
         <div>
-            <div
-                v-if="
-                    showAttribute('requires_permit') && display.length > 0
-                "
-            >
+            <div v-if="showAttribute('requires_permit') && display.length > 0">
                 <p v-if="value.requires_permit">Requires Permit</p>
             </div>
             <div v-if="!display.length">

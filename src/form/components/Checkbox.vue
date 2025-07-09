@@ -17,16 +17,16 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
-})
+});
 
 // Define emits
-const emit = defineEmits(["update:modelValue", "change"])
+const emit = defineEmits(["update:modelValue", "change"]);
 
 // Methods
 const handleChange = (e) => {
-    emit("update:modelValue", e.target.checked)
-    emit("change", e)
-}
+    emit("update:modelValue", e.target.checked);
+    emit("change", e);
+};
 </script>
 
 <template>

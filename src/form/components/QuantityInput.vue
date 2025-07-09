@@ -1,6 +1,7 @@
 <script setup>
 import BaseInput from "./BaseInput.vue";
 import { useInput } from "../composables/useInput";
+import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 import { ref, computed, onMounted, nextTick } from "vue";
 import numeral from "numeral";
 
@@ -28,11 +29,18 @@ const onFocus = ref(false);
 const showMaxValueError = ref(null);
 const showMinValueError = ref(null);
 
-const maxValueErrorMessage = computed(() => `Maximum number allowed is ${props.maximumValue}`);
-const minValueErrorMessage = computed(() => `Minimum number allowed is ${props.minimumValue}`);
+const maxValueErrorMessage = computed(
+    () => `Maximum number allowed is ${props.maximumValue}`,
+);
+const minValueErrorMessage = computed(
+    () => `Minimum number allowed is ${props.minimumValue}`,
+);
 
 const formattedInput = computed(() => {
-    if (props.nullable && (props.modelValue == "" || props.modelValue == null)) {
+    if (
+        props.nullable &&
+        (props.modelValue == "" || props.modelValue == null)
+    ) {
         return null;
     }
     return numeral(props.modelValue).format(numeralFormat.value);
@@ -120,13 +128,21 @@ onMounted(() => {
         update(props.maximumValue);
     }
 });
+
+// Use filtered attrs to handle Vue 3 compatibility
+const { filteredAttrs } = useFilteredAttrs();
+
+// Define options
+defineOptions({
+    inheritAttrs: false,
+});
 </script>
 
 <template>
     <BaseInput
         v-if="onFocus"
         ref="inputRef"
-        v-bind="$attrs"
+        v-bind="filteredAttrs"
         type="number"
         :max="maximumValue"
         :min="minimumValue"
@@ -143,7 +159,7 @@ onMounted(() => {
     <BaseInput
         v-else
         ref="inputRef"
-        v-bind="$attrs"
+        v-bind="filteredAttrs"
         type="text"
         :label="label"
         :model-value="formattedInput"

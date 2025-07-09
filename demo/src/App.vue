@@ -350,7 +350,7 @@ const moneyv2 = ref(0)
 const deliveryCountry = ref("Malaysia")
 const attachments = ref([])
 const minDate = ref(format(zonedTimeToUtc(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd"))
-const dateRange = reactive({
+const dateRange = ref({
     from: "2020-03-19",
     to: "2020-03-24"
 })
@@ -423,8 +423,10 @@ const email = ref("")
 
 onMounted(() => {
     setTimeout(() => {
-        dateRange.from = "2020-01-01"
-        dateRange.to = "2020-03-31"
+        dateRange.value = {
+            from: "2020-01-01",
+            to: "2020-03-31"
+        }
         minDate.value = "2020-01-01"
     }, 5000)
 })

@@ -8,8 +8,12 @@
         </slot>
         <input
             :value="modelValue"
-            v-bind="$attrs"
-            :class="[{ 'input-error': showError || isInvalid }, inputClass]"
+            v-bind="filteredAttrs"
+            :class="[
+                { 'input-error': showError || isInvalid },
+                inputClass,
+                attrsClass,
+            ]"
             :required="required"
             @input="handleInput"
             @focus="focus"
@@ -35,7 +39,8 @@
     </div>
 </template>
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch } from "vue";
+import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 
 // Define props
 const props = defineProps({
@@ -75,57 +80,69 @@ const props = defineProps({
         type: String,
         default: null,
     },
-})
+});
 
 // Define emits
-const emit = defineEmits(["update:modelValue", "blur", "change", "focus", "keydown"])
+const emit = defineEmits([
+    "update:modelValue",
+    "blur",
+    "change",
+    "focus",
+    "keydown",
+]);
 
 // Reactive state
-const focused = ref(false)
-const showError = ref(false)
+const focused = ref(false);
+const showError = ref(false);
 
 // Computed properties
 const isInvalid = computed(() => {
-    if (!props.regex) return false
-    
-    const value = props.regex.test(props.modelValue?.toString() || '')
-    return !value && focused.value && props.modelValue
-})
+    if (!props.regex) return false;
+
+    const value = props.regex.test(props.modelValue?.toString() || "");
+    return !value && focused.value && props.modelValue;
+});
 
 // Watchers
-watch(() => props.error, (val) => {
-    if (val && props.required) {
-        showError.value = true
-    } else {
-        showError.value = false
-    }
-})
+watch(
+    () => props.error,
+    (val) => {
+        if (val && props.required) {
+            showError.value = true;
+        } else {
+            showError.value = false;
+        }
+    },
+);
 
 // Methods
 const handleInput = (e) => {
-    const target = e.target
-    emit("update:modelValue", target.value)
-}
+    const target = e.target;
+    emit("update:modelValue", target.value);
+};
 
 const blur = (e) => {
-    emit("blur", e)
-}
+    emit("blur", e);
+};
 
 const change = (e) => {
-    emit("change", e)
-}
+    emit("change", e);
+};
 
 const focus = (e) => {
-    emit("focus", e)
-    focused.value = true
-}
+    emit("focus", e);
+    focused.value = true;
+};
 
 const keydown = () => {
-    emit("keydown")
-}
+    emit("keydown");
+};
+
+// Use filtered attrs to handle Vue 3 compatibility
+const { filteredAttrs, attrsClass } = useFilteredAttrs();
 
 // Define options
 defineOptions({
-    inheritAttrs: false
-})
+    inheritAttrs: false,
+});
 </script>

@@ -27,9 +27,7 @@ const localTime = computed(() => {
 
     if (props.isUtc) {
         const utcDate = zonedTimeToUtc(zonedDate, props.timezone);
-        return (
-            format(utcDate, props.format) + " " + format(utcDate, "XXX")
-        );
+        return format(utcDate, props.format) + " " + format(utcDate, "XXX");
     }
 
     return format(zonedDate, props.format);

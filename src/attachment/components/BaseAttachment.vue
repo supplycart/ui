@@ -50,9 +50,7 @@ const setAttachment = async (event) => {
                 );
             }
             if (!validateAttachmentFormat(file, props.format)) {
-                message.push(
-                    `File format for ${file.name} not supported`,
-                );
+                message.push(`File format for ${file.name} not supported`);
             }
             emit("onError", message);
         }

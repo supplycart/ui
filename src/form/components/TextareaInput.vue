@@ -1,5 +1,6 @@
 <script setup>
 import { useInput } from "../composables/useInput";
+import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 import { ref, computed } from "vue";
 
 const props = defineProps({
@@ -34,6 +35,9 @@ const keydown = () => {
     emit("keydown");
 };
 
+// Use filtered attrs to handle Vue 3 compatibility
+const { filteredAttrs, attrsClass } = useFilteredAttrs();
+
 defineOptions({
     inheritAttrs: false,
 });
@@ -42,7 +46,7 @@ defineOptions({
 <template>
     <div class="input-holder">
         <slot name="label">
-            <label v-if="label" :for="$attrs.id">
+            <label v-if="label" :for="filteredAttrs.id">
                 {{ label }}
                 <small v-if="required" class="italic text-red-600">*</small>
             </label>
@@ -51,10 +55,10 @@ defineOptions({
         <textarea
             :value="modelValue"
             :rows="rows"
-            v-bind="$attrs"
+            v-bind="filteredAttrs"
             :placeholder="placeholder"
             class="h-textarea"
-            :class="[showError ? 'error' : '', inputClass]"
+            :class="[showError ? 'error' : '', inputClass, attrsClass]"
             :required="required"
             @input="handleInput"
             @blur="blur"

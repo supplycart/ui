@@ -2,7 +2,7 @@
     <div>
         <slot name="label">
             <FormLabel
-                :id="$attrs.id"
+                :id="filteredAttrs.id"
                 :label="label"
                 :required="required"
                 :disabled="disabled"
@@ -10,14 +10,14 @@
             />
         </slot>
         <input
-            :id="$attrs.id"
+            :id="filteredAttrs.id"
             :value="modelValue"
-            v-bind="$attrs"
+            v-bind="filteredAttrs"
             :placeholder="placeholder"
             :required="required"
             :disabled="disabled"
             :maxlength="maxLength"
-            :class="[showError ? 'input-error' : '', inputClass]"
+            :class="[showError ? 'input-error' : '', inputClass, attrsClass]"
             class="w-full"
             @input="handleInput"
             @focus="focus"
@@ -45,8 +45,9 @@
     </div>
 </template>
 <script setup>
-import { ref, watch } from 'vue'
-import FormLabel from "./FormLabel.vue"
+import { ref, watch } from "vue";
+import FormLabel from "./FormLabel.vue";
+import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 
 // Define props with defaults
 const props = defineProps({
@@ -90,55 +91,61 @@ const props = defineProps({
         type: String,
         default: null,
     },
-})
+});
 
 // Define emits
-const emit = defineEmits(["update:modelValue", "blur", "focus", "keydown"])
+const emit = defineEmits(["update:modelValue", "blur", "focus", "keydown"]);
 
 // Reactive state
-const showError = ref(false)
+const showError = ref(false);
 
 // Watch for error changes
-watch(() => props.error, (val) => {
-    if (!val && props.required) {
-        showError.value = true
-    }
-})
+watch(
+    () => props.error,
+    (val) => {
+        if (!val && props.required) {
+            showError.value = true;
+        }
+    },
+);
 
 // Methods
 const handleInput = (e) => {
-    const target = e.target
-    const val = target.value
-    emit("update:modelValue", val)
+    const target = e.target;
+    const val = target.value;
+    emit("update:modelValue", val);
     if (props.required) {
-        toggleError(val)
+        toggleError(val);
     }
-}
+};
 
 const blur = (e) => {
-    const target = e.target
-    emit("blur", target.value)
-}
+    const target = e.target;
+    emit("blur", target.value);
+};
 
 const focus = () => {
-    emit("focus")
+    emit("focus");
     if (props.required) {
-        toggleError(props.modelValue?.toString() || '')
+        toggleError(props.modelValue?.toString() || "");
     }
-}
+};
 
 const toggleError = (val) => {
-    showError.value = !val
-}
+    showError.value = !val;
+};
 
 const keydown = () => {
-    emit("keydown")
-}
+    emit("keydown");
+};
+
+// Use filtered attrs to handle Vue 3 compatibility
+const { filteredAttrs, attrsClass } = useFilteredAttrs();
 
 // Define options for Vue component
 defineOptions({
-    inheritAttrs: false
-})
+    inheritAttrs: false,
+});
 </script>
 <style>
 .input-error {

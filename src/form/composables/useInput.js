@@ -1,23 +1,23 @@
-import { ref } from "vue"
+import { ref } from "vue";
 
 export function useInput(emit) {
     // Reactive state
-    const regex = ref(null)
+    const regex = ref(null);
 
     // Methods
     const blur = (e) => {
-        emit("blur", e)
-    }
+        emit("blur", e);
+    };
 
     const update = (e) => {
-        emit("update:modelValue", e)
-    }
+        emit("update:modelValue", e);
+    };
 
     return {
         regex,
         blur,
         update,
-    }
+    };
 }
 
 // Common props definition for input components
@@ -50,7 +50,7 @@ export const inputProps = {
         type: String,
         default: null,
     },
-}
+};
 
 // Common emits definition for input components
-export const inputEmits = ["update:modelValue", "blur"]
+export const inputEmits = ["update:modelValue", "blur"];

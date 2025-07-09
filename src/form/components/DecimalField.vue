@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue"
+import { computed } from "vue";
 
 // Define props
 const props = defineProps({
@@ -34,24 +34,24 @@ const props = defineProps({
         type: Number,
         default: 0,
     },
-})
+});
 
 // Computed properties
 const input = computed(() => {
     if (props.minDecimal > 0 || props.maxDecimal > 0) {
         if (props.maxDecimal < props.minDecimal) {
-            return props.modelValue
+            return props.modelValue;
         }
         return new Intl.NumberFormat("en", {
             style: "decimal",
             useGrouping: true,
             minimumFractionDigits: props.minDecimal,
             maximumFractionDigits: props.maxDecimal,
-        }).format(props.modelValue)
+        }).format(props.modelValue);
     } else {
-        return props.modelValue
+        return props.modelValue;
     }
-})
+});
 </script>
 
 <template>
