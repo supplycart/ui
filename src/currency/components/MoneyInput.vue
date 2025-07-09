@@ -36,6 +36,7 @@ input[type="text"] {
 </style>
 <script setup>
 import { ref, computed, watch } from "vue"
+import "vue-currency-input/dist/style.css";
 import { useCurrencyInput } from "vue-currency-input"
 import { find } from "lodash-es"
 import FormLabel from "../../form/components/FormLabel.vue"

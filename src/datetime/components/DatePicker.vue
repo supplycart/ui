@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, watch } from "vue";
 import FlatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
 import { Timezones } from "../constants";
 import { DefaultConfig } from "../constants/flatpickr";
 import FormLabel from "../../form/components/FormLabel.vue";

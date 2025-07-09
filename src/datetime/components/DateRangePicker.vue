@@ -2,6 +2,7 @@
 import { ref, watch, onMounted, onBeforeUnmount } from "vue";
 import { merge } from "lodash-es";
 import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.css";
 
 const props = defineProps({
     modelValue: {

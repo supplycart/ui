@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, watch } from "vue"
+import "vue-select/dist/vue-select.css";
 import VSelect from "vue-select"
 
 // Define props
