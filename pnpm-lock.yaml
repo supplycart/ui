@@ -16,7 +16,7 @@ importers:
         version: 3.5.17(vue@3.5.17(typescript@5.8.3))
       core-js:
         specifier: ^3.6.4
-        version: 3.43.0
+        version: 3.44.0
       date-fns:
         specifier: 2.16.1
         version: 2.16.1
@@ -25,7 +25,7 @@ importers:
         version: 1.1.7(date-fns@2.16.1)
       decimal.js:
         specifier: ^10.5.0
-        version: 10.5.0
+        version: 10.6.0
       dinero.js:
         specifier: ^1.8.1
         version: 1.9.1
@@ -35,9 +35,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      lucide-vue:
-        specifier: ^0.446.0
-        version: 0.446.0(vue@3.5.17(typescript@5.8.3))
+      lucide-vue-next:
+        specifier: ^0.525.0
+        version: 0.525.0(vue@3.5.17(typescript@5.8.3))
       luxon:
         specifier: ^1.22.0
         version: 1.28.1
@@ -62,31 +62,31 @@ importers:
         version: 7.27.6
       '@eslint/compat':
         specifier: ^1.2.4
-        version: 1.3.1(eslint@9.30.1)
+        version: 1.3.1(eslint@9.31.0)
       '@eslint/js':
         specifier: ^9.18.0
-        version: 9.30.1
+        version: 9.31.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
       '@vue/eslint-config-prettier':
         specifier: ^10.2.0
-        version: 10.2.0(eslint@9.30.1)(prettier@3.6.2)
+        version: 10.2.0(eslint@9.31.0)(prettier@3.6.2)
       eslint:
         specifier: ^9.18.0
-        version: 9.30.1
+        version: 9.31.0
       eslint-config-prettier:
         specifier: ^9.1.0
-        version: 9.1.0(eslint@9.30.1)
+        version: 9.1.0(eslint@9.31.0)
       eslint-plugin-import:
         specifier: ^2.31.0
-        version: 2.32.0(eslint@9.30.1)
+        version: 2.32.0(eslint@9.31.0)
       eslint-plugin-prettier:
         specifier: ^5.2.3
-        version: 5.5.1(eslint-config-prettier@9.1.0(eslint@9.30.1))(eslint@9.30.1)(prettier@3.6.2)
+        version: 5.5.1(eslint-config-prettier@9.1.0(eslint@9.31.0))(eslint@9.31.0)(prettier@3.6.2)
       eslint-plugin-vue:
         specifier: ^9.32.0
-        version: 9.33.0(eslint@9.30.1)
+        version: 9.33.0(eslint@9.31.0)
       globals:
         specifier: ^15.14.0
         version: 15.15.0
@@ -98,7 +98,7 @@ importers:
         version: 16.4.2(typescript@5.8.3)
       vue-eslint-parser:
         specifier: ^9.4.3
-        version: 9.4.3(eslint@9.30.1)
+        version: 9.4.3(eslint@9.31.0)
 
 packages:
 
@@ -123,8 +123,8 @@ packages:
     resolution: {integrity: sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/types@7.28.0':
-    resolution: {integrity: sha512-jYnje+JyZG5YThjHiF28oT4SIZLnYOcSBb6+SDaFIyzDVSkXQmQQYclJ2R+YxcdmK0AX6x1E5OQNtuh3jHDrUg==}
+  '@babel/types@7.28.1':
+    resolution: {integrity: sha512-x0LvFTekgSX+83TI28Y9wYPUfzrnl2aT5+5QLnO6v7mSJYtEEevuDRN0F0uSHRk1G1IWZC43o00Y0xDDrpBGPQ==}
     engines: {node: '>=6.9.0'}
 
   '@eslint-community/eslint-utils@4.7.0':
@@ -154,10 +154,6 @@ packages:
     resolution: {integrity: sha512-ViuymvFmcJi04qdZeDc2whTHryouGcDlaxPqarTD0ZE10ISpxGUVZGZDx4w01upyIynL3iu6IXH2bS1NhclQMw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@eslint/core@0.14.0':
-    resolution: {integrity: sha512-qIbV0/JZr7iSDjqAc60IqbLdsj9GDt16xQtWD+B78d/HAlvysGdZZ6rpJHGAc2T0FQx1X6thsSPdnoiGKdNtdg==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
   '@eslint/core@0.15.1':
     resolution: {integrity: sha512-bkOp+iumZCCbt1K1CmWf0R9pM5yKpDv+ZXtvSyQpudrI9kuFLp+bM2WOPXImuD/ceQuaa8f5pj93Y7zyECIGNA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -174,8 +170,8 @@ packages:
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@eslint/js@9.30.1':
-    resolution: {integrity: sha512-zXhuECFlyep42KZUhWjfvsmXGX39W8K8LFb8AWXM9gSV9dQB+MrJGLKvW6Zw0Ggnbpw0VHTtrhFXYe3Gym18jg==}
+  '@eslint/js@9.31.0':
+    resolution: {integrity: sha512-LOm5OVt7D4qiKCqoiPbA7LWmI+tbw1VbTUowBcUMgQSuM6poJufkFkYDcQpo5KfgD39TnNySV26QjOh7VFpSyw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/object-schema@2.1.6':
@@ -459,11 +455,11 @@ packages:
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  core-js-pure@3.43.0:
-    resolution: {integrity: sha512-i/AgxU2+A+BbJdMxh3v7/vxi2SbFqxiFmg6VsDwYB4jkucrd1BZNA9a9gphC0fYMG5IBSgQcbQnk865VCLe7xA==}
+  core-js-pure@3.44.0:
+    resolution: {integrity: sha512-gvMQAGB4dfVUxpYD0k3Fq8J+n5bB6Ytl15lqlZrOIXFzxOhtPaObfkQGHtMRdyjIf7z2IeNULwi1jEwyS+ltKQ==}
 
-  core-js@3.43.0:
-    resolution: {integrity: sha512-N6wEbTTZSYOY2rYAn85CuvWWkCK6QweMn7/4Nr3w+gDBeBhk/x4EJeY6FPo4QzDoJZxVTv8U7CMvgWk6pOHHqA==}
+  core-js@3.44.0:
+    resolution: {integrity: sha512-aFCtd4l6GvAXwVEh3XbbVqJGHDJt0OZRa+5ePGx3LLwi12WfexqQxcsohb2wgsa/92xtl19Hd66G/L+TaAxDMw==}
 
   cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}
@@ -515,8 +511,8 @@ packages:
       supports-color:
         optional: true
 
-  decimal.js@10.5.0:
-    resolution: {integrity: sha512-8vDa8Qxvr/+d94hSh5P3IJwI5t8/c0KsMp+g8bNw9cY2icONa5aPfvKeieW1WlG0WQYwwhJ7mjui2xtiePQSXw==}
+  decimal.js@10.6.0:
+    resolution: {integrity: sha512-YpgQiITW3JXGntzdUmyUR1V812Hn8T1YVXhCu+wO3OpS4eU9l4YdD3qjyiKdV6mvV29zapkMeD390UVEf2lkUg==}
 
   deep-is@0.1.4:
     resolution: {integrity: sha512-oIPzksmTg4/MriiaYGO+okXDT7ztn/w3Eptv/+gSIdMdKsJo0u4CfYNFJPy+4SKMuCqGw2wxnA+URMg3t8a/bQ==}
@@ -679,8 +675,8 @@ packages:
     deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
-  eslint@9.30.1:
-    resolution: {integrity: sha512-zmxXPNMOXmwm9E0yQLi5uqXHs7uq2UIiqEKo3Gq+3fwo1XrJ+hijAZImyF7hclW3E6oHz43Yk3RP8at6OTKflQ==}
+  eslint@9.31.0:
+    resolution: {integrity: sha512-QldCVh/ztyKJJZLr4jXNUByx3gR+TDYZCRXEktiZoUR3PGy4qCmSbkxcIle8GEwGpb5JBZazlaJ/CxLidXdEbQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     hasBin: true
     peerDependencies:
@@ -1045,11 +1041,10 @@ packages:
     resolution: {integrity: sha512-HgMmCqIJSAKqo68l0rS2AanEWfkxaZ5wNiEFb5ggm08lDs9Xl2KxBlX3PTcaD2chBM1gXAYf491/M2Rv8Jwayg==}
     engines: {node: '>= 0.6.0'}
 
-  lucide-vue@0.446.0:
-    resolution: {integrity: sha512-U7I2g/f2P+6rIDyuTKBjzi5eS+eDwAq3Wm52ClpWQARn2Mov3zrGSRdfkFXcEcercboRz0xeplicHIK3x5TsnQ==}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+  lucide-vue-next@0.525.0:
+    resolution: {integrity: sha512-Xf8+x8B2DrnGDV/rxylS+KBp2FIe6ljwDn2JsGTZZvXIfhmm/q+nv8RuGO1OyoMjOVkkz7CqtUqJfwtFPRbB2w==}
     peerDependencies:
-      vue: ^2.6.12
+      vue: '>=3.0.1'
 
   luxon@1.28.1:
     resolution: {integrity: sha512-gYHAa180mKrNIUJCbwpmD0aTu9kV0dREDrwNnuyFAsO1Wt0EVYSZelPnJlbj9HplzXX/YWXHFTL45kvZ53M0pw==}
@@ -1497,15 +1492,15 @@ snapshots:
 
   '@babel/parser@7.28.0':
     dependencies:
-      '@babel/types': 7.28.0
+      '@babel/types': 7.28.1
 
   '@babel/runtime-corejs3@7.28.0':
     dependencies:
-      core-js-pure: 3.43.0
+      core-js-pure: 3.44.0
 
   '@babel/runtime@7.27.6': {}
 
-  '@babel/types@7.28.0':
+  '@babel/types@7.28.1':
     dependencies:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
@@ -1515,16 +1510,16 @@ snapshots:
       eslint: 8.57.1
       eslint-visitor-keys: 3.4.3
 
-  '@eslint-community/eslint-utils@4.7.0(eslint@9.30.1)':
+  '@eslint-community/eslint-utils@4.7.0(eslint@9.31.0)':
     dependencies:
-      eslint: 9.30.1
+      eslint: 9.31.0
       eslint-visitor-keys: 3.4.3
 
   '@eslint-community/regexpp@4.12.1': {}
 
-  '@eslint/compat@1.3.1(eslint@9.30.1)':
+  '@eslint/compat@1.3.1(eslint@9.31.0)':
     optionalDependencies:
-      eslint: 9.30.1
+      eslint: 9.31.0
 
   '@eslint/config-array@0.21.0':
     dependencies:
@@ -1535,10 +1530,6 @@ snapshots:
       - supports-color
 
   '@eslint/config-helpers@0.3.0': {}
-
-  '@eslint/core@0.14.0':
-    dependencies:
-      '@types/json-schema': 7.0.15
 
   '@eslint/core@0.15.1':
     dependencies:
@@ -1574,7 +1565,7 @@ snapshots:
 
   '@eslint/js@8.57.1': {}
 
-  '@eslint/js@9.30.1': {}
+  '@eslint/js@9.31.0': {}
 
   '@eslint/object-schema@2.1.6': {}
 
@@ -1721,11 +1712,11 @@ snapshots:
       '@vue/compiler-dom': 3.5.17
       '@vue/shared': 3.5.17
 
-  '@vue/eslint-config-prettier@10.2.0(eslint@9.30.1)(prettier@3.6.2)':
+  '@vue/eslint-config-prettier@10.2.0(eslint@9.31.0)(prettier@3.6.2)':
     dependencies:
-      eslint: 9.30.1
-      eslint-config-prettier: 10.1.5(eslint@9.30.1)
-      eslint-plugin-prettier: 5.5.1(eslint-config-prettier@10.1.5(eslint@9.30.1))(eslint@9.30.1)(prettier@3.6.2)
+      eslint: 9.31.0
+      eslint-config-prettier: 10.1.5(eslint@9.31.0)
+      eslint-plugin-prettier: 5.5.1(eslint-config-prettier@10.1.5(eslint@9.31.0))(eslint@9.31.0)(prettier@3.6.2)
       prettier: 3.6.2
     transitivePeerDependencies:
       - '@types/eslint'
@@ -1898,9 +1889,9 @@ snapshots:
 
   concat-map@0.0.1: {}
 
-  core-js-pure@3.43.0: {}
+  core-js-pure@3.44.0: {}
 
-  core-js@3.43.0: {}
+  core-js@3.44.0: {}
 
   cross-spawn@7.0.6:
     dependencies:
@@ -1944,7 +1935,7 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
-  decimal.js@10.5.0: {}
+  decimal.js@10.6.0: {}
 
   deep-is@0.1.4: {}
 
@@ -2070,13 +2061,13 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-prettier@10.1.5(eslint@9.30.1):
+  eslint-config-prettier@10.1.5(eslint@9.31.0):
     dependencies:
-      eslint: 9.30.1
+      eslint: 9.31.0
 
-  eslint-config-prettier@9.1.0(eslint@9.30.1):
+  eslint-config-prettier@9.1.0(eslint@9.31.0):
     dependencies:
-      eslint: 9.30.1
+      eslint: 9.31.0
 
   eslint-import-resolver-node@0.3.9:
     dependencies:
@@ -2086,16 +2077,16 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(eslint-import-resolver-node@0.3.9)(eslint@9.30.1):
+  eslint-module-utils@2.12.1(eslint-import-resolver-node@0.3.9)(eslint@9.31.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
-      eslint: 9.30.1
+      eslint: 9.31.0
       eslint-import-resolver-node: 0.3.9
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.32.0(eslint@9.30.1):
+  eslint-plugin-import@2.32.0(eslint@9.31.0):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
@@ -2104,9 +2095,9 @@ snapshots:
       array.prototype.flatmap: 1.3.3
       debug: 3.2.7
       doctrine: 2.1.0
-      eslint: 9.30.1
+      eslint: 9.31.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.1(eslint-import-resolver-node@0.3.9)(eslint@9.30.1)
+      eslint-module-utils: 2.12.1(eslint-import-resolver-node@0.3.9)(eslint@9.31.0)
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -2122,34 +2113,34 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-plugin-prettier@5.5.1(eslint-config-prettier@10.1.5(eslint@9.30.1))(eslint@9.30.1)(prettier@3.6.2):
+  eslint-plugin-prettier@5.5.1(eslint-config-prettier@10.1.5(eslint@9.31.0))(eslint@9.31.0)(prettier@3.6.2):
     dependencies:
-      eslint: 9.30.1
+      eslint: 9.31.0
       prettier: 3.6.2
       prettier-linter-helpers: 1.0.0
       synckit: 0.11.8
     optionalDependencies:
-      eslint-config-prettier: 10.1.5(eslint@9.30.1)
+      eslint-config-prettier: 10.1.5(eslint@9.31.0)
 
-  eslint-plugin-prettier@5.5.1(eslint-config-prettier@9.1.0(eslint@9.30.1))(eslint@9.30.1)(prettier@3.6.2):
+  eslint-plugin-prettier@5.5.1(eslint-config-prettier@9.1.0(eslint@9.31.0))(eslint@9.31.0)(prettier@3.6.2):
     dependencies:
-      eslint: 9.30.1
+      eslint: 9.31.0
       prettier: 3.6.2
       prettier-linter-helpers: 1.0.0
       synckit: 0.11.8
     optionalDependencies:
-      eslint-config-prettier: 9.1.0(eslint@9.30.1)
+      eslint-config-prettier: 9.1.0(eslint@9.31.0)
 
-  eslint-plugin-vue@9.33.0(eslint@9.30.1):
+  eslint-plugin-vue@9.33.0(eslint@9.31.0):
     dependencies:
-      '@eslint-community/eslint-utils': 4.7.0(eslint@9.30.1)
-      eslint: 9.30.1
+      '@eslint-community/eslint-utils': 4.7.0(eslint@9.31.0)
+      eslint: 9.31.0
       globals: 13.24.0
       natural-compare: 1.4.0
       nth-check: 2.1.1
       postcss-selector-parser: 6.1.2
       semver: 7.7.2
-      vue-eslint-parser: 9.4.3(eslint@9.30.1)
+      vue-eslint-parser: 9.4.3(eslint@9.31.0)
       xml-name-validator: 4.0.0
     transitivePeerDependencies:
       - supports-color
@@ -2211,15 +2202,15 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint@9.30.1:
+  eslint@9.31.0:
     dependencies:
-      '@eslint-community/eslint-utils': 4.7.0(eslint@9.30.1)
+      '@eslint-community/eslint-utils': 4.7.0(eslint@9.31.0)
       '@eslint-community/regexpp': 4.12.1
       '@eslint/config-array': 0.21.0
       '@eslint/config-helpers': 0.3.0
-      '@eslint/core': 0.14.0
+      '@eslint/core': 0.15.1
       '@eslint/eslintrc': 3.3.1
-      '@eslint/js': 9.30.1
+      '@eslint/js': 9.31.0
       '@eslint/plugin-kit': 0.3.3
       '@humanfs/node': 0.16.6
       '@humanwhocodes/module-importer': 1.0.1
@@ -2618,7 +2609,7 @@ snapshots:
 
   loglevel@1.9.2: {}
 
-  lucide-vue@0.446.0(vue@3.5.17(typescript@5.8.3)):
+  lucide-vue-next@0.525.0(vue@3.5.17(typescript@5.8.3)):
     dependencies:
       vue: 3.5.17(typescript@5.8.3)
 
@@ -3053,10 +3044,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vue-eslint-parser@9.4.3(eslint@9.30.1):
+  vue-eslint-parser@9.4.3(eslint@9.31.0):
     dependencies:
       debug: 4.4.1
-      eslint: 9.30.1
+      eslint: 9.31.0
       eslint-scope: 7.2.2
       eslint-visitor-keys: 3.4.3
       espree: 9.6.1

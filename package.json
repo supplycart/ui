@@ -22,7 +22,7 @@
         "dinero.js": "^1.8.1",
         "flatpickr": "^4.6.9",
         "lodash-es": "^4.17.21",
-        "lucide-vue": "^0.446.0",
+        "lucide-vue-next": "^0.525.0",
         "luxon": "^1.22.0",
         "numeral": "^2.0.6",
         "vue-currency-input": "^3.1.0",
