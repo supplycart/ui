@@ -36,7 +36,9 @@ export default {
                 .value();
 
             if (this.convertPrecision > -1) {
-                processedVal = processedVal.toFixed(this.convertPrecision);
+                // Use Decimal to avoid rounding issues caused by JS's floating-point math.
+                // Some numbers (like 1.005) can't be represented exactly and may round incorrectly.
+                processedVal = new Decimal(processedVal).toFixed(this.convertPrecision);
             }
             return (
                 (this.withSign && this.currencySignPos == "BEFORE"
