@@ -1,39 +1,24 @@
-import { format, parseISO } from "date-fns";
-import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
+import moment from "moment-timezone";
 
 export * from "./components";
 export * from "./constants";
 
 function displayDate(
     value,
-    formatString = "yyyy-MM-dd HH:mm:ss",
+    format = "YYYY-MM-DD HH:mm:ss",
     timezone = "Asia/Kuala_Lumpur",
     isUtc = false
 ) {
-    if (!value) return "";
+    // set default timezone as UTC
+    moment.tz.setDefault("Etc/UTC");
 
-    let dateValue;
-
-    // Ensure the date is correctly interpreted as UTC if needed
-    if (value.endsWith("Z") || value.includes("GMT")) {
-        dateValue = new Date(value);
-    } else {
-        // Treat as local time (assumed to be in system timezone)
-        dateValue = new Date(`${value}Z`); // Assume UTC to avoid local misinterpretation
-    }
-
-    if (isNaN(dateValue.getTime())) return "Invalid Date";
-
-    // Convert to target timezone
-    const zonedDate = utcToZonedTime(dateValue, timezone);
-
-    // Handle UTC conversion if isUtc is true
+    // return in utc format and specified timezone
     if (isUtc) {
-        const utcDate = zonedTimeToUtc(zonedDate, timezone);
-        return format(utcDate, formatString) + " " + format(utcDate, "XXX");
+        return moment(value).format(format) + moment().tz(timezone).format("Z");
     }
 
-    return format(zonedDate, formatString);
+    // convert value into timezone local time
+    return moment(value).tz(timezone).format(format);
 }
 
 export { displayDate };

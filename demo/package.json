@@ -10,8 +10,6 @@
   "dependencies": {
     "@supplycart/ui": "^1.0.5",
     "core-js": "^3.6.4",
-    "date-fns": "2.16.1",
-    "date-fns-tz": "1.1.7",
     "vue": "^2.6.11"
   },
   "devDependencies": {

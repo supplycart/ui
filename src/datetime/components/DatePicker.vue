@@ -15,7 +15,6 @@
         />
     </div>
 </template>
-
 <script>
 import FlatPickr from "vue-flatpickr-component";
 import { Timezones } from "../constants";

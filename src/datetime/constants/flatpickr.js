@@ -1,20 +1,17 @@
-import { format } from "date-fns";
-import { zonedTimeToUtc } from "date-fns-tz";
-
-const timeZone = "UTC";
+import moment from "moment";
 
 const DefaultConfig = {
     altInput: true,
     altFormat: "j M Y",
     dateFormat: "Z",
-    minDate: format(zonedTimeToUtc(new Date(), timeZone), "yyyy-MM-dd"),
+    minDate: moment().format("YYYY-MM-DD"),
 };
 
 const DefaultDateRangeConfig = {
     altInput: true,
     altFormat: "j M Y",
-    dateFormat: "Z",
-    minDate: format(zonedTimeToUtc(new Date(), timeZone), "yyyy-MM-dd"),
+    dateFormat: "Y-m-d",
+    minDate: moment().format("YYYY-MM-DD"),
     mode: "range",
 };
 
