@@ -1,106 +1,53 @@
 <template>
-    <input ref="input" type="text" />
+    <VueDatePicker
+        :model-value="modelValue"
+        @update:model-value="$emit('update:modelValue', $event)"
+        range
+        :min-date="config.minDate"
+        :max-date="config.maxDate"
+        :format="dateFormat"
+        :disabled="disabled"
+    />
 </template>
 <script>
-import merge from "lodash/merge";
-import flatpickr from "flatpickr";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css';
 
 export default {
+    name: 'DateRangePicker',
+    components: {
+        VueDatePicker,
+    },
     props: {
-        value: {
-            type: Object,
-            default: () => ({
-                from: null,
-                to: null,
-            }),
+        /**
+         * The selected date range (Vue 3 v-model) - array with start and end dates
+         */
+        modelValue: {
+            type: [Object, Array],
+            default: () => null,
         },
+        /**
+         * Date range picker configuration options
+         */
         config: {
             type: Object,
             default: () => ({}),
         },
-    },
-    data() {
-        return {
-            instance: null,
-            selected: {
-                from: this.value.from,
-                to: this.value.to,
-            },
-        };
-    },
-    watch: {
-        value(val) {
-            this.selected = val;
+        /**
+         * Whether the date range picker is disabled
+         */
+        disabled: {
+            type: Boolean,
+            default: false,
         },
-        selected(val) {
-            if (this.instance.config._minDate > flatpickr.parseDate(val.from)) {
-                this.instance.set("minDate", flatpickr.parseDate(val.from));
-            }
-
-            if (this.instance.config._maxDate < flatpickr.parseDate(val.to)) {
-                this.instance.set("maxDate", flatpickr.parseDate(val.to));
-            }
-
-            this.instance.setDate(Object.values(val));
+        /**
+         * Date format string
+         */
+        dateFormat: {
+            type: String,
+            default: 'yyyy-MM-dd',
         },
     },
-    methods: {
-        onClose(selectedDates, dateStr, instance) {
-            if (selectedDates.length === 2) {
-                // set to hours to end of day
-                selectedDates[1].setHours(23, 59, 59, 999);
-
-                this.$emit("input", {
-                    from: flatpickr.formatDate(
-                        selectedDates[0],
-                        this.instance.config.dateFormat
-                    ),
-                    to: flatpickr.formatDate(
-                        selectedDates[1],
-                        this.instance.config.dateFormat
-                    ),
-                });
-            }
-        },
-    },
-    mounted() {
-        const config = merge(
-            {
-                mode: "range",
-                altInput: true,
-                altFormat: "j M Y",
-                minDate: "today",
-            },
-            this.config
-        );
-
-        this.instance = flatpickr(this.$refs.input, {
-            ...config,
-            onClose: this.onClose,
-            defaultDate: Object.values(this.selected),
-        });
-
-        if (
-            this.instance.config._minDate >
-            flatpickr.parseDate(this.selected.from)
-        ) {
-            this.instance.set(
-                "minDate",
-                flatpickr.parseDate(this.selected.from)
-            );
-            this.instance.setDate(Object.values(this.selected));
-        }
-
-        if (
-            this.instance.config._maxDate <
-            flatpickr.parseDate(this.selected.to)
-        ) {
-            this.instance.set("maxDate", flatpickr.parseDate(this.selected.to));
-            this.instance.setDate(Object.values(this.selected));
-        }
-    },
-    beforeDestroy() {
-        this.instance.destroy();
-    },
+    emits: ['update:modelValue'],
 };
 </script>
