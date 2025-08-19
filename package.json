@@ -6,10 +6,9 @@
         "url": "https://github.com/supplycart/ui"
     },
     "scripts": {
-        "install-demo": "cd ./demo && pnpm install && pnpm link @supplycart/ui",
-        "serve": "cd ./demo && pnpm run serve",
-        "lint": "eslint src --format stylish",
-        "lint-fix": "eslint src --fix --format stylish"
+        "dev": "histoire dev",
+        "build": "histoire build",
+        "preview": "histoire preview"
     },
     "dependencies": {
         "core-js": "^3.6.4",
@@ -31,7 +30,9 @@
         "@babel/runtime": "^7.12.18",
         "@eslint/compat": "^1.2.4",
         "@eslint/js": "^9.18.0",
+        "@histoire/plugin-vue2": "^0.17.17",
         "@types/lodash": "^4.17.14",
+        "@vitejs/plugin-vue2": "^2.3.3",
         "@vue/eslint-config-prettier": "^10.2.0",
         "eslint": "^9.18.0",
         "eslint-config-prettier": "^9.1.0",
@@ -39,8 +40,10 @@
         "eslint-plugin-prettier": "^5.2.3",
         "eslint-plugin-vue": "^9.32.0",
         "globals": "^15.14.0",
+        "histoire": "0.17.17",
         "prettier": "^3.4.2",
         "prettier-eslint": "^16.3.0",
+        "vite": "4",
         "vue-eslint-parser": "^9.4.3"
     },
     "packageManager": "pnpm@10.6.2+sha512.47870716bea1572b53df34ad8647b42962bc790ce2bf4562ba0f643237d7302a3d6a8ecef9e4bdfc01d23af1969aa90485d4cebb0b9638fa5ef1daef656f6c1b"
