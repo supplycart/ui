@@ -6,14 +6,10 @@
         "url": "https://github.com/supplycart/ui"
     },
     "scripts": {
-        "install-demo": "cd ./demo && pnpm install && pnpm link @supplycart/ui",
-        "serve": "cd ./demo && pnpm run serve",
-        "lint": "eslint src --format stylish",
-        "lint-fix": "eslint src --fix --format stylish",
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
-        "docs:dev": "pnpm storybook",
-        "docs:build": "pnpm build-storybook"
+        "dev": "pnpm storybook",
+        "build": "pnpm build-storybook"
     },
     "dependencies": {
         "@vue/compat": "^3.4.0",
