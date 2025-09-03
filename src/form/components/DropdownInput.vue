@@ -110,7 +110,7 @@ export default {
                 this.focused = false;
                 this.$emit("input", e);
 
-                if (Array.isArray(e) ? e.length == 0 : e == null) {
+                if (this.required && (Array.isArray(e) ? e.length == 0 : e == null)) {
                     this.errorMessage = this.emptyMessage;
                 } else {
                     this.errorMessage = null;
