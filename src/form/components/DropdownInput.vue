@@ -87,7 +87,7 @@ const handleUpdate = (e) => {
     focused.value = false;
     emit("update:modelValue", e);
 
-    if (Array.isArray(e) ? e.length == 0 : e == null) {
+    if (props.required && (Array.isArray(e) ? e.length == 0 : e == null)) {
         errorMessage.value = emptyMessage;
     } else {
         errorMessage.value = null;
