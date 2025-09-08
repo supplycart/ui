@@ -9,7 +9,7 @@ import Currencies, {
 } from "../constants/currencies.js";
 
 const props = defineProps({
-    value: {
+    modelValue: {
         type: [String, Number],
         default: () => "0.00",
     },
@@ -71,8 +71,8 @@ const renderMoney = () => {
     currency = currency ? currency : DefaultCurrency;
 
     const alteredValue = noCentCurrency.value
-        ? numeral(props.value).divide(Math.pow(10, props.decimal)).value()
-        : props.value;
+        ? numeral(props.modelValue).divide(Math.pow(10, props.decimal)).value()
+        : props.modelValue;
 
     const val = props.intValue
         ? numeral(alteredValue).value()

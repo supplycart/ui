@@ -343,13 +343,13 @@ import {
     Currency
 } from "@supplycart/ui"
 import { format } from "date-fns"
-import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz"
+import { toZonedTime, fromZonedTime } from "date-fns-tz"
 
 // Reactive state
 const moneyv2 = ref(0)
 const deliveryCountry = ref("Malaysia")
 const attachments = ref([])
-const minDate = ref(format(zonedTimeToUtc(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd"))
+const minDate = ref(format(toZonedTime(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd"))
 const dateRange = ref({
     from: "2020-03-19",
     to: "2020-03-24"
@@ -404,7 +404,7 @@ const phone = ref("019-1234566")
 const time = ref(null)
 const check = ref(false)
 const password = ref("")
-const currentTime = ref(format(utcToZonedTime(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd HH:mm:ss"))
+const currentTime = ref(format(fromZonedTime(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd HH:mm:ss"))
 const meta = reactive({
     total: 180,
     last_page: 10,

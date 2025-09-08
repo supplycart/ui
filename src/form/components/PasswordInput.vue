@@ -51,7 +51,7 @@
 </template>
 <script setup>
 import { ref, computed } from "vue";
-import { Eye, EyeOff } from "lucide-vue";
+import { Eye, EyeOff } from "lucide-vue-next";
 import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 
 // Define props
@@ -108,7 +108,6 @@ const blur = (e) => {
 };
 
 const update = (e) => {
-    console.log(e.target.value)
     const target = e.target;
     emit("update:modelValue", target.value);
 };

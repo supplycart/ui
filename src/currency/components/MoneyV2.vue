@@ -12,7 +12,7 @@ const props = defineProps({
         type: [String, Object],
         default: "MYR",
     },
-    value: {
+    modelValue: {
         type: Number,
         default: 0,
     },
@@ -55,7 +55,7 @@ const displayFormat = computed(() => {
 });
 
 const displayValue = computed(() => {
-    let processedVal = numeral(props.value)
+    let processedVal = numeral(props.modelValue)
         .divide(Math.pow(10, props.decimal))
         .value();
 

@@ -1,5 +1,5 @@
 import { format, parseISO } from "date-fns";
-import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
+import { toZonedTime, fromZonedTime } from "date-fns-tz";
 
 export * from "./components";
 export * from "./constants";
@@ -25,11 +25,11 @@ function displayDate(
     if (isNaN(dateValue.getTime())) return "Invalid Date";
 
     // Convert to target timezone
-    const zonedDate = utcToZonedTime(dateValue, timezone);
+    const zonedDate = fromZonedTime(dateValue, timezone);
 
     // Handle UTC conversion if isUtc is true
     if (isUtc) {
-        const utcDate = zonedTimeToUtc(zonedDate, timezone);
+        const utcDate = toZonedTime(zonedDate, timezone);
         return format(utcDate, formatString) + " " + format(utcDate, "XXX");
     }
 

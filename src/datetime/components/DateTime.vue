@@ -1,32 +1,32 @@
 <script setup>
 import { computed } from "vue";
-import { utcToZonedTime, zonedTimeToUtc } from "date-fns-tz";
+import { fromZonedTime, toZonedTime } from "date-fns-tz";
 import { format } from "date-fns";
 
 const props = defineProps({
-    value: { type: String, default: "", required: true },
+    modelValue: { type: String, default: "", required: true },
     timezone: { type: String, default: "Asia/Kuala_Lumpur" },
     format: { type: String, default: "yyyy-MM-dd HH:mm:ss" },
     isUtc: { type: Boolean, default: false },
 });
 
 const localTime = computed(() => {
-    if (!props.value) return "";
+    if (!props.modelValue) return "";
 
     let dateValue;
 
-    if (props.value.endsWith("Z") || props.value.includes("GMT")) {
-        dateValue = new Date(props.value);
+    if (props.modelValue.endsWith("Z") || props.modelValue.includes("GMT")) {
+        dateValue = new Date(props.modelValue);
     } else {
-        dateValue = new Date(`${props.value}Z`);
+        dateValue = new Date(`${props.modelValue}Z`);
     }
 
     if (isNaN(dateValue.getTime())) return "Invalid Date";
 
-    const zonedDate = utcToZonedTime(dateValue, props.timezone);
+    const zonedDate = fromZonedTime(dateValue, props.timezone);
 
     if (props.isUtc) {
-        const utcDate = zonedTimeToUtc(zonedDate, props.timezone);
+        const utcDate = toZonedTime(zonedDate, props.timezone);
         return format(utcDate, props.format) + " " + format(utcDate, "XXX");
     }
 
