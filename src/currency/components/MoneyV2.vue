@@ -1,6 +1,6 @@
 <script>
 import numeral from "numeral";
-import CurrencySettings from "../constants/currencySettings.js";
+import CurrencySettings, { DefaultDisplayFormat } from "../constants/currencySettings.js";
 import { Decimal } from "decimal.js";
 
 export default {
@@ -69,7 +69,7 @@ export default {
         displayFormat() {
             return this.format
                 ? this.format
-                : CurrencySettings[this.currentCurrency]["displayFormat"];
+                : DefaultDisplayFormat;
         },
     },
     render(createElement) {
