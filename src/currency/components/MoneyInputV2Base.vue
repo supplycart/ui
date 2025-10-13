@@ -1,7 +1,7 @@
 <script>
 import numeral from "numeral";
 import { h } from "vue";
-import CurrencySettings from "../constants/currencySettings.js";
+import CurrencySettings, { DefaultDisplayFormat } from "../constants/currencySettings.js";
 
 export default {
     props: {
@@ -93,7 +93,7 @@ export default {
         displayFormat() {
             return this.format
                 ? this.format
-                : CurrencySettings[this.currentCurrency]["displayFormat"];
+                : DefaultDisplayFormat;
         },
         inputFormat() {
             return CurrencySettings[this.currentCurrency]["inputFormat"];
