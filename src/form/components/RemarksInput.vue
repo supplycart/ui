@@ -104,7 +104,7 @@ defineOptions({
 </script>
 
 <template>
-    <div class="input-holder">
+    <div class="input-holder v-bind="filteredAttrs"">
         <slot name="label">
             <label v-if="label" :for="filteredAttrs.id">
                 {{ label }}
