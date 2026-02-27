@@ -9,13 +9,14 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@supplycart/ui": "link:../",
+    "@supplycart-my/ui": "link:../",
+    "@vue/compat": "^3.5.13",
     "core-js": "^3.6.4",
     "date-fns": "2.16.1",
     "date-fns-tz": "1.1.7",
     "lodash-es": "^4.17.21",
-    "vue": "^3.5.13",
-    "@vue/compat": "^3.5.13"
+    "ui": "link:../../../Library/pnpm/global/5/node_modules/@supplycart-my/ui",
+    "vue": "^3.5.13"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.4",
@@ -33,5 +34,10 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "pnpm": {
+    "overrides": {
+      "ui": "link:../../../Library/pnpm/global/5/node_modules/@supplycart/ui"
+    }
+  }
 }

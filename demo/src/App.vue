@@ -341,7 +341,7 @@ import {
     DecimalField,
     formatCents,
     Currency
-} from "@supplycart/ui"
+} from "@supplycart-my/ui"
 import { format } from "date-fns"
 import { toZonedTime, fromZonedTime } from "date-fns-tz"
 

@@ -4,11 +4,14 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  ui: link:../../../Library/pnpm/global/5/node_modules/@supplycart/ui
+
 importers:
 
   .:
     dependencies:
-      '@supplycart/ui':
+      '@supplycart-my/ui':
         specifier: link:../
         version: link:..
       '@vue/compat':
@@ -26,6 +29,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      ui:
+        specifier: link:../../../Library/pnpm/global/5/node_modules/@supplycart/ui
+        version: link:../../../Library/pnpm/global/5/node_modules/@supplycart/ui
       vue:
         specifier: ^3.5.13
         version: 3.5.17
