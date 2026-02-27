@@ -1,6 +1,6 @@
 {
-    "name": "@supplycart/ui",
-    "version": "2.0.2",
+    "name": "@supplycart-my/ui",
+    "version": "2.0.6",
     "repository": {
         "type": "git",
         "url": "https://github.com/supplycart/ui"
@@ -14,7 +14,6 @@
         "lint-fix": "eslint src --fix --format stylish"
     },
     "dependencies": {
-        "@babel/runtime-corejs3": "^7.26.9",
         "core-js": "^3.6.4",
         "date-fns": "4.1.0",
         "date-fns-tz": "3.2.0",

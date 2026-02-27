@@ -146,24 +146,24 @@
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'dd MMM yy'"/>
+                        :format="'DD MMM YY'"/>
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'dd MMM yyyy'"/>
+                        :format="'DD MMM YYYY'"/>
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'dd MMM yyyy hh:mma'"/>
+                        :format="'DD MMM YYYY hh:mmA'"/>
                     <DateTime
                         :value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'EEE, dd MMM yyyy HH:mm'"/>
+                        :format="'ddd, DD MMM YYYY HH:mm'"/>
                     <DateTime
                         :value="currentTime"
                         :is-utc="true"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'EEE, dd MMM yyyy HH:mm'"/>
+                        :format="'ddd, DD MMM YYYY HH:mm'"/>
                 </div>
             </div>
             <div class="p-12">

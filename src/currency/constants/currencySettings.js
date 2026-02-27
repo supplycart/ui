@@ -141,4 +141,7 @@ const currencySettings = {
     },
 };
 
+const DefaultDisplayFormat = "0,0.00[00]";
+
 export default currencySettings;
+export { DefaultDisplayFormat };

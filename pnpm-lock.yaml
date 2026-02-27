@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@babel/runtime-corejs3':
-        specifier: ^7.26.9
-        version: 7.28.0
       '@vue/compat':
         specifier: ^3.4.27
         version: 3.5.17(vue@3.5.17(typescript@5.8.3))
@@ -18,11 +15,11 @@ importers:
         specifier: ^3.6.4
         version: 3.44.0
       date-fns:
-        specifier: 2.16.1
-        version: 2.16.1
+        specifier: 4.1.0
+        version: 4.1.0
       date-fns-tz:
-        specifier: 1.1.7
-        version: 1.1.7(date-fns@2.16.1)
+        specifier: 3.2.0
+        version: 3.2.0(date-fns@4.1.0)
       decimal.js:
         specifier: ^10.5.0
         version: 10.6.0
@@ -114,10 +111,6 @@ packages:
     resolution: {integrity: sha512-jVZGvOxOuNSsuQuLRTh13nU0AogFlw32w/MT+LV6D3sP5WdbW61E77RnkbaO2dUvmPAYrBDJXGn5gGS6tH4j8g==}
     engines: {node: '>=6.0.0'}
     hasBin: true
-
-  '@babel/runtime-corejs3@7.28.0':
-    resolution: {integrity: sha512-nlIXnSqLcBij8K8TtkxbBJgfzfvi75V1pAKSM7dUXejGw12vJAqez74jZrHTsJ3Z+Aczc5Q/6JgNjKRMsVU44g==}
-    engines: {node: '>=6.9.0'}
 
   '@babel/runtime@7.27.6':
     resolution: {integrity: sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==}
@@ -455,9 +448,6 @@ packages:
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
-  core-js-pure@3.44.0:
-    resolution: {integrity: sha512-gvMQAGB4dfVUxpYD0k3Fq8J+n5bB6Ytl15lqlZrOIXFzxOhtPaObfkQGHtMRdyjIf7z2IeNULwi1jEwyS+ltKQ==}
-
   core-js@3.44.0:
     resolution: {integrity: sha512-aFCtd4l6GvAXwVEh3XbbVqJGHDJt0OZRa+5ePGx3LLwi12WfexqQxcsohb2wgsa/92xtl19Hd66G/L+TaAxDMw==}
 
@@ -485,14 +475,13 @@ packages:
     resolution: {integrity: sha512-BS8PfmtDGnrgYdOonGZQdLZslWIeCGFP9tpan0hi1Co2Zr2NKADsvGYA8XxuG/4UWgJ6Cjtv+YJnB6MM69QGlQ==}
     engines: {node: '>= 0.4'}
 
-  date-fns-tz@1.1.7:
-    resolution: {integrity: sha512-xfL918kXO528DJ17Sao60H07rYv5L/X0Bp6zojDssuZAR/acYETDS9PaICKAnodcO9XVHL/0bpLRGKd7kNnvcQ==}
+  date-fns-tz@3.2.0:
+    resolution: {integrity: sha512-sg8HqoTEulcbbbVXeg84u5UnlsQa8GS5QXMqjjYIhS4abEVVKIUwe0/l/UhrZdKaL/W5eWZNlbTeEIiOXTcsBQ==}
     peerDependencies:
-      date-fns: '>=2.0.0-alpha.13'
+      date-fns: ^3.0.0 || ^4.0.0
 
-  date-fns@2.16.1:
-    resolution: {integrity: sha512-sAJVKx/FqrLYHAQeN7VpJrPhagZc9R4ImZIWYRFZaaohR3KzmuK88touwsSwSVT8Qcbd4zoDsnGfX4GFB4imyQ==}
-    engines: {node: '>=0.11'}
+  date-fns@4.1.0:
+    resolution: {integrity: sha512-Ukq0owbQXxa/U3EGtsdVBkR1w7KOQ5gIBqdH2hkvknzZPYvBxb/aa6E8L7tmjFtkwZBu3UXBbjIgPo/Ez4xaNg==}
 
   debug@3.2.7:
     resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
@@ -1494,10 +1483,6 @@ snapshots:
     dependencies:
       '@babel/types': 7.28.1
 
-  '@babel/runtime-corejs3@7.28.0':
-    dependencies:
-      core-js-pure: 3.44.0
-
   '@babel/runtime@7.27.6': {}
 
   '@babel/types@7.28.1':
@@ -1889,8 +1874,6 @@ snapshots:
 
   concat-map@0.0.1: {}
 
-  core-js-pure@3.44.0: {}
-
   core-js@3.44.0: {}
 
   cross-spawn@7.0.6:
@@ -1921,11 +1904,11 @@ snapshots:
       es-errors: 1.3.0
       is-data-view: 1.0.2
 
-  date-fns-tz@1.1.7(date-fns@2.16.1):
+  date-fns-tz@3.2.0(date-fns@4.1.0):
     dependencies:
-      date-fns: 2.16.1
+      date-fns: 4.1.0
 
-  date-fns@2.16.1: {}
+  date-fns@4.1.0: {}
 
   debug@3.2.7:
     dependencies:

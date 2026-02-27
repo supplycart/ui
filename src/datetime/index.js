@@ -6,11 +6,12 @@ export * from "./constants";
 
 function displayDate(
     value,
-    formatString = "yyyy-MM-dd HH:mm:ss",
+    format = "YYYY-MM-DD HH:mm:ss",
     timezone = "Asia/Kuala_Lumpur",
     isUtc = false,
 ) {
-    if (!value) return "";
+    // set default timezone as UTC
+    moment.tz.setDefault("Etc/UTC");
 
     let dateValue;
 
@@ -33,7 +34,8 @@ function displayDate(
         return format(utcDate, formatString) + " " + format(utcDate, "XXX");
     }
 
-    return format(zonedDate, formatString);
+    // convert value into timezone local time
+    return moment(value).tz(timezone).format(format);
 }
 
 export { displayDate };
