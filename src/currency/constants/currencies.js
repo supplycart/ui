@@ -1,5 +1,5 @@
-import find from "lodash/find";
-import filter from "lodash/filter";
+import { find } from "lodash-es";
+import { filter } from "lodash-es";
 
 const currencies = [
     {

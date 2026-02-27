@@ -1,8 +1,68 @@
+<script setup>
+import { computed, ref } from "vue";
+import MoneyInputBase from "./MoneyInputV2Base.vue";
+import FormLabel from "../../form/components/FormLabel.vue";
+import { useFilteredAttrs } from "../../form/composables/useFilteredAttrs.js";
+
+const props = defineProps({
+    label: {
+        type: String,
+        default: null,
+    },
+    required: {
+        type: Boolean,
+        default: false,
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+    modelValue: {
+        type: [Number, String],
+        default: 0,
+    },
+    value: {
+        type: [Number, String],
+        default: 0,
+    },
+    inputClass: {
+        type: [String, Object],
+        default: null,
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "input", "keydown"]);
+
+const showError = ref(false);
+
+const input = computed({
+    get() {
+        return props.modelValue !== undefined ? props.modelValue : props.value;
+    },
+    set(value) {
+        emit("update:modelValue", value);
+        emit("input", value);
+    },
+});
+
+const handleKeydown = () => {
+    emit("keydown");
+};
+
+// Use filtered attrs to handle Vue 3 compatibility
+const { filteredAttrs, attrsClass } = useFilteredAttrs();
+
+// Define options
+defineOptions({
+    inheritAttrs: false,
+});
+</script>
+
 <template>
     <div>
         <slot name="label">
             <FormLabel
-                :id="$attrs.id"
+                :id="filteredAttrs.id"
                 :label="label"
                 :required="required"
                 :disabled="disabled"
@@ -11,11 +71,11 @@
 
         <MoneyInputBase
             v-model="input"
-            v-bind="$attrs"
-            :class="[showError ? 'input-error' : '', inputClass]"
+            v-bind="filteredAttrs"
+            :class="[showError ? 'input-error' : '', inputClass, attrsClass]"
             :disabled="disabled"
             :required="required"
-            @keydown="$emit('keydown')"
+            @keydown="handleKeydown"
         />
 
         <slot name="error">
@@ -26,49 +86,3 @@
         <slot name="description" />
     </div>
 </template>
-<script>
-import MoneyInputBase from "./MoneyInputV2Base.vue";
-export default {
-    components: {
-        FormLabel: () => import("../../form/components/FormLabel.vue"),
-        MoneyInputBase,
-    },
-    props: {
-        label: {
-            type: String,
-            default: null,
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        value: {
-            type: [Number, String],
-            default: 0,
-        },
-        inputClass: {
-            type: [String, Object],
-            default: null,
-        },
-    },
-    computed: {
-        input: {
-            get() {
-                return this.value;
-            },
-            set(value) {
-                this.$emit("input", value);
-            },
-        },
-    },
-    data() {
-        return {
-            showError: false,
-        };
-    },
-};
-</script>

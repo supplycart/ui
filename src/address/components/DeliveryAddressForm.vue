@@ -1,3 +1,57 @@
+<script setup>
+import { computed } from "vue";
+import { useAddressForm } from "../composables/useAddressForm";
+import { useMalaysiaStates } from "../composables/useMalaysiaStates";
+import "vue-select/dist/vue-select.css";
+import VSelect from "vue-select";
+import TextInput from "../../form/components/TextInput.vue";
+import Checkbox from "../../form/components/Checkbox.vue";
+
+const props = defineProps({
+    modelValue: {
+        type: Object,
+        default: () => ({}),
+    },
+    countries: {
+        type: [Object, Array],
+        default: () => ["Malaysia"],
+    },
+    disableFields: {
+        type: Array,
+        default: () => [],
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "changeCountry"]);
+
+const {
+    labels: LABELS,
+    addressCountryConfig,
+    disabledFields,
+} = useAddressForm(props);
+const { states } = useMalaysiaStates();
+
+const value = computed({
+    get() {
+        return props.modelValue || {};
+    },
+    set(newValue) {
+        emit("update:modelValue", newValue);
+    },
+});
+
+const setCountry = computed({
+    get() {
+        return value.value.country || "Malaysia";
+    },
+    set(newCountry) {
+        const updatedValue = { ...value.value, country: newCountry };
+        emit("update:modelValue", updatedValue);
+        emit("changeCountry", newCountry);
+    },
+});
+</script>
+
 <template>
     <div>
         <div>
@@ -10,7 +64,6 @@
                     class="w-full mr-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
-                <portal-target name="address-branch-name" class="italic" />
             </div>
         </div>
 
@@ -23,7 +76,6 @@
                     class="w-full"
                     input-class="p-2 rounded border border-gray-200"
                 />
-                <portal-target name="address-unit" class="italic" />
             </div>
             <div v-if="addressCountryConfig.floor" class="mb-4">
                 <TextInput
@@ -33,7 +85,6 @@
                     class="w-full"
                     input-class="p-2 rounded border border-gray-200"
                 />
-                <portal-target name="address-floor" class="italic" />
             </div>
             <div v-if="addressCountryConfig.building" class="mb-4">
                 <TextInput
@@ -44,7 +95,6 @@
                     input-class="p-2 rounded border border-gray-200"
                 />
             </div>
-            <portal-target name="address-building" class="italic" />
         </div>
         <div v-if="addressCountryConfig.street" class="mb-4">
             <TextInput
@@ -55,7 +105,6 @@
                 class="w-full mr-4"
                 input-class="p-2 rounded border border-gray-200"
             />
-            <portal-target name="address-street" class="italic" />
         </div>
         <div class="grid grid-cols-2 gap-2">
             <div v-if="addressCountryConfig.city" class="mb-4">
@@ -67,7 +116,6 @@
                     class="w-full mr-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
-                <portal-target name="address-city" class="italic" />
             </div>
 
             <div v-if="addressCountryConfig.district" class="mb-4">
@@ -79,7 +127,6 @@
                     class="w-full mr-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
-                <portal-target name="address-city" class="italic" />
             </div>
 
             <div v-if="addressCountryConfig.postcode" class="mb-4">
@@ -91,7 +138,6 @@
                     class="w-full mr-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
-                <portal-target name="address-postcode" class="italic" />
             </div>
             <div v-if="addressCountryConfig.zipcode" class="mb-4">
                 <TextInput
@@ -102,7 +148,6 @@
                     class="w-full mr-4"
                     input-class="p-2 rounded border border-gray-200"
                 />
-                <portal-target name="address-postcode" class="italic" />
             </div>
         </div>
         <div class="mb-4 grid grid-cols-2 gap-2">
@@ -116,7 +161,6 @@
                     v-model="value.state"
                     class="mt-2 select-country"
                 ></VSelect>
-                <portal-target name="address-state" class="italic" />
             </div>
 
             <div>
@@ -129,7 +173,6 @@
                     v-model="setCountry"
                     class="mt-2 select-country"
                 ></VSelect>
-                <portal-target name="address-country" class="italic" />
             </div>
         </div>
         <div class="grid grid-cols-2 gap-2">
@@ -161,17 +204,3 @@
         </div>
     </div>
 </template>
-
-<script>
-import AddressFormMixins from "../mixins/addressForm";
-import StateMixins from "../mixins/malaysiaStates";
-
-export default {
-    name: "DeliveryAddressForm",
-    components: {
-        TextInput: () => import("../../form/components/TextInput.vue"),
-        Checkbox: () => import("../../form/components/Checkbox.vue"),
-    },
-    mixins: [AddressFormMixins, StateMixins],
-};
-</script>

@@ -1,13 +1,13 @@
 <template>
     <div id="app"
-         class="flex-1">
+         class="w-full min-h-screen p-4">
         <div class="text-center my-8">
             <img alt="Vue logo"
                  src="./assets/logo.png"
                  class="mx-auto w-24 mb-3">
             <h1 class="text-xl font-bold">Supplycart UI</h1>
         </div>
-        <div class="grid grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-full">
             <div class="p-12">
                 <h2 class="mb-2 font-bold text-gray-600">DatePicker</h2>
                 <DatePicker class="p-2 rounded border border-gray-200 w-1/2"
@@ -313,159 +313,136 @@
     </div>
 </template>
 
-<script>
-    import {
-        Address,
-        AddressForm,
-        AttachmentInput,
-        Checkbox,
-        DatePicker,
-        DateRangePicker,
-        DateTime,
-        TimePicker,
-        Money,
-        MoneyV2,
-        MoneyInput,
-        MoneyInputV2,
-        EmailInput,
-        TextInput,
-        PhoneInput,
-        RemarksInput,
-        QuantityInput,
-        SubmitButton,
-        Paginate,
-        PasswordInput,
-        TextareaInput,
-        DropdownInput,
-        DecimalField,
-        formatCents,
-        Currency
-    } from "@supplycart/ui";
-    import moment from "moment";
+<script setup>
+import { ref, reactive, onMounted } from 'vue'
+import {
+    Address,
+    AddressForm,
+    AttachmentInput,
+    Checkbox,
+    DatePicker,
+    DateRangePicker,
+    DateTime,
+    TimePicker,
+    Money,
+    MoneyV2,
+    MoneyInput,
+    MoneyInputV2,
+    EmailInput,
+    TextInput,
+    PhoneInput,
+    RemarksInput,
+    SubmitButton,
+    QuantityInput,
+    Paginate,
+    PasswordInput,
+    TextareaInput,
+    DropdownInput,
+    DecimalField,
+    formatCents,
+    Currency
+} from "@supplycart-my/ui"
+import { format } from "date-fns"
+import { toZonedTime, fromZonedTime } from "date-fns-tz"
 
-    export default {
-        name: "App",
-        components: {
-            Address,
-            AddressForm,
-            AttachmentInput,
-            Checkbox,
-            DateTime,
-            DatePicker,
-            TimePicker,
-            DateRangePicker,
-            Money,
-            MoneyV2,
-            MoneyInput,
-            MoneyInputV2,
-            EmailInput,
-            TextInput,
-            PhoneInput,
-            RemarksInput,
-            SubmitButton,
-            QuantityInput,
-            Paginate,
-            PasswordInput,
-            TextareaInput,
-            DropdownInput,
-            DecimalField,
-            Currency,
-        },
-        data() {
-            return {
-                moneyv2:0,
-                deliveryCountry: 'Malaysia',
-                attachments: [],
-                minDate: moment().format("YYYY-MM-DD"),
-                dateRange: {
-                    from: "2020-03-19",
-                    to: "2020-03-24"
-                },
-                moneyInput: {
-                    integer: 1000,
-                    value: 10.00,
-                    decimal: 4,
-                },
-                testMoneyVal:0,
-                money: {
-                    integer: 102355,
-                    value: 10.00,
-                    decimal: 4,
-                },
-                malaysiaBillingAddress: {
-                    entity_name: "Supplycart",
-                    pic_name: "Will",
-                    pic_phone: "012340545343",
-                    unit: "PG02",
-                    floor: "Ground Floor",
-                    building: "Phoenix Tower",
-                    street: "Jalan BM1/8 Taman Bukit Mayang Emas",
-                    city: "Petaling Jaya",
-                    state: "Selangor",
-                    postcode: "47301",
-                    country: "Singapore",
-                    einvoice_email: "will@supplycart.my",
-                    registration_no: "REG0001",
-                    ref_no: "REG0011A"
-                },
-                malaysiaDeliveryAddress: {
-                    branch_name: "Supplycart",
-                    unit: "PG02",
-                    floor: "Ground Floor",
-                    building: "Phoenix Tower",
-                    street: "Jalan BM1/8 Taman Bukit Mayang Emas",
-                    city: "Petaling Jaya",
-                    state: "Selangor",
-                    postcode: "47301",
-                    country: "Malaysia",
-                    pic_phone: "012340545343",
-                    lift_access: true,
-                    requires_permit: false
-                },
-                name: {
-                    first: null,
-                    last: null
-                },
-                quantity: 200,
-                phone: '019-1234566',
-                time: null,
-                check: false,
-                password: '',
-                currentTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-                meta: {
-                    total: 180,
-                    last_page: 10,
-                    from: 1,
-                    to: 8,
-                    current_page: 1,
-                },
-                state: null,
-                stateOptions: [{id:1,label:'Pahang'},{id:2,label:'Perak'}, {id:3,label:'Melaka'}],
-                dropdownError: null
-            };
-        },
-        mounted() {
-            const vm = this;
+// Reactive state
+const moneyv2 = ref(0)
+const deliveryCountry = ref("Malaysia")
+const attachments = ref([])
+const minDate = ref(format(toZonedTime(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd"))
+const dateRange = ref({
+    from: "2020-03-19",
+    to: "2020-03-24"
+})
+const moneyInput = reactive({
+    integer: 1000,
+    value: 10.00,
+    decimal: 4,
+})
+const testMoneyVal = ref(0)
+const money = reactive({
+    integer: 102355,
+    value: 10.00,
+    decimal: 4,
+})
+const malaysiaBillingAddress = reactive({
+    entity_name: "Supplycart",
+    pic_name: "Will",
+    pic_phone: "012340545343",
+    unit: "PG02",
+    floor: "Ground Floor",
+    building: "Phoenix Tower",
+    street: "Jalan BM1/8 Taman Bukit Mayang Emas",
+    city: "Petaling Jaya",
+    state: "Selangor",
+    postcode: "47301",
+    country: "Singapore",
+    einvoice_email: "will@supplycart.my",
+    registration_no: "REG0001",
+    ref_no: "REG0011A"
+})
+const malaysiaDeliveryAddress = reactive({
+    branch_name: "Supplycart",
+    unit: "PG02",
+    floor: "Ground Floor",
+    building: "Phoenix Tower",
+    street: "Jalan BM1/8 Taman Bukit Mayang Emas",
+    city: "Petaling Jaya",
+    state: "Selangor",
+    postcode: "47301",
+    country: "Malaysia",
+    pic_phone: "012340545343",
+    lift_access: true,
+    requires_permit: false
+})
+const name = reactive({
+    first: null,
+    last: null
+})
+const quantity = ref(200)
+const phone = ref("019-1234566")
+const time = ref(null)
+const check = ref(false)
+const password = ref("")
+const currentTime = ref(format(fromZonedTime(new Date(), "Asia/Kuala_Lumpur"), "yyyy-MM-dd HH:mm:ss"))
+const meta = reactive({
+    total: 180,
+    last_page: 10,
+    from: 1,
+    to: 8,
+    current_page: 1,
+})
+const state = ref(null)
+const stateOptions = ref([
+    { id: 1, label: "Pahang" },
+    { id: 2, label: "Perak" },
+    { id: 3, label: "Melaka" }
+])
+const dropdownError = ref(null)
+const email = ref("")
 
-            setTimeout(function () {
-                vm.dateRange = {
-                    from: "2020-01-01",
-                    to: "2020-03-31"
-                };
-                vm.minDate = "2020-01-01";
-            }, 5000);
-            
-        },
-        methods: {
-            formatCents,
-            test(e) {
-                console.log('input dropdown', e)
-            },
-            displayError(message) {
-                console.table(message)
-            }
+onMounted(() => {
+    setTimeout(() => {
+        dateRange.value = {
+            from: "2020-01-01",
+            to: "2020-03-31"
         }
-    };
+        minDate.value = "2020-01-01"
+    }, 5000)
+})
+
+const test = (e) => {
+    console.log("input dropdown", e)
+}
+
+const displayError = (message) => {
+    console.table(message)
+}
+
+// Define component name
+defineOptions({
+    name: "App"
+})
 </script>
 
 <style>

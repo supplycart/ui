@@ -1,11 +1,28 @@
+<script setup>
+const props = defineProps({
+    modelValue: {
+        type: [Number, String],
+        default: 30,
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "change"]);
+
+const updateValue = (event) => {
+    const value = event.target.value;
+    emit("update:modelValue", value);
+    emit("change", value);
+};
+</script>
+
 <template>
     <div class="perpage text-right ml-1">
         <div class="inline-block dropdown relative">
             <select
-                v-model="limit"
+                :value="modelValue"
                 class="selections"
                 style="padding-right: 1.2rem; padding-left: 0.5rem"
-                @change="$emit('change')"
+                @change="updateValue"
             >
                 <option value="15">Per Page 15</option>
                 <option value="30">Per Page 30</option>
@@ -31,23 +48,3 @@
         </div>
     </div>
 </template>
-<script>
-export default {
-    props: {
-        value: {
-            type: [Number, String],
-            default: 30,
-        },
-    },
-    computed: {
-        limit: {
-            get() {
-                return this.value;
-            },
-            set(value) {
-                this.$emit("input", value);
-            },
-        },
-    },
-};
-</script>

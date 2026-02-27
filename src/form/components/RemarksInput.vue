@@ -1,19 +1,129 @@
+<script setup>
+import { ref, computed } from "vue";
+import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
+
+// Define props
+const props = defineProps({
+    id: {
+        type: String,
+        default: null,
+    },
+    label: {
+        type: String,
+        default: null,
+    },
+    modelValue: {
+        type: String,
+        default: null,
+    },
+    error: {
+        type: String,
+        default: null,
+    },
+    description: {
+        type: String,
+        default: null,
+    },
+    regex: {
+        type: RegExp,
+        default: () => /^.{0,255}$/,
+    },
+    required: {
+        type: Boolean,
+        default: false,
+    },
+    format: {
+        type: String,
+        default: "Max 255 characters",
+    },
+    inputClass: {
+        type: String,
+        default: null,
+    },
+    rows: {
+        type: Number,
+        default: 4,
+    },
+});
+
+// Define emits
+const emit = defineEmits(["update:modelValue", "blur", "keydown"]);
+
+// Reactive state
+const focused = ref(false);
+
+// Computed properties
+const showError = computed(() => {
+    return props.error && props.required && !props.modelValue && focused.value;
+});
+
+const isInvalid = computed(() => {
+    if (!props.regex) return false;
+    const value = props.modelValue ? props.modelValue.length <= 255 : false;
+
+    return !value && focused.value && props.modelValue;
+});
+
+const charLeft = computed(() => {
+    return props.modelValue ? 255 - props.modelValue.length : 255;
+});
+
+// Methods
+const handleInput = (e) => {
+    const str = e.target.value.slice(0, 255);
+    emit("update:modelValue", str);
+};
+
+const blur = (e) => {
+    emit("blur", e);
+};
+
+const focus = (e) => {
+    focused.value = true;
+};
+
+const charCount = (event) => {
+    if (!props.modelValue) return;
+
+    if (props.modelValue.length >= 255) {
+        if (event.keyCode >= 48 && event.keyCode <= 90) {
+            event.preventDefault();
+            return;
+        }
+    }
+    emit("keydown");
+};
+
+// Use filtered attrs to handle Vue 3 compatibility
+const { filteredAttrs, attrsClass } = useFilteredAttrs();
+
+// Define options
+defineOptions({
+    inheritAttrs: false,
+});
+</script>
+
 <template>
-    <div class="input-holder">
+    <div class="input-holder v-bind="filteredAttrs"">
         <slot name="label">
-            <label v-if="label" :for="$attrs.id">
+            <label v-if="label" :for="filteredAttrs.id">
                 {{ label }}
                 <small v-if="required" class="italic text-red-600">*</small>
             </label>
         </slot>
 
         <textarea
-            v-model="input"
+            :value="modelValue"
             :rows="rows"
-            v-bind="$attrs"
+            v-bind="filteredAttrs"
             class="h-textarea"
-            :class="[showError || isInvalid ? 'error' : '', inputClass]"
+            :class="[
+                showError || isInvalid ? 'error' : '',
+                inputClass,
+                attrsClass,
+            ]"
             :required="required"
+            @input="handleInput"
             @focus="focus"
             @blur="blur"
             @keydown="charCount($event)"
@@ -41,104 +151,10 @@
         </slot>
     </div>
 </template>
+
 <style>
 .h-textarea {
     resize: none;
     overflow-y: auto;
 }
 </style>
-<script>
-export default {
-    inheritAttrs: false,
-    props: {
-        id: {
-            type: String,
-            default: null,
-        },
-        label: {
-            type: String,
-            default: null,
-        },
-        value: {
-            type: String,
-            default: null,
-        },
-        error: {
-            type: String,
-            default: null,
-        },
-        description: {
-            type: String,
-            default: null,
-        },
-        regex: {
-            type: RegExp,
-            default: () => /^.{0,255}$/,
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-        format: {
-            type: String,
-            default: "Max 255 characters",
-        },
-        inputClass: {
-            type: String,
-            default: null,
-        },
-        rows: {
-            type: Number,
-            default: 4,
-        },
-    },
-    data() {
-        return {
-            focused: false,
-        };
-    },
-    computed: {
-        input: {
-            get() {
-                return this.value;
-            },
-            set(e) {
-                var str = e.slice(0, 255);
-                this.$emit("input", str);
-                this.$forceUpdate();
-            },
-        },
-        showError() {
-            return this.error && this.required && !this.input && this.focused;
-        },
-        isInvalid() {
-            if (!this.regex) return false;
-            const value = this.input ? this.input.length <= 255 : false;
-
-            return !value && this.focused && this.input;
-        },
-        charLeft() {
-            return this.input ? 255 - this.input.length : 255;
-        },
-    },
-    methods: {
-        blur(e) {
-            this.$emit("blur", e);
-        },
-        focus(e) {
-            this.focused = true;
-        },
-        charCount(event) {
-            if (!this.input) return;
-
-            if (this.input.length >= 255) {
-                if (event.keyCode >= 48 && event.keyCode <= 90) {
-                    event.preventDefault();
-                    return;
-                }
-            }
-            this.$emit("keydown");
-        },
-    },
-};
-</script>

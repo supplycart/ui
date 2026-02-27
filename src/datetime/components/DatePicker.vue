@@ -1,3 +1,78 @@
+<script setup>
+import { computed, ref, watch } from "vue";
+import FlatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
+import { Timezones } from "../constants";
+import { DefaultConfig } from "../constants/flatpickr";
+import FormLabel from "../../form/components/FormLabel.vue";
+
+const props = defineProps({
+    id: {
+        type: String,
+        default: null,
+    },
+    label: {
+        type: String,
+        default: null,
+    },
+    labelClass: {
+        type: String,
+        default: "inline-block mb-2",
+    },
+    modelValue: {
+        type: [String, Date],
+        default: null,
+    },
+    value: {
+        type: [String, Date],
+        default: null,
+    },
+    timezone: {
+        type: [String, Object],
+        default() {
+            return Timezones.MALAYSIA.timezone;
+        },
+    },
+    config: {
+        type: Object,
+        default: () => {},
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+    required: {
+        type: Boolean,
+        default: false,
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "input"]);
+
+const dateConfig = ref({});
+
+const input = computed({
+    get() {
+        return props.modelValue !== undefined ? props.modelValue : props.value;
+    },
+    set(val) {
+        emit("update:modelValue", val);
+        emit("input", val);
+    },
+});
+
+watch(
+    () => props.config,
+    (val) => {
+        dateConfig.value = {
+            ...DefaultConfig,
+            ...val,
+        };
+    },
+    { deep: true, immediate: true },
+);
+</script>
+
 <template>
     <div>
         <FormLabel
@@ -15,78 +90,3 @@
         />
     </div>
 </template>
-<script>
-import FlatPickr from "vue-flatpickr-component";
-import { Timezones } from "../constants";
-import { DefaultConfig } from "../constants/flatpickr";
-
-export default {
-    components: {
-        FlatPickr,
-        FormLabel: () => import("../../form/components/FormLabel.vue"),
-    },
-    props: {
-        id: {
-            type: String,
-            default: null,
-        },
-        label: {
-            type: String,
-            default: null,
-        },
-        labelClass: {
-            type: String,
-            default: "inline-block mb-2",
-        },
-        value: {
-            type: [String, Date],
-            default: null,
-        },
-        timezone: {
-            type: [String, Object],
-            default() {
-                return Timezones.MALAYSIA.timezone;
-            },
-        },
-        config: {
-            type: Object,
-            default: () => {},
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        required: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    data() {
-        return {
-            dateConfig: {},
-        };
-    },
-    computed: {
-        input: {
-            get() {
-                return this.value;
-            },
-            set(val) {
-                this.$emit("input", val);
-            },
-        },
-    },
-    watch: {
-        config: {
-            handler: function (val) {
-                this.dateConfig = {
-                    ...DefaultConfig,
-                    ...val,
-                };
-            },
-            deep: true,
-            immediate: true,
-        },
-    },
-};
-</script>

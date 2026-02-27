@@ -1,3 +1,50 @@
+<script setup>
+import { computed } from "vue";
+import FlatPickr from "vue-flatpickr-component";
+import "flatpickr/dist/flatpickr.css";
+import { merge } from "lodash-es";
+import { DefaultTimeConfig } from "../constants/flatpickr";
+
+const props = defineProps({
+    id: {
+        type: String,
+        default: null,
+    },
+    modelValue: {
+        type: String,
+        default: null,
+    },
+    value: {
+        type: String,
+        default: null,
+    },
+    config: {
+        type: Object,
+        default: () => {},
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "input"]);
+
+const input = computed({
+    get() {
+        return props.modelValue !== undefined ? props.modelValue : props.value;
+    },
+    set(val) {
+        emit("update:modelValue", val);
+        emit("input", val);
+    },
+});
+
+const timeConfig = computed(() => {
+    return merge(DefaultTimeConfig, props.config);
+});
+</script>
+
 <template>
     <FlatPickr
         :id="id"
@@ -6,44 +53,3 @@
         :disabled="disabled"
     />
 </template>
-<script>
-import FlatPickr from "vue-flatpickr-component";
-import merge from "lodash/merge";
-import { DefaultTimeConfig } from "../constants/flatpickr";
-
-export default {
-    name: "TimePicker",
-    components: { FlatPickr },
-    props: {
-        id: {
-            type: String,
-            default: null,
-        },
-        value: {
-            type: String,
-            default: null,
-        },
-        config: {
-            type: Object,
-            default: () => {},
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    computed: {
-        input: {
-            get() {
-                return this.value;
-            },
-            set(val) {
-                this.$emit("input", val);
-            },
-        },
-        timeConfig() {
-            return merge(DefaultTimeConfig, this.config);
-        },
-    },
-};
-</script>

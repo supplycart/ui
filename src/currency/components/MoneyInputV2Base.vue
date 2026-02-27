@@ -1,173 +1,181 @@
-<script>
+<script setup>
+import { computed, ref, nextTick, getCurrentInstance } from "vue";
 import numeral from "numeral";
-import { h } from "vue";
-import CurrencySettings, { DefaultDisplayFormat } from "../constants/currencySettings.js";
+import CurrencySettings from "../constants/currencySettings.js";
 
-export default {
-    props: {
-        decimal: {
-            type: Number,
-            default: 2,
-        },
-        currency: {
-            type: [String, Object],
-            default: "MYR",
-        },
-        value: {
-            type: Number,
-            default: 0,
-        },
-        withSign: {
-            type: Boolean,
-            default: false,
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        format: {
-            type: String,
-            default: null,
-        },
-        allowNegative: {
-            type: Boolean,
-            default: false,
-        },
-        placeholder: {
-            type: String,
-            default: null,
-        },
+const props = defineProps({
+    decimal: {
+        type: Number,
+        default: 2,
     },
-    data() {
-        return {
-            editing: false,
-        };
+    currency: {
+        type: [String, Object],
+        default: "MYR",
     },
-    computed: {
-        rawValue: {
-            get() {
-                return this.value ?? 0;
-            },
-            set(val) {
-                this.$emit("input", val);
-            },
-        },
-        inputValue: {
-            get() {
-                return numeral(this.rawValue)
-                    .divide(Math.pow(10, this.decimal))
-                    .value();
-            },
-            set(value) {
-                this.rawValue = Number(
-                    numeral(value)
-                        .multiply(Math.pow(10, this.decimal))
-                        .value()
-                        .toFixed(this.decimal),
-                );
-            },
-        },
-        displayValue: {
-            get() {
-                return (
-                    (this.withSign && this.currencySignPos == "BEFORE"
-                        ? `${this.currencySign} `
-                        : "") +
-                    numeral(this.inputValue).format(this.displayFormat) +
-                    (this.withSign && this.currencySignPos == "AFTER"
-                        ? ` ${this.currencySign}`
-                        : "")
-                );
-            },
-            set(val) {},
-        },
-        currentCurrency() {
-            const currencyStr =
-                typeof this.currency == "object"
-                    ? this.currency.code
-                    : this.currency;
-            return Object.keys(CurrencySettings).includes(currencyStr)
-                ? currencyStr
-                : "MYR";
-        },
-        displayFormat() {
-            return this.format
-                ? this.format
-                : DefaultDisplayFormat;
-        },
-        inputFormat() {
-            return CurrencySettings[this.currentCurrency]["inputFormat"];
-        },
-        currencySign() {
-            return CurrencySettings[this.currentCurrency]["sign"];
-        },
-        currencySignPos() {
-            return CurrencySettings[this.currentCurrency]["signPosition"];
-        },
+    modelValue: {
+        type: Number,
+        default: 0,
     },
-    render: function (h) {
-        const vm = this;
-
-        const display = h("input", {
-            attrs: {
-                type: "text",
-                class:
-                    "border border-gray-300 rounded p-2 text-right" +
-                    (vm.editing ? " hidden" : ""),
-                pattern: "[0-9.!a-zA-Z0]",
-                disabled: vm.disabled,
-                placeholder: vm.placeholder,
-            },
-            domProps: {
-                value: vm.displayValue,
-            },
-            on: {
-                focus: function (e) {
-                    vm.editing = true;
-
-                    vm.$nextTick(function () {
-                        input.elm.focus();
-                        input.elm.select();
-                    });
-                },
-            },
-        });
-
-        const input = h("input", {
-            attrs: {
-                type: "text",
-                class:
-                    "border border-red-300 rounded p-2 text-right" +
-                    (!vm.editing ? " hidden" : ""),
-                pattern: "[0-9.!a-zA-Z0]",
-                placeholder: vm.placeholder,
-            },
-            domProps: {
-                value: vm.inputValue,
-            },
-            on: {
-                blur: function (e) {
-                    vm.editing = false;
-                    let emitVal = vm.rawValue;
-                    if (!vm.allowNegative && vm.rawValue < 0) {
-                        emitVal *= -1;
-                        vm.inputValue *= -1;
-                        vm.$emit("input", emitVal);
-                    }
-                },
-                input: function (e) {
-                    const oldValue = vm.inputValue;
-                    vm.inputValue = e.target.value;
-                },
-                keydown: function (e) {
-                    vm.$emit("keydown");
-                },
-            },
-        });
-
-        return h("div", [display, input]);
+    value: {
+        type: Number,
+        default: 0,
     },
+    withSign: {
+        type: Boolean,
+        default: false,
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+    format: {
+        type: String,
+        default: null,
+    },
+    allowNegative: {
+        type: Boolean,
+        default: false,
+    },
+    placeholder: {
+        type: String,
+        default: null,
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "input", "keydown"]);
+
+const editing = ref(false);
+const inputRef = ref(null);
+const instance = getCurrentInstance();
+
+const rawValue = computed({
+    get() {
+        const currentValue =
+            props.modelValue !== undefined ? props.modelValue : props.value;
+        return currentValue ?? 0;
+    },
+    set(val) {
+        emit("update:modelValue", val);
+        emit("input", val);
+    },
+});
+
+const inputValue = computed({
+    get() {
+        return numeral(rawValue.value)
+            .divide(Math.pow(10, props.decimal))
+            .value();
+    },
+    set(value) {
+        rawValue.value = Number(
+            numeral(value)
+                .multiply(Math.pow(10, props.decimal))
+                .value()
+                .toFixed(props.decimal),
+        );
+    },
+});
+
+const currentCurrency = computed(() => {
+    const currencyStr =
+        typeof props.currency == "object"
+            ? props.currency.code
+            : props.currency;
+    return Object.keys(CurrencySettings).includes(currencyStr)
+        ? currencyStr
+        : "MYR";
+});
+
+const displayFormat = computed(() => {
+    return props.format
+        ? props.format
+        : CurrencySettings[currentCurrency.value]["displayFormat"];
+});
+
+const inputFormat = computed(() => {
+    return CurrencySettings[currentCurrency.value]["inputFormat"];
+});
+
+const currencySign = computed(() => {
+    return CurrencySettings[currentCurrency.value]["sign"];
+});
+
+const currencySignPos = computed(() => {
+    return CurrencySettings[currentCurrency.value]["signPosition"];
+});
+
+const displayValue = computed(() => {
+    return (
+        (props.withSign && currencySignPos.value == "BEFORE"
+            ? `${currencySign.value} `
+            : "") +
+        numeral(inputValue.value).format(displayFormat.value) +
+        (props.withSign && currencySignPos.value == "AFTER"
+            ? ` ${currencySign.value}`
+            : "")
+    );
+});
+
+const handleDisplayFocus = () => {
+    editing.value = true;
+
+    nextTick(() => {
+        if (inputRef.value) {
+            inputRef.value.focus();
+            inputRef.value.select();
+        }
+    });
+};
+
+const handleInputBlur = () => {
+    editing.value = false;
+    let emitVal = rawValue.value;
+    if (!props.allowNegative && rawValue.value < 0) {
+        emitVal *= -1;
+        inputValue.value *= -1;
+        emit("update:modelValue", emitVal);
+        emit("input", emitVal);
+    }
+};
+
+const handleInputChange = (e) => {
+    inputValue.value = e.target.value;
+};
+
+const handleKeydown = () => {
+    emit("keydown");
 };
 </script>
+
+<template>
+    <div>
+        <input
+            type="text"
+            :class="[
+                'border border-gray-300 rounded p-2 text-right',
+                { hidden: editing },
+            ]"
+            pattern="[0-9.!a-zA-Z0]"
+            :disabled="disabled"
+            :placeholder="placeholder"
+            :value="displayValue"
+            @focus="handleDisplayFocus"
+        />
+        <input
+            ref="inputRef"
+            type="text"
+            :class="[
+                'border border-red-300 rounded p-2 text-right',
+                { hidden: !editing },
+            ]"
+            pattern="[0-9.!a-zA-Z0]"
+            :placeholder="placeholder"
+            :value="inputValue"
+            @blur="handleInputBlur"
+            @input="handleInputChange"
+            @keydown="handleKeydown"
+        />
+    </div>
+</template>
 
 <style></style>

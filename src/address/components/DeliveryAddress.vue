@@ -1,3 +1,36 @@
+<script setup>
+import { useAddress } from "../composables/useAddress";
+
+// Define props
+const props = defineProps({
+    modelValue: {
+        type: [Array, Object],
+        default: () => ({}),
+    },
+    display: {
+        type: Array,
+        default: () => [],
+    },
+    country: {
+        type: String,
+        default: "Malaysia",
+    },
+});
+
+// Use address composable
+const { LABELS, addressCountry, addressCountryConfig, showAttribute } =
+    useAddress(props);
+
+// Values (same as original)
+const value = props.modelValue;
+const display = props.display;
+
+// Define component options
+defineOptions({
+    name: "DeliveryAddress",
+});
+</script>
+
 <template>
     <div>
         <div v-if="showAttribute('branch_name')">
@@ -82,23 +115,19 @@
             </p>
         </div>
         <div>
-            <div v-if="showAttribute('lift_access') && this.display.length > 0">
+            <div v-if="showAttribute('lift_access') && display.length > 0">
                 <p v-if="value.lift_access">Lift Access</p>
             </div>
-            <div v-if="!this.display.length">
+            <div v-if="!display.length">
                 <p>Lift Access: {{ value.lift_access }}</p>
             </div>
         </div>
 
         <div>
-            <div
-                v-if="
-                    showAttribute('requires_permit') && this.display.length > 0
-                "
-            >
+            <div v-if="showAttribute('requires_permit') && display.length > 0">
                 <p v-if="value.requires_permit">Requires Permit</p>
             </div>
-            <div v-if="!this.display.length">
+            <div v-if="!display.length">
                 <p>Requires Permit: {{ value.requires_permit }}</p>
             </div>
             <div v-if="showAttribute('warehouse')">
@@ -110,12 +139,3 @@
         </div>
     </div>
 </template>
-
-<script>
-import AddressMixins from "../mixins/address";
-
-export default {
-    name: "DeliveryAddress",
-    mixins: [AddressMixins],
-};
-</script>

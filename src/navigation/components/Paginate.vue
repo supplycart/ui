@@ -1,7 +1,93 @@
+<script setup>
+import { ref, computed, watch, onMounted } from "vue";
+import PerPageSelect from "./PerPageSelect.vue";
+
+const props = defineProps({
+    modelValue: {
+        type: Object,
+        default: () => ({}),
+    },
+    showItemInterval: {
+        type: Boolean,
+        default: true,
+    },
+    showPerPage: {
+        type: Boolean,
+        default: true,
+    },
+});
+
+const emit = defineEmits(["update:modelValue", "change"]);
+
+const pages = ref([]);
+const selected = ref(1);
+const range = ref(3);
+const perPage = ref(30);
+
+const pagination = computed(() => {
+    return props.modelValue || {};
+});
+
+const checkPages = () => {
+    const pagesArray = [];
+    const min = selected.value - range.value;
+    const max = selected.value + range.value;
+
+    for (let i = min + 1; i < max; i++) {
+        if (i > 0 && i <= pagination.value.last_page) {
+            pagesArray.push(i);
+        }
+    }
+
+    pages.value = pagesArray;
+};
+
+const updatePerPage = (value) => {
+    perPage.value = value;
+};
+
+const goToPage = (page) => {
+    emit("change", {
+        page,
+        perPage: perPage.value,
+    });
+};
+
+const toFullNumber = (value) => {
+    if (value === undefined || value === null) {
+        return 0;
+    }
+    value = parseInt(value, 10);
+    return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+};
+
+watch(
+    pagination,
+    (value) => {
+        if (value.per_page) {
+            perPage.value = value.per_page;
+        }
+        if (value.current_page) {
+            selected.value = value.current_page;
+        }
+        checkPages();
+    },
+    { deep: true, immediate: true },
+);
+
+onMounted(() => {
+    checkPages();
+});
+</script>
+
 <template>
     <div class="paginate flex">
         <slot v-if="showPerPage" name="default" :pagination="pagination">
-            <PerPageSelect v-model="perPage" @change="goToPage(1)" />
+            <PerPageSelect
+                :model-value="perPage"
+                @update:model-value="updatePerPage"
+                @change="goToPage(1)"
+            />
         </slot>
         <div class="w-full flex md:flex-1 items-center justify-end">
             <div v-if="showItemInterval">
@@ -45,84 +131,3 @@
         </div>
     </div>
 </template>
-<script>
-import PerPageSelect from "./PerPageSelect.vue";
-
-export default {
-    components: { PerPageSelect },
-    props: {
-        value: {
-            type: Object,
-            default: () => ({}),
-        },
-        showItemInterval: {
-            type: Boolean,
-            default: true,
-        },
-        showPerPage: {
-            type: Boolean,
-            default: true,
-        },
-    },
-    data() {
-        return {
-            pages: [],
-            selected: 1,
-            range: 3,
-            perPage: 30,
-        };
-    },
-    computed: {
-        pagination: {
-            get() {
-                return this.value;
-            },
-            set(value) {},
-        },
-    },
-    watch: {
-        pagination: {
-            handler(value) {
-                this.perPage = value.per_page;
-                this.selected = value.current_page;
-
-                this.checkPages();
-            },
-            deep: true,
-            immediate: true,
-        },
-    },
-    mounted() {
-        this.checkPages();
-    },
-    methods: {
-        checkPages() {
-            const pages = [];
-
-            const min = this.selected - this.range;
-            const max = this.selected + this.range;
-
-            for (let i = min + 1; i < max; i++) {
-                if (i > 0 && i <= this.pagination.last_page) {
-                    pages.push(i);
-                }
-            }
-
-            this.pages = pages;
-        },
-        goToPage(page) {
-            this.$emit("change", {
-                page,
-                perPage: this.perPage,
-            });
-        },
-        toFullNumber(value) {
-            if (value === undefined || value === null) {
-                return 0;
-            }
-            value = parseInt(value, 10);
-            return value.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-        },
-    },
-};
-</script>
