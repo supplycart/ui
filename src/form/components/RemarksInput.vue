@@ -104,7 +104,7 @@ defineOptions({
 </script>
 
 <template>
-    <div class="input-holder v-bind="filteredAttrs"">
+    <div class="input-holder" v-bind="filteredAttrs">
         <slot name="label">
             <label v-if="label" :for="filteredAttrs.id">
                 {{ label }}
@@ -115,7 +115,6 @@ defineOptions({
         <textarea
             :value="modelValue"
             :rows="rows"
-            v-bind="filteredAttrs"
             class="h-textarea"
             :class="[
                 showError || isInvalid ? 'error' : '',
