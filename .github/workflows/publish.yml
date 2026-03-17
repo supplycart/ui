@@ -35,6 +35,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN_VUE3 }}
 
+      - name: Check registry
+        run: npm config get registry
+
       - name: Publish
         run: pnpm publish --access public --no-git-checks
         env:
