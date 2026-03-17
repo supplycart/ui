@@ -6,10 +6,15 @@
                 :label="label"
                 :required="required"
                 :disabled="disabled"
+                :is-view-only="isViewOnly"
                 class="inline-block mb-2"
             />
         </slot>
+        <div v-if="isViewOnly" class="display-text w-full">
+            {{ modelValue }}
+        </div>
         <input
+            v-else
             :id="filteredAttrs.id"
             :value="modelValue"
             v-bind="filteredAttrs"
@@ -18,6 +23,7 @@
             :disabled="disabled"
             :maxlength="maxLength"
             :class="[showError ? 'input-error' : '', inputClass, attrsClass]"
+            :type="type"
             class="w-full"
             @input="handleInput"
             @focus="focus"
@@ -91,6 +97,15 @@ const props = defineProps({
         type: String,
         default: null,
     },
+    isViewOnly: {
+        type: Boolean,
+        default: false,
+    },
+    type: {
+        type: String,
+        default: "text",
+        validate: (value) => ["text", "number", "email", "password"].includes(value),
+    },
 });
 
 // Define emits
@@ -141,11 +156,6 @@ const keydown = () => {
 
 // Use filtered attrs to handle Vue 3 compatibility
 const { filteredAttrs, attrsClass } = useFilteredAttrs();
-
-// Define options for Vue component
-defineOptions({
-    inheritAttrs: false,
-});
 </script>
 <style>
 .input-error {
