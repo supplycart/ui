@@ -15,18 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v3
-        with:
-            version: latest
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "pnpm"
           registry-url: https://registry.npmjs.org/
 
-      - run: pnpm i --frozen-lock
+      - run: npm ci
 
       - uses: JS-DevTools/npm-publish@v4
         with:
