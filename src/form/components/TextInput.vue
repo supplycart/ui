@@ -23,6 +23,7 @@
             :disabled="disabled"
             :maxlength="maxLength"
             :class="[showError ? 'input-error' : '', inputClass, attrsClass]"
+            :type="type"
             class="w-full"
             @input="handleInput"
             @focus="focus"
@@ -100,6 +101,11 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    type: {
+        type: String,
+        default: "text",
+        validate: (value) => ["text", "number", "email", "password"].includes(value),
+    },
 });
 
 // Define emits
@@ -150,11 +156,6 @@ const keydown = () => {
 
 // Use filtered attrs to handle Vue 3 compatibility
 const { filteredAttrs, attrsClass } = useFilteredAttrs();
-
-// Define options for Vue component
-defineOptions({
-    inheritAttrs: false,
-});
 </script>
 <style>
 .input-error {
