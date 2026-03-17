@@ -6,10 +6,15 @@
                 :label="label"
                 :required="required"
                 :disabled="disabled"
+                :is-view-only="isViewOnly"
                 class="inline-block mb-2"
             />
         </slot>
+        <div v-if="isViewOnly" class="display-text w-full">
+            {{ modelValue }}
+        </div>
         <input
+            v-else
             :id="filteredAttrs.id"
             :value="modelValue"
             v-bind="filteredAttrs"
@@ -90,6 +95,10 @@ const props = defineProps({
     inputDescClass: {
         type: String,
         default: null,
+    },
+    isViewOnly: {
+        type: Boolean,
+        default: false,
     },
 });
 
