@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from "vue";
 import { useAddress } from "../composables/useAddress";
 
 // Define props
@@ -29,6 +30,83 @@ const display = props.display;
 defineOptions({
     name: "DeliveryAddress",
 });
+
+const addressLine1 = computed(() => {
+    const parts = []
+
+    if (addressCountry.value === 'SINGAPORE' && value.street) {
+        parts.push(value.street)
+    }
+
+    if (
+        value.unit &&
+        addressCountryConfig.value.unit &&
+        addressCountry.value !== 'SINGAPORE'
+    ) {
+        parts.push(value.unit)
+    }
+
+    if (value.floor && addressCountryConfig.value.floor) {
+        parts.push(value.floor)
+    }
+
+    if (
+        value.unit &&
+        addressCountryConfig.value.unit &&
+        addressCountry.value === 'SINGAPORE'
+    ) {
+        parts.push(value.unit)
+    }
+
+    if (value.building && addressCountryConfig.value.building) {
+        parts.push(value.building)
+    }
+
+    if (value.street && (
+        addressCountryConfig.value.street &&
+        addressCountry.value !== 'SINGAPORE'
+    )) {
+        parts.push(value.street)
+    }
+
+    if (value.city && (
+        addressCountryConfig.value.city ||
+        addressCountryConfig.value.district
+    )) {
+        let city = value.city
+
+        if (value.city && value.postcode) {
+            city += ','
+        }
+
+        parts.push(city)
+    }
+
+    return parts.join(', ')
+});
+const addressLine2 = computed(() => {
+    const parts = []
+
+    if (value.postcode && (
+        addressCountryConfig.value.postcode ||
+        addressCountryConfig.value.zipcode
+    )) {
+        parts.push(value.postcode)
+    }
+
+    if (value.state && (
+        addressCountryConfig.value.state ||
+        addressCountryConfig.value.province
+    )) {
+        parts.push(value.state)
+    }
+
+    if (value.country) {
+        parts.push(value.country)
+    }
+
+    return parts.join(', ')
+})
 </script>
 
 <template>
@@ -48,71 +126,8 @@ defineOptions({
             <p v-if="value.recipient_phone">{{ value.recipient_phone }}</p>
         </div>
         <div v-if="showAttribute('address')">
-            <p>
-                <span v-if="addressCountry == 'SINGAPORE'">
-                    {{ value.street }}</span
-                >
-                <span
-                    v-if="
-                        value.unit &&
-                        addressCountryConfig.unit &&
-                        addressCountry !== 'SINGAPORE'
-                    "
-                    >{{ value.unit }},
-                </span>
-                <span v-if="value.floor && addressCountryConfig.floor"
-                    >{{ value.floor }},
-                </span>
-                <span
-                    v-if="
-                        value.unit &&
-                        addressCountryConfig.unit &&
-                        addressCountry == 'SINGAPORE'
-                    "
-                    >{{ value.unit }},
-                </span>
-                <span v-if="value.building && addressCountryConfig.building">{{
-                    value.building
-                }}</span>
-                <span
-                    v-if="
-                        addressCountryConfig.street &&
-                        addressCountry !== 'SINGAPORE'
-                    "
-                >
-                    {{ value.street }}
-                </span>
-                <span
-                    v-if="
-                        addressCountryConfig.city ||
-                        addressCountryConfig.district
-                    "
-                >
-                    {{ value.city
-                    }}{{ value.city && value.postcode ? "," : "" }}
-                </span>
-            </p>
-            <p>
-                <span
-                    v-if="
-                        addressCountryConfig.postcode ||
-                        addressCountryConfig.zipcode
-                    "
-                >
-                    {{ value.postcode }}
-                </span>
-
-                <span
-                    v-if="
-                        addressCountryConfig.state ||
-                        addressCountryConfig.province
-                    "
-                >
-                    {{ value.state
-                    }}{{ value.state && value.country ? "," : "" }}
-                </span>
-                {{ value.country }}
-            </p>
+            <p>{{ addressLine1 }}</p>
+            <p>{{ addressLine2 }}</p>
         </div>
         <div>
             <div v-if="showAttribute('lift_access') && display.length > 0">
