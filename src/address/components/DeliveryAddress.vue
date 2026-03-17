@@ -22,10 +22,6 @@ const props = defineProps({
 const { LABELS, addressCountry, addressCountryConfig, showAttribute } =
     useAddress(props);
 
-// Values (same as original)
-const value = props.modelValue;
-const display = props.display;
-
 // Define component options
 defineOptions({
     name: "DeliveryAddress",
@@ -34,48 +30,48 @@ defineOptions({
 const addressLine1 = computed(() => {
     const parts = []
 
-    if (addressCountry.value === 'SINGAPORE' && value.street) {
-        parts.push(value.street)
+    if (addressCountry.value === 'SINGAPORE' && props.modelValue.street) {
+        parts.push(props.modelValue.street)
     }
 
     if (
-        value.unit &&
+        props.modelValue.unit &&
         addressCountryConfig.value.unit &&
         addressCountry.value !== 'SINGAPORE'
     ) {
-        parts.push(value.unit)
+        parts.push(props.modelValue.unit)
     }
 
-    if (value.floor && addressCountryConfig.value.floor) {
-        parts.push(value.floor)
+    if (props.modelValue.floor && addressCountryConfig.value.floor) {
+        parts.push(props.modelValue.floor)
     }
 
     if (
-        value.unit &&
+        props.modelValue.unit &&
         addressCountryConfig.value.unit &&
         addressCountry.value === 'SINGAPORE'
     ) {
-        parts.push(value.unit)
+        parts.push(props.modelValue.unit)
     }
 
-    if (value.building && addressCountryConfig.value.building) {
-        parts.push(value.building)
+    if (props.modelValue.building && addressCountryConfig.value.building) {
+        parts.push(props.modelValue.building)
     }
 
-    if (value.street && (
+    if (props.modelValue.street && (
         addressCountryConfig.value.street &&
         addressCountry.value !== 'SINGAPORE'
     )) {
-        parts.push(value.street)
+        parts.push(props.modelValue.street)
     }
 
-    if (value.city && (
+    if (props.modelValue.city && (
         addressCountryConfig.value.city ||
         addressCountryConfig.value.district
     )) {
-        let city = value.city
+        let city = props.modelValue.city
 
-        if (value.city && value.postcode) {
+        if (props.modelValue.city && props.modelValue.postcode) {
             city += ','
         }
 
@@ -87,22 +83,22 @@ const addressLine1 = computed(() => {
 const addressLine2 = computed(() => {
     const parts = []
 
-    if (value.postcode && (
+    if (props.modelValue.postcode && (
         addressCountryConfig.value.postcode ||
         addressCountryConfig.value.zipcode
     )) {
-        parts.push(value.postcode)
+        parts.push(props.modelValue.postcode)
     }
 
-    if (value.state && (
+    if (props.modelValue.state && (
         addressCountryConfig.value.state ||
         addressCountryConfig.value.province
     )) {
-        parts.push(value.state)
+        parts.push(props.modelValue.state)
     }
 
-    if (value.country) {
-        parts.push(value.country)
+    if (props.modelValue.country) {
+        parts.push(props.modelValue.country)
     }
 
     return parts.join(', ')
@@ -113,44 +109,44 @@ const addressLine2 = computed(() => {
     <div>
         <div v-if="showAttribute('branch_name')">
             <p>
-                {{ value.branch_name }}
+                {{ props.modelValue.branch_name }}
             </p>
         </div>
         <div v-if="showAttribute('pic_phone')">
-            <p v-if="value.pic_phone">{{ value.pic_phone }}</p>
+            <p v-if="props.modelValue.pic_phone">{{ props.modelValue.pic_phone }}</p>
         </div>
         <div v-if="showAttribute('recipient_name')">
-            <p v-if="value.recipient_name">{{ value.recipient_name }}</p>
+            <p v-if="props.modelValue.recipient_name">{{ props.modelValue.recipient_name }}</p>
         </div>
         <div v-if="showAttribute('recipient_phone')">
-            <p v-if="value.recipient_phone">{{ value.recipient_phone }}</p>
+            <p v-if="props.modelValue.recipient_phone">{{ props.modelValue.recipient_phone }}</p>
         </div>
         <div v-if="showAttribute('address')">
             <p>{{ addressLine1 }}</p>
             <p>{{ addressLine2 }}</p>
         </div>
         <div>
-            <div v-if="showAttribute('lift_access') && display.length > 0">
-                <p v-if="value.lift_access">Lift Access</p>
+            <div v-if="showAttribute('lift_access') && props.display.length > 0">
+                <p v-if="props.modelValue.lift_access">Lift Access</p>
             </div>
-            <div v-if="!display.length">
-                <p>Lift Access: {{ value.lift_access }}</p>
+            <div v-if="!props.display.length">
+                <p>Lift Access: {{ props.modelValue.lift_access }}</p>
             </div>
         </div>
 
         <div>
-            <div v-if="showAttribute('requires_permit') && display.length > 0">
-                <p v-if="value.requires_permit">Requires Permit</p>
+            <div v-if="showAttribute('requires_permit') && props.display.length > 0">
+                <p v-if="props.modelValue.requires_permit">Requires Permit</p>
             </div>
-            <div v-if="!display.length">
-                <p>Requires Permit: {{ value.requires_permit }}</p>
+            <div v-if="!props.display.length">
+                <p>Requires Permit: {{ props.modelValue.requires_permit }}</p>
             </div>
             <div v-if="showAttribute('warehouse')">
-                <p v-if="value.warehouse">Warehouse</p>
+                <p v-if="props.modelValue.warehouse">Warehouse</p>
             </div>
         </div>
         <div v-if="showAttribute('ref_no')">
-            <p v-if="value.ref_no">Location Code: {{ value.ref_no }}</p>
+            <p v-if="props.modelValue.ref_no">Location Code: {{ props.modelValue.ref_no }}</p>
         </div>
     </div>
 </template>

@@ -22,10 +22,6 @@ const props = defineProps({
 const { LABELS, addressCountry, addressCountryConfig, showAttribute } =
     useAddress(props);
 
-// Values (same as original)
-const value = props.modelValue;
-const display = props.display;
-
 // Define component options
 defineOptions({
     name: "BillingAddress",
@@ -35,55 +31,55 @@ const addressLine1 = computed(() => {
     const parts = []
 
     // Street (Singapore only, first)
-    if (addressCountry.value === 'SINGAPORE' && value.street) {
-        parts.push(value.street)
+    if (addressCountry.value === 'SINGAPORE' && props.modelValue.street) {
+        parts.push(props.modelValue.street)
     }
 
     // Unit (non-Singapore)
     if (
-        value.unit &&
+        props.modelValue.unit &&
         addressCountryConfig.value.unit &&
         addressCountry.value !== 'SINGAPORE'
     ) {
-        parts.push(value.unit)
+        parts.push(props.modelValue.unit)
     }
 
     // Floor
-    if (value.floor && addressCountryConfig.value.floor) {
-        parts.push(value.floor)
+    if (props.modelValue.floor && addressCountryConfig.value.floor) {
+        parts.push(props.modelValue.floor)
     }
 
     // Unit (Singapore)
     if (
-        value.unit &&
+        props.modelValue.unit &&
         addressCountryConfig.value.unit &&
         addressCountry.value === 'SINGAPORE'
     ) {
-        parts.push(value.unit)
+        parts.push(props.modelValue.unit)
     }
 
     // Building
-    if (value.building && addressCountryConfig.value.building) {
-        parts.push(value.building)
+    if (props.modelValue.building && addressCountryConfig.value.building) {
+        parts.push(props.modelValue.building)
     }
 
     // Street (non-Singapore)
     if (
-        value.street &&
+        props.modelValue.street &&
         addressCountryConfig.value.street &&
         addressCountry.value !== 'SINGAPORE'
     ) {
-        parts.push(value.street)
+        parts.push(props.modelValue.street)
     }
 
     // City + comma if postcode exists
-    if (value.city && (
+    if (props.modelValue.city && (
         addressCountryConfig.value.city ||
         addressCountryConfig.value.district
     )) {
-        let city = value.city
+        let city = props.modelValue.city
 
-        if (value.city && value.postcode) {
+        if (props.modelValue.city && props.modelValue.postcode) {
             city += ','
         }
 
@@ -96,24 +92,24 @@ const addressLine2 = computed(() => {
     const parts = []
 
     // Postcode
-    if (value.postcode && (
+    if (props.modelValue.postcode && (
         addressCountryConfig.value.postcode ||
         addressCountryConfig.value.zipcode
     )) {
-        parts.push(value.postcode)
+        parts.push(props.modelValue.postcode)
     }
 
     // State / Province
-    if (value.state && (
+    if (props.modelValue.state && (
         addressCountryConfig.value.state ||
         addressCountryConfig.value.province
     )) {
-        parts.push(value.state)
+        parts.push(props.modelValue.state)
     }
 
     // Country (always last)
-    if (value.country) {
-        parts.push(value.country)
+    if (props.modelValue.country) {
+        parts.push(props.modelValue.country)
     }
 
     return parts.join(', ')
@@ -125,53 +121,53 @@ const addressLine2 = computed(() => {
         <div>
             <p>
                 <span v-if="showAttribute('entity_name')">{{
-                    value.entity_name
+                    props.modelValue.entity_name
                 }}</span>
 
                 <span
                     v-if="
                         showAttribute('registration_no') &&
-                        value.registration_no
+                        props.modelValue.registration_no
                     "
-                    >&nbsp;({{ value.registration_no }})</span
+                    >&nbsp;({{ props.modelValue.registration_no }})</span
                 >
             </p>
         </div>
         <div>
-            <div v-if="display.length > 0">
+            <div v-if="props.display.length > 0">
                 <span v-if="showAttribute('pic_name')">
-                    {{ value.pic_name }}
+                    {{ props.modelValue.pic_name }}
+                    <span v-if="showAttribute('pic_phone')">
                 </span>
-                <span v-if="showAttribute('pic_phone')">
-                    - {{ value.pic_phone }}
+                    - {{ props.modelValue.pic_phone }}
                 </span>
             </div>
-            <p v-else>{{ value.pic_name }} - {{ value.pic_phone }}</p>
+            <p v-else>{{ props.modelValue.pic_name }} - {{ props.modelValue.pic_phone }}</p>
         </div>
         <div v-if="showAttribute('address')">
             <p>{{ addressLine1 }}</p>
             <p>{{ addressLine2 }}</p>
         </div>
         <div v-if="showAttribute('sales_tax_registration_no')">
-            <p v-if="value.sales_tax_registration_no">
+            <p v-if="props.modelValue.sales_tax_registration_no">
                 {{ LABELS.SALES_TAX_REGISTRATION_NO }}:
-                {{ value.sales_tax_registration_no }}
+                {{ props.modelValue.sales_tax_registration_no }}
             </p>
         </div>
         <div v-if="showAttribute('service_tax_registration_no')">
-            <p v-if="value.service_tax_registration_no">
+            <p v-if="props.modelValue.service_tax_registration_no">
                 {{ LABELS.SERVICE_TAX_REGISTRATION_NO }}:
-                {{ value.service_tax_registration_no }}
+                {{ props.modelValue.service_tax_registration_no }}
             </p>
         </div>
         <div v-if="showAttribute('ref_no')">
-            <p v-if="value.ref_no">
-                {{ LABELS.BILLING_ENTITY_CODE }}: {{ value.ref_no }}
+            <p v-if="props.modelValue.ref_no">
+                {{ LABELS.BILLING_ENTITY_CODE }}: {{ props.modelValue.ref_no }}
             </p>
         </div>
         <div v-if="showAttribute('einvoice_email')">
-            <p v-if="value.einvoice_email">
-                {{ LABELS.E_INVOICE_MAILBOX }}: {{ value.einvoice_email }}
+            <p v-if="props.modelValue.einvoice_email">
+                {{ LABELS.E_INVOICE_MAILBOX }}: {{ props.modelValue.einvoice_email }}
             </p>
         </div>
     </div>
