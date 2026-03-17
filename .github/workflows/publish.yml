@@ -10,16 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
 
-      - run: pnpm i --frozen-lock
-
-      - uses: JS-DevTools/npm-publish@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
         with:
-          token: ${{ secrets.NPM_AUTH_TOKEN_VUE3 }}
-          access: public
+          version: latest
+
+      - name: Install deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify auth
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN_VUE3 }}
+
+      - name: Check registry
+        run: npm config get registry
+
+      - name: Publish
+        run: pnpm publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN_VUE3 }}
