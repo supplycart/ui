@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from "vue";
 import { useAddress } from "../composables/useAddress";
 
 // Define props
@@ -28,6 +29,94 @@ const display = props.display;
 // Define component options
 defineOptions({
     name: "BillingAddress",
+});
+
+const addressLine1 = computed(() => {
+    const parts = []
+
+    // Street (Singapore only, first)
+    if (addressCountry.value === 'SINGAPORE' && value.street) {
+        parts.push(value.street)
+    }
+
+    // Unit (non-Singapore)
+    if (
+        value.unit &&
+        addressCountryConfig.value.unit &&
+        addressCountry.value !== 'SINGAPORE'
+    ) {
+        parts.push(value.unit)
+    }
+
+    // Floor
+    if (value.floor && addressCountryConfig.value.floor) {
+        parts.push(value.floor)
+    }
+
+    // Unit (Singapore)
+    if (
+        value.unit &&
+        addressCountryConfig.value.unit &&
+        addressCountry.value === 'SINGAPORE'
+    ) {
+        parts.push(value.unit)
+    }
+
+    // Building
+    if (value.building && addressCountryConfig.value.building) {
+        parts.push(value.building)
+    }
+
+    // Street (non-Singapore)
+    if (
+        value.street &&
+        addressCountryConfig.value.street &&
+        addressCountry.value !== 'SINGAPORE'
+    ) {
+        parts.push(value.street)
+    }
+
+    // City + comma if postcode exists
+    if (value.city && (
+        addressCountryConfig.value.city ||
+        addressCountryConfig.value.district
+    )) {
+        let city = value.city
+
+        if (value.city && value.postcode) {
+            city += ','
+        }
+
+        parts.push(city)
+    }
+
+    return parts.join(', ')
+});
+const addressLine2 = computed(() => {
+    const parts = []
+
+    // Postcode
+    if (value.postcode && (
+        addressCountryConfig.value.postcode ||
+        addressCountryConfig.value.zipcode
+    )) {
+        parts.push(value.postcode)
+    }
+
+    // State / Province
+    if (value.state && (
+        addressCountryConfig.value.state ||
+        addressCountryConfig.value.province
+    )) {
+        parts.push(value.state)
+    }
+
+    // Country (always last)
+    if (value.country) {
+        parts.push(value.country)
+    }
+
+    return parts.join(', ')
 });
 </script>
 
@@ -60,54 +149,8 @@ defineOptions({
             <p v-else>{{ value.pic_name }} - {{ value.pic_phone }}</p>
         </div>
         <div v-if="showAttribute('address')">
-            <p>
-                <span v-if="addressCountry == 'SINGAPORE'">
-                    {{ value.street }}</span
-                >
-                <span
-                    v-if="
-                        value.unit &&
-                        addressCountryConfig.unit &&
-                        addressCountry !== 'SINGAPORE'
-                    "
-                    >{{ value.unit }},
-                </span>
-                <span v-if="value.floor && addressCountryConfig.floor"
-                    >{{ value.floor }},
-                </span>
-                <span
-                    v-if="
-                        value.unit &&
-                        addressCountryConfig.unit &&
-                        addressCountry == 'SINGAPORE'
-                    "
-                    >{{ value.unit }},
-                </span>
-                <span v-if="value.building">{{ value.building }}, </span>
-                <span v-if="addressCountry !== 'SINGAPORE'">
-                    {{ value.street }},
-                </span>
-                <span v-if="value.city"> {{ value.city }}, </span>
-                <span
-                    v-if="
-                        value.postcode &&
-                        (addressCountryConfig.state ||
-                            addressCountryConfig.province)
-                    "
-                >
-                    {{ value.postcode }}
-                </span>
-                <span
-                    v-if="
-                        addressCountryConfig.state ||
-                        addressCountryConfig.province
-                    "
-                >
-                    {{ value.state
-                    }}{{ value.state && value.country ? "," : "" }}
-                </span>
-                {{ value.country }}
-            </p>
+            <p>{{ addressLine1 }}</p>
+            <p>{{ addressLine2 }}</p>
         </div>
         <div v-if="showAttribute('sales_tax_registration_no')">
             <p v-if="value.sales_tax_registration_no">
