@@ -104,7 +104,7 @@ defineOptions({
 </script>
 
 <template>
-    <div class="input-holder" v-bind="filteredAttrs">
+    <div class="input-holder" :class="attrsClass">
         <slot name="label">
             <label v-if="label" :for="filteredAttrs.id">
                 {{ label }}
@@ -119,7 +119,6 @@ defineOptions({
             :class="[
                 showError || isInvalid ? 'error' : '',
                 inputClass,
-                attrsClass,
             ]"
             :required="required"
             @input="handleInput"
