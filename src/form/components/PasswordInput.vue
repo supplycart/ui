@@ -6,12 +6,10 @@
                 <small v-if="required" class="italic text-red-600">*</small>
             </label>
         </slot>
-        
         <div class="relative">
             <input
                 :id="id"
                 :value="modelValue"
-                v-bind="filteredAttrs"
                 :type="type"
                 :required="required"
                 :class="[
@@ -52,7 +50,6 @@
 <script setup>
 import { ref, computed } from "vue";
 import { Eye, EyeOff } from "lucide-vue-next";
-import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 
 // Define props
 const props = defineProps({
@@ -121,12 +118,4 @@ const showPassword = ref(false);
 
 // Password-specific regex (minimum 8 characters)
 const regex = ref(/^(.{8,})+/);
-
-// Use filtered attrs to handle Vue 3 compatibility
-const { filteredAttrs, attrsClass } = useFilteredAttrs();
-
-// Define options
-defineOptions({
-    inheritAttrs: false,
-});
 </script>

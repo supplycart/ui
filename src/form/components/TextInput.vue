@@ -2,7 +2,7 @@
     <div>
         <slot name="label">
             <FormLabel
-                :id="filteredAttrs.id"
+                :id="id"
                 :label="label"
                 :required="required"
                 :disabled="disabled"
@@ -15,14 +15,13 @@
         </div>
         <input
             v-else
-            :id="filteredAttrs.id"
+            :id="id"
             :value="modelValue"
-            v-bind="filteredAttrs"
             :placeholder="placeholder"
             :required="required"
             :disabled="disabled"
             :maxlength="maxLength"
-            :class="[showError ? 'input-error' : '', inputClass, attrsClass]"
+            :class="[showError ? 'input-error' : '', inputClass]"
             :type="type"
             class="w-full"
             @input="handleInput"
@@ -53,10 +52,13 @@
 <script setup>
 import { ref, watch } from "vue";
 import FormLabel from "./FormLabel.vue";
-import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 
 // Define props with defaults
 const props = defineProps({
+    id: {
+        type: String,
+        default: null,
+    },
     modelValue: {
         type: [String, Number],
         default: null,
@@ -153,9 +155,6 @@ const toggleError = (val) => {
 const keydown = () => {
     emit("keydown");
 };
-
-// Use filtered attrs to handle Vue 3 compatibility
-const { filteredAttrs, attrsClass } = useFilteredAttrs();
 </script>
 <style>
 .input-error {

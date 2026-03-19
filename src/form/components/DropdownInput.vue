@@ -2,7 +2,6 @@
 import { ref, computed, watch } from "vue"
 import "vue-select/dist/vue-select.css";
 import VSelect from "vue-select";
-import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 
 // Define props
 const props = defineProps({
@@ -113,20 +112,12 @@ const open = () => {
 const optionDeselecting = (option) => {
     emit("deselecting", option);
 };
-
-// Use filtered attrs to handle Vue 3 compatibility
-const { filteredAttrs, attrsClass } = useFilteredAttrs();
-
-// Define options
-defineOptions({
-    inheritAttrs: false,
-});
 </script>
 
 <template>
     <div class="input-holder">
         <slot name="label">
-            <label v-if="formLabel" :for="filteredAttrs.id">
+            <label v-if="formLabel" :for="id">
                 {{ formLabel }}
                 <small v-if="required" class="italic text-red-600">*</small>
                 <slot name="info" />
@@ -135,13 +126,11 @@ defineOptions({
 
         <VSelect
             :model-value="modelValue"
-            v-bind="filteredAttrs"
             :disabled="disabled"
             :options="options"
             :class="[
                 !!errorMessage ? 'input-error dropdown-input-error' : '',
                 inputClass,
-                attrsClass,
             ]"
             @update:model-value="handleUpdate"
             @search="search"

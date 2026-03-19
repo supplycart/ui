@@ -2,7 +2,7 @@
     <div>
         <slot name="label">
             <FormLabel
-                :id="filteredAttrs.id"
+                :id="id"
                 :label="label"
                 :required="required"
                 :disabled="disabled"
@@ -12,10 +12,9 @@
         <input
             v-if="currencyData"
             ref="inputRef"
-            v-bind="filteredAttrs"
             type="text"
             class="text-right w-full"
-            :class="[showError ? 'input-error' : '', inputClass, attrsClass]"
+            :class="[showError ? 'input-error' : '', inputClass]"
             :disabled="disabled"
             :required="required"
             @blur="blur"
@@ -39,7 +38,6 @@ import { ref, computed, watch } from "vue"
 import { useCurrencyInput } from "vue-currency-input"
 import { find } from "lodash-es"
 import FormLabel from "../../form/components/FormLabel.vue"
-import { useFilteredAttrs } from "../../form/composables/useFilteredAttrs.js";
 import Currencies, {
     DefaultCurrency,
     NoCentsCurrencies,
@@ -48,6 +46,10 @@ import Currencies, {
 // Define props
 // Note: 'value' prop is kept for backward compatibility
 const props = defineProps({
+    id: {
+        type: String,
+        default: null,
+    },
     label: {
         type: String,
         default: null,
@@ -196,13 +198,4 @@ const blur = (e) => {
     }
     emit("blur", e);
 };
-
-// Use filtered attrs to handle Vue 3 compatibility
-const { filteredAttrs, attrsClass } = useFilteredAttrs();
-
-// Define options
-defineOptions({
-    name: "MoneyInput",
-    inheritAttrs: false,
-});
 </script>

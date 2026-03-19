@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed } from "vue";
-import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 
 // Define props
 const props = defineProps({
@@ -93,20 +92,12 @@ const charCount = (event) => {
     }
     emit("keydown");
 };
-
-// Use filtered attrs to handle Vue 3 compatibility
-const { filteredAttrs, attrsClass } = useFilteredAttrs();
-
-// Define options
-defineOptions({
-    inheritAttrs: false,
-});
 </script>
 
 <template>
-    <div class="input-holder" :class="attrsClass">
+    <div class="input-holder">
         <slot name="label">
-            <label v-if="label" :for="filteredAttrs.id">
+            <label v-if="label" :for="id">
                 {{ label }}
                 <small v-if="required" class="italic text-red-600">*</small>
             </label>

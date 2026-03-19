@@ -8,11 +8,9 @@
         </slot>
         <input
             :value="modelValue"
-            v-bind="filteredAttrs"
             :class="[
                 { 'input-error': showError || isInvalid },
                 inputClass,
-                attrsClass,
             ]"
             :required="required"
             @input="handleInput"
@@ -40,7 +38,6 @@
 </template>
 <script setup>
 import { ref, computed, watch } from "vue";
-import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 
 // Define props
 const props = defineProps({
@@ -137,12 +134,4 @@ const focus = (e) => {
 const keydown = () => {
     emit("keydown");
 };
-
-// Use filtered attrs to handle Vue 3 compatibility
-const { filteredAttrs, attrsClass } = useFilteredAttrs();
-
-// Define options
-defineOptions({
-    inheritAttrs: false,
-});
 </script>
