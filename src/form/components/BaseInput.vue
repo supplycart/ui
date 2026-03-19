@@ -15,6 +15,7 @@
                 attrsClass,
             ]"
             :required="required"
+            :style="[attrsStyle]"
             @input="handleInput"
             @focus="focus"
             @change="change"
@@ -139,7 +140,7 @@ const keydown = () => {
 };
 
 // Use filtered attrs to handle Vue 3 compatibility
-const { filteredAttrs, attrsClass } = useFilteredAttrs();
+const { filteredAttrs, attrsClass, attrsStyle } = useFilteredAttrs();
 
 // Define options
 defineOptions({
