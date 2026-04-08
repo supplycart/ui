@@ -113,6 +113,7 @@ defineOptions({
         </slot>
 
         <textarea
+            v-bind="filteredAttrs"
             :value="modelValue"
             :rows="rows"
             class="h-textarea"
