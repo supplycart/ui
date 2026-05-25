@@ -17,6 +17,7 @@ const props = defineProps({
     maxDecimal: { type: Number, default: 0 },
     minDecimal: { type: Number, default: 0 },
     allowNegative: { type: Boolean, default: true },
+    allowWheel: { type: Boolean, default: false },
     nullable: { type: Boolean, default: false },
 });
 
@@ -118,6 +119,12 @@ const keydown = () => {
     emit("keydown");
 };
 
+const wheel = (event) => {
+    if (!props.allowWheel) {
+        event.preventDefault();
+    }
+};
+
 const handleFocus = () => {
     onFocus.value = true;
     focus();
@@ -155,6 +162,7 @@ defineOptions({
         @update:model-value="update"
         @blur="blur"
         @keydown="keydown"
+        @wheel="wheel"
     />
     <BaseInput
         v-else

@@ -21,6 +21,7 @@
             @change="change"
             @blur="blur"
             @keydown="keydown"
+            @wheel="wheel"
         />
 
         <slot name="error" :invalid="isInvalid">
@@ -90,6 +91,7 @@ const emit = defineEmits([
     "change",
     "focus",
     "keydown",
+    "wheel",
 ]);
 
 // Reactive state
@@ -137,6 +139,10 @@ const focus = (e) => {
 
 const keydown = () => {
     emit("keydown");
+};
+
+const wheel = (e) => {
+    emit("wheel", e);
 };
 
 // Use filtered attrs to handle Vue 3 compatibility
