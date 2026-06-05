@@ -36,6 +36,20 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+    /**
+     * If this is passed as true, it will limit the decimal places
+     * of the input to `limitedUnitDecimal` value. This is useful
+     * for cases like weight or quantity inputs where you want to
+     * enforce a certain number of decimal places.
+     */
+    isEnforceLimitedUnit: {
+        type: Boolean,
+        default: false,
+    },
+    limitedUnitDecimal: {
+        type: Number,
+        default: 4,
+    },
     placeholder: {
         type: String,
         default: null,
@@ -138,8 +152,32 @@ const handleInputBlur = () => {
     }
 };
 
+const limitDecimalPlaces = (value) => {
+    if (!props.isEnforceLimitedUnit) {
+        return value;
+    }
+
+    const input = String(value ?? "");
+    const [integerPart, decimalPart] = input.split(".");
+
+    if (
+        decimalPart === undefined ||
+        decimalPart.length <= props.limitedUnitDecimal
+    ) {
+        return input;
+    }
+
+    return `${integerPart}.${decimalPart.slice(0, props.limitedUnitDecimal)}`;
+};
+
 const handleInputChange = (e) => {
-    inputValue.value = e.target.value;
+    const value = limitDecimalPlaces(e.target.value);
+
+    if (value !== e.target.value) {
+        e.target.value = value;
+    }
+
+    inputValue.value = value;
 };
 
 const handleKeydown = () => {
