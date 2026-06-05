@@ -38,17 +38,13 @@ const props = defineProps({
     },
     /**
      * If this is passed as true, it will limit the decimal places
-     * of the input to `limitedUnitDecimal` value. This is useful
+     * of the input to the `decimal` prop value. This is useful
      * for cases like weight or quantity inputs where you want to
      * enforce a certain number of decimal places.
      */
     isEnforceLimitedUnit: {
         type: Boolean,
         default: false,
-    },
-    limitedUnitDecimal: {
-        type: Number,
-        default: 4,
     },
     placeholder: {
         type: String,
@@ -162,12 +158,12 @@ const limitDecimalPlaces = (value) => {
 
     if (
         decimalPart === undefined ||
-        decimalPart.length <= props.limitedUnitDecimal
+        decimalPart.length <= props.decimal
     ) {
         return input;
     }
 
-    return `${integerPart}.${decimalPart.slice(0, props.limitedUnitDecimal)}`;
+    return `${integerPart}.${decimalPart.slice(0, props.decimal)}`;
 };
 
 const handleInputChange = (e) => {
