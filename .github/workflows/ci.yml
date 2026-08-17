@@ -1,39 +1,35 @@
-name: Publish
+name: CI
 
 on:
   push:
     branches: [master]
+  pull_request:
+    branches: [master]
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
-  group: npm-publish
-  cancel-in-progress: false
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 env:
   PNPM_CONFIG_STORE_DIR: ${{ github.workspace }}/.pnpm-store
 
 jobs:
-  publish:
+  quality:
+    name: Lint, build, and package
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 15
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Node.js for npm publishing
-        uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          package-manager-cache: false
-          registry-url: https://registry.npmjs.org/
-
-      - name: Setup pnpm
+      - name: Setup pnpm and Node.js
         uses: pnpm/setup@v2
         with:
+          runtime: node@24
           cache: true
           install: false
 
@@ -51,13 +47,3 @@ jobs:
 
       - name: Verify package contents
         run: pnpm pack --dry-run
-
-      - name: Verify npm authentication
-        run: npm whoami
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN_VUE3 }}
-
-      - name: Publish package
-        run: pnpm publish --access public --no-git-checks --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN_VUE3 }}
