@@ -3,7 +3,6 @@ export { default as BaseAttachment } from "./components/BaseAttachment.vue";
 
 function validateAttachmentFormat(file, format) {
     const fname = file.name;
-    let regex = null;
 
     // if no format is set, by default only these format are allowed
     const defaultFormat = [
@@ -37,7 +36,7 @@ function validateAttachmentFormat(file, format) {
         const element = useFormat[index];
         const temp = element.toLowerCase();
 
-        regex = new RegExp(`(\\.${temp})$`, "i");
+        const regex = new RegExp(`(\\.${temp})$`, "i");
 
         if (regex.exec(fname)) {
             return true;

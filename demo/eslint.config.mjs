@@ -1,6 +1,5 @@
 import pluginVue from "eslint-plugin-vue";
-import _import from "eslint-plugin-import";
-import { fixupPluginRules } from "@eslint/compat";
+import importPlugin from "eslint-plugin-import-x";
 import globals from "globals";
 import js from "@eslint/js";
 import prettierConfig from "@vue/eslint-config-prettier";
@@ -14,7 +13,7 @@ export default [
         files: ["src/**/*.{js,vue}"],
         plugins: {
             vue: pluginVue,
-            import: fixupPluginRules(_import),
+            "import-x": importPlugin,
         },
         languageOptions: {
             globals: {
@@ -23,7 +22,7 @@ export default [
             },
         },
         settings: {
-            "import/resolver": {
+            "import-x/resolver": {
                 node: {
                     extensions: [".js", ".vue"],
                 },
