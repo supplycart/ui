@@ -12,10 +12,9 @@
     "@supplycart-my/ui": "link:../",
     "@vue/compat": "^3.5.13",
     "core-js": "^3.6.4",
-    "date-fns": "2.16.1",
-    "date-fns-tz": "1.1.7",
+    "date-fns": "4.1.0",
+    "date-fns-tz": "3.2.0",
     "lodash-es": "^4.17.21",
-    "ui": "link:../../../Library/pnpm/global/5/node_modules/@supplycart-my/ui",
     "vue": "^3.5.13"
   },
   "devDependencies": {
@@ -35,9 +34,5 @@
     "last 2 versions",
     "not dead"
   ],
-  "pnpm": {
-    "overrides": {
-      "ui": "link:../../../Library/pnpm/global/5/node_modules/@supplycart/ui"
-    }
-  }
+  "packageManager": "pnpm@11.21.0"
 }

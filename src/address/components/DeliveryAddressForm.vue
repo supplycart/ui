@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from "vue";
-import { useAddressForm } from "../composables/useAddressForm";
-import { useMalaysiaStates } from "../composables/useMalaysiaStates";
+import { useAddressForm } from "../composables/useAddressForm.js";
+import { useMalaysiaStates } from "../composables/useMalaysiaStates.js";
 import "vue-select/dist/vue-select.css";
 import VSelect from "vue-select";
 import TextInput from "../../form/components/TextInput.vue";
@@ -24,11 +24,7 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue", "changeCountry"]);
 
-const {
-    labels: LABELS,
-    addressCountryConfig,
-    disabledFields,
-} = useAddressForm(props);
+const { addressCountryConfig, disabledFields } = useAddressForm(props);
 const { states } = useMalaysiaStates();
 
 const value = computed({

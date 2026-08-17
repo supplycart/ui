@@ -144,26 +144,26 @@
                 <h2 class="mb-2 font-bold text-gray-600">Datetime</h2>
                 <div class="mb-4">
                     <DateTime
-                        :value="currentTime"
+                        :model-value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'DD MMM YY'"/>
+                        :format="'dd MMM yy'"/>
                     <DateTime
-                        :value="currentTime"
+                        :model-value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'DD MMM YYYY'"/>
+                        :format="'dd MMM yyyy'"/>
                     <DateTime
-                        :value="currentTime"
+                        :model-value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'DD MMM YYYY hh:mmA'"/>
+                        :format="'dd MMM yyyy hh:mma'"/>
                     <DateTime
-                        :value="currentTime"
+                        :model-value="currentTime"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'ddd, DD MMM YYYY HH:mm'"/>
+                        :format="'EEE, dd MMM yyyy HH:mm'"/>
                     <DateTime
-                        :value="currentTime"
+                        :model-value="currentTime"
                         :is-utc="true"
                         :timezone="'Asia/Kuala_Lumpur'"
-                        :format="'ddd, DD MMM YYYY HH:mm'"/>
+                        :format="'EEE, dd MMM yyyy HH:mm'"/>
                 </div>
             </div>
             <div class="p-12">

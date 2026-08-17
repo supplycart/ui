@@ -6,6 +6,7 @@ import js from "@eslint/js";
 import prettierConfig from "@vue/eslint-config-prettier";
 
 export default [
+    { ignores: ["dist/**"] },
     js.configs.recommended,
     ...pluginVue.configs["flat/vue2-strongly-recommended"],
     prettierConfig,

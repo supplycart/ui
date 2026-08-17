@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import CurrencySettings from "../constants/currencySettings";
+import CurrencySettings from "../constants/currencySettings.js";
 
 // Define props
 const props = defineProps({
@@ -30,7 +30,7 @@ const currencyData = computed(() => {
 
 // Define options
 defineOptions({
-    name: "Currency",
+    name: "CurrencyDisplay",
 });
 </script>
 

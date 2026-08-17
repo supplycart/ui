@@ -2,8 +2,8 @@
 import { computed, ref, watch } from "vue";
 import FlatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
-import { Timezones } from "../constants";
-import { DefaultConfig } from "../constants/flatpickr";
+import { Timezones } from "../constants/index.js";
+import { DefaultConfig } from "../constants/flatpickr.js";
 import FormLabel from "../../form/components/FormLabel.vue";
 
 const props = defineProps({

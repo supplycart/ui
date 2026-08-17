@@ -10,12 +10,10 @@ export function useFilteredAttrs() {
 
     // Extract class and style from attrs to handle separately
     const filteredAttrs = computed(() => {
-        const { class: _, style: __, ...rest } = attrs;
-
-        // Filter out event handlers (onXxx) to prevent duplication
+        // Filter out class, style, and event handlers to prevent duplication.
         const filtered = {};
-        for (const [key, value] of Object.entries(rest)) {
-            if (!key.startsWith("on")) {
+        for (const [key, value] of Object.entries(attrs)) {
+            if (key !== "class" && key !== "style" && !key.startsWith("on")) {
                 filtered[key] = value;
             }
         }
