@@ -1,41 +1,36 @@
-import { format, parseISO } from "date-fns";
-import { toZonedTime, fromZonedTime } from "date-fns-tz";
+import { formatInTimeZone } from "date-fns-tz";
 
-export * from "./components";
-export * from "./constants";
+export * from "./components/index.js";
+export * from "./constants/index.js";
 
 function displayDate(
     value,
-    format = "YYYY-MM-DD HH:mm:ss",
+    format = "yyyy-MM-dd HH:mm:ss",
     timezone = "Asia/Kuala_Lumpur",
     isUtc = false,
 ) {
-    // set default timezone as UTC
-    moment.tz.setDefault("Etc/UTC");
+    if (!value) return "";
 
-    let dateValue;
-
-    // Ensure the date is correctly interpreted as UTC if needed
-    if (value.endsWith("Z") || value.includes("GMT")) {
-        dateValue = new Date(value);
-    } else {
-        // Treat as local time (assumed to be in system timezone)
-        dateValue = new Date(`${value}Z`); // Assume UTC to avoid local misinterpretation
-    }
+    const stringValue = String(value).trim();
+    const hasExplicitTimezone =
+        /(?:Z|[+-]\d{2}(?::?\d{2})?)$/i.test(stringValue) ||
+        /\bGMT\b/i.test(stringValue);
+    const isoValue = stringValue.includes("T")
+        ? stringValue
+        : stringValue.replace(" ", "T");
+    const dateValue = new Date(hasExplicitTimezone ? isoValue : `${isoValue}Z`);
 
     if (isNaN(dateValue.getTime())) return "Invalid Date";
 
-    // Convert to target timezone
-    const zonedDate = fromZonedTime(dateValue, timezone);
+    try {
+        const formatted = formatInTimeZone(dateValue, timezone, format);
 
-    // Handle UTC conversion if isUtc is true
-    if (isUtc) {
-        const utcDate = toZonedTime(zonedDate, timezone);
-        return format(utcDate, formatString) + " " + format(utcDate, "XXX");
+        return isUtc
+            ? `${formatted} ${formatInTimeZone(dateValue, timezone, "XXX")}`
+            : formatted;
+    } catch {
+        return "Invalid Date";
     }
-
-    // convert value into timezone local time
-    return moment(value).tz(timezone).format(format);
 }
 
 export { displayDate };

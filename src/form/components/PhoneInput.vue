@@ -1,15 +1,15 @@
 <script setup>
 import BaseInput from "./BaseInput.vue";
-import { useInput } from "../composables/useInput";
+import { useInput } from "../composables/useInput.js";
 import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 import { ref } from "vue";
 
-const props = defineProps({
-    label: { type: String },
+defineProps({
+    label: { type: String, default: null },
     modelValue: { type: String, default: "" },
-    error: { type: String },
-    inputClass: { type: String },
-    description: { type: String },
+    error: { type: String, default: null },
+    inputClass: { type: String, default: null },
+    description: { type: String, default: null },
     required: { type: Boolean, default: false },
 });
 

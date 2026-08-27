@@ -78,7 +78,7 @@ const blur = (e) => {
     emit("blur", e);
 };
 
-const focus = (e) => {
+const focus = () => {
     focused.value = true;
 };
 
@@ -117,10 +117,7 @@ defineOptions({
             :value="modelValue"
             :rows="rows"
             class="h-textarea"
-            :class="[
-                showError || isInvalid ? 'error' : '',
-                inputClass,
-            ]"
+            :class="[showError || isInvalid ? 'error' : '', inputClass]"
             :required="required"
             @input="handleInput"
             @focus="focus"

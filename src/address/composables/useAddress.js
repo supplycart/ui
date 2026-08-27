@@ -1,6 +1,6 @@
 import { computed } from "vue";
-import { LABELS } from "../constants/address";
-import addressConfig from "../constants/addressConfig";
+import { LABELS } from "../constants/address.js";
+import addressConfig from "../constants/addressConfig.js";
 
 export function useAddress(props) {
     const CONFIG = addressConfig;

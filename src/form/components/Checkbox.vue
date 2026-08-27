@@ -1,6 +1,6 @@
 <script setup>
 // Define props
-const props = defineProps({
+defineProps({
     modelValue: {
         type: Boolean,
         default: false,
@@ -17,6 +17,10 @@ const props = defineProps({
         type: Boolean,
         default: false,
     },
+});
+
+defineOptions({
+    name: "BaseCheckbox",
 });
 
 // Define emits

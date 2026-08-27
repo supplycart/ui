@@ -4,3 +4,4 @@ node_modules/
 .cache/
 *.log
 package-lock.json
+.pnpm-store/**

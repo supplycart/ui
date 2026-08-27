@@ -17,6 +17,10 @@ const props = defineProps({
     },
 });
 
+defineOptions({
+    name: "PaginationControls",
+});
+
 const emit = defineEmits(["update:modelValue", "change"]);
 
 const pages = ref([]);

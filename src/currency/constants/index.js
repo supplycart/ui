@@ -1,4 +1,4 @@
-export { default as Currencies } from "./currencies";
-export { DefaultCurrency } from "./currencies";
-export { default as CurrencySettings } from "./currencySettings";
-export { DefaultDisplayFormat } from "./currencySettings";
+export { default as Currencies } from "./currencies.js";
+export { DefaultCurrency } from "./currencies.js";
+export { default as CurrencySettings } from "./currencySettings.js";
+export { DefaultDisplayFormat } from "./currencySettings.js";

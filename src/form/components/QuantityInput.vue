@@ -1,16 +1,15 @@
 <script setup>
 import BaseInput from "./BaseInput.vue";
-import { useInput } from "../composables/useInput";
 import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 import { ref, computed, onMounted, nextTick } from "vue";
 import numeral from "numeral";
 
 const props = defineProps({
-    label: { type: String },
+    label: { type: String, default: null },
     modelValue: { type: [String, Number], default: "" },
-    error: { type: String },
-    inputClass: { type: String },
-    description: { type: String },
+    error: { type: String, default: null },
+    inputClass: { type: String, default: null },
+    description: { type: String, default: null },
     required: { type: Boolean, default: false },
     maximumValue: { type: Number, default: null },
     minimumValue: { type: Number, default: null },
@@ -23,7 +22,6 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue", "error", "keydown", "blur"]);
 
-const { blur: useInputBlur } = useInput(emit);
 const inputRef = ref(null);
 
 const onFocus = ref(false);

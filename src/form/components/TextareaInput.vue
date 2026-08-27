@@ -1,17 +1,17 @@
 <script setup>
-import { useInput } from "../composables/useInput";
+import { useInput } from "../composables/useInput.js";
 import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 import { ref, computed } from "vue";
 
 const props = defineProps({
-    label: { type: String },
+    label: { type: String, default: null },
     modelValue: { type: String, default: "" },
-    error: { type: String },
-    inputClass: { type: String },
-    description: { type: String },
+    error: { type: String, default: null },
+    inputClass: { type: String, default: null },
+    description: { type: String, default: null },
     required: { type: Boolean, default: false },
     rows: { type: Number, default: 4 },
-    placeholder: { type: String },
+    placeholder: { type: String, default: null },
 });
 
 const emit = defineEmits(["update:modelValue", "keydown", "blur"]);
@@ -27,7 +27,7 @@ const handleInput = (e) => {
     emit("update:modelValue", e.target.value);
 };
 
-const focus = (e) => {
+const focus = () => {
     focused.value = true;
 };
 
