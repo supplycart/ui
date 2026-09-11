@@ -1,7 +1,8 @@
 <script setup>
 import { h, computed } from "vue";
 import numeral from "numeral";
-import CurrencySettings from "../constants/currencySettings.js";
+import CurrencySettings, { DefaultDisplayFormat } from "../constants/currencySettings.js";
+import { Decimal } from "decimal.js";
 
 const props = defineProps({
     decimal: {

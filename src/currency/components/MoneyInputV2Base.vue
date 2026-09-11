@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, nextTick } from "vue";
+import { computed, ref, nextTick, getCurrentInstance } from "vue";
 import numeral from "numeral";
 import CurrencySettings from "../constants/currencySettings.js";
 
@@ -46,6 +46,7 @@ const emit = defineEmits(["update:modelValue", "input", "keydown"]);
 
 const editing = ref(false);
 const inputRef = ref(null);
+const instance = getCurrentInstance();
 
 const rawValue = computed({
     get() {
@@ -89,6 +90,10 @@ const displayFormat = computed(() => {
     return props.format
         ? props.format
         : CurrencySettings[currentCurrency.value]["displayFormat"];
+});
+
+const inputFormat = computed(() => {
+    return CurrencySettings[currentCurrency.value]["inputFormat"];
 });
 
 const currencySign = computed(() => {

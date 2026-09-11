@@ -39,10 +39,6 @@ const props = defineProps({
     },
 });
 
-defineOptions({
-    name: "MoneyDisplay",
-});
-
 const noCentCurrency = computed(() => {
     if (typeof props.currency === "string") {
         const currencyCodeCountry = [];

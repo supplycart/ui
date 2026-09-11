@@ -4,27 +4,17 @@ on:
   pull_request:
     types: [opened, reopened, edited, ready_for_review]
 
-permissions: {}
-
-concurrency:
-  group: pr-check-${{ github.event.pull_request.number }}
-  cancel-in-progress: true
-
 env:
-  PR_URL: ${{ github.event.pull_request.html_url }}
+  PR_URL: ${{github.event.pull_request.html_url}}
 
 jobs:
   fix-pr-title:
     name: Fix PR Title
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: write
-      pull-requests: write
     steps:
       - name: Check title format
         env:
-          GITHUB_TOKEN: ${{ secrets.SUPPLYCART_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{secrets.SUPPLYCART_BOT_TOKEN}}
           PR_BRANCH: ${{ github.head_ref }}
         run: |
           echo "PR URL: $PR_URL"
@@ -138,4 +128,4 @@ jobs:
       - name: Enable auto-merge
         run: gh pr merge --auto --squash "$PR_URL"
         env:
-          GITHUB_TOKEN: ${{ secrets.SUPPLYCART_BOT_TOKEN }}
+          GITHUB_TOKEN: ${{secrets.SUPPLYCART_BOT_TOKEN}}

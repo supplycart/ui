@@ -3,7 +3,7 @@ import { computed } from "vue";
 import FlatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
 import { merge } from "lodash-es";
-import { DefaultTimeConfig } from "../constants/flatpickr.js";
+import { DefaultTimeConfig } from "../constants/flatpickr";
 
 const props = defineProps({
     id: {

@@ -18,7 +18,6 @@ const props = defineProps({
     },
     maxSize: {
         type: Number,
-        default: 30,
         validator: function (value) {
             return value <= 30;
         },
@@ -98,9 +97,9 @@ defineOptions({
             @update:model-value="updateValue"
             @change="change"
             @deleted="deleted"
-            @on-error="onError"
+            @onError="onError"
         >
-            <template #default="{ setAttachment, maxSize: attachmentMaxSize }">
+            <template #default="{ setAttachment, maxSize }">
                 <label for="attachment_input" class="block cursor-pointer">
                     <input
                         id="attachment_input"
@@ -111,7 +110,7 @@ defineOptions({
                     <div class="w-full">
                         <span
                             >Click to Attach Document (max
-                            {{ attachmentMaxSize }}mb)</span
+                            {{ maxSize }}mb)</span
                         >
                     </div>
                 </label>

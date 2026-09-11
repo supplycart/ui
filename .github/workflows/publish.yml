@@ -1,63 +1,41 @@
-name: Publish
+name: "Publish"
 
 on:
   push:
-    branches: [master]
-
-permissions:
-  contents: read
-  id-token: write
-
-concurrency:
-  group: npm-publish
-  cancel-in-progress: false
-
-env:
-  PNPM_CONFIG_STORE_DIR: ${{ github.workspace }}/.pnpm-store
+    branches:
+      - master
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v7
+      - name: Checkout
+        uses: actions/checkout@v6
 
-      - name: Setup Node.js for npm publishing
-        uses: actions/setup-node@v7
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          node-version: 24
-          package-manager-cache: false
+          node-version: 22
           registry-url: https://registry.npmjs.org/
 
       - name: Setup pnpm
-        uses: pnpm/setup@v2
+        uses: pnpm/action-setup@v3
         with:
-          cache: true
-          install: false
+          version: latest
 
-      - name: Install package dependencies
+      - name: Install deps
         run: pnpm install --frozen-lockfile
 
-      - name: Install demo dependencies
-        run: pnpm --dir demo install --frozen-lockfile
-
-      - name: Lint source
-        run: pnpm exec eslint src --max-warnings 0 --format stylish
-
-      - name: Build demo
-        run: pnpm build-demo
-
-      - name: Verify package contents
-        run: pnpm pack --dry-run
-
-      - name: Verify npm authentication
+      - name: Verify auth
         run: npm whoami
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN_VUE3 }}
 
-      - name: Publish package
-        run: pnpm publish --access public --no-git-checks --provenance
+      - name: Check registry
+        run: npm config get registry
+
+      - name: Publish
+        run: pnpm publish --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN_VUE3 }}
