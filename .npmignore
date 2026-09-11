@@ -1,6 +1,4 @@
 node_modules/
-.pnpm-store/
-pnpm-workspace.yaml
 demo/
 .idea/
 .vscode/

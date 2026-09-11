@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import { useAddress } from "../composables/useAddress.js";
+import { useAddress } from "../composables/useAddress";
 
 // Define props
 const props = defineProps({
@@ -28,93 +28,91 @@ defineOptions({
 });
 
 const addressLine1 = computed(() => {
-    const parts = [];
+    const parts = []
 
     // Street (Singapore only, first)
-    if (addressCountry.value === "SINGAPORE" && props.modelValue.street) {
-        parts.push(props.modelValue.street);
+    if (addressCountry.value === 'SINGAPORE' && props.modelValue.street) {
+        parts.push(props.modelValue.street)
     }
 
     // Unit (non-Singapore)
     if (
         props.modelValue.unit &&
         addressCountryConfig.value.unit &&
-        addressCountry.value !== "SINGAPORE"
+        addressCountry.value !== 'SINGAPORE'
     ) {
-        parts.push(props.modelValue.unit);
+        parts.push(props.modelValue.unit)
     }
 
     // Floor
     if (props.modelValue.floor && addressCountryConfig.value.floor) {
-        parts.push(props.modelValue.floor);
+        parts.push(props.modelValue.floor)
     }
 
     // Unit (Singapore)
     if (
         props.modelValue.unit &&
         addressCountryConfig.value.unit &&
-        addressCountry.value === "SINGAPORE"
+        addressCountry.value === 'SINGAPORE'
     ) {
-        parts.push(props.modelValue.unit);
+        parts.push(props.modelValue.unit)
     }
 
     // Building
     if (props.modelValue.building && addressCountryConfig.value.building) {
-        parts.push(props.modelValue.building);
+        parts.push(props.modelValue.building)
     }
 
     // Street (non-Singapore)
     if (
         props.modelValue.street &&
         addressCountryConfig.value.street &&
-        addressCountry.value !== "SINGAPORE"
+        addressCountry.value !== 'SINGAPORE'
     ) {
-        parts.push(props.modelValue.street);
+        parts.push(props.modelValue.street)
     }
 
     // City + comma if postcode exists
-    if (
-        props.modelValue.city &&
-        (addressCountryConfig.value.city || addressCountryConfig.value.district)
-    ) {
-        let city = props.modelValue.city;
+    if (props.modelValue.city && (
+        addressCountryConfig.value.city ||
+        addressCountryConfig.value.district
+    )) {
+        let city = props.modelValue.city
 
         if (props.modelValue.city && props.modelValue.postcode) {
-            city += ",";
+            city += ','
         }
 
-        parts.push(city);
+        parts.push(city)
     }
 
-    return parts.join(", ");
+    return parts.join(', ')
 });
 const addressLine2 = computed(() => {
-    const parts = [];
+    const parts = []
 
     // Postcode
-    if (
-        props.modelValue.postcode &&
-        (addressCountryConfig.value.postcode ||
-            addressCountryConfig.value.zipcode)
-    ) {
-        parts.push(props.modelValue.postcode);
+    if (props.modelValue.postcode && (
+        addressCountryConfig.value.postcode ||
+        addressCountryConfig.value.zipcode
+    )) {
+        parts.push(props.modelValue.postcode)
     }
 
     // State / Province
-    if (
-        props.modelValue.state &&
-        (addressCountryConfig.value.state ||
-            addressCountryConfig.value.province)
-    ) {
-        parts.push(props.modelValue.state);
+    if (props.modelValue.state && (
+        addressCountryConfig.value.state ||
+        addressCountryConfig.value.province
+    )) {
+        parts.push(props.modelValue.state)
     }
 
     // Country (always last)
     if (props.modelValue.country) {
-        parts.push(props.modelValue.country);
+        parts.push(props.modelValue.country)
     }
 
-    return parts.join(", ");
+    return parts.join(', ')
 });
 </script>
 
@@ -139,14 +137,12 @@ const addressLine2 = computed(() => {
             <div v-if="props.display.length > 0">
                 <span v-if="showAttribute('pic_name')">
                     {{ props.modelValue.pic_name }}
-                    <span v-if="showAttribute('pic_phone')"> </span>
+                    <span v-if="showAttribute('pic_phone')">
+                </span>
                     - {{ props.modelValue.pic_phone }}
                 </span>
             </div>
-            <p v-else>
-                {{ props.modelValue.pic_name }} -
-                {{ props.modelValue.pic_phone }}
-            </p>
+            <p v-else>{{ props.modelValue.pic_name }} - {{ props.modelValue.pic_phone }}</p>
         </div>
         <div v-if="showAttribute('address')">
             <p>{{ addressLine1 }}</p>
@@ -171,8 +167,7 @@ const addressLine2 = computed(() => {
         </div>
         <div v-if="showAttribute('einvoice_email')">
             <p v-if="props.modelValue.einvoice_email">
-                {{ LABELS.E_INVOICE_MAILBOX }}:
-                {{ props.modelValue.einvoice_email }}
+                {{ LABELS.E_INVOICE_MAILBOX }}: {{ props.modelValue.einvoice_email }}
             </p>
         </div>
     </div>

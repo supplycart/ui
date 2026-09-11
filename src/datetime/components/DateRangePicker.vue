@@ -35,7 +35,7 @@ const selected = ref({
     to: currentValue.to,
 });
 
-const onClose = (selectedDates) => {
+const onClose = (selectedDates, dateStr, instanceRef) => {
     if (selectedDates.length === 2) {
         selectedDates[1].setHours(23, 59, 59, 999);
 

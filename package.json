@@ -1,7 +1,6 @@
 {
     "name": "@supplycart-my/ui",
-    "version": "4.0.0",
-    "types": "index.d.ts",
+    "version": "3.0.7",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/supplycart/ui.git"
@@ -30,24 +29,25 @@
         "vue-select": "4.0.0-beta.6"
     },
     "peerDependencies": {
-        "vue": "^3.5.41"
+        "vue": "^3.4.27",
+        "@vue/compat": "^3.4.27"
     },
     "license": "MIT",
     "devDependencies": {
         "@babel/runtime": "^7.12.18",
-        "@eslint/js": "^10.0.1",
+        "@eslint/compat": "^1.2.4",
+        "@eslint/js": "^9.18.0",
         "@types/lodash-es": "^4.17.12",
         "@vue/eslint-config-prettier": "^10.2.0",
-        "eslint": "^10.8.1",
-        "eslint-config-prettier": "^10.1.8",
-        "eslint-plugin-import-x": "^4.17.1",
-        "eslint-plugin-prettier": "^5.5.6",
-        "eslint-plugin-vue": "^10.10.0",
+        "eslint": "^9.18.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-import": "^2.31.0",
+        "eslint-plugin-prettier": "^5.2.3",
+        "eslint-plugin-vue": "^9.32.0",
         "globals": "^15.14.0",
         "prettier": "^3.4.2",
         "prettier-eslint": "^16.3.0",
-        "vue": "^3.5.41",
-        "vue-eslint-parser": "^10.4.1"
+        "vue-eslint-parser": "^9.4.3"
     },
-    "packageManager": "pnpm@11.21.0"
+    "packageManager": "pnpm@10.6.2+sha512.47870716bea1572b53df34ad8647b42962bc790ce2bf4562ba0f643237d7302a3d6a8ecef9e4bdfc01d23af1969aa90485d4cebb0b9638fa5ef1daef656f6c1b"
 }

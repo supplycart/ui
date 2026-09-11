@@ -35,10 +35,10 @@ input[type="text"] {
 }
 </style>
 <script setup>
-import { ref, computed, watch } from "vue";
-import { useCurrencyInput } from "vue-currency-input";
-import { find } from "lodash-es";
-import FormLabel from "../../form/components/FormLabel.vue";
+import { ref, computed, watch } from "vue"
+import { useCurrencyInput } from "vue-currency-input"
+import { find } from "lodash-es"
+import FormLabel from "../../form/components/FormLabel.vue"
 import { useFilteredAttrs } from "../../form/composables/useFilteredAttrs.js";
 import Currencies, {
     DefaultCurrency,
@@ -147,8 +147,7 @@ const currencyOptions = computed(() => ({
     hideCurrencySymbolOnFocus: true,
     hideGroupingSeparatorOnFocus: true,
     allowNegative: props.allowNegative,
-    // vue-currency-input 3 replaced valueAsInteger with valueScaling.
-    valueScaling: props.intValue ? "precision" : undefined,
+    valueAsInteger: props.intValue,
     currencyDisplay: props.sign ? "symbol" : "code",
 }));
 

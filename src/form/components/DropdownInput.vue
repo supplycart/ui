@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch } from "vue"
 import "vue-select/dist/vue-select.css";
 import VSelect from "vue-select";
 import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
@@ -63,6 +63,7 @@ const emit = defineEmits([
 
 // Reactive state
 const focused = ref(false);
+const originalValue = ref(props.modelValue);
 const errorMessage = ref(props.error);
 const emptyMessage = "Please fill in this field";
 

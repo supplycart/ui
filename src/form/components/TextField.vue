@@ -1,6 +1,6 @@
 <script setup>
 // Define props
-defineProps({
+const props = defineProps({
     label: {
         type: String,
         default: "Label",

@@ -1,1 +1,1 @@
-export { LABELS } from "./address.js";
+export { LABELS } from "./address";

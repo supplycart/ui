@@ -1,1 +1,1 @@
-export { default as Timezones } from "./timezones.js";
+export { default as Timezones } from "./timezones";
