@@ -24,4 +24,16 @@ const DefaultTimeConfig = {
     dateFormat: "H:i",
 };
 
-export { DefaultConfig, DefaultDateRangeConfig, DefaultTimeConfig };
+const DefaultDateOnlyConfig = {
+    altInput: true,
+    altFormat: "j M Y",
+    dateFormat: "Y-m-d",
+    minDate: format(new Date(), "yyyy-MM-dd"),
+};
+
+export {
+    DefaultConfig,
+    DefaultDateOnlyConfig,
+    DefaultDateRangeConfig,
+    DefaultTimeConfig,
+};
