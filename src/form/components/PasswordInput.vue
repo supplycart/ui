@@ -6,7 +6,7 @@
                 <small v-if="required" class="italic text-red-600">*</small>
             </label>
         </slot>
-
+        
         <div class="relative">
             <input
                 :id="id"

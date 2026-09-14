@@ -7,7 +7,6 @@
             </label>
         </slot>
         <input
-            :id="id"
             :value="modelValue"
             v-bind="filteredAttrs"
             :class="[

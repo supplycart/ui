@@ -2,8 +2,7 @@
 import { computed, ref, watch } from "vue";
 import FlatPickr from "vue-flatpickr-component";
 import "flatpickr/dist/flatpickr.css";
-import { Timezones } from "../constants";
-import { DefaultConfig } from "../constants/flatpickr";
+import { DefaultDateOnlyConfig } from "../constants/flatpickr";
 import FormLabel from "../../form/components/FormLabel.vue";
 
 const props = defineProps({
@@ -20,18 +19,17 @@ const props = defineProps({
         default: "inline-block mb-2",
     },
     modelValue: {
-        type: [String, Date],
+        type: String,
         default: null,
     },
     value: {
-        type: [String, Date],
+        type: String,
         default: null,
     },
-    timezone: {
-        type: [String, Object],
-        default() {
-            return Timezones.MALAYSIA.timezone;
-        },
+    // flatpickr tokens, from companySettings.date_formats.input_date.
+    altFormat: {
+        type: String,
+        default: DefaultDateOnlyConfig.altFormat,
     },
     config: {
         type: Object,
@@ -62,11 +60,14 @@ const input = computed({
 });
 
 watch(
-    () => props.config,
-    (val) => {
+    [() => props.config, () => props.altFormat],
+    ([config, altFormat]) => {
         dateConfig.value = {
-            ...DefaultConfig,
-            ...val,
+            ...DefaultDateOnlyConfig,
+            altFormat,
+            ...config,
+            // dateFormat drives the emitted value. The caller must not change it.
+            dateFormat: "Y-m-d",
         };
     },
     { deep: true, immediate: true },

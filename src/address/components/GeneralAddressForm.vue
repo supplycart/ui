@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from "vue";
-import { useAddressForm } from "../composables/useAddressForm.js";
-import { useMalaysiaStates } from "../composables/useMalaysiaStates.js";
+import { useAddressForm } from "../composables/useAddressForm";
+import { useMalaysiaStates } from "../composables/useMalaysiaStates";
 import "vue-select/dist/vue-select.css";
 import VSelect from "vue-select";
 import TextInput from "../../form/components/TextInput.vue";

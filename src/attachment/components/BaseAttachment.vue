@@ -1,11 +1,6 @@
 <script setup>
 import { computed } from "vue";
-import { validateAttachmentFormat, validateAttachmentSize } from "../index.js";
-
-defineOptions({
-    name: "BaseAttachment",
-    inheritAttrs: false,
-});
+import { validateAttachmentFormat, validateAttachmentSize } from "../index";
 
 const props = defineProps({
     modelValue: {

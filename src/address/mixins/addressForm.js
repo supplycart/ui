@@ -1,7 +1,7 @@
 import "vue-select/dist/vue-select.css";
 import VSelect from "vue-select";
-import { LABELS } from "../constants/address.js";
-import addressConfig from "../constants/addressConfig.js";
+import { LABELS } from "../constants/address";
+import addressConfig from "../constants/addressConfig";
 
 export default {
     components: { VSelect },
@@ -30,39 +30,42 @@ export default {
         addressCountryConfig() {
             return this.CONFIG[this.setCountry.toUpperCase()];
         },
-        disabledFields() {
-            const tempDisabledFields = {
-                unit: false,
-                floor: false,
-                building: false,
-                street: false,
-                city: false,
-                postcode: false,
-                state: false,
-                country: false,
-                entity_name: false,
-                pic_phone: false,
-                pic_name: false,
-                einvoice_email: false,
-                registration_no: false,
-                branch_name: false,
-                lift_access: false,
-                requires_permit: false,
-            };
+        disabledFields: {
+            get() {
+                const tempDisabledFields = {
+                    unit: false,
+                    floor: false,
+                    building: false,
+                    street: false,
+                    city: false,
+                    postcode: false,
+                    state: false,
+                    country: false,
+                    entity_name: false,
+                    pic_phone: false,
+                    pic_name: false,
+                    einvoice_email: false,
+                    registration_no: false,
+                    branch_name: false,
+                    lift_access: false,
+                    requires_permit: false,
+                };
 
-            this.disableFields.forEach((field) => {
-                if (field === "all") {
-                    const objKeys = Object.keys(tempDisabledFields);
+                this.disableFields.forEach((field) => {
+                    if (field === "all") {
+                        const objKeys = Object.keys(tempDisabledFields);
 
-                    objKeys.forEach((key) => {
-                        tempDisabledFields[key] = true;
-                    });
-                } else {
-                    tempDisabledFields[field] = true;
-                }
-            });
+                        objKeys.forEach((key) => {
+                            tempDisabledFields[key] = true;
+                        });
+                    } else {
+                        tempDisabledFields[field] = true;
+                    }
+                });
 
-            return tempDisabledFields;
+                return tempDisabledFields;
+            },
+            set(value) {},
         },
     },
     data() {

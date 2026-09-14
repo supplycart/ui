@@ -1,5 +1,5 @@
-import { LABELS } from "../constants/address.js";
-import addressConfig from "../constants/addressConfig.js";
+import { LABELS } from "../constants/address";
+import addressConfig from "../constants/addressConfig";
 export default {
     props: {
         value: {

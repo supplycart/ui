@@ -19,7 +19,7 @@ import BaseInput from "./BaseInput.vue";
 import { useFilteredAttrs } from "../composables/useFilteredAttrs.js";
 
 // Define props
-defineProps({
+const props = defineProps({
     id: {
         type: String,
         default: null,

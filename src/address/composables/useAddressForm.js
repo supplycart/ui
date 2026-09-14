@@ -1,14 +1,19 @@
-import { computed } from "vue";
-import { LABELS } from "../constants/address.js";
-import addressConfig from "../constants/addressConfig.js";
+import { ref, computed } from "vue";
+import { LABELS } from "../constants/address";
+import addressConfig from "../constants/addressConfig";
 
 export function useAddressForm(props) {
     const CONFIG = addressConfig;
     const labels = LABELS;
 
-    const setCountry = computed(
-        () => props.modelValue?.country || props.country || "Malaysia",
-    );
+    const setCountry = computed({
+        get() {
+            return props.modelValue?.country || props.country || "Malaysia";
+        },
+        set(value) {
+            // This will be handled by the parent component
+        },
+    });
 
     const addressCountryConfig = computed(() => {
         const country = setCountry.value;
